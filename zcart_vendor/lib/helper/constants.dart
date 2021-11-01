@@ -26,3 +26,6 @@ final List<String> paymentMethods = [
   paypal,
   if (Platform.isAndroid) razorpay
 ];
+
+const double defaultRadius = 16;
+const double defaultPadding = 16;
