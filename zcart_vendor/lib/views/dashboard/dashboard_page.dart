@@ -1,17 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:zcart_vendor/helper/constants.dart';
-import 'package:zcart_vendor/views/catalog/catalog_page.dart';
+import 'package:zcart_vendor/helper/navigator_helper.dart';
 import 'package:zcart_vendor/views/custom/custom_headline.dart';
 import 'package:zcart_vendor/views/custom/information_card.dart';
 import 'package:zcart_vendor/views/custom/information_card_icon.dart';
 import 'package:zcart_vendor/views/orders/orders_page.dart';
-import 'package:zcart_vendor/views/profile/profile_page.dart';
-import 'package:zcart_vendor/views/promotions/promotion_page.dart';
-import 'package:zcart_vendor/views/settings/settings_page.dart';
-import 'package:zcart_vendor/views/shipping/shipping_page.dart';
-import 'package:zcart_vendor/views/stock/stock_page.dart';
-import 'package:zcart_vendor/views/support_desk/support_desk_page.dart';
+import 'package:zcart_vendor/views/account/account_page.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -123,91 +118,269 @@ class DashboardPage extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTile(
+              ExpansionTile(
                 leading: const Icon(Icons.shopping_bag),
                 title: const Text('Orders'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const OrdersPage()));
-                },
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Orders"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      MyNav.goTo(context, const OrdersPage());
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Pickup Orders"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement pickup orders
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Carts"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement carts
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Cancellations"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement cancellations
+                    },
+                  ),
+                ],
               ),
-              ListTile(
+              ExpansionTile(
                 leading: const Icon(CupertinoIcons.rectangle_grid_2x2_fill),
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
                 title: const Text('Catalog'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CatalogPage()));
-                },
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Attributes"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement attributes
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Products"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement products
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Manufactures"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement manufacturers
+                    },
+                  ),
+                ],
               ),
-              ListTile(
+              ExpansionTile(
                 leading: const Icon(CupertinoIcons.rectangle_3_offgrid_fill),
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
                 title: const Text('Stock'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const StockPage()));
-                },
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Inventories"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement inventories
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Warehouses"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement warehouses
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Supplies"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement supplies
+                    },
+                  ),
+                ],
               ),
-              ListTile(
+              ExpansionTile(
                 leading: const Icon(Icons.local_shipping),
                 title: const Text('Shipping'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ShippingPage()));
-                },
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Carriers"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement carriers
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Packaging"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement packaging
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Shipping zones"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement shipping zones
+                    },
+                  ),
+                ],
               ),
-              ListTile(
-                leading: const Icon(CupertinoIcons.chat_bubble_2_fill),
+              ExpansionTile(
+                leading: const Icon(Icons.support),
                 title: const Text('Support Desk'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SupportDeskPage()));
-                },
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Chats"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement chats
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Messages"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement messages
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Disputes"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement disputes
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Refunds"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement refunds
+                    },
+                  ),
+                ],
               ),
-              ListTile(
+              ExpansionTile(
                 leading: const Icon(Icons.local_offer),
                 title: const Text('Promotions'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PromotionPage()));
-                },
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Coupons"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement coupons
+                    },
+                  ),
+                ],
               ),
-              ListTile(
-                leading: const Icon(CupertinoIcons.profile_circled),
-                title: const Text('Profile'),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfilePage()));
-                },
+              ExpansionTile(
+                leading: const Icon(Icons.admin_panel_settings),
+                title: const Text('Admin'),
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Users"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement users
+                    },
+                  ),
+                ],
               ),
-              ListTile(
+              ExpansionTile(
                 leading: const Icon(Icons.settings),
                 title: const Text('Settings'),
+                childrenPadding: const EdgeInsets.only(left: defaultPadding),
+                children: [
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("User Roles"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement user roles
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Taxes"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement taxes
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("General Configs"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement general configs
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Configuration"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement configuration
+                    },
+                  ),
+                  const Divider(height: 0, color: Colors.black12),
+                  ListTile(
+                    title: const Text("Payment Methods"),
+                    leading: const Icon(Icons.double_arrow),
+                    onTap: () {
+                      //TODO: implement payment methods
+                    },
+                  ),
+                ],
+              ),
+              const Divider(height: 0, color: Colors.black12),
+              ListTile(
+                leading: const Icon(CupertinoIcons.profile_circled),
+                title: const Text('Account'),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsPage()));
+                  MyNav.goTo(context, const AccountPage());
                 },
               ),
+              const Divider(height: 0, color: Colors.black12),
               ListTile(
                 leading: const Icon(Icons.exit_to_app),
                 title: const Text('Logout'),
                 onTap: () {},
               ),
+              const Divider(height: 0, color: Colors.black12),
             ],
           ),
         )),

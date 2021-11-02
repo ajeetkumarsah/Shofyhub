@@ -18,7 +18,20 @@ class MyApp extends StatelessWidget {
     //
     //THEME
     final _themeData = ThemeData(
+      colorScheme: const ColorScheme.light().copyWith(
+        primary: MyConfig.primaryColor,
+        secondary: MyConfig.accentColor,
+        primaryVariant: MyConfig.primaryColor,
+        secondaryVariant: MyConfig.accentColor,
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+        surface: Colors.white,
+        onSurface: Colors.black87,
+        error: Colors.red,
+        onError: Colors.white,
+      ),
       appBarTheme: AppBarTheme(
+        toolbarHeight: defaultPadding * 4,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(defaultRadius),
@@ -52,9 +65,7 @@ class MyApp extends StatelessWidget {
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           textStyle: GoogleFonts.poppins(
-            textStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
-                  color: Colors.red,
-                ),
+            textStyle: Theme.of(context).textTheme.subtitle2,
             fontWeight: FontWeight.bold,
           ),
           elevation: 0,
@@ -68,9 +79,7 @@ class MyApp extends StatelessWidget {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           textStyle: GoogleFonts.poppins(
-            textStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
-                  color: Colors.red,
-                ),
+            textStyle: Theme.of(context).textTheme.subtitle2,
             fontWeight: FontWeight.bold,
           ),
           elevation: 0,

@@ -37,8 +37,8 @@ class MyConfig {
   /// These are your app colors. You must change this colors as your own app colors.
   ///Only change the hex values of the colors. Format of the color is [#FFFFFF].
   ///
-  static final Color primaryColor = HexColor("#0071A5");
-  static final Color accentColor = HexColor("#03A8C5");
+  static final Color primaryColor = HexColor("#DF3030");
+  static final Color accentColor = HexColor("#DF3030");
 
   ///App Gradient Colors
   static final Color gradientColor1 = HexColor("#B12704");
