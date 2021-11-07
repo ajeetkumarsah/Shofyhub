@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     //
     //THEME
     final _themeData = ThemeData(
+      scaffoldBackgroundColor: Colors.white,
       colorScheme: const ColorScheme.light().copyWith(
         primary: MyConfig.primaryColor,
         secondary: MyConfig.accentColor,
@@ -69,8 +70,6 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           elevation: 0,
-          padding: const EdgeInsets.symmetric(
-              horizontal: defaultPadding, vertical: defaultRadius),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(defaultRadius),
           ),
@@ -83,8 +82,6 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           elevation: 0,
-          padding: const EdgeInsets.symmetric(
-              horizontal: defaultPadding, vertical: defaultRadius),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(defaultRadius),
           ),

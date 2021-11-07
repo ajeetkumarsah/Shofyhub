@@ -38,7 +38,7 @@ class MyConfig {
   ///Only change the hex values of the colors. Format of the color is [#FFFFFF].
   ///
   static final Color primaryColor = HexColor("#DF3030");
-  static final Color accentColor = HexColor("#DF3030");
+  static final Color accentColor = HexColor("#F5F5F5");
 
   ///App Gradient Colors
   static final Color gradientColor1 = HexColor("#B12704");
