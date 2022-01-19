@@ -61,69 +61,6 @@ class MyConfig {
       SpinKitCubeGrid(color: color, size: size, duration: duration);
 
   ///
-
-  /// TURN ON/OFF SWITCHABLE THEME AND SOCIAL LOGINS
-  /// Currently all the values are set to [true]. You can change this to [false] if you want to turn off
-  /// any of the theme and social logins.
-  ///
-  /// [true] means that the theme and social logins are enabled.
-  /// [false] means that the theme and social logins are disabled.
-  ///
-  /// Social Logins
-  /// FACEBOOK LOGIN
-  static const bool isFacebookLoginActive = true;
-
-  /// GOOGLE LOGIN
-  static const bool isGoogleLoginActive = true;
-
-  /// APPLE LOGIN
-  static const bool isAppleLoginActive = true;
-
-  // Theme
-  static const bool isDynamicThemeActive = true;
-
-  ///
-
-  /// PAYMENT GATEWAY CONFIGS
-  /// These are your payment gateway configs. You must change this configs as your own payment gateway API configs. If you don't have any payment gateway API configs then you can leave these configs as it is.
-  ///
-  /// [RAZOR PAY]
-  /// API KEY
-  static const String razorPayApiKey = 'rzp_test_Pq4V0mcist4gfu';
-
-  /// SECRET KEY
-  static const String razorPaySecretKey = "oot8NuMhyoz6sZkYbkdCvCar";
-
-  /// CURRENCY CODE
-  static const String razorPayCurrency = "INR";
-
-  /// [PAYSTACK]
-  /// API KEY
-  static const String paystackApiKey =
-      'pk_test_4b0bfd886ad641c03fc008017c0f127adb3eecb3';
-
-  /// [PAYPAL]
-  /// SANDBOX MODE
-  static const bool paypalSandboxMode = true;
-
-  /// CLIENT ID
-  static const String paypalClientId =
-      "AT1_wwlwFHefidTjEF4DYzjOVoI7ZK66ib1zlVA0YZUPuNj4D4IG_0Sxmto5Q6leByaxgdbHi-KkkaHz";
-
-  /// CLIENT SECRET
-  static const String paypalClientSecret =
-      "EO4T0rY9u0gcKlegpW8nGKoXS1QjUNHLlfgcGPjW5Sv5r7o7gMPVMaPAfGgmqbQWo7UB8OSG2Fgb2Nkt";
-
-  /// PAYPAL TRANSACTION DESCRIPTION
-  static const String paypalTransactionDescription = "Payment for ZCart";
-
-  /// PAYPAL CURRENCY CODE
-  static const String payPalCurrency = "USD";
-
-  /// PAYSTACK CURRENCY CODE
-  static const String paystackCurrency = "ZAR";
-
-  ///
   ///
   ///
   ///
