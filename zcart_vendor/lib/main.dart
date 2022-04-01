@@ -22,8 +22,6 @@ class MyApp extends StatelessWidget {
       colorScheme: const ColorScheme.light().copyWith(
         primary: MyConfig.primaryColor,
         secondary: MyConfig.accentColor,
-        primaryVariant: MyConfig.primaryColor,
-        secondaryVariant: MyConfig.accentColor,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
         surface: Colors.white,
