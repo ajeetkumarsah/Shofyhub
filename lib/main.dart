@@ -1,99 +1,39 @@
+import 'package:clean_api/clean_api.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:zcart_vendor/config/config.dart';
-import 'package:zcart_vendor/helper/constants.dart';
-import 'package:zcart_vendor/views/dashboard/dashboard_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_vendor/presentation/auth/sign_in.dart';
 
-void main() => runApp(const MyApp());
+import 'firebase_options.dart';
+import 'presentation/widget_for_all/color.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  CleanApi.instance
+      .setup(baseUrl: "https://test.incevio.cloud/api/vendor/", showLogs: true);
+  runApp(const ProviderScope(child: MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
-    //
-    //THEME
-    final _themeData = ThemeData(
-      scaffoldBackgroundColor: Colors.white,
-      colorScheme: const ColorScheme.light().copyWith(
-        primary: MyConfig.primaryColor,
-        secondary: MyConfig.accentColor,
-        onPrimary: Colors.white,
-        onSecondary: Colors.white,
-        surface: Colors.white,
-        onSurface: Colors.black87,
-        error: Colors.red,
-        onError: Colors.white,
-      ),
-      appBarTheme: AppBarTheme(
-        toolbarHeight: defaultPadding * 4,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(defaultRadius),
-            bottomRight: Radius.circular(defaultRadius),
-          ),
-        ),
-        elevation: 0,
-        centerTitle: false,
-        titleTextStyle: GoogleFonts.poppins(
-          textStyle: Theme.of(context).textTheme.headline6,
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      textTheme: GoogleFonts.poppinsTextTheme(
-        Theme.of(context).textTheme,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-        elevation: 0,
-        textStyle: GoogleFonts.poppins(
-          textStyle: Theme.of(context).textTheme.subtitle2,
-          fontWeight: FontWeight.bold,
-        ),
-        padding: const EdgeInsets.symmetric(
-            horizontal: defaultPadding, vertical: defaultRadius),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(defaultRadius),
-        ),
-      )),
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          textStyle: GoogleFonts.poppins(
-            textStyle: Theme.of(context).textTheme.subtitle2,
-            fontWeight: FontWeight.bold,
-          ),
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(defaultRadius),
-          ),
-        ),
-      ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          textStyle: GoogleFonts.poppins(
-            textStyle: Theme.of(context).textTheme.subtitle2,
-            fontWeight: FontWeight.bold,
-          ),
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(defaultRadius),
-          ),
-        ),
-      ),
-    );
-
-    //
-
-    return MaterialApp(
-      title: MyConfig.appName,
-      debugShowCheckedModeBanner: false,
-      theme: _themeData,
-      home: const DashboardPage(),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      builder: (context, child) {
+        return MaterialApp(
+          theme: ThemeData(primaryColor: MyColor.appbarColor),
+          debugShowCheckedModeBanner: false,
+          title: 'Multivendor App',
+          home: const SignInPage(),
+        );
+      },
     );
   }
 }
