@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/catalog/atributes/atributes_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/atributes/attribute_type_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/atributes/categories_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/atributes/get_atributes_model.dart/get_atributes_model.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/categories_model.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.dart/get_atributes_model.dart';
 
 abstract class IAtributesRepo {
   Future<Either<CleanFailure, List<AtributesModel>>> getAtributes();

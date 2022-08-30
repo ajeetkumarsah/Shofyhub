@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/order/order_state.dart';
-import 'package:zcart_vendor/presentation/order/widget/archived_order_tile.dart';
-import 'package:zcart_vendor/presentation/order/widget/delete_order_dialog.dart';
+import 'package:zcart_seller/application/app/order/order_state.dart';
+import 'package:zcart_seller/presentation/order/widget/archived_order_tile.dart';
+import 'package:zcart_seller/presentation/order/widget/delete_order_dialog.dart';
 
 import '../../../application/app/order/order_provider.dart';
 

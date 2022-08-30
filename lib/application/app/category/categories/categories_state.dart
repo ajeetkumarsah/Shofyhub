@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_vendor/domain/app/category/categories/attributes_model.dart';
-import 'package:zcart_vendor/domain/app/category/categories/category_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/attributes_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 
 class CategorisState extends Equatable {
   final bool loading;

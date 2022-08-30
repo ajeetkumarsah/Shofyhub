@@ -1,7 +1,7 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/attribute_value_details_model/attribute_value_details_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/attribute_values_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/i_attribute_values_repo.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_value_details_model/attribute_value_details_model.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/i_attribute_values_repo.dart';
 
 class AttributeValuesRepo extends IAttributeValuesRepo {
   final cleanApi = CleanApi.instance;

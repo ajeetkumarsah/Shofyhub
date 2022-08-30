@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/order/order_provider.dart';
+import 'package:zcart_seller/application/app/order/order_provider.dart';
 
 class CancelOrderDialog extends HookConsumerWidget {
   final int orderId;

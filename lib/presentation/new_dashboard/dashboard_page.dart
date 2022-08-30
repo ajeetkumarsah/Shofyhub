@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/category/caegory%20group/category_group_provider.dart';
-import 'package:zcart_vendor/application/app/order/order_provider.dart';
-import 'package:zcart_vendor/application/app/stocks/inventories/inventories_provider.dart';
-import 'package:zcart_vendor/presentation/catalog/catalogue_screen.dart';
-import 'package:zcart_vendor/presentation/inventory/inventory_page.dart';
-import 'package:zcart_vendor/presentation/new_dashboard/widgets/more_option_item.dart';
-import 'package:zcart_vendor/presentation/new_dashboard/widgets/store_report_item.dart';
-import 'package:zcart_vendor/presentation/order/order_main_page.dart';
+import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
+import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
+import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';
+import 'package:zcart_seller/presentation/inventory/inventory_page.dart';
+import 'package:zcart_seller/presentation/new_dashboard/widgets/more_option_item.dart';
+import 'package:zcart_seller/presentation/new_dashboard/widgets/store_report_item.dart';
+import 'package:zcart_seller/presentation/order/order_main_page.dart';
 
 class DashboardPage extends HookConsumerWidget {
   const DashboardPage({Key? key}) : super(key: key);

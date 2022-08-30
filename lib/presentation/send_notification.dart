@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 import 'order/manage_order_page.dart';
 import 'widget_for_all/my_text_field.dart';

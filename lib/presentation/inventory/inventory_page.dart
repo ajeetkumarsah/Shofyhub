@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/stocks/inventories/inventories_provider.dart';
-import 'package:zcart_vendor/presentation/inventory/inventory_details/inventory_details_page.dart';
-import 'package:zcart_vendor/presentation/inventory/widgets/inventory_item_tile.dart';
-import 'package:zcart_vendor/presentation/inventory/widgets/quick_update_inventory_dialog.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
+import 'package:zcart_seller/presentation/inventory/inventory_details/inventory_details_page.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/inventory_item_tile.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/quick_update_inventory_dialog.dart';
+import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class InventoryPage extends HookConsumerWidget {
   const InventoryPage({Key? key}) : super(key: key);

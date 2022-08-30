@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/category/categories/category_attribute_state.dart';
-import 'package:zcart_vendor/domain/app/category/categories/i_category_repo.dart';
-import 'package:zcart_vendor/infrastructure/app/category%20management/categories/category_repo.dart';
+import 'package:zcart_seller/application/app/category/categories/category_attribute_state.dart';
+import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
+import 'package:zcart_seller/infrastructure/app/category%20management/categories/category_repo.dart';
 
 final categoryAttributeProvider =
     StateNotifierProvider<CategoryAttributeNotifier, CategoryAttributeState>(

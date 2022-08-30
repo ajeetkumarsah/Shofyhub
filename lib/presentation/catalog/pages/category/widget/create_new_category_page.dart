@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/category/categories/categories_provider.dart';
-import 'package:zcart_vendor/application/app/category/categories/category_attribute_provider.dart';
-import 'package:zcart_vendor/domain/app/category/categories/attributes_model.dart';
-import 'package:zcart_vendor/domain/app/category/categories/create_category_model.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/k_text_field.dart';
+import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
+import 'package:zcart_seller/application/app/category/categories/category_attribute_provider.dart';
+import 'package:zcart_seller/domain/app/category/categories/attributes_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
+import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:search_choices/search_choices.dart';
 
 class CreateNewCategoryPage extends HookConsumerWidget {
@@ -31,7 +32,15 @@ class CreateNewCategoryPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Attributes'),
+        toolbarHeight: 60.h,
+        backgroundColor: MyColor.appbarColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(22.r),
+          ),
+        ),
+        title: const Text('Add category'),
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -59,12 +68,6 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                   onChanged: (value) {
                     active.value = value!;
                   }),
-              // Row(
-              //   children: [
-              //     Icon(Icons.check_box),
-              //     SizedBox()
-              //   ],
-              // ),
               SizedBox(height: 10.h),
               SearchChoices<CategoryAttribuitesModel>.multiple(
                 items: List<DropdownMenuItem<CategoryAttribuitesModel>>.from(
@@ -134,6 +137,7 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                       ref
                           .read(categoryProvider(categorySubgroupId).notifier)
                           .createNewCategory(createCategory);
+                      Navigator.of(context).pop();
                     },
                     child: const Text('Add'),
                   ),

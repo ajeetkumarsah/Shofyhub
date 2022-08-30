@@ -4,9 +4,9 @@ import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/order/order_provider.dart';
-import 'package:zcart_vendor/application/app/order/order_state.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/k_text_field.dart';
+import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/application/app/order/order_state.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class AddAdminNote extends HookConsumerWidget {
   final int orderId;

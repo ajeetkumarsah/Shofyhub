@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/Product/product_state.dart';
-import 'package:zcart_vendor/domain/app/Product/create_product/create_product_model.dart';
-import 'package:zcart_vendor/infrastructure/app/Products/product_repo.dart';
+import 'package:zcart_seller/application/app/Product/product_state.dart';
+import 'package:zcart_seller/domain/app/Product/create_product/create_product_model.dart';
+import 'package:zcart_seller/infrastructure/app/Products/product_repo.dart';
 
 import '../../../domain/app/Product/i_product_repo.dart';
 
@@ -35,6 +35,18 @@ class ProductNotifier extends StateNotifier<ProductState> {
   updateProduct(CreateProductModel updateDetails) async {
     state = state.copyWith(loading: true);
     final data = await productRepo.updateProduct(updateDetails: updateDetails);
+    state = data.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+      ),
+    );
+  }
+
+  createProduct(CreateProductModel createProduct) async {
+    state = state.copyWith(loading: true);
+    final data = await productRepo.createProduct(createProduct);
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),
       (r) => state.copyWith(

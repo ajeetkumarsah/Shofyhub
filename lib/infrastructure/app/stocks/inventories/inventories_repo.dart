@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/stocks/inventories/i_inventories_repo.dart';
-import 'package:zcart_vendor/domain/app/stocks/inventories/inventories_model.dart';
-import 'package:zcart_vendor/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
-import 'package:zcart_vendor/domain/app/stocks/inventories/quick_update_model.dart';
+import 'package:zcart_seller/domain/app/stocks/inventories/i_inventories_repo.dart';
+import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
+import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
+import 'package:zcart_seller/domain/app/stocks/inventories/quick_update_model.dart';
 
 class InventoriesRepo extends IInventoriesRepo {
   final cleanApi = CleanApi.instance;

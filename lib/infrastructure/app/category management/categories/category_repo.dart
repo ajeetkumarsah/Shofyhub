@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/category/categories/attributes_model.dart';
-import 'package:zcart_vendor/domain/app/category/categories/category_model.dart';
-import 'package:zcart_vendor/domain/app/category/categories/create_category_model.dart';
-import 'package:zcart_vendor/domain/app/category/categories/i_category_repo.dart';
-import 'package:zcart_vendor/domain/app/category/categories/update_category.dart';
+import 'package:zcart_seller/domain/app/category/categories/attributes_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
+import 'package:zcart_seller/domain/app/category/categories/update_category.dart';
 
 class CategoryRepo extends ICategoryRepo {
   final cleanApi = CleanApi.instance;

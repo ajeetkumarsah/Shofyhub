@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/attribute_values_model.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 
 import 'add_update_attribute_values_dialog.dart';
 import 'delete_attribute_value_dialog.dart';

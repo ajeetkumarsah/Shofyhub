@@ -3,7 +3,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_vendor/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 
 class CategorySubGroupState extends Equatable {
   final bool loading;

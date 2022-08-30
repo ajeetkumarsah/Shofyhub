@@ -2,9 +2,9 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_vendor/domain/app/catalog/atributes/attribute_type_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/atributes/categories_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/atributes/get_atributes_model.dart/get_atributes_model.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/categories_model.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.dart/get_atributes_model.dart';
 
 class GetAtributesState extends Equatable {
   final bool loading;

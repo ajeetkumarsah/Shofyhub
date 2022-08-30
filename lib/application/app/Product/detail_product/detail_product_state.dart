@@ -2,7 +2,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_vendor/domain/app/Product/Detail%20Product/detail_product_model.dart';
+import 'package:zcart_seller/domain/app/Product/Detail%20Product/detail_product_model.dart';
 
 class DetailProductState extends Equatable {
   final bool loading;

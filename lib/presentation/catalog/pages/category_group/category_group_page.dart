@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/category/caegory%20group/category_group_provider.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/category_subgroup/sub_category_group.dart';
+import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_subgroup/sub_category_group.dart';
 import 'widget/add_category_group_dialog.dart';
 import 'widget/category_container.dart';
 

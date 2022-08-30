@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/catalog/atributes/atributes_provider.dart';
+import 'package:zcart_seller/application/app/catalog/atributes/atributes_provider.dart';
 
 class DeleteAttributeDialog extends HookConsumerWidget {
   final int attributeId;

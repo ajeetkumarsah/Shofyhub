@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_vendor/domain/app/Product/Detail%20Product/manufacturer_model.dart';
+import 'package:zcart_seller/domain/app/Product/Detail%20Product/manufacturer_model.dart';
 
 class DetailProductModel extends Equatable {
   final int id;

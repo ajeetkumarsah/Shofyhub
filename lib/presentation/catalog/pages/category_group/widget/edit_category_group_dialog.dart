@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/category/caegory%20group/category_group_provider.dart';
-import 'package:zcart_vendor/application/app/category/caegory%20group/category_group_state.dart';
-import 'package:zcart_vendor/domain/app/category/category%20group/create_category_group_model.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/k_text_field.dart';
+import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
+import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class EditCategoryGroupDialog extends HookConsumerWidget {
   const EditCategoryGroupDialog({Key? key}) : super(key: key);

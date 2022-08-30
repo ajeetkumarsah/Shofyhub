@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/domain/app/catalog/atributes/atributes_model.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/attributes/widgets/delete_attribute_dialog.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/attributes/widgets/edit_attributes_dialog.dart';
+import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
+import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/delete_attribute_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/edit_attributes_dialog.dart';
 
 class AttributeTile extends StatelessWidget {
   final AtributesModel attribute;

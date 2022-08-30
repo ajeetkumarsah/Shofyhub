@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/presentation/all_products/widget/product_container.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/presentation/all_products/widget/product_container.dart';
+import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class AllProducts extends StatefulWidget {
   const AllProducts({Key? key}) : super(key: key);

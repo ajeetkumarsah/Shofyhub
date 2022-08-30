@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/presentation/account_setting/account_setting_page.dart';
-import 'package:zcart_vendor/presentation/delivery_orders_page/order_card.dart';
-import 'package:zcart_vendor/presentation/previously_completed_orders_page/previously_completed_orders_page.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/presentation/account_setting/account_setting_page.dart';
+import 'package:zcart_seller/presentation/delivery_orders_page/order_card.dart';
+import 'package:zcart_seller/presentation/previously_completed_orders_page/previously_completed_orders_page.dart';
+import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class DeliveryOrdersPage extends StatelessWidget {
   const DeliveryOrdersPage({Key? key}) : super(key: key);

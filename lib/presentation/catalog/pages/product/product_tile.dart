@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/domain/app/Product/product_model.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/product/delete_product_dialog.dart';
+import 'package:zcart_seller/domain/app/Product/product_model.dart';
+import 'package:zcart_seller/presentation/catalog/pages/product/delete_product_dialog.dart';
 
 class ProductTile extends StatelessWidget {
   final ProductModel product;

@@ -31,4 +31,11 @@ class ProductRepo extends IProductRepo {
         endPoint:
             'product/create?manufacturer_id=${updateDetails.manufacturerId}&brand=${updateDetails.brand}&name=${updateDetails.name}&model_number=${updateDetails.modeNumber}&mpn=${updateDetails.mpn}&gtin=${updateDetails.gtin}&gtin_type=${updateDetails.gtinType}&description=${updateDetails.description}&min_price=${updateDetails.minPrice}&max_price=${updateDetails.maxPrice}&origin_country=${updateDetails.originCountry}&has_variant=${updateDetails.hasVariant}&downloadable=${updateDetails.downloadable}&slug=${updateDetails.slug}&sale_count=${updateDetails.saleCount}&category_list[]=${updateDetails.categoryList}&active=${updateDetails.active}');
   }
+
+  @override
+  Future<Either<CleanFailure, Unit>> createProduct(
+      CreateProductModel body) async {
+    return await cleanApi.post(
+        fromData: (data) => unit, body: null, endPoint: body.endPoint);
+  }
 }

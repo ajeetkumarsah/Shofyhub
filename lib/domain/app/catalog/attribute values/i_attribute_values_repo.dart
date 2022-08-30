@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/attribute_value_details_model/attribute_value_details_model.dart';
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/attribute_values_model.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_value_details_model/attribute_value_details_model.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 
 abstract class IAttributeValuesRepo {
   Future<Either<CleanFailure, List<AttributeValuesModel>>> getAttributeValues(

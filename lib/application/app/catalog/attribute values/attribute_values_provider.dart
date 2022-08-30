@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/catalog/attribute%20values/attribute_values_state.dart';
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/i_attribute_values_repo.dart';
-import 'package:zcart_vendor/infrastructure/app/catalog/attribute%20values/attribute_values_repo.dart';
+import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_state.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/i_attribute_values_repo.dart';
+import 'package:zcart_seller/infrastructure/app/catalog/attribute%20values/attribute_values_repo.dart';
 
 final attributeValuesProvider = StateNotifierProvider.family
     .autoDispose<AttributeValuesNotifier, AttributeValuesState, int>((ref, id) {

@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/delivary%20boy/delivary_boy_model.dart';
-import 'package:zcart_vendor/domain/app/delivary%20boy/i_delivary_boy_repo.dart';
+import 'package:zcart_seller/domain/app/delivary%20boy/delivary_boy_model.dart';
+import 'package:zcart_seller/domain/app/delivary%20boy/i_delivary_boy_repo.dart';
 
 class DelivaryBoyRepo extends IDelivaryBoyRepo {
   final cleanApi = CleanApi.instance;

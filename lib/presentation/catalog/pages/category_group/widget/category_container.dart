@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:zcart_vendor/domain/app/category/category%20group/category_group_model.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/category_group/widget/delete_category_group_dialog.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/category_group/widget/edit_category_group_dialog.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/delete_category_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/edit_category_group_dialog.dart';
 
 class CateContainer extends StatelessWidget {
   final CategoryGroupModel categoryGroup;

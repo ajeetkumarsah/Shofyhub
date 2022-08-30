@@ -1,6 +1,6 @@
 {
-    "name": "zcart_vendor",
-    "short_name": "zcart_vendor",
+    "name": "multivendor_store",
+    "short_name": "multivendor_store",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

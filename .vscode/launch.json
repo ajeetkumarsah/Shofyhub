@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "zcart-vendor-app",
+            "name": "MultivendorStore",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "zcart-vendor-app (profile mode)",
+            "name": "MultivendorStore (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "zcart-vendor-app (release mode)",
+            "name": "MultivendorStore (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

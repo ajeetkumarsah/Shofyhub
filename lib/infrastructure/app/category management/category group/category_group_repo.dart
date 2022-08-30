@@ -1,7 +1,7 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/category/category%20group/category_group_model.dart';
-import 'package:zcart_vendor/domain/app/category/category%20group/create_category_group_model.dart';
-import 'package:zcart_vendor/domain/app/category/category%20group/i_category_group_repo.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/i_category_group_repo.dart';
 
 class CategoryGroupRepo extends ICategoryGroupRepo {
   final cleanApi = CleanApi.instance;
@@ -57,7 +57,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
     return cleanApi.delete(
         fromData: (json) => unit,
         body: null,
-        endPoint: 'attribute/$categoryGroupId/trash');
+        endPoint: 'category-group/$categoryGroupId/trash');
   }
 
   @override
@@ -66,7 +66,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
     return cleanApi.put(
         fromData: (json) => unit,
         body: null,
-        endPoint: 'attribute/$categoryGroupId/restore');
+        endPoint: 'category-group/$categoryGroupId/restore');
   }
 
   @override
@@ -75,6 +75,6 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
     return cleanApi.delete(
         fromData: (json) => unit,
         body: null,
-        endPoint: 'attribute/$categoryGroupId/delete');
+        endPoint: 'category-group/$categoryGroupId/delete');
   }
 }

@@ -3,7 +3,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_vendor/domain/app/catalog/attribute%20values/attribute_values_model.dart';
+import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 
 class AttributeValuesState extends Equatable {
   final bool loading;

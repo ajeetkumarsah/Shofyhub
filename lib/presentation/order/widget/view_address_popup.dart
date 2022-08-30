@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/k_button.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
 
 class ViewAddressPopup extends StatelessWidget {
   final String shippingAddress;

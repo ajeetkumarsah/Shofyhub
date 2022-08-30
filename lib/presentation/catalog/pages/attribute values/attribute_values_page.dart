@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/catalog/attribute%20values/attribute_values_provider.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/attribute%20values/widgets/add_update_attribute_values_dialog.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/attribute%20values/widgets/attribute_values_tile.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_provider.dart';
+import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/add_update_attribute_values_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/attribute_values_tile.dart';
+import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class AttributeValuesPage extends HookConsumerWidget {
   final String groupName;

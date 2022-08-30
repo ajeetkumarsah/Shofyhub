@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/attributes/attributes_page.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/category_group/category_group_page.dart';
-import 'package:zcart_vendor/presentation/catalog/pages/product/product_list_page.dart';
-import 'package:zcart_vendor/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/presentation/catalog/pages/attributes/attributes_page.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_group/category_group_page.dart';
+import 'package:zcart_seller/presentation/catalog/pages/product/product_list_page.dart';
+import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class CatalogueScreen extends StatelessWidget {
   const CatalogueScreen({Key? key}) : super(key: key);

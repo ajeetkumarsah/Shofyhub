@@ -1,5 +1,5 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_vendor/domain/app/Product/Detail%20Product/detail_product_model.dart';
+import 'package:zcart_seller/domain/app/Product/Detail%20Product/detail_product_model.dart';
 
 import '../../../domain/app/Product/Detail Product/i_detail_product_repo.dart';
 

@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_vendor/application/app/Product/detail_product/detail_product_state.dart';
-import 'package:zcart_vendor/domain/app/Product/Detail%20Product/detail_product_model.dart';
-import 'package:zcart_vendor/domain/app/Product/Detail%20Product/i_detail_product_repo.dart';
+import 'package:zcart_seller/application/app/Product/detail_product/detail_product_state.dart';
+import 'package:zcart_seller/domain/app/Product/Detail%20Product/detail_product_model.dart';
+import 'package:zcart_seller/domain/app/Product/Detail%20Product/i_detail_product_repo.dart';
 
 class DetailProductNotifier extends StateNotifier<DetailProductState> {
   final IDetailProductRepo detailProduct;
