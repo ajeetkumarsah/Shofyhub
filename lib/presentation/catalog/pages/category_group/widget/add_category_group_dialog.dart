@@ -19,7 +19,11 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
     final descController = useTextEditingController();
     final metaTitleController = useTextEditingController();
     final metaDescController = useTextEditingController();
+    final iconController = useTextEditingController();
+    final orderController = useTextEditingController();
     final buttonPressed = useState(false);
+    final active = useState(true);
+
     ref.listen<CategoryGroupState>(categoryGroupProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
@@ -38,18 +42,31 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
     });
     return AlertDialog(
       title: const Text('Add Category Group'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          KTextField(controller: nameController, lebelText: 'Name'),
-          SizedBox(height: 10.h),
-          KTextField(controller: descController, lebelText: 'Description'),
-          SizedBox(height: 10.h),
-          KTextField(controller: metaTitleController, lebelText: 'Meta title'),
-          SizedBox(height: 10.h),
-          KTextField(
-              controller: metaDescController, lebelText: 'Meta description'),
-        ],
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            KTextField(controller: nameController, lebelText: 'Name'),
+            SizedBox(height: 10.h),
+            KTextField(controller: descController, lebelText: 'Description'),
+            SizedBox(height: 10.h),
+            KTextField(
+                controller: metaTitleController, lebelText: 'Meta title'),
+            SizedBox(height: 10.h),
+            KTextField(
+                controller: metaDescController, lebelText: 'Meta description'),
+            SizedBox(height: 10.h),
+            KTextField(controller: iconController, lebelText: 'Icon'),
+            SizedBox(height: 10.h),
+            KTextField(controller: orderController, lebelText: 'Order'),
+            SizedBox(height: 10.h),
+            SwitchListTile(
+              value: active.value,
+              onChanged: (value) => active.value = value,
+              title: const Text('Active status'),
+            ),
+          ],
+        ),
       ),
       actions: [
         TextButton(
@@ -68,13 +85,17 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                 metaTitleController.text.isNotEmpty &&
                 metaDescController.text.isNotEmpty) {
               final categoryGroupModel = CreateCategoryGroupModel(
-                  name: nameController.text,
-                  slug: nameController.text
-                      .toLowerCase()
-                      .replaceAll(RegExp(r' '), '-'),
-                  desc: descController.text,
-                  metaTitle: metaTitleController.text,
-                  meatDesc: metaDescController.text);
+                name: nameController.text,
+                slug: nameController.text
+                    .toLowerCase()
+                    .replaceAll(RegExp(r' '), '-'),
+                desc: descController.text,
+                metaTitle: metaTitleController.text,
+                meatDesc: metaDescController.text,
+                icon: iconController.text,
+                order: int.parse(orderController.text),
+                active: active.value,
+              );
               buttonPressed.value = true;
               ref
                   .read(categoryGroupProvider.notifier)

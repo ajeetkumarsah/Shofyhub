@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 
 class InventoryItemTile extends StatelessWidget {
   final String title;
@@ -121,7 +121,7 @@ class InventoryItemTile extends StatelessWidget {
                   child: Container(
                     height: 30.h,
                     decoration: BoxDecoration(
-                      color: MyColor.appbarColor,
+                      color: Constants.appbarColor,
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: Center(

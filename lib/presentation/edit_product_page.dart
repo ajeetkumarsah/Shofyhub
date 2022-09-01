@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 
 class EditProduct extends StatefulWidget {
   const EditProduct({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class _EditProductState extends State<EditProduct> {
         leading:
             IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),
@@ -142,7 +142,7 @@ class _EditProductState extends State<EditProduct> {
                     width: 30.w,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.r),
-                        color: MyColor.appbarColor),
+                        color: Constants.appbarColor),
                     child: InkWell(
                       onTap: () {},
                       child: const Icon(
@@ -288,7 +288,7 @@ class _EditProductState extends State<EditProduct> {
                     decoration: InputDecoration(
                         suffixIcon: const Icon(
                           Icons.redo,
-                          color: MyColor.appbarColor,
+                          color: Constants.appbarColor,
                         ),
                         border: InputBorder.none,
                         hintText: 'Input Zipcode',
@@ -470,7 +470,7 @@ class _EditProductState extends State<EditProduct> {
                     toggleSize: 15.0,
                     value: isSwitch,
                     borderRadius: 30.0,
-                    activeColor: MyColor.appbarColor,
+                    activeColor: Constants.appbarColor,
                     padding: 8.0,
                     onToggle: (val) {
                       setState(() {
@@ -570,7 +570,7 @@ class _EditProductState extends State<EditProduct> {
                     toggleSize: 15.0,
                     value: isActiveproduct,
                     borderRadius: 30.0,
-                    activeColor: MyColor.appbarColor,
+                    activeColor: Constants.appbarColor,
                     padding: 8.0,
                     onToggle: (val) {
                       setState(() {
@@ -584,7 +584,7 @@ class _EditProductState extends State<EditProduct> {
               ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    primary: MyColor.appbarColor,
+                    primary: Constants.appbarColor,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),

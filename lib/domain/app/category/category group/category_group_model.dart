@@ -7,6 +7,7 @@ class CategoryGroupModel extends Equatable {
   final String name;
   final String slug;
   final String description;
+
   final String icon;
   final String iconImage;
   final String coverImage;

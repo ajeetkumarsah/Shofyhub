@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_subgroup/sub_category_group.dart';
 import 'widget/add_category_group_dialog.dart';
-import 'widget/category_container.dart';
+import 'widget/category_group_tile.dart';
 
 class CategoryGroupPage extends HookConsumerWidget {
   const CategoryGroupPage({
@@ -46,20 +45,8 @@ class CategoryGroupPage extends HookConsumerWidget {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               itemCount: categoryGroupList.length,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CategorySubgroupPage(
-                          groupName: categoryGroupList[index].name,
-                          id: categoryGroupList[index].id)));
-                },
-                child: CateContainer(
-                  onPressed: () {},
-                  image: categoryGroupList[index].coverImage,
-                  title: categoryGroupList[index].name,
-                  desc: categoryGroupList[index].description,
-                  categoryGroup: categoryGroupList[index],
-                ),
+              itemBuilder: (context, index) => CategoryGroupTile(
+                categoryGroup: categoryGroupList[index],
               ),
               separatorBuilder: (context, index) => SizedBox(
                 height: 10.h,

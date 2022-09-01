@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/add_update_attribute_values_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/attribute_values_tile.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class AttributeValuesPage extends HookConsumerWidget {
   final String groupName;
@@ -29,7 +29,7 @@ class AttributeValuesPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

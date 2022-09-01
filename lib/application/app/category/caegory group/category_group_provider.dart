@@ -39,6 +39,20 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
     getAllCategoryGroup();
   }
 
+  detailsCategoryGroup({required int categoryGroupId}) async {
+    state = state.copyWith(loading: true);
+    final data = await categoryGroupRepo.detailsCategoryGroup(
+        categoryGroupId: categoryGroupId);
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+              loading: false,
+              failure: CleanFailure.none(),
+              categoryDetails: r,
+            ));
+    Logger.i(state.categoryDetails);
+  }
+
   updateCategoryGroup(
       {required int categoryGroupId,
       required String name,

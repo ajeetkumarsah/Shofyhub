@@ -3,10 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/presentation/auth/sign_in.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
 import 'firebase_options.dart';
-import 'presentation/widget_for_all/color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       builder: (context, child) {
         return MaterialApp(
-          theme: ThemeData(primaryColor: MyColor.appbarColor),
+          theme: ThemeData(primaryColor: Constants.appbarColor),
           debugShowCheckedModeBanner: false,
           title: 'Multivendor App',
           home: const SignInPage(),

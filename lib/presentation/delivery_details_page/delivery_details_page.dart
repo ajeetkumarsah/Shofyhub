@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 
 import 'widget/my_radio.dart';
 
@@ -14,7 +13,7 @@ class DeliveryDetailsPage extends StatelessWidget {
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

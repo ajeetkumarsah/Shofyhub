@@ -3,19 +3,19 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class DelivaryBoyModel extends Equatable {
+class DelivaryBoy extends Equatable {
   final String id;
   final String name;
-  const DelivaryBoyModel({
+  const DelivaryBoy({
     required this.id,
     required this.name,
   });
 
-  DelivaryBoyModel copyWith({
+  DelivaryBoy copyWith({
     String? id,
     String? name,
   }) {
-    return DelivaryBoyModel(
+    return DelivaryBoy(
       id: id ?? this.id,
       name: name ?? this.name,
     );
@@ -28,8 +28,8 @@ class DelivaryBoyModel extends Equatable {
     };
   }
 
-  factory DelivaryBoyModel.fromMap(Map<String, dynamic> map) {
-    return DelivaryBoyModel(
+  factory DelivaryBoy.fromMap(Map<String, dynamic> map) {
+    return DelivaryBoy(
       id: map['id'] as String,
       name: map['name'] as String,
     );
@@ -37,8 +37,8 @@ class DelivaryBoyModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory DelivaryBoyModel.fromJson(String source) =>
-      DelivaryBoyModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory DelivaryBoy.fromJson(String source) =>
+      DelivaryBoy.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool get stringify => true;
@@ -46,5 +46,5 @@ class DelivaryBoyModel extends Equatable {
   @override
   List<Object> get props => [id, name];
 
-  factory DelivaryBoyModel.init() => const DelivaryBoyModel(id: '', name: '');
+  factory DelivaryBoy.init() => const DelivaryBoy(id: '', name: '');
 }

@@ -2,13 +2,12 @@
 
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/category_group_show_model.dart';
 
 class CategoryGroupFamilyState extends Equatable {
   final bool loading;
   final CleanFailure failure;
-  final CategoryGroupModel categoryGroupDetails;
+  final CategoryGroupDetailsModel categoryGroupDetails;
   CategoryGroupFamilyState({
     required this.loading,
     required this.failure,
@@ -18,7 +17,7 @@ class CategoryGroupFamilyState extends Equatable {
   CategoryGroupFamilyState copyWith({
     bool? loading,
     CleanFailure? failure,
-    CategoryGroupModel? categoryGroupDetails,
+    CategoryGroupDetailsModel? categoryGroupDetails,
   }) {
     return CategoryGroupFamilyState(
       loading: loading ?? this.loading,
@@ -37,5 +36,5 @@ class CategoryGroupFamilyState extends Equatable {
   factory CategoryGroupFamilyState.init() => CategoryGroupFamilyState(
       loading: false,
       failure: CleanFailure.none(),
-      categoryGroupDetails: CategoryGroupModel.init());
+      categoryGroupDetails: CategoryGroupDetailsModel.init());
 }

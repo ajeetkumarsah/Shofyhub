@@ -1,6 +1,9 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/domain/app/Product/create_product/manufacturer_id.dart';
 
 import '../../../domain/app/Product/create_product/create_product_model.dart';
+import '../../../domain/app/Product/create_product/gtin_types_model.dart';
+import '../../../domain/app/Product/create_product/tag_list.dart';
 import '../../../domain/app/Product/i_product_repo.dart';
 import '../../../domain/app/Product/product_model.dart';
 
@@ -37,5 +40,35 @@ class ProductRepo extends IProductRepo {
       CreateProductModel body) async {
     return await cleanApi.post(
         fromData: (data) => unit, body: null, endPoint: body.endPoint);
+  }
+
+  @override
+  Future<Either<CleanFailure, List<GtinTypes>>> gtinType() async {
+    return await cleanApi.get(
+        fromData: (json) => List<GtinTypes>.from(json
+            .map((key, value) =>
+                MapEntry(key, GtinTypes(name: key, value: value)))
+            .values),
+        endPoint: 'data/gtin_type');
+  }
+
+  @override
+  Future<Either<CleanFailure, List<TagListModel>>> tagList() async {
+    return await cleanApi.get(
+        fromData: (json) => List<TagListModel>.from(json
+            .map((key, value) =>
+                MapEntry(key, TagListModel(id: key, value: value)))
+            .values),
+        endPoint: 'data/tag_lists');
+  }
+
+  @override
+  Future<Either<CleanFailure, List<ManufacturerId>>> manufacturer() async {
+   return await cleanApi.get(
+        fromData: (json) => List<ManufacturerId>.from(json
+            .map((key, value) =>
+                MapEntry(key, ManufacturerId(id: key, value: value)))
+            .values),
+        endPoint: 'data/manufacturers');
   }
 }

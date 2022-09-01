@@ -11,7 +11,7 @@ import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.d
 import 'package:zcart_seller/application/app/catalog/atributes/get_atributes_provider.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/categories_model.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:search_choices/search_choices.dart';
 
@@ -53,7 +53,7 @@ class AddAttributesDialog extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

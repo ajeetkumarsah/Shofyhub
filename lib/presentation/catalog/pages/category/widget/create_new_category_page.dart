@@ -8,7 +8,7 @@ import 'package:zcart_seller/application/app/category/categories/categories_prov
 import 'package:zcart_seller/application/app/category/categories/category_attribute_provider.dart';
 import 'package:zcart_seller/domain/app/category/categories/attributes_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:search_choices/search_choices.dart';
 
@@ -33,7 +33,7 @@ class CreateNewCategoryPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

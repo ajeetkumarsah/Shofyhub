@@ -1,5 +1,6 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/category_group_show_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/i_category_group_repo.dart';
 
@@ -21,14 +22,14 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
         fromData: (json) => unit,
         body: null,
         endPoint:
-            'category/group/create?name=${categoryGroupModel.name}&slug=${categoryGroupModel.slug}&description=${categoryGroupModel.desc}&meta_title=${categoryGroupModel.metaTitle}&meta_description=${categoryGroupModel.meatDesc}');
+            'category-group/create?name=${categoryGroupModel.name}&slug=${categoryGroupModel.slug}&description=${categoryGroupModel.desc}&meta_title=${categoryGroupModel.metaTitle}&meta_description=${categoryGroupModel.meatDesc}&order=${categoryGroupModel.order}&icon=${categoryGroupModel.icon}&active=${categoryGroupModel.active}');
   }
 
   @override
-  Future<Either<CleanFailure, CategoryGroupModel>> getCategoryGroupById(
+  Future<Either<CleanFailure, CategoryGroupDetailsModel>> getCategoryGroupById(
       {required int id}) async {
     return cleanApi.get(
-        fromData: (json) => CategoryGroupModel.fromMap(json['data']),
+        fromData: (json) => CategoryGroupDetailsModel.fromMap(json['data']),
         endPoint: 'category/$id');
   }
 
@@ -76,5 +77,13 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
         fromData: (json) => unit,
         body: null,
         endPoint: 'category-group/$categoryGroupId/delete');
+  }
+
+  @override
+  Future<Either<CleanFailure, CategoryGroupDetailsModel>> detailsCategoryGroup(
+      {required int categoryGroupId}) {
+    return cleanApi.get(
+        fromData: (json) => CategoryGroupDetailsModel.fromMap(json),
+        endPoint: 'category-group/$categoryGroupId');
   }
 }

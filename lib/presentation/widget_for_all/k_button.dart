@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 
 class KButton extends StatelessWidget {
   final Function()? onPressed;
@@ -10,7 +10,7 @@ class KButton extends StatelessWidget {
       {Key? key,
       required this.onPressed,
       required this.child,
-      this.color = MyColor.appbarColor})
+      this.color = Constants.appbarColor})
       : super(key: key);
 
   @override

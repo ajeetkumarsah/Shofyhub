@@ -1,5 +1,6 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20group/category_group_show_model.dart';
 
 import 'create_category_group_model.dart';
 
@@ -9,8 +10,11 @@ abstract class ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> createCategoryGroup(
       {required CreateCategoryGroupModel categoryGroupModel});
 
-  Future<Either<CleanFailure, CategoryGroupModel>> getCategoryGroupById(
+  Future<Either<CleanFailure, CategoryGroupDetailsModel>> getCategoryGroupById(
       {required int id});
+
+  Future<Either<CleanFailure, CategoryGroupDetailsModel>> detailsCategoryGroup(
+      {required int categoryGroupId});
 
   Future<Either<CleanFailure, Unit>> updateCategoryGroup({
     required int categoryGroupId,

@@ -3,10 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
-import 'package:zcart_seller/application/app/delivary%20boys/delivary_boy_provider.dart';
+import 'package:zcart_seller/application/app/delivary%20boys/delivary_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/order/widget/add_admin_note.dart';
 import 'package:zcart_seller/presentation/order/widget/archive_order_confirmation.dart';
 import 'package:zcart_seller/presentation/order/widget/cancle_order_confirmation_dialog.dart';
@@ -15,7 +16,6 @@ import 'package:zcart_seller/presentation/order/widget/view_address_popup.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
 
 import 'proceed_order_page.dart';
-import '../widget_for_all/color.dart';
 import 'fullfill_order_dialog.dart';
 
 class ManageOrderPage extends HookConsumerWidget {
@@ -26,7 +26,7 @@ class ManageOrderPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(delivaryBoyProvider.notifier).getDelivaryBoys();
+        ref.read(delivaryProvider.notifier).getDelivaryBoys();
         ref.read(orderDetailsProvider(id).notifier).getOrderDetails();
         ref.read(carriersProvider.notifier).getCarrier();
         ref.read(orderStatusProvider.notifier).getOrderStatus();
@@ -40,7 +40,7 @@ class ManageOrderPage extends HookConsumerWidget {
       extendBody: true,
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

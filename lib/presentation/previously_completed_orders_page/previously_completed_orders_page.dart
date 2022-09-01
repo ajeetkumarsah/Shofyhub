@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/account_setting/account_setting_page.dart';
 import 'package:zcart_seller/presentation/delivery_details_page/delivery_details_page.dart';
 import 'package:zcart_seller/presentation/delivery_orders_page/delivery_orders_page.dart';
 import 'package:zcart_seller/presentation/previously_completed_orders_page/radio_dialogue.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class PreviouslyCompletedOrdersPage extends StatelessWidget {
   const PreviouslyCompletedOrdersPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class PreviouslyCompletedOrdersPage extends StatelessWidget {
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

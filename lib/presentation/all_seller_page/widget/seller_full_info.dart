@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_group/category_group_page.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class SellerFullInfo extends StatelessWidget {
   const SellerFullInfo({Key? key}) : super(key: key);
@@ -100,7 +100,7 @@ class SellerFullInfo extends StatelessWidget {
                   child: Container(
                     height: 35.h,
                     decoration: BoxDecoration(
-                      color: MyColor.appbarColor,
+                      color: Constants.appbarColor,
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Center(

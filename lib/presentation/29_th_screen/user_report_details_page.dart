@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 
 class UserReportDetailPage extends HookConsumerWidget {
   const UserReportDetailPage({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class UserReportDetailPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),
@@ -264,7 +264,7 @@ class UserReportDetailPage extends HookConsumerWidget {
                         child: Container(
                           height: 30.h,
                           decoration: BoxDecoration(
-                            color: MyColor.appbarColor,
+                            color: Constants.appbarColor,
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Center(

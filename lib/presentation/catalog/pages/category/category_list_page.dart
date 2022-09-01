@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
 import 'package:zcart_seller/application/app/category/categories/category_attribute_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_list_tile.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/widget/create_new_category_page.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class CategoryListPage extends HookConsumerWidget {
   final String subGroupName;
@@ -29,7 +29,7 @@ class CategoryListPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

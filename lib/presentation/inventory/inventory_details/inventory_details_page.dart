@@ -3,13 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventory_details_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/description.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/left_side_text.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/listing.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/offer.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/product.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/right_side_text.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class InventoryDetailsPage extends HookConsumerWidget {
   final int id;
@@ -50,7 +50,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),

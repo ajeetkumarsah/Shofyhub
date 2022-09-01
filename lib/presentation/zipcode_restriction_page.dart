@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/my_account_page.dart';
 import 'package:zcart_seller/presentation/notification_page.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class ZipCodeRestriction extends HookConsumerWidget {
@@ -18,7 +18,7 @@ class ZipCodeRestriction extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),
@@ -77,7 +77,7 @@ class ZipCodeRestriction extends HookConsumerWidget {
                   toggleSize: 15.0,
                   value: isSwitch.value,
                   borderRadius: 20.0,
-                  activeColor: MyColor.appbarColor,
+                  activeColor: Constants.appbarColor,
                   padding: 8.0,
                   onToggle: (val) {
                     isSwitch.value = val;
@@ -103,7 +103,7 @@ class ZipCodeRestriction extends HookConsumerWidget {
                 onTap: () {},
                 child: const Icon(
                   Icons.redo,
-                  // color: MyColor.appbarColor,
+                  // color:  Constants.appbarColor,
                 ),
               ),
             ),
@@ -186,7 +186,7 @@ class ZipCodeRestriction extends HookConsumerWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: MyColor.appbarColor,
+                primary: Constants.appbarColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.r),
                 ),

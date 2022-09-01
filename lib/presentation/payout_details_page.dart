@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/delivery_orders_page/delivery_orders_page.dart';
-import 'package:zcart_seller/presentation/widget_for_all/color.dart';
 
 class PayoutDetails extends StatefulWidget {
   const PayoutDetails({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class _PayoutDetailsState extends State<PayoutDetails> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),
@@ -383,7 +383,7 @@ class _PayoutDetailsState extends State<PayoutDetails> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: MyColor.appbarColor,
+                  primary: Constants.appbarColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),

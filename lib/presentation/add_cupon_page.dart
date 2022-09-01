@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 
-import 'widget_for_all/color.dart';
 import 'widget_for_all/my_text_field.dart';
 
 class AddCupon extends StatefulWidget {
@@ -20,7 +20,7 @@ class _AddCuponState extends State<AddCupon> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
-        backgroundColor: MyColor.appbarColor,
+        backgroundColor: Constants.appbarColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(22.r),
@@ -121,7 +121,7 @@ class _AddCuponState extends State<AddCupon> {
                           child: Text(
                             'Change Date',
                             style: TextStyle(
-                              color: MyColor.appbarColor,
+                              color: Constants.appbarColor,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -142,7 +142,7 @@ class _AddCuponState extends State<AddCupon> {
                           child: Text(
                             'Change Date',
                             style: TextStyle(
-                              color: MyColor.appbarColor,
+                              color: Constants.appbarColor,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -175,7 +175,7 @@ class _AddCuponState extends State<AddCupon> {
                     toggleSize: 15.0,
                     value: isSwitch,
                     borderRadius: 30.r,
-                    activeColor: MyColor.appbarColor,
+                    activeColor: Constants.appbarColor,
                     padding: 8.0,
                     onToggle: (val) {
                       setState(() {
@@ -196,7 +196,7 @@ class _AddCuponState extends State<AddCupon> {
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  primary: MyColor.appbarColor,
+                  primary: Constants.appbarColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.r),
                   ),

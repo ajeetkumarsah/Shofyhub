@@ -54,5 +54,45 @@ class ProductNotifier extends StateNotifier<ProductState> {
         failure: CleanFailure.none(),
       ),
     );
+    getProducts();
+  }
+
+  gtinType() async {
+    state = state.copyWith(loading: true);
+    final data = await productRepo.gtinType();
+    state = data.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+        gtinTypes: r,
+      ),
+    );
+  }
+
+  tagList() async {
+    state = state.copyWith(loading: true);
+    final data = await productRepo.tagList();
+    state = data.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+        tagList: r,
+      ),
+    );
+  }
+
+  manufacturer() async {
+    state = state.copyWith(loading: true);
+    final data = await productRepo.manufacturer();
+    state = data.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+        manufacturerId: r,
+      ),
+    );
   }
 }
