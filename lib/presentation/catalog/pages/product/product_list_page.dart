@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/Product/product_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/create_product_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/product_tile.dart';
 
@@ -19,6 +20,7 @@ class ProductListPage extends HookConsumerWidget {
         ref.read(getAttributesProvider.notifier).getCategories();
         ref.read(productProvider.notifier).gtinType();
         ref.read(productProvider.notifier).tagList();
+        ref.read(productProvider.notifier).manufacturer();
       });
 
       return null;
@@ -26,36 +28,17 @@ class ProductListPage extends HookConsumerWidget {
     final products =
         ref.watch(productProvider.select((value) => value.productList));
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Constants.buttonColor,
+        onPressed: () {
+          showDialog(
+              context: context, builder: (context) => const AddProductPage());
+        },
+        label: const Text('Add new'),
+        icon: const Icon(Icons.add),
+      ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: Colors.green[100],
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AddProductPage()));
-                },
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.green[700],
-                ),
-                label: Text(
-                  'create product',
-                  style: TextStyle(
-                    color: Colors.green[700],
-                  ),
-                ),
-              ),
-            ],
-          ),
           Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -111,10 +111,12 @@ class FullfillorderDialog extends HookConsumerWidget {
                   SizedBox(
                     width: 10.w,
                   ),
-                  Text(
-                    "send a notifocation",
-                    style:
-                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                  Expanded(
+                    child: Text(
+                      "Send a notification email to customer ",
+                      style: TextStyle(
+                          fontSize: 14.sp, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
@@ -135,7 +137,7 @@ class FullfillorderDialog extends HookConsumerWidget {
                       Navigator.pop(context);
                     },
                     child: const Text(
-                      "Cancle",
+                      "Cancel",
                       style: TextStyle(color: Colors.red),
                     ),
                   ),

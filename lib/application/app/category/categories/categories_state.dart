@@ -1,47 +1,41 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-
-import 'package:zcart_seller/domain/app/category/categories/attributes_model.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 
-class CategorisState extends Equatable {
+class CategoryState extends Equatable {
   final bool loading;
   final CleanFailure failure;
-  final List<CategoryModel> allCategoris;
-  final List<CategoryAttribuitesModel> attribuitList;
-  const CategorisState({
+  final IList<CategoryModel> allCategoris;
+  const CategoryState({
     required this.loading,
     required this.failure,
     required this.allCategoris,
-    required this.attribuitList,
   });
 
-  CategorisState copyWith({
+  CategoryState copyWith({
     bool? loading,
     CleanFailure? failure,
-    List<CategoryModel>? allCategoris,
-    List<CategoryAttribuitesModel>? attribuitList,
+    IList<CategoryModel>? allCategoris,
   }) {
-    return CategorisState(
+    return CategoryState(
       loading: loading ?? this.loading,
       failure: failure ?? this.failure,
       allCategoris: allCategoris ?? this.allCategoris,
-      attribuitList: attribuitList ?? this.attribuitList,
     );
   }
 
   @override
   String toString() {
-    return 'CategorisState(loading: $loading, failure: $failure, allCategoris: $allCategoris, attribuitList: $attribuitList)';
+    return 'CategorisState(loading: $loading, failure: $failure, allCategoris: $allCategoris, )';
   }
 
   @override
-  List<Object> get props => [loading, failure, allCategoris, attribuitList];
+  List<Object> get props => [loading, failure, allCategoris];
 
-  factory CategorisState.init() => CategorisState(
-        attribuitList: const [],
+  factory CategoryState.init() => CategoryState(
         loading: false,
         failure: CleanFailure.none(),
-        allCategoris: const [],
+        allCategoris: const IListConst([]),
       );
 }

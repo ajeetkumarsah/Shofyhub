@@ -8,12 +8,10 @@ class ShopUserState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<GetShopUsersModel> getShopUser;
-  final CreateShopUserModel shopUser;
   const ShopUserState({
     required this.loading,
     required this.failure,
     required this.getShopUser,
-    required this.shopUser,
   });
 
   ShopUserState copyWith({
@@ -26,21 +24,23 @@ class ShopUserState extends Equatable {
       loading: loading ?? this.loading,
       failure: failure ?? this.failure,
       getShopUser: getShopUser ?? this.getShopUser,
-      shopUser: shopUser ?? this.shopUser,
     );
   }
 
   @override
   String toString() {
-    return 'ShopUserState(loading: $loading, failure: $failure, getShopUser: $getShopUser, shopUser: $shopUser)';
+    return 'ShopUserState(loading: $loading, failure: $failure, getShopUser: $getShopUser)';
   }
 
   @override
-  List<Object> get props => [loading, failure, getShopUser, shopUser];
+  List<Object> get props => [
+        loading,
+        failure,
+        getShopUser,
+      ];
   factory ShopUserState.init() => ShopUserState(
         loading: false,
         failure: CleanFailure.none(),
-        shopUser: CreateShopUserModel.init(),
         getShopUser: const [],
       );
 }

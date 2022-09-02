@@ -33,7 +33,7 @@ class ShopHome extends StatelessWidget {
                   text: 'Shop User',
                 ),
                 Tab(
-                  text: 'Delivary Boy',
+                  text: 'Delivery Boy',
                 ),
                 // Tab(
                 //   text: 'Products',

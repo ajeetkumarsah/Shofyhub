@@ -17,12 +17,12 @@ class ShopUserRepo extends IShopUserRepo {
 
   @override
   Future<Either<CleanFailure, Unit>> createShopUser(
-      {required CreateShopUserModel createShopUser}) async {
+      {required CreateShopUserModel user}) async {
     return cleanApi.post(
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'user/create?shop_id=${createShopUser.shopId}&role_id=${createShopUser.roleId}&name=${createShopUser.name}&nice_name=${createShopUser.niceName}&email=${createShopUser.email}&password=${createShopUser.password}&dob=${createShopUser.dob}&sex=${createShopUser.sex}&description=${createShopUser.description}',
+          'user/create?shop_id=${user.shopId}&role_id=${user.roleId}&name=${user.name}&nice_name=${user.niceName}&email=${user.email}&password=${user.password}&password_confirmation=${user.confirmPassword}&dob=${user.dob}&sex=${user.sex}&description=${user.description}&active=${user.active}',
     );
   }
 

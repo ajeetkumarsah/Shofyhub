@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
+import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/New%20order/new_order.dart';
-import 'package:zcart_seller/presentation/order/widget/arcived_order.dart';
+import 'package:zcart_seller/presentation/order/order_list_page.dart';
 
 import '../../application/app/delivary boys/delivary_provider.dart';
 
@@ -54,16 +54,17 @@ class OrderMainPage extends HookConsumerWidget {
                   text: 'Unfulfilled',
                 ),
                 Tab(
-                  text: 'Archived',
+                  text: 'Unpaid',
                 ),
               ]),
         ),
         body: const TabBarView(children: [
-          NewOrderPage(allOrder: true),
-          NewOrderPage(
-            allOrder: false,
+          OrderListPage(filter: null),
+          OrderListPage(
+            filter: OrderFilter.unfullfill,
           ),
-          ArcivedOrder(),
+          OrderListPage(filter: OrderFilter.unpaid),
+          // ArcivedOrder(),
         ]),
       ),
     );

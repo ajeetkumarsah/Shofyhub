@@ -58,13 +58,14 @@ class ProductState extends Equatable {
       manufacturerId,
     ];
   }
+
   factory ProductState.init() => ProductState(
         loading: false,
         failure: CleanFailure.none(),
         productList: const [],
         gtinTypes: const [],
         tagList: const [],
-       manufacturerId: const [],
+        manufacturerId: const [],
       );
 
   @override

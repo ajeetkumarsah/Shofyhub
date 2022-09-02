@@ -9,12 +9,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_provider.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/get_atributes_provider.dart';
+import 'package:zcart_seller/application/app/form/category_list_provider.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/categories_model.dart';
+import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
-import 'package:search_choices/search_choices.dart';
+import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 
 class EditAttributesDialog extends HookConsumerWidget {
   final AtributesModel attribute;
@@ -25,15 +26,16 @@ class EditAttributesDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final ValueNotifier<IList<int>> selectedCategories =
-        useState(const IListConst([]));
     final nameController = useTextEditingController();
     final orderController = useTextEditingController();
 
     final List<AttributeTypeModel> attributeTypes =
         ref.watch(getAttributesProvider.select((value) => value.attributeType));
-    final categoriesList =
-        ref.watch(getAttributesProvider.select((value) => value.categories));
+
+    final allCategories =
+        ref.watch(categoryListProvider.select((value) => value.dataList));
+    final ValueNotifier<IList<KeyValueData>> selectedCategories =
+        useState(const IListConst([]));
     final ValueNotifier<AttributeTypeModel> selectedAttributeType =
         useState(attributeTypes[0]);
 
@@ -57,10 +59,9 @@ class EditAttributesDialog extends HookConsumerWidget {
 
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () {
+        ref.read(categoryListProvider.notifier).loadData();
         nameController.text = attribute.name;
         orderController.text = attribute.order.toString();
-        // selectedAttributeType.value= AttributeTypeModel(id: attribute.attributeType.id.toString(), name: attribute.atributeType.type);
-        // selectedCategories.value = attribute.categories.map((e) => e.id).toIList();
       });
       return null;
     }, []);
@@ -122,47 +123,12 @@ class EditAttributesDialog extends HookConsumerWidget {
               SizedBox(height: 10.h),
               KTextField(controller: orderController, lebelText: 'Order'),
               SizedBox(height: 10.h),
-              SearchChoices<CategoriesModel>.multiple(
-                items: List<DropdownMenuItem<CategoriesModel>>.from(
-                    categoriesList.map<DropdownMenuItem<CategoriesModel>>(
-                        (e) => DropdownMenuItem<CategoriesModel>(
-                              value: e,
-                              child: Text(
-                                e.name,
-                                textDirection: TextDirection.rtl,
-                              ),
-                            ))),
-                selectedItems: selectedCategories.value.unlock,
-                hint: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text("Select Categories"),
-                ),
-                searchHint: "Select Categories",
-                onChanged: (List<int> value) {
-                  selectedCategories.value = value.lock;
-                  Logger.i(selectedCategories.value);
-
-                  //  selectedCategories.value = value;
-                },
-                closeButton: (selectedItems) {
-                  return (selectedItems.isNotEmpty
-                      ? "Save ${selectedItems.length == 1 ? '"${categoriesList[selectedItems.first].name}"' : '(${selectedItems.length})'}"
-                      : "Save without selection");
-                },
-                isExpanded: true,
-              ),
-              // MultiSelectDropDown(
-              //   onOptionSelected: (List<ValueItem> selectedOptions) {
-              //     selectedCategories.value = selectedOptions.lock;
-              //   },
-              //   options: List<ValueItem>.from(categoriesList
-              //       .map((e) => ValueItem(label: e.name, value: e.id))),
-              //   selectionType: SelectionType.multi,
-              //   chipConfig: const ChipConfig(wrapType: WrapType.wrap),
-              //   dropdownHeight: 300,
-              //   optionTextStyle: const TextStyle(fontSize: 16),
-              //   selectedOptionIcon: const Icon(Icons.check_circle),
-              // ),
+              MultipleKeyValueSelector(
+                  title: "Select Categories",
+                  allData: allCategories,
+                  onSelect: (list) {
+                    selectedCategories.value = list;
+                  }),
               Row(
                 children: [
                   TextButton(
@@ -176,13 +142,8 @@ class EditAttributesDialog extends HookConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      final selectedCategoryIds = selectedCategories.value
-                          .map((element) => categoriesList[element])
-                          .map((e) => e.id)
-                          .toList();
-
-                      final String endPoint = selectedCategoryIds
-                          .map((id) => "categories_ids[]=$id")
+                      final String endPoint = selectedCategories.value
+                          .map((category) => "categories_ids[]=${category.key}")
                           .join('&');
 
                       Logger.i(endPoint);

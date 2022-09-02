@@ -1,6 +1,7 @@
-import 'dart:convert';
-
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+
+import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 
 class CreateCategoryModel extends Equatable {
   final int categorySubGroupId;
@@ -9,8 +10,8 @@ class CreateCategoryModel extends Equatable {
   final String description;
   final String metaTitle;
   final String metaDescription;
-  final String attributeIds;
-  final bool active;
+  final IList<KeyValueData> attribute;
+  final int active;
   final String order;
   const CreateCategoryModel({
     required this.categorySubGroupId,
@@ -19,7 +20,7 @@ class CreateCategoryModel extends Equatable {
     required this.description,
     required this.metaTitle,
     required this.metaDescription,
-    required this.attributeIds,
+    required this.attribute,
     required this.active,
     required this.order,
   });
@@ -31,8 +32,8 @@ class CreateCategoryModel extends Equatable {
     String? description,
     String? metaTitle,
     String? metaDescription,
-    String? attributeIds,
-    bool? active,
+    IList<KeyValueData>? attribute,
+    int? active,
     String? order,
   }) {
     return CreateCategoryModel(
@@ -42,49 +43,16 @@ class CreateCategoryModel extends Equatable {
       description: description ?? this.description,
       metaTitle: metaTitle ?? this.metaTitle,
       metaDescription: metaDescription ?? this.metaDescription,
-      attributeIds: attributeIds ?? this.attributeIds,
+      attribute: attribute ?? this.attribute,
       active: active ?? this.active,
       order: order ?? this.order,
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'category_sub_group_id': categorySubGroupId,
-      'name': name,
-      'slug': slug,
-      'description': description,
-      'meta_title': metaTitle,
-      'meta_description': metaDescription,
-      'attribute_ids': attributeIds,
-      'active': active,
-      'order': order,
-    };
-  }
-
-  factory CreateCategoryModel.fromMap(Map<String, dynamic> map) {
-    return CreateCategoryModel(
-      categorySubGroupId: map['category_sub_group_id']?.toInt() ?? 0,
-      name: map['name'] ?? '',
-      slug: map['slug'] ?? '',
-      description: map['description'] ?? '',
-      metaTitle: map['meta_title'] ?? '',
-      metaDescription: map['meta_description'] ?? '',
-      attributeIds: map['attribute_ids'] ?? '',
-      active: map['active'] ?? false,
-      order: map['order'] ?? '',
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory CreateCategoryModel.fromJson(String source) =>
-      CreateCategoryModel.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'CreateCategoryModel(categorySubGroupId: $categorySubGroupId, name: $name, slug: $slug, description: $description, metaTitle: $metaTitle, metaDescription: $metaDescription, attributeIds: $attributeIds, active: $active, order: $order)';
-  }
+  String get attributesEndPoint =>
+      attribute.map((data) => "attribute_ids[]=${data.key}").join('&');
+  String get endpoint =>
+      'category/create?category_sub_group_id=$categorySubGroupId&name=$name&slug=$slug&meta_title=$metaTitle&meta_description=$metaDescription&$attributesEndPoint&active=$active&order=$order';
 
   @override
   List<Object> get props {
@@ -95,9 +63,14 @@ class CreateCategoryModel extends Equatable {
       description,
       metaTitle,
       metaDescription,
-      attributeIds,
+      attribute,
       active,
       order,
     ];
+  }
+
+  @override
+  String toString() {
+    return 'CreateCategoryModel(categorySubGroupId: $categorySubGroupId, name: $name, slug: $slug, description: $description, metaTitle: $metaTitle, metaDescription: $metaDescription, attribute: $attribute, active: $active, order: $order)';
   }
 }

@@ -28,11 +28,12 @@ class ProductRepo extends IProductRepo {
 
   @override
   Future<Either<CleanFailure, Unit>> updateProduct(
-      {required CreateProductModel updateDetails}) async {
+      {required CreateProductModel updateDetails,
+      required int productId}) async {
     return cleanApi.get(
         fromData: (json) => unit,
         endPoint:
-            'product/create?manufacturer_id=${updateDetails.manufacturerId}&brand=${updateDetails.brand}&name=${updateDetails.name}&model_number=${updateDetails.modeNumber}&mpn=${updateDetails.mpn}&gtin=${updateDetails.gtin}&gtin_type=${updateDetails.gtinType}&description=${updateDetails.description}&min_price=${updateDetails.minPrice}&max_price=${updateDetails.maxPrice}&origin_country=${updateDetails.originCountry}&has_variant=${updateDetails.hasVariant}&downloadable=${updateDetails.downloadable}&slug=${updateDetails.slug}&sale_count=${updateDetails.saleCount}&category_list[]=${updateDetails.categoryList}&active=${updateDetails.active}');
+            'product/$productId/update?manufacturer_id=${updateDetails.manufacturerId}&brand=${updateDetails.brand}&name=${updateDetails.name}&model_number=${updateDetails.modeNumber}&mpn=${updateDetails.mpn}&gtin=${updateDetails.gtin}&gtin_type=${updateDetails.gtinType}&description=${updateDetails.description}&origin_country=${updateDetails.originCountry}&slug=${updateDetails.slug}&category_list[]=${updateDetails.categoryList}&active=${updateDetails.active}');
   }
 
   @override
@@ -64,7 +65,7 @@ class ProductRepo extends IProductRepo {
 
   @override
   Future<Either<CleanFailure, List<ManufacturerId>>> manufacturer() async {
-   return await cleanApi.get(
+    return await cleanApi.get(
         fromData: (json) => List<ManufacturerId>.from(json
             .map((key, value) =>
                 MapEntry(key, ManufacturerId(id: key, value: value)))
@@ -72,3 +73,7 @@ class ProductRepo extends IProductRepo {
         endPoint: 'data/manufacturers');
   }
 }
+
+// min_price=${updateDetails.minPrice}&max_price=${updateDetails.maxPrice}&
+// &has_variant=${updateDetails.hasVariant}&downloadable=${updateDetails.downloadable}
+// &sale_count=${updateDetails.saleCount}

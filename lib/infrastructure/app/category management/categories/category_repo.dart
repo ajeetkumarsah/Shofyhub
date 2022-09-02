@@ -1,9 +1,10 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/category/categories/attributes_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/category_details_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
-import 'package:zcart_seller/domain/app/category/categories/update_category.dart';
+
+import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
 
 class CategoryRepo extends ICategoryRepo {
   final cleanApi = CleanApi.instance;
@@ -21,10 +22,16 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, Unit>> createNewCategory(
       {required CreateCategoryModel categoryModel}) async {
     return await cleanApi.post(
+        fromData: (josn) => unit, body: null, endPoint: categoryModel.endpoint);
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> updateCategory(
+      {required UpdateCategoryModel updateCategoryModel}) async {
+    return await cleanApi.put(
         fromData: (josn) => unit,
         body: null,
-        endPoint:
-            'category/create?category_sub_group_id=${categoryModel.categorySubGroupId}&name=${categoryModel.name}&slug=${categoryModel.slug}&meta_title=${categoryModel.metaTitle}&meta_description=${categoryModel.metaDescription}&${categoryModel.attributeIds}&active=${categoryModel.active}&order=${categoryModel.order}');
+        endPoint: updateCategoryModel.endpoint);
   }
 
   @override
@@ -36,11 +43,10 @@ class CategoryRepo extends ICategoryRepo {
   }
 
   @override
-  Future<Either<CleanFailure, CategoryModel>> trashCatetory(
-      {required CategoryModel categoryId}) async {
-    return cleanApi.get(
-        fromData: (json) => CategoryModel.fromMap(json),
-        endPoint: 'category/$categoryId/all');
+  Future<Either<CleanFailure, Unit>> trashCategory(
+      {required int categoryId}) async {
+    return cleanApi.delete(
+        fromData: (json) => unit, endPoint: 'category/$categoryId/trash');
   }
 
   @override
@@ -52,27 +58,17 @@ class CategoryRepo extends ICategoryRepo {
   }
 
   @override
-  Future<Either<CleanFailure, CategoryModel>> deleteCatetory(
-      {required CategoryModel categoryId}) async {
-    return cleanApi.get(
-        fromData: (json) => CategoryModel.fromMap(json),
-        endPoint: 'category/$categoryId/all');
+  Future<Either<CleanFailure, Unit>> deleteCategory(
+      {required int categoryId}) async {
+    return cleanApi.delete(
+        fromData: (json) => unit, endPoint: 'category/$categoryId/delete');
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> updateCatetories(
-      {required UpdateCategoryModel categoryId}) async {
-    return await cleanApi.get(fromData: (json) => unit, endPoint: '');
-  }
-
-  @override
-  Future<Either<CleanFailure, List<CategoryAttribuitesModel>>>
-      getAttributes() async {
+  Future<Either<CleanFailure, CategoryDetailsModel>> detailsCategory(
+      {required int categoryId}) {
     return cleanApi.get(
-        fromData: (json) => List<CategoryAttribuitesModel>.from(json
-            .map((key, value) =>
-                MapEntry(key, CategoryAttribuitesModel(id: key, name: value)))
-            .values),
-        endPoint: 'data/attributes');
+        fromData: (json) => CategoryDetailsModel.fromMap(json['data']),
+        endPoint: 'category/$categoryId');
   }
 }

@@ -36,7 +36,7 @@ class AttributeTile extends StatelessWidget {
       //   icon: const Icon(Icons.create),
       // ),
       subtitle: Text(
-        'Attribute Type : ${attribute.attributeType}',
+        'Type : ${attribute.attributeType}',
         style: TextStyle(
           fontSize: 14.sp,
           color: Colors.grey.shade800,

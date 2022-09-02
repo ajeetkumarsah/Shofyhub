@@ -19,4 +19,11 @@ class CountryNotifier extends StateNotifier<KeyValueFormState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, dataList: r));
   }
+
+  loadState({required int id}) async {
+    state = state.copyWith(loading: true);
+    final data = await repo.getStateList(id: id);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, stateList: r));
+  }
 }

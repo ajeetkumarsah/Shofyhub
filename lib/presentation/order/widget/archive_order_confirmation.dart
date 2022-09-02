@@ -9,7 +9,9 @@ import 'package:zcart_seller/application/app/order/order_state.dart';
 
 class ArchivedOrderConfirmation extends HookConsumerWidget {
   final int orderId;
-  const ArchivedOrderConfirmation({Key? key, required this.orderId})
+  final String? filter;
+  const ArchivedOrderConfirmation(
+      {Key? key, required this.orderId, this.filter})
       : super(key: key);
 
   @override
@@ -51,7 +53,9 @@ class ArchivedOrderConfirmation extends HookConsumerWidget {
           onPressed: () {
             ref
                 .read(orderProvider(OrderFilter.archived).notifier)
-                .archiveOrder(orderId);
+                .archiveOrder(orderId, reloadList: () {
+              ref.read(orderProvider(filter).notifier).getOrders();
+            });
             // Navigator.of(context).pop();
           },
           child: loading

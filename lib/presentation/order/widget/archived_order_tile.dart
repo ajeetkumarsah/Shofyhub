@@ -1,166 +1,194 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zcart_seller/domain/app/order/order_model.dart';
+
+import 'order_status_dialog.dart';
 
 class ArchivedOrderTile extends StatelessWidget {
-  final String buttonName;
-  final String orderNumber;
-  final String orderAmount;
-  // final String name;
-  final String date;
-  final int items;
-  final Function()? onDelete;
-  final Function()? onpress;
   const ArchivedOrderTile(
-      {Key? key,
-      required this.buttonName,
-      required this.date,
-      required this.items,
-      required this.onpress,
-      required this.orderAmount,
-      required this.orderNumber,
-      required this.onDelete})
+      {Key? key, required this.order, required this.unArchive})
       : super(key: key);
+
+  final OrderModel order;
+  final void Function() unArchive;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // height: 150.h,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r),
-          color: const Color.fromARGB(255, 243, 242, 242)),
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(12.r),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20).r,
+          child: Column(
             children: [
-              RichText(
-                text: TextSpan(
-                  text: 'Order id: ',
-                  style: TextStyle(
-                    color: Colors.grey.shade700,
-                    fontSize: 16.sp,
-                  ),
-                  children: <InlineSpan>[
-                    TextSpan(
-                      text: orderNumber,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.grey.shade800,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Text(
-                date,
-                style: TextStyle(
-                  color: Colors.grey.shade700,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 15.h),
-          RichText(
-            text: TextSpan(
-              text: 'Order amount: ',
-              style: TextStyle(
-                color: Colors.grey.shade700,
-                fontSize: 16.sp,
-              ),
-              children: <InlineSpan>[
-                TextSpan(
-                  text: 'Rs.$orderAmount',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: Colors.grey.shade800,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 15.h),
-          // RichText(
-          //   text: TextSpan(
-          //     text: 'Name: ',
-          //     style: TextStyle(
-          //       color: Colors.grey.shade700,
-          //       fontSize: 16.sp,
-          //     ),
-          //     children: <InlineSpan>[
-          //       TextSpan(
-          //         text: name,
-          //         style: TextStyle(
-          //             fontSize: 16.sp,
-          //             color: Colors.grey.shade700,
-          //             fontWeight: FontWeight.w500),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: onpress,
-                child: Container(
-                  height: 38.h,
-                  width: 140.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(color: Colors.grey, width: 1.w),
-                  ),
-                  child: Center(
-                    child: Text(
-                      buttonName,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.grey.shade800,
-                        fontWeight: FontWeight.w500,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    order.orderNumber,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
                     ),
                   ),
-                ),
+                  Container(
+                    height: 16.h,
+                    width: 50.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(3.r),
+                      color: order.paymentStatus == 'PAID'
+                          ? const Color.fromARGB(255, 179, 224, 180)
+                          : const Color(0xffF7D2CD),
+                    ),
+                    child: Center(
+                      child: Text(
+                        order.paymentStatus,
+                        style: TextStyle(
+                          color: order.paymentStatus == 'PAID'
+                              ? const Color.fromARGB(255, 45, 107, 47)
+                              : const Color(0xffFC5553),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
               SizedBox(
-                width: 10.w,
+                height: 15.h,
               ),
-              IconButton(
-                  onPressed: onDelete,
-                  icon: Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                    size: 30.sp,
-                  )),
-              const Spacer(),
-              RichText(
-                text: TextSpan(
-                  text: 'Items: ',
-                  style: TextStyle(
-                    color: Colors.grey.shade700,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.sp,
-                  ),
-                  children: <InlineSpan>[
-                    TextSpan(
-                      text: items.toString(),
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.grey.shade700,
-                        fontWeight: FontWeight.w500,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Order Date",
+                    style: TextStyle(
+                      color: Theme.of(context).hintColor,
                     ),
-                  ],
+                  ),
+                  Text(
+                    order.orderDate,
+                    style: TextStyle(
+                      color: Theme.of(context).hintColor,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Customer:",
+                    style: TextStyle(
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Text(
+                    order.customerName,
+                    style: const TextStyle(
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Grand Total:",
+                    style: TextStyle(
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Text(
+                    order.grandTotal,
+                    style: const TextStyle(
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Status:",
+                    style: TextStyle(
+                      color: Colors.black54,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        order.orderStatus,
+                        style: const TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => OrderStatusDialog(
+                                    orderId: order.id,
+                                    orderStatus: order.orderStatus,
+                                  ));
+                        },
+                        child: const Icon(
+                          Icons.pending_actions,
+                          size: 17,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              SizedBox(
+                height: 40.h,
+                width: 240.w,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: const Color(0xffE5EFFA),
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          width: 1.w,
+                          color: const Color(0xff683CB7),
+                        ),
+                        borderRadius: BorderRadius.circular(20.r),
+                      )),
+                  onPressed: unArchive,
+                  child: const Text(
+                    "Unarchive Order",
+                    style: TextStyle(
+                      color: Color(0xff683CB7),
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

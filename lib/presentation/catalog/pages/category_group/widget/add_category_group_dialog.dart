@@ -41,13 +41,17 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
       }
     });
     return AlertDialog(
+      insetPadding: EdgeInsets.zero,
       title: const Text('Add Category Group'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             KTextField(controller: nameController, lebelText: 'Name'),
-            SizedBox(height: 10.h),
+            SizedBox(
+              height: 10.h,
+              width: 300.w,
+            ),
             KTextField(controller: descController, lebelText: 'Description'),
             SizedBox(height: 10.h),
             KTextField(

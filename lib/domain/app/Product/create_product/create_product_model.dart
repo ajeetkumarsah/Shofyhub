@@ -11,13 +11,11 @@ class CreateProductModel extends Equatable {
   final String gtin;
   final String gtinType;
   final String description;
-  final String minPrice;
-  final String maxPrice;
+
   final String originCountry;
-  final String hasVariant;
-  final String downloadable;
+
   final String slug;
-  final String saleCount;
+
   final List<int> categoryList;
   final List<int> tagList;
   final bool active;
@@ -31,13 +29,8 @@ class CreateProductModel extends Equatable {
     required this.gtin,
     required this.gtinType,
     required this.description,
-    required this.minPrice,
-    required this.maxPrice,
     required this.originCountry,
-    required this.hasVariant,
-    required this.downloadable,
     required this.slug,
-    required this.saleCount,
     required this.categoryList,
     required this.tagList,
     required this.active,
@@ -48,7 +41,7 @@ class CreateProductModel extends Equatable {
   String get categoriesEndPoint =>
       tagList.map((id) => "category_list[]=$id").join('&');
   String get endPoint =>
-      'product/create?name=$name&active=$active&mpn=$mpn&gtin=$gtin&gtin_type=$gtinType&description=$description&$tagsEndPoint&$categoriesEndPoint&requires_shipping=$requireShipping&manufacturer_id=$manufacturerId&brand=$brand&model_number=$modeNumber&origin_country=$originCountry&slug=$slug';
+      'product/create?name=$name&active=$active&mpn=$mpn&gtin=$gtin&gtin_type=$gtinType&description=$description&$tagsEndPoint&requires_shipping=$requireShipping&manufacturer_id=$manufacturerId&brand=$brand&model_number=$modeNumber&origin_country=$originCountry&slug=$slug&$categoriesEndPoint';
 
   @override
   bool get stringify => true;
@@ -64,13 +57,8 @@ class CreateProductModel extends Equatable {
       gtin,
       gtinType,
       description,
-      minPrice,
-      maxPrice,
       originCountry,
-      hasVariant,
-      downloadable,
       slug,
-      saleCount,
       categoryList,
       tagList,
       active,
@@ -87,13 +75,8 @@ class CreateProductModel extends Equatable {
     String? gtin,
     String? gtinType,
     String? description,
-    String? minPrice,
-    String? maxPrice,
     String? originCountry,
-    String? hasVariant,
-    String? downloadable,
     String? slug,
-    String? saleCount,
     List<int>? categoryList,
     List<int>? tagList,
     bool? active,
@@ -108,13 +91,8 @@ class CreateProductModel extends Equatable {
       gtin: gtin ?? this.gtin,
       gtinType: gtinType ?? this.gtinType,
       description: description ?? this.description,
-      minPrice: minPrice ?? this.minPrice,
-      maxPrice: maxPrice ?? this.maxPrice,
       originCountry: originCountry ?? this.originCountry,
-      hasVariant: hasVariant ?? this.hasVariant,
-      downloadable: downloadable ?? this.downloadable,
       slug: slug ?? this.slug,
-      saleCount: saleCount ?? this.saleCount,
       categoryList: categoryList ?? this.categoryList,
       tagList: tagList ?? this.tagList,
       active: active ?? this.active,

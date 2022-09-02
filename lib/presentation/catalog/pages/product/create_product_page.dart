@@ -6,31 +6,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:search_choices/search_choices.dart';
 import 'package:zcart_seller/application/app/Product/product_provider.dart';
+import 'package:zcart_seller/application/app/form/category_list_provider.dart';
 import 'package:zcart_seller/domain/app/Product/create_product/create_product_model.dart';
 import 'package:zcart_seller/domain/app/Product/create_product/gtin_types_model.dart';
+import 'package:zcart_seller/domain/app/Product/create_product/manufacturer_id.dart';
 import 'package:zcart_seller/domain/app/Product/create_product/tag_list.dart';
+import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
-
-import '../../../../application/app/catalog/atributes/get_atributes_provider.dart';
-import '../../../../domain/app/catalog/atributes/categories_model.dart';
+import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 
 class AddProductPage extends HookConsumerWidget {
   const AddProductPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    final ValueNotifier<IList<int>> selectedCategories =
-        useState(const IListConst([]));
     final ValueNotifier<IList<int>> selectedTags =
         useState(const IListConst([]));
-    final ValueNotifier<int> manufacturerId = useState(0);
 
     final gtinList =
         ref.watch(productProvider.select((value) => value.gtinTypes));
     final tagList = ref.watch(productProvider.select((value) => value.tagList));
-    final categoryList =
-        ref.watch(getAttributesProvider.select((value) => value.categories));
+
     final manufacturerIdList =
         ref.watch(productProvider.select((value) => value.manufacturerId));
 
@@ -40,76 +38,47 @@ class AddProductPage extends HookConsumerWidget {
     final mpn = useTextEditingController();
     final gtin = useTextEditingController();
     final description = useTextEditingController();
-    final minPrice = useTextEditingController();
-    final maxPrice = useTextEditingController();
+
     final originCountry = useTextEditingController();
-    final hasVarient = useTextEditingController();
-    final downloadable = useTextEditingController();
-    final slug = useTextEditingController();
-    final saleCount = useTextEditingController();
 
     final ValueNotifier<GtinTypes> selectedGtin = useState(gtinList[0]);
-
-    final active = useState(false);
-    final shipping = useState(false);
+    final ValueNotifier<ManufacturerId> selectedMenufectur =
+        useState(manufacturerIdList[0]);
+    final allCategories =
+        ref.watch(categoryListProvider.select((value) => value.dataList));
+    final ValueNotifier<IList<KeyValueData>> selectedCategories =
+        useState(const IListConst([]));
+    final active = useState(true);
+    final shipping = useState(true);
     useEffect(() {
-      Future.delayed(const Duration(milliseconds: 100), () async {});
+      Future.delayed(const Duration(milliseconds: 100), () async {
+        ref.read(categoryListProvider.notifier).loadData();
+      });
       return null;
     }, []);
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 60.h,
+        backgroundColor: Constants.appbarColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(22.r),
+          ),
+        ),
+        elevation: 0,
         title: const Text('Create Product'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10.h),
-              // SearchChoices<CategoriesModel>.multiple(
-              //   items: List<DropdownMenuItem<CategoriesModel>>.from(
-              //       categoryList.map<DropdownMenuItem<CategoriesModel>>(
-              //           (e) => DropdownMenuItem<CategoriesModel>(
-              //                 value: e,
-              //                 child: Text(
-              //                   e.name,
-              //                   textDirection: TextDirection.rtl,
-              //                 ),
-              //               ))),
-              //   selectedItems: selectedCategories.value.unlock,
-              //   hint: const Padding(
-              //     padding: EdgeInsets.all(12.0),
-              //     child: Text("Select ManufacturerId"),
-              //   ),
-              //   searchHint: "Select ManufacturerId",
-              //   onChanged: (List<int> value) {
-              //     selectedCategories.value = value.lock;
-              //     Logger.i(selectedCategories.value);
-
-              //     //  selectedCategories.value = value;
-              //   },
-              //   closeButton: (selectedItems) {
-              //     return (selectedItems.isNotEmpty
-              //         ? "Save ${selectedItems.length == 1 ? '"${categoryList[selectedItems.first].name}"' : '(${selectedItems.length})'}"
-              //         : "Save without selection");
-              //   },
-              //   isExpanded: true,
-              // ),
-              SizedBox(height: 10.h),
-              SwitchListTile(
-                value: active.value,
-                onChanged: (value) => active.value = value,
-                title: const Text('Active status'),
-              ),
-              KTextField(controller: brand, lebelText: 'Brand'),
-              SizedBox(
-                height: 20.h,
-              ),
               KTextField(controller: nameController, lebelText: 'Name'),
-              SizedBox(
-                height: 10.h,
-              ),
+              SizedBox(height: 10.h),
+              KTextField(controller: brand, lebelText: 'Brand'),
+              SizedBox(height: 10.h),
               KTextField(
                 controller: modelNumer,
                 lebelText: 'Model Number',
@@ -124,13 +93,8 @@ class AddProductPage extends HookConsumerWidget {
               SizedBox(
                 height: 10.h,
               ),
-              Text(
-                "GTIn Types",
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+              const Text(
+                "GTIn Types:",
               ),
               SizedBox(
                 height: 10.h,
@@ -177,34 +141,44 @@ class AddProductPage extends HookConsumerWidget {
               SizedBox(
                 height: 10.h,
               ),
-              SearchChoices<CategoriesModel>.multiple(
-                items: List<DropdownMenuItem<CategoriesModel>>.from(
-                    categoryList.map<DropdownMenuItem<CategoriesModel>>(
-                        (e) => DropdownMenuItem<CategoriesModel>(
-                              value: e,
-                              child: Text(
-                                e.name,
-                                textDirection: TextDirection.rtl,
-                              ),
-                            ))),
-                selectedItems: selectedCategories.value.unlock,
-                hint: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text("Select Categories"),
+              const Text(
+                "Manufacturer:",
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              SizedBox(
+                height: 50.h,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1.w),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                    ),
+                    style: TextStyle(color: Colors.grey.shade800),
+                    isExpanded: true,
+                    value: selectedMenufectur.value,
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    items: manufacturerIdList
+                        .map<DropdownMenuItem<ManufacturerId>>(
+                            (ManufacturerId value) {
+                      return DropdownMenuItem<ManufacturerId>(
+                        value: value,
+                        child: Text(
+                          value.value,
+                          style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (ManufacturerId? newValue) {
+                      selectedMenufectur.value = newValue!;
+                    },
+                  ),
                 ),
-                searchHint: "Select Categories",
-                onChanged: (List<int> value) {
-                  selectedCategories.value = value.lock;
-                  Logger.i(selectedCategories.value);
-
-                  //  selectedCategories.value = value;
-                },
-                closeButton: (selectedItems) {
-                  return (selectedItems.isNotEmpty
-                      ? "Save ${selectedItems.length == 1 ? '"${categoryList[selectedItems.first].name}"' : '(${selectedItems.length})'}"
-                      : "Save without selection");
-                },
-                isExpanded: true,
               ),
               SizedBox(
                 height: 10.h,
@@ -217,50 +191,8 @@ class AddProductPage extends HookConsumerWidget {
                 height: 10.h,
               ),
               KTextField(
-                controller: minPrice,
-                lebelText: 'minPrice',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: maxPrice,
-                lebelText: 'mixPrice',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
                 controller: originCountry,
                 lebelText: 'originCountry',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: hasVarient,
-                lebelText: 'hasVariant',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: downloadable,
-                lebelText: 'downloadable',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: slug,
-                lebelText: 'slug',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: saleCount,
-                lebelText: 'saleCount',
               ),
               SizedBox(
                 height: 10.h,
@@ -295,10 +227,23 @@ class AddProductPage extends HookConsumerWidget {
                 isExpanded: true,
               ),
               SizedBox(height: 10.h),
+              MultipleKeyValueSelector(
+                  title: "Select Categories",
+                  allData: allCategories,
+                  onSelect: (list) {
+                    selectedCategories.value = list;
+                  }),
+              SizedBox(height: 10.h),
+              SwitchListTile(
+                value: active.value,
+                onChanged: (value) => active.value = value,
+                title: const Text('Active '),
+              ),
+              SizedBox(height: 10.h),
               SwitchListTile(
                 value: shipping.value,
                 onChanged: (value) => shipping.value = value,
-                title: const Text('RequireShipping'),
+                title: const Text('Require Shipping'),
               ),
               SizedBox(height: 10.h),
               Row(
@@ -314,8 +259,11 @@ class AddProductPage extends HookConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
+                      Logger.i(nameController.text
+                          .toLowerCase()
+                          .replaceAll(RegExp(r' '), '-'));
                       final product = CreateProductModel(
-                        manufacturerId: manufacturerId.value,
+                        manufacturerId: int.parse(selectedMenufectur.value.id),
                         brand: brand.text,
                         name: nameController.text,
                         modeNumber: modelNumer.text,
@@ -323,14 +271,13 @@ class AddProductPage extends HookConsumerWidget {
                         gtin: gtin.text,
                         gtinType: selectedGtin.value.value,
                         description: description.text,
-                        minPrice: minPrice.text,
-                        maxPrice: maxPrice.text,
                         originCountry: originCountry.text,
-                        hasVariant: hasVarient.text,
-                        downloadable: downloadable.text,
-                        slug: slug.text,
-                        saleCount: saleCount.text,
-                        categoryList: selectedCategories.value.unlock,
+                        slug: nameController.text
+                            .toLowerCase()
+                            .replaceAll(RegExp(r' '), '-'),
+                        categoryList: selectedCategories.value
+                            .map((element) => int.tryParse(element.key) ?? 0)
+                            .toList(),
                         tagList: selectedTags.value.unlock,
                         active: active.value,
                         requireShipping: shipping.value,

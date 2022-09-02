@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class CreateShopUserModel extends Equatable {
@@ -8,9 +9,11 @@ class CreateShopUserModel extends Equatable {
   final String niceName;
   final String email;
   final String password;
+  final String confirmPassword;
   final String dob;
   final String sex;
   final String description;
+  final int active;
   const CreateShopUserModel({
     required this.shopId,
     required this.roleId,
@@ -18,9 +21,11 @@ class CreateShopUserModel extends Equatable {
     required this.niceName,
     required this.email,
     required this.password,
+    required this.confirmPassword,
     required this.dob,
     required this.sex,
     required this.description,
+    required this.active,
   });
 
   CreateShopUserModel copyWith({
@@ -30,9 +35,11 @@ class CreateShopUserModel extends Equatable {
     String? niceName,
     String? email,
     String? password,
+    String? confirmPassword,
     String? dob,
     String? sex,
     String? description,
+    int? active,
   }) {
     return CreateShopUserModel(
       shopId: shopId ?? this.shopId,
@@ -41,9 +48,11 @@ class CreateShopUserModel extends Equatable {
       niceName: niceName ?? this.niceName,
       email: email ?? this.email,
       password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
       dob: dob ?? this.dob,
       sex: sex ?? this.sex,
       description: description ?? this.description,
+      active: active ?? this.active,
     );
   }
 
@@ -55,9 +64,11 @@ class CreateShopUserModel extends Equatable {
       'nice_name': niceName,
       'email': email,
       'password': password,
+      'confirm_password': confirmPassword,
       'dob': dob,
       'sex': sex,
       'description': description,
+      'active': active,
     };
   }
 
@@ -69,9 +80,11 @@ class CreateShopUserModel extends Equatable {
       niceName: map['nice_name'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
+      confirmPassword: map['confirm_password'] ?? '',
       dob: map['dob'] ?? '',
       sex: map['sex'] ?? '',
       description: map['description'] ?? '',
+      active: map['active']?.toInt() ?? 0,
     );
   }
 
@@ -82,7 +95,7 @@ class CreateShopUserModel extends Equatable {
 
   @override
   String toString() {
-    return 'CreateUserModel(shopId: $shopId, roleId: $roleId, name: $name, niceName: $niceName, email: $email, password: $password, dob: $dob, sex: $sex, description: $description)';
+    return 'CreateShopUserModel(shopId: $shopId, roleId: $roleId, name: $name, niceName: $niceName, email: $email, password: $password, confirmPassword: $confirmPassword, dob: $dob, sex: $sex, description: $description, active: $active)';
   }
 
   @override
@@ -94,13 +107,17 @@ class CreateShopUserModel extends Equatable {
       niceName,
       email,
       password,
+      confirmPassword,
       dob,
       sex,
       description,
+      active,
     ];
   }
 
   factory CreateShopUserModel.init() => const CreateShopUserModel(
+        active: 1,
+        confirmPassword: '',
         shopId: 0,
         roleId: 0,
         name: '',

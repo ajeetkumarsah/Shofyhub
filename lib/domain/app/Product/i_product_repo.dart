@@ -12,7 +12,7 @@ abstract class IProductRepo {
   Future<Either<CleanFailure, Unit>> deleteProduct(int productId);
   Future<Either<CleanFailure, Unit>> createProduct(CreateProductModel body);
   Future<Either<CleanFailure, Unit>> updateProduct(
-      {required CreateProductModel updateDetails});
+      {required CreateProductModel updateDetails, required int productId});
   Future<Either<CleanFailure, List<GtinTypes>>> gtinType();
   Future<Either<CleanFailure, List<TagListModel>>> tagList();
   Future<Either<CleanFailure, List<ManufacturerId>>> manufacturer();

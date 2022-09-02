@@ -32,9 +32,10 @@ class ProductNotifier extends StateNotifier<ProductState> {
     getProducts();
   }
 
-  updateProduct(CreateProductModel updateDetails) async {
+  updateProduct(CreateProductModel updateDetails, int productId) async {
     state = state.copyWith(loading: true);
-    final data = await productRepo.updateProduct(updateDetails: updateDetails);
+    final data = await productRepo.updateProduct(
+        updateDetails: updateDetails, productId: productId);
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),
       (r) => state.copyWith(

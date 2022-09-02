@@ -5,9 +5,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
 import 'package:zcart_seller/application/app/delivary%20boys/delivary_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
+import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/order/fullfill_order_dialog.dart';
 import 'package:zcart_seller/presentation/order/proceed_order_page.dart';
+import 'package:zcart_seller/presentation/order/widget/add_admin_note.dart';
+import 'package:zcart_seller/presentation/order/widget/archive_order_confirmation.dart';
 import 'package:zcart_seller/presentation/order/widget/cancle_order_confirmation_dialog.dart';
+import 'package:zcart_seller/presentation/order/widget/order_status_dialog.dart';
 import 'package:zcart_seller/presentation/order_details_page/widget/productlist.dart';
 
 class OrderDetailsScreen extends HookConsumerWidget {
@@ -31,18 +37,70 @@ class OrderDetailsScreen extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('Order Details'),
         toolbarHeight: 70.h,
-        backgroundColor: const Color(0xff683cb7),
+        backgroundColor: Constants.appbarColor,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        actions: [
+          PopupMenuButton(
+              onSelected: (index) {
+                if (index == 1) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AddAdminNote(
+                            orderId: orderDetails.id,
+                          ));
+                } else if (index == 2) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => ArchivedOrderConfirmation(
+                            orderId: orderDetails.id,
+                          ));
+                } else if (index == 3) {
+                  ref
+                      .read(orderProvider(null).notifier)
+                      .markAsDelivered(orderDetails.id, true);
+                  ref.read(orderDetailsProvider(id).notifier).getOrderDetails();
+                } else if (index == 4) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => OrderStatusDialog(
+                            orderId: orderDetails.id,
+                            orderStatus: orderDetails.order_status,
+                          ));
+                }
+              },
+              itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 1,
+                      child: Text("Add note"),
+                    ),
+                    const PopupMenuItem(
+                      value: 2,
+                      child: Text("Archive order"),
+                    ),
+                    if (orderDetails.order_status != 'DELIVERED')
+                      const PopupMenuItem(
+                        value: 3,
+                        child: Text("Mark as Delivered"),
+                      ),
+                    const PopupMenuItem(
+                      value: 4,
+                      child: Text("Update order status"),
+                    )
+                  ])
+        ],
       ),
       backgroundColor: const Color(0xffefefef),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 10.w),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: ListView(
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -427,53 +485,60 @@ class OrderDetailsScreen extends HookConsumerWidget {
             SizedBox(
               height: 24.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: 37.h,
-                  width: 121.w,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => CancelOrderDialog(
-                          orderId: orderDetails.id,
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: const Color(0xffFFD0D0),
-                        shape: const StadiumBorder()),
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Color(0xffF80000)),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: 37.h,
+              width: 160.w,
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => CancelOrderDialog(
+                      orderId: orderDetails.id,
                     ),
-                  ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: const Color(0xffFFD0D0),
+                    shape: const StadiumBorder()),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Color(0xffF80000)),
                 ),
-                SizedBox(
-                  height: 37.h,
-                  width: 121.w,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ProceedOrderScreen(
-                          orderId: orderDetails.id,
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                        primary: const Color(0xff683CB7),
-                        shape: const StadiumBorder()),
-                    child: const Text(
-                      'Proceed',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+              ),
+            ),
+            SizedBox(
+              height: 37.h,
+              width: 160.w,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (orderDetails.payment_status == "UNPAID") {
+                    ref.read(orderDetailsProvider(id).notifier).markAsPaid();
+                  } else {
+                    ref.read(orderDetailsProvider(id).notifier).markAsUnpaid();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: const Color(0xff683CB7),
+                    shape: const StadiumBorder()),
+                child: Text(
+                  orderDetails.payment_status == "UNPAID"
+                      ? 'Mark as Paid'
+                      : 'Mark as Unpaid',
+                  style: const TextStyle(color: Colors.white),
                 ),
-              ],
-            )
+              ),
+            ),
           ],
         ),
       ),

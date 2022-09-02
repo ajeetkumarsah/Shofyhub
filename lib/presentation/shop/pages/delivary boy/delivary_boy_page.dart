@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/delivary%20boy/delivary_boy_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/add_delivary_boy_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivary_dialog.dart';
 
@@ -20,32 +21,18 @@ class DelivaryBoyPage extends HookConsumerWidget {
     final delivaryBoyList =
         ref.watch(delivaryBoyProvider.select((value) => value.delivaryBoyList));
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Constants.buttonColor,
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) => const AddUpdateDelivaryBoyPage());
+        },
+        label: const Text('Add new'),
+        icon: const Icon(Icons.add),
+      ),
       body: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    primary: Colors.green[100],
-                  ),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => const AddUpdateDelivaryBoyPage());
-                  },
-                  icon: Icon(
-                    Icons.add,
-                    color: Colors.green[700],
-                  ),
-                  label: Text('Add Delivary Boy',
-                      style: TextStyle(color: Colors.green[700]))),
-            ],
-          ),
           Expanded(
             child: ListView.separated(
               itemCount: delivaryBoyList.length,

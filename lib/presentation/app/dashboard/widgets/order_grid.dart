@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/presentation/order/archived_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 
 import 'store_report_item.dart';
@@ -46,9 +47,7 @@ class OrderGrid extends ConsumerWidget {
           StoreReportItems(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const OrderMainPage(
-                        index: 2,
-                      )));
+                  builder: (_) => const ArchivedOrderListPage()));
             },
             icon: FontAwesomeIcons.cartArrowDown,
             itemValues: '$totalArchivedOrder',

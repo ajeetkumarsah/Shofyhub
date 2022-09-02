@@ -43,25 +43,19 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
 
   updateCategorySubGroup(
       {required int categorySubGroupId,
-      required int successfullyUpdate,
+      required int categoryGroupId,
       required String name,
       required String slug,
       required String description,
-      required String metaTitle,
-      required String metaDescription,
-      required bool active,
-      required int order}) async {
+      required bool active}) async {
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.updateCategorySubGroup(
         categorySubGroupId: categorySubGroupId,
-        successfullyUpdate: successfullyUpdate,
+        categoryGroupId: categoryGroupId,
         name: name,
         slug: slug,
         description: description,
-        metaTitle: metaTitle,
-        metaDescription: metaDescription,
-        active: active,
-        order: order);
+        active: active);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);

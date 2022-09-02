@@ -10,13 +10,11 @@ class GetAtributesState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<AttributeTypeModel> attributeType;
-  final List<CategoriesModel> categories;
   final GetAtributesModel atributeId;
   const GetAtributesState({
     required this.loading,
     required this.failure,
     required this.attributeType,
-    required this.categories,
     required this.atributeId,
   });
 
@@ -31,7 +29,6 @@ class GetAtributesState extends Equatable {
       loading: loading ?? this.loading,
       failure: failure ?? this.failure,
       attributeType: attributeType ?? this.attributeType,
-      categories: categories ?? this.categories,
       atributeId: atributeId ?? this.atributeId,
     );
   }
@@ -46,7 +43,6 @@ class GetAtributesState extends Equatable {
       loading,
       failure,
       attributeType,
-      categories,
       atributeId,
     ];
   }
@@ -56,7 +52,6 @@ class GetAtributesState extends Equatable {
         failure: CleanFailure.none(),
         atributeId: GetAtributesModel.init(),
         attributeType: const [],
-        categories: const [],
       );
 
   @override

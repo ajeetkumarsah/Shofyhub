@@ -38,36 +38,25 @@ class AttributeValuesPage extends HookConsumerWidget {
         title: Text(groupName),
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
-              ),
-              ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    primary: Colors.green[100],
-                  ),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => AddUpdateAttributeValuesDialog(
-                              attributeId: attributeId,
-                            ));
-                  },
-                  icon: Icon(
-                    Icons.add,
-                    color: Colors.green[700],
-                  ),
-                  label: Text('Add Attribute Values',
-                      style: TextStyle(color: Colors.green[700]))),
-            ],
-          ),
-          Expanded(
-            child: ListView.separated(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Constants.buttonColor,
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (context) => AddUpdateAttributeValuesDialog(
+                    attributeId: attributeId,
+                  ));
+        },
+        label: const Text(
+          'Add attribute value',
+        ),
+        icon: const Icon(Icons.add),
+      ),
+      body: attributeValuesList.isEmpty
+          ? const Center(
+              child: Text('No data available'),
+            )
+          : ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               itemCount: attributeValuesList.length,
               itemBuilder: (context, index) => InkWell(
@@ -80,9 +69,6 @@ class AttributeValuesPage extends HookConsumerWidget {
                 height: 10.h,
               ),
             ),
-          ),
-        ],
-      ),
     );
   }
 }

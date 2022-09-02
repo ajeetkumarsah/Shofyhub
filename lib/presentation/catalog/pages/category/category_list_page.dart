@@ -3,30 +3,43 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
-import 'package:zcart_seller/application/app/category/categories/category_attribute_provider.dart';
+import 'package:zcart_seller/application/app/form/attribute_list_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_list_tile.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/widget/create_new_category_page.dart';
 
 class CategoryListPage extends HookConsumerWidget {
   final String subGroupName;
-  final int id;
+  final int categorySubGroupId;
   const CategoryListPage(
-      {Key? key, required this.id, required this.subGroupName})
+      {Key? key, required this.categorySubGroupId, required this.subGroupName})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(categoryProvider(id).notifier).getAllCategories();
-        ref.read(categoryAttributeProvider.notifier).getAttribuits();
+        ref
+            .read(categoryProvider(categorySubGroupId).notifier)
+            .getAllCategories();
       });
       return null;
     }, []);
-    final categoryList =
-        ref.watch(categoryProvider(id).select((value) => value.allCategoris));
+
+    final categoryList = ref.watch(categoryProvider(categorySubGroupId)
+        .select((value) => value.allCategoris));
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Constants.buttonColor,
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CreateNewCategoryPage(
+                    categorySubgroupId: categorySubGroupId,
+                  )));
+        },
+        label: const Text('Add category'),
+        icon: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         toolbarHeight: 60.h,
         backgroundColor: Constants.appbarColor,
@@ -38,66 +51,25 @@ class CategoryListPage extends HookConsumerWidget {
         title: Text(subGroupName),
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 10,
+      body: categoryList.isEmpty
+          ? Center(
+              child: Text(
+                'No Category Available',
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
               ),
-              ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    primary: Colors.green[100],
-                  ),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => CreateNewCategoryPage(
-                              categorySubgroupId: id,
-                            ));
-                  },
-                  icon: Icon(
-                    Icons.add,
-                    color: Colors.green[700],
-                  ),
-                  label: Text('Add category',
-                      style: TextStyle(color: Colors.green[700]))),
-            ],
-          ),
-          categoryList.isEmpty
-              ? Column(
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      'No Category Available',
-                      style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                )
-              : Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    itemCount: categoryList.length,
-                    itemBuilder: (context, index) => InkWell(
-                      child: CategoryListTile(
-                        onPressed: () {},
-                        image: categoryList[index].coverImage,
-                        title: categoryList[index].name,
-                        featured: categoryList[index].featured,
-                      ),
-                    ),
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 10.h,
-                    ),
-                  ),
+            )
+          : ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              itemCount: categoryList.length,
+              itemBuilder: (context, index) => InkWell(
+                child: CategoryListTile(
+                  category: categoryList[index],
                 ),
-        ],
-      ),
+              ),
+              separatorBuilder: (context, index) => SizedBox(
+                height: 10.h,
+              ),
+            ),
     );
   }
 }

@@ -6,16 +6,14 @@ import 'package:zcart_seller/domain/app/shop/user/i_shop_user_repo.dart';
 import 'package:zcart_seller/infrastructure/app/shop/user/shop_user_repo.dart';
 
 final shopUserProvider =
-    StateNotifierProvider.family<ShopUserNotifier, ShopUserState, int>(
-        (ref, userId) {
-  return ShopUserNotifier(ShopUserRepo(), userId);
+    StateNotifierProvider<ShopUserNotifier, ShopUserState>((ref) {
+  return ShopUserNotifier(ShopUserRepo());
 });
 
 class ShopUserNotifier extends StateNotifier<ShopUserState> {
   final IShopUserRepo shopUserRepo;
-  final int userId;
-  ShopUserNotifier(this.shopUserRepo, this.userId)
-      : super(ShopUserState.init());
+
+  ShopUserNotifier(this.shopUserRepo) : super(ShopUserState.init());
 
   getShopUser() async {
     state = state.copyWith(loading: true);
@@ -29,8 +27,7 @@ class ShopUserNotifier extends StateNotifier<ShopUserState> {
 
   createShopUser({required CreateShopUserModel createShopUser}) async {
     state = state.copyWith(loading: true);
-    final data =
-        await shopUserRepo.createShopUser(createShopUser: createShopUser);
+    final data = await shopUserRepo.createShopUser(user: createShopUser);
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),
       (r) => state.copyWith(

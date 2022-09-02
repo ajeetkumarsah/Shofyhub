@@ -9,26 +9,34 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_provider.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/get_atributes_provider.dart';
+import 'package:zcart_seller/application/app/form/category_list_provider.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/categories_model.dart';
+import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
-import 'package:search_choices/search_choices.dart';
+import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 
-class AddAttributesDialog extends HookConsumerWidget {
-  const AddAttributesDialog({Key? key}) : super(key: key);
+class AddAttributesPage extends HookConsumerWidget {
+  const AddAttributesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    final ValueNotifier<IList<int>> selectedCategories =
-        useState(const IListConst([]));
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        ref.read(categoryListProvider.notifier).loadData();
+      });
+      return null;
+    }, []);
+    final allCategories =
+        ref.watch(categoryListProvider.select((value) => value.dataList));
+
     final nameController = useTextEditingController();
     final orderController = useTextEditingController();
-
+    final ValueNotifier<IList<KeyValueData>> selectedCategories =
+        useState(const IListConst([]));
     final List<AttributeTypeModel> attributes =
         ref.watch(getAttributesProvider.select((value) => value.attributeType));
-    final categoriesList =
-        ref.watch(getAttributesProvider.select((value) => value.categories));
+
     final ValueNotifier<AttributeTypeModel> selectedAttributes =
         useState(attributes[0]);
 
@@ -106,35 +114,41 @@ class AddAttributesDialog extends HookConsumerWidget {
               SizedBox(height: 10.h),
               KTextField(controller: orderController, lebelText: 'Order'),
               SizedBox(height: 10.h),
-              SearchChoices<CategoriesModel>.multiple(
-                items: List<DropdownMenuItem<CategoriesModel>>.from(
-                    categoriesList.map<DropdownMenuItem<CategoriesModel>>(
-                        (e) => DropdownMenuItem<CategoriesModel>(
-                              value: e,
-                              child: Text(
-                                e.name,
-                                textDirection: TextDirection.rtl,
-                              ),
-                            ))),
-                selectedItems: selectedCategories.value.unlock,
-                hint: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text("Select Categories"),
-                ),
-                searchHint: "Select Categories",
-                onChanged: (List<int> value) {
-                  selectedCategories.value = value.lock;
-                  Logger.i(selectedCategories.value);
+              MultipleKeyValueSelector(
+                  title: "Select Categories",
+                  allData: allCategories,
+                  onSelect: (list) {
+                    selectedCategories.value = list;
+                  }),
+              // SearchChoices<CategoriesModel>.multiple(
+              //   items: List<DropdownMenuItem<CategoriesModel>>.from(
+              //       categoriesList.map<DropdownMenuItem<CategoriesModel>>(
+              //           (e) => DropdownMenuItem<CategoriesModel>(
+              //                 value: e,
+              //                 child: Text(
+              //                   e.name,
+              //                   textDirection: TextDirection.rtl,
+              //                 ),
+              //               ))),
+              //   selectedItems: selectedCategories.value.unlock,
+              //   hint: const Padding(
+              //     padding: EdgeInsets.all(12.0),
+              //     child: Text("Select Categories"),
+              //   ),
+              //   searchHint: "Select Categories",
+              //   onChanged: (List<int> value) {
+              //     selectedCategories.value = value.lock;
+              //     Logger.i(selectedCategories.value);
 
-                  //  selectedCategories.value = value;
-                },
-                closeButton: (selectedItems) {
-                  return (selectedItems.isNotEmpty
-                      ? "Save ${selectedItems.length == 1 ? '"${categoriesList[selectedItems.first].name}"' : '(${selectedItems.length})'}"
-                      : "Save without selection");
-                },
-                isExpanded: true,
-              ),
+              //     //  selectedCategories.value = value;
+              //   },
+              //   closeButton: (selectedItems) {
+              //     return (selectedItems.isNotEmpty
+              //         ? "Save ${selectedItems.length == 1 ? '"${categoriesList[selectedItems.first].name}"' : '(${selectedItems.length})'}"
+              //         : "Save without selection");
+              //   },
+              //   isExpanded: true,
+              // ),
               // MultiSelectDropDown(
               //   onOptionSelected: (List<ValueItem> selectedOptions) {
               //     selectedCategories.value = selectedOptions.lock;
@@ -160,12 +174,8 @@ class AddAttributesDialog extends HookConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      final selectedCategoryIds = selectedCategories.value
-                          .map((element) => categoriesList[element])
-                          .map((e) => e.id)
-                          .toList();
-
-                      final String endPoint = selectedCategoryIds
+                      final String endPoint = selectedCategories.value
+                          .map((element) => element.key)
                           .map((id) => "categories_ids[]=$id")
                           .join('&');
 

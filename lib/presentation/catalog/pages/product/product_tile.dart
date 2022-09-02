@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/Product/product_model.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/delete_product_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/product/update_product_page.dart';
 
 class ProductTile extends StatelessWidget {
   final ProductModel product;
@@ -25,7 +26,10 @@ class ProductTile extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
         icon: const Icon(Icons.more_horiz),
         onSelected: (index) {
-          if (index == 1) {}
+          if (index == 1) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => UpdateProductPage(productId: product.id)));
+          }
           if (index == 2) {
             showDialog(
                 context: context,

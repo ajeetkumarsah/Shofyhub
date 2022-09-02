@@ -6,7 +6,7 @@ abstract class IShopUserRepo {
   Future<Either<CleanFailure, List<GetShopUsersModel>>> getShopUser();
 
   Future<Either<CleanFailure, Unit>> createShopUser(
-      {required CreateShopUserModel createShopUser});
+      {required CreateShopUserModel user});
 
   Future<Either<CleanFailure, CreateShopUserModel>> shopUserDetails(
       {required int userId});

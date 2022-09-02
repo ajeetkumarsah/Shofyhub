@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_state.dart';
 import 'package:zcart_seller/domain/app/order/i_order_repo.dart';
@@ -105,13 +106,16 @@ class OrderNotifier extends StateNotifier<OrderState> {
     getOrders();
   }
 
-  archiveOrder(int orderId) async {
+  archiveOrder(int orderId, {VoidCallback? reloadList}) async {
     state = state.copyWith(loading: true);
     final data = await orderRepo.archiveOrder(orderId: orderId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getOrders();
+    if (reloadList != null) {
+      reloadList();
+    }
   }
 
   deleteOrder(int orderId) async {

@@ -1,6 +1,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/create_category_sub_group_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/i_category_sub_group_repo.dart';
 
 class CategorySubGroupRepo extends ICategorySubGroupRepo {
@@ -23,25 +24,27 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
         fromData: (json) => unit,
         body: null,
         endPoint:
-            'category-sub-group/create?category_group_id=${createCategorySubGroupModel.categoryGroupId}&name=${createCategorySubGroupModel.name}&slug=${createCategorySubGroupModel.slug}&meta_title=${createCategorySubGroupModel.metaTitle}&meta_description=${createCategorySubGroupModel.metaDescription}&active=${createCategorySubGroupModel.active}&order=${createCategorySubGroupModel.order}&images[cover]=');
+            'category-sub-group/create?category_group_id=${createCategorySubGroupModel.categoryGroupId}&name=${createCategorySubGroupModel.name}&slug=${createCategorySubGroupModel.slug}&description=${createCategorySubGroupModel.description}&meta_title=${createCategorySubGroupModel.metaTitle}&meta_description=${createCategorySubGroupModel.metaDescription}&active=${createCategorySubGroupModel.active}&order=${createCategorySubGroupModel.order}');
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> updateCategorySubGroup(
-      {required int categorySubGroupId,
-      required int successfullyUpdate,
-      required String name,
-      required String slug,
-      required String description,
-      required String metaTitle,
-      required String metaDescription,
-      required bool active,
-      required int order}) async {
+  Future<Either<CleanFailure, Unit>> updateCategorySubGroup({
+    required int categorySubGroupId,
+    required int categoryGroupId,
+    required String name,
+    required String slug,
+    required String description,
+    //required String metaTitle,
+    //required String metaDescription,
+    required bool active,
+  }) async {
     return cleanApi.put(
         fromData: (json) => unit,
         body: null,
         endPoint:
-            'category-sub-group/$categorySubGroupId/update?category_sub_group_update_successfully=$successfullyUpdate&name=$name&slug=$slug&description=$description&meta_title=$metaTitle&meta_description=$metaDescription&active=$active&order=$order&images[cover]=');
+            'category-sub-group/$categorySubGroupId/update?category_group_id=$categoryGroupId&name=$name&slug=$slug&description=$description&active=$active'
+        //'category-sub-group/$categorySubGroupId/update?category_group_id=$categoryGroupId&name=$name&slug=$slug&description=$description&meta_title=$metaTitle&meta_description=$metaDescription&active=$active&order=$order&images[cover]='
+        );
   }
 
   @override
@@ -69,5 +72,13 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
         fromData: (json) => unit,
         body: null,
         endPoint: 'category-sub-group/$categorySubGroupId/restore');
+  }
+
+  @override
+  Future<Either<CleanFailure, CategorySubGroupDetailsModel>>
+      getCategorySubGroupDetails({required int categorySubGroupId}) async {
+    return cleanApi.get(
+        fromData: (json) => CategorySubGroupDetailsModel.fromMap(json["data"]),
+        endPoint: 'category-sub-group/$categorySubGroupId');
   }
 }
