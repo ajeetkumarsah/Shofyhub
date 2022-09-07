@@ -1,8 +1,13 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
+import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
+import 'package:zcart_seller/application/app/order/order_details_state.dart';
+import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
 import 'package:zcart_seller/domain/app/order/order_status_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
@@ -23,6 +28,30 @@ class OrderStatusDialog extends HookConsumerWidget {
         .toList()[0]);
     final selectedStatus = useState(status);
     final notifyCustomer = useState(true);
+
+    ref.listen<OrderDetailsState>(orderDetailsProvider(orderId),
+        (previous, next) {
+      if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none()) {
+          ref.read(orderProvider(null).notifier).getOrders();
+          ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
+          ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
+          CherryToast.info(
+            title: const Text('Order Status Updated'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+        } else if (next.failure != CleanFailure.none()) {
+          CherryToast.info(
+            title: const Text('Something went wrong'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+          next.failure.showDialogue(context);
+        }
+      }
+    });
+    final loading = ref
+        .watch(orderDetailsProvider(orderId).select((value) => value.loading));
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -122,9 +151,12 @@ class OrderStatusDialog extends HookConsumerWidget {
                         .read(orderDetailsProvider(orderId).notifier)
                         .updateOrderStatus(
                             int.parse(selectedStatus.value.id), true);
-                    Navigator.of(context).pop();
                   },
-                  child: const Text('Update Status')),
+                  child: loading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Text('Update Status')),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();

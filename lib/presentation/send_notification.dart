@@ -117,7 +117,7 @@ class _SendNotificationState extends State<SendNotification> {
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                primary: Constants.appbarColor,
+                backgroundColor: Constants.appbarColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.r),
                 ),

@@ -157,7 +157,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 0
+                      backgroundColor: navigationSelect.value != 0
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(
@@ -191,7 +191,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 1
+                      backgroundColor: navigationSelect.value != 1
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(
@@ -225,7 +225,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 2
+                      backgroundColor: navigationSelect.value != 2
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(
@@ -259,7 +259,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 3
+                      backgroundColor: navigationSelect.value != 3
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(

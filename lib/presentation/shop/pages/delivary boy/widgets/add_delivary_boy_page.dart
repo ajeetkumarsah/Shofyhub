@@ -91,8 +91,10 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                   controller: nickNameController, lebelText: 'Nick Name'),
               SizedBox(height: 10.h),
               KTextField(controller: emailController, lebelText: 'Email'),
-              SizedBox(height: 10.h),
-              KTextField(controller: passwordController, lebelText: 'Password'),
+              if (delivaryBoyDetails == null) SizedBox(height: 10.h),
+              if (delivaryBoyDetails == null)
+                KTextField(
+                    controller: passwordController, lebelText: 'Password'),
               SizedBox(height: 10.h),
               KTextField(
                   controller: phoneNoController, lebelText: 'Phone Number'),

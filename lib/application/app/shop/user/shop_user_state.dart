@@ -7,7 +7,7 @@ import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 class ShopUserState extends Equatable {
   final bool loading;
   final CleanFailure failure;
-  final List<GetShopUsersModel> getShopUser;
+  final List<ShopUsersModel> getShopUser;
   const ShopUserState({
     required this.loading,
     required this.failure,
@@ -17,7 +17,7 @@ class ShopUserState extends Equatable {
   ShopUserState copyWith({
     bool? loading,
     CleanFailure? failure,
-    List<GetShopUsersModel>? getShopUser,
+    List<ShopUsersModel>? getShopUser,
     CreateShopUserModel? shopUser,
   }) {
     return ShopUserState(

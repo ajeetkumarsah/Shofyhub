@@ -9,14 +9,14 @@ import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.da
 class GetAtributesModel extends Equatable {
   final int id;
   final String name;
-  final AttributeTypeClass atributeType;
+  final AttributeTypeClass attributeType;
   final List<ValuesClass> values;
   final List<CategoriesClass> categories;
   final int order;
   const GetAtributesModel({
     required this.id,
     required this.name,
-    required this.atributeType,
+    required this.attributeType,
     required this.values,
     required this.categories,
     required this.order,
@@ -25,7 +25,7 @@ class GetAtributesModel extends Equatable {
   GetAtributesModel copyWith({
     int? id,
     String? name,
-    AttributeTypeClass? atributeType,
+    AttributeTypeClass? attributeType,
     List<ValuesClass>? values,
     List<CategoriesClass>? categories,
     int? order,
@@ -33,7 +33,7 @@ class GetAtributesModel extends Equatable {
     return GetAtributesModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      atributeType: atributeType ?? this.atributeType,
+      attributeType: attributeType ?? this.attributeType,
       values: values ?? this.values,
       categories: categories ?? this.categories,
       order: order ?? this.order,
@@ -44,7 +44,7 @@ class GetAtributesModel extends Equatable {
     return {
       'id': id,
       'name': name,
-      'atribute_type': atributeType.toMap(),
+      'attribute_type': attributeType.toMap(),
       'values': values.map((x) => x.toMap()).toList(),
       'categories': categories.map((x) => x.toMap()).toList(),
       'order': order,
@@ -55,7 +55,7 @@ class GetAtributesModel extends Equatable {
     return GetAtributesModel(
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
-      atributeType: AttributeTypeClass.fromMap(map['atribute_type']),
+      attributeType: AttributeTypeClass.fromMap(map['attribute_type']),
       values: List<ValuesClass>.from(
           map['values']?.map((x) => ValuesClass.fromMap(x)) ?? const []),
       categories: List<CategoriesClass>.from(
@@ -72,7 +72,7 @@ class GetAtributesModel extends Equatable {
 
   @override
   String toString() {
-    return 'GetAtributesModeel(id: $id, name: $name, atributeType: $atributeType, values: $values, categories: $categories, order: $order)';
+    return 'GetAtributesModel(id: $id, name: $name, attributeType: $attributeType, values: $values, categories: $categories, order: $order)';
   }
 
   @override
@@ -80,7 +80,7 @@ class GetAtributesModel extends Equatable {
     return [
       id,
       name,
-      atributeType,
+      attributeType,
       values,
       categories,
       order,
@@ -90,11 +90,9 @@ class GetAtributesModel extends Equatable {
   factory GetAtributesModel.init() => GetAtributesModel(
         id: 0,
         name: '',
-        atributeType: AttributeTypeClass.init(),
+        attributeType: AttributeTypeClass.init(),
         values: [ValuesClass.init()],
         categories: [CategoriesClass.init()],
         order: 0,
       );
-
-  static from(map) {}
 }

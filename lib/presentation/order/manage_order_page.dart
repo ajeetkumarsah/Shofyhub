@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
-import 'package:zcart_seller/application/app/delivary%20boys/delivary_provider.dart';
+import 'package:zcart_seller/application/app/delivary_boys/delivary_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
@@ -312,7 +312,7 @@ class ManageOrderPage extends HookConsumerWidget {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xffEA2264),
+                          backgroundColor: const Color(0xffEA2264),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.r),

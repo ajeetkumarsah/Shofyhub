@@ -2,6 +2,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zcart_seller/domain/auth/i_auth_repo.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
+import 'package:zcart_seller/domain/auth/registration_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,7 +12,25 @@ class AuthRepo extends IAuthRepo {
   Future<Either<CleanFailure, UserModel>> logIn(
       {required LogInBody body}) async {
     Logger.i("email = ${body.email}, pass ${body.password}");
+
     final data = await cleanApi.post(
+        failureHandler:
+            <UserModel>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'login',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'login',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'login', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => UserModel.fromMap(json["data"]),
         body: null,
         endPoint: "auth/login?email=${body.email}&password=${body.password}");
@@ -38,6 +57,50 @@ class AuthRepo extends IAuthRepo {
       final data = (event as DocumentSnapshot).data() as Map;
       Logger.i("token changed: ${data['token']}");
       cleanApi.setToken({'Authorization': "Bearer ${data['token']}"});
+    });
+  }
+
+  @override
+  Future<Either<CleanFailure, UserModel>> registration(
+      {required RegistrationBody body}) async {
+    final data = await cleanApi.post(
+        failureHandler:
+            <UserModel>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'registration', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'login',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'login',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'registration', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => UserModel.fromMap(json["data"]),
+        body: null,
+        endPoint:
+            "auth/register?email=${body.email}&shop_name=${body.shopName}&plan=${body.planId}&password=${body.password}&password_confirmation=${body.confirmPassword}&agree=${body.agree}");
+    return data.fold((l) => left(l), (r) async {
+      await FirebaseFirestore.instance
+          .collection('setting')
+          .doc('app-setting')
+          .set({'token': r.api_token});
+      final preferences = await SharedPreferences.getInstance();
+      listenForTokenChange();
+      preferences.setString('token', r.api_token);
+      cleanApi.setToken({'Authorization': 'Bearer ${r.api_token}'});
+      return right(r);
     });
   }
 }

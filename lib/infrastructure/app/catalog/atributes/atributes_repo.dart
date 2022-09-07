@@ -24,11 +24,7 @@ class AtributesRepo extends IAtributesRepo {
   Future<Either<CleanFailure, GetAtributesModel>> getAlAtributes(
       {required int attributeId}) async {
     return cleanApi.get(
-        fromData: ((json) => GetAtributesModel.from(
-              json['data'].map(
-                (e) => GetAtributesModel.fromMap(e),
-              ),
-            )),
+        fromData: (json) => GetAtributesModel.fromMap(json['data']),
         endPoint: "attribute/$attributeId");
   }
 

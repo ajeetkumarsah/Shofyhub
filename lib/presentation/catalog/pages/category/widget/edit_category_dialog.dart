@@ -1,3 +1,5 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
+import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 import 'package:zcart_seller/application/app/category/categories/category_family_provider.dart';
 import 'package:zcart_seller/application/app/category/categories/category_family_state.dart';
 import 'package:zcart_seller/application/app/form/attribute_list_provider.dart';
@@ -32,7 +35,8 @@ class EditCategoryDialog extends HookConsumerWidget {
       });
       return null;
     }, []);
-
+    final ValueNotifier<IList<KeyValueData>> selectedAttributes =
+        useState(const IListConst([]));
     final nameController = useTextEditingController();
     final descController = useTextEditingController();
 
@@ -48,15 +52,35 @@ class EditCategoryDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         nameController.text = next.categoryDetails.name;
         descController.text = next.categoryDetails.description;
-
+        selectedAttributes.value =
+            selectedAttributes.value.addAll(next.categoryDetails.attributes);
         active.value = next.categoryDetails.featured;
+        Logger.i(selectedAttributes.value);
       }
     });
-    final ValueNotifier<IList<KeyValueData>> selectedAttributes =
-        useState(const IListConst([]));
 
+    ref.listen<CategoryState>(categoryProvider(categoryId), (previous, next) {
+      if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          CherryToast.info(
+            title: const Text('Category added'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+
+          buttonPressed.value = false;
+        } else if (next.failure != CleanFailure.none()) {
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
+        }
+      }
+    });
     return AlertDialog(
-      title: const Text('Edit Category Group'),
+      title: const Text('Edit Category'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -114,7 +138,6 @@ class EditCategoryDialog extends HookConsumerWidget {
             ref
                 .read(categoryProvider(category.categorySubGroupId).notifier)
                 .updateCategory(updatecategoryModel);
-            Navigator.of(context).pop();
           },
           child: const Text('Save'),
         ),

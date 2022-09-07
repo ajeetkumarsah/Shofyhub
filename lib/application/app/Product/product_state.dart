@@ -2,11 +2,11 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/Product/create_product/manufacturer_id.dart';
-import 'package:zcart_seller/domain/app/Product/create_product/tag_list.dart';
+import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
+import 'package:zcart_seller/domain/app/product/create_product/tag_list.dart';
 
-import '../../../domain/app/Product/create_product/gtin_types_model.dart';
-import '../../../domain/app/Product/product_model.dart';
+import '../../../domain/app/product/create_product/gtin_types_model.dart';
+import '../../../domain/app/product/product_model.dart';
 
 class ProductState extends Equatable {
   final bool loading;

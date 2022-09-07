@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/catalog/attribute%20values/attribut
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_state.dart';
 import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
 class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
   final int attributeId;
@@ -40,33 +41,56 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           Navigator.of(context).pop();
           CherryToast.info(
-            title: const Text('Attribute value added'),
+            title: attributeValues != null
+                ? const Text('Attribute value updated')
+                : const Text('Attribute value added'),
             animationType: AnimationType.fromTop,
           ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-          Navigator.of(context).pop();
-          next.failure.showDialogue(context);
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
         }
       }
     });
+    final formKey = useMemoized(() => GlobalKey<FormState>());
     return AlertDialog(
       title: attributeValues != null
           ? const Text('Update Attribute Values')
           : const Text('Add Attribute Values'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          KTextField(controller: valueController, lebelText: 'Value'),
-          // SizedBox(height: 10.h),
-          // KTextField(
-          //     controller: attributeIdController, lebelText: 'Attribute id'),
-          SizedBox(height: 10.h),
-          KTextField(controller: colorController, lebelText: 'Color'),
-          SizedBox(height: 10.h),
-          KTextField(controller: orderController, lebelText: 'Order'),
-        ],
+      content: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('* Required fields.',
+                style: TextStyle(color: Theme.of(context).hintColor)),
+            SizedBox(height: 10.h),
+            KTextField(
+              controller: valueController,
+              lebelText: 'Value *',
+              validator: (text) =>
+                  ValidatorLogic.requiredField(text, fieldName: 'Value'),
+            ),
+            // SizedBox(height: 10.h),
+            // KTextField(
+            //     controller: attributeIdController, lebelText: 'Attribute id'),
+            SizedBox(height: 10.h),
+            KTextField(controller: colorController, lebelText: 'Color'),
+            SizedBox(height: 10.h),
+            KTextField(
+              controller: orderController,
+              lebelText: 'Order',
+              numberFormatters: true,
+            ),
+          ],
+        ),
       ),
       actions: [
         TextButton(
@@ -81,39 +105,34 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             if (attributeValues == null) {
-              if (valueController.text.isNotEmpty &&
-                  colorController.text.isNotEmpty &&
-                  orderController.text.isNotEmpty) {
+              if (formKey.currentState?.validate() ?? false) {
                 buttonPressed.value = true;
                 ref
                     .read(attributeValuesProvider(attributeId).notifier)
-                    .createAttributeValue(valueController.text, attributeId,
-                        colorController.text, int.parse(orderController.text));
-              } else {
-                CherryToast.info(
-                  title: const Text('Please fill all fields'),
-                  animationType: AnimationType.fromTop,
-                ).show(context);
+                    .createAttributeValue(
+                        valueController.text,
+                        attributeId,
+                        colorController.text,
+                        orderController.text.isEmpty
+                            ? 0
+                            : int.parse(orderController.text));
               }
             } else {
-              if (valueController.text.isNotEmpty &&
-                  colorController.text.isNotEmpty &&
-                  orderController.text.isNotEmpty) {
-                buttonPressed.value = true;
-                ref
-                    .read(attributeValuesProvider(attributeId).notifier)
-                    .updateAttributeValue(
-                        attributeId: attributeId,
-                        attributeValueId: attributeValues!.id,
-                        color: colorController.text,
-                        order: int.parse(orderController.text),
-                        value: valueController.text);
-              } else {
-                CherryToast.info(
-                  title: const Text('Please fill all fields'),
-                  animationType: AnimationType.fromTop,
-                ).show(context);
-              }
+              buttonPressed.value = true;
+              ref
+                  .read(attributeValuesProvider(attributeId).notifier)
+                  .updateAttributeValue(
+                      attributeId: attributeId,
+                      attributeValueId: attributeValues!.id,
+                      color: colorController.text.isEmpty
+                          ? attributeValues!.color
+                          : colorController.text,
+                      order: orderController.text.isEmpty
+                          ? 0
+                          : int.parse(orderController.text),
+                      value: valueController.text.isEmpty
+                          ? attributeValues!.value
+                          : valueController.text);
             }
           },
           child: attributeValues != null

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 
 class CategoriesClass extends Equatable {
   final int id;
@@ -79,6 +80,8 @@ class CategoriesClass extends Equatable {
       featureImage,
     ];
   }
+
+  KeyValueData toKeyValue() => KeyValueData(key: id.toString(), value: name);
 
   factory CategoriesClass.init() => const CategoriesClass(
         id: 0,

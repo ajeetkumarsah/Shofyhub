@@ -3,7 +3,7 @@ import 'package:zcart_seller/domain/app/shop/user/create_shop_user_model.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 
 abstract class IShopUserRepo {
-  Future<Either<CleanFailure, List<GetShopUsersModel>>> getShopUser();
+  Future<Either<CleanFailure, List<ShopUsersModel>>> getShopUser();
 
   Future<Either<CleanFailure, Unit>> createShopUser(
       {required CreateShopUserModel user});
@@ -18,9 +18,9 @@ abstract class IShopUserRepo {
     required String name,
     required String niceName,
     required String email,
-    required String password,
-    required String dob,
-    required String sex,
+    required int active,
+    // required String dob,
+    // required String sex,
     required String description,
   });
 

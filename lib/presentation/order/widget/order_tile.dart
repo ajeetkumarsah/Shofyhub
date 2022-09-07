@@ -216,7 +216,7 @@ class OrderTile extends StatelessWidget {
                     width: 240.w,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: const Color(0xffE5EFFA),
+                          backgroundColor: const Color(0xffE5EFFA),
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               width: 1.w,
@@ -246,7 +246,7 @@ class OrderTile extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(0),
-                          primary: const Color(0xffE5EFFA),
+                          backgroundColor: const Color(0xffE5EFFA),
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
                               width: 1.w,

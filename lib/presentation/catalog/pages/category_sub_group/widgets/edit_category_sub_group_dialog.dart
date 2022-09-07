@@ -63,8 +63,12 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
             buttonPressed.value = false;
           }
         } else if (next.failure != CleanFailure.none()) {
-          Navigator.of(context).pop();
-          next.failure.showDialogue(context);
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
         }
       }
     });

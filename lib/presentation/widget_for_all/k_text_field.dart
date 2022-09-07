@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class KTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String lebelText;
   final Widget? prefixIcon;
+  final String? Function(String?)? validator;
   final TextEditingController controller;
 
   const KTextField(
@@ -12,16 +14,19 @@ class KTextField extends StatelessWidget {
       required this.controller,
       required this.lebelText,
       this.prefixIcon,
+      this.validator,
       this.suffixIcon,
+      this.numberFormatters = false,
       this.obscureText = false})
       : super(key: key);
-  final bool obscureText;
+  final bool obscureText, numberFormatters;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       style: const TextStyle(fontWeight: FontWeight.bold),
+      validator: validator,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         labelText: lebelText,
@@ -31,6 +36,10 @@ class KTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
       ),
       obscureText: obscureText,
+      inputFormatters: [
+        if (numberFormatters)
+          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+      ],
     );
   }
 }

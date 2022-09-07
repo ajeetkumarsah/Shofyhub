@@ -1,3 +1,5 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -5,12 +7,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:search_choices/search_choices.dart';
-import 'package:zcart_seller/application/app/Product/product_provider.dart';
+import 'package:zcart_seller/application/app/form/country_provider.dart';
+import 'package:zcart_seller/application/app/product/product_provider.dart';
 import 'package:zcart_seller/application/app/form/category_list_provider.dart';
-import 'package:zcart_seller/domain/app/Product/create_product/create_product_model.dart';
-import 'package:zcart_seller/domain/app/Product/create_product/gtin_types_model.dart';
-import 'package:zcart_seller/domain/app/Product/create_product/manufacturer_id.dart';
-import 'package:zcart_seller/domain/app/Product/create_product/tag_list.dart';
+import 'package:zcart_seller/application/app/product/product_state.dart';
+import 'package:zcart_seller/domain/app/product/create_product/create_product_model.dart';
+import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.dart';
+import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
+import 'package:zcart_seller/domain/app/product/create_product/tag_list.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 
@@ -31,6 +35,8 @@ class AddProductPage extends HookConsumerWidget {
 
     final manufacturerIdList =
         ref.watch(productProvider.select((value) => value.manufacturerId));
+    final countryList =
+        ref.watch(countryProvider.select((value) => value.dataList));
 
     final nameController = useTextEditingController();
     final brand = useTextEditingController();
@@ -39,9 +45,11 @@ class AddProductPage extends HookConsumerWidget {
     final gtin = useTextEditingController();
     final description = useTextEditingController();
 
-    final originCountry = useTextEditingController();
+    // final originCountry = useTextEditingController();
 
     final ValueNotifier<GtinTypes> selectedGtin = useState(gtinList[0]);
+    final ValueNotifier<KeyValueData> selectedCountry =
+        useState(countryList[0]);
     final ValueNotifier<ManufacturerId> selectedMenufectur =
         useState(manufacturerIdList[0]);
     final allCategories =
@@ -56,6 +64,23 @@ class AddProductPage extends HookConsumerWidget {
       });
       return null;
     }, []);
+    final buttonPressed = useState(false);
+    ref.listen<ProductState>(productProvider, (previous, next) {
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          Navigator.of(context).pop();
+          CherryToast.info(
+            title: const Text('Product added'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+
+          buttonPressed.value = false;
+        } else if (next.failure != CleanFailure.none()) {
+          Navigator.of(context).pop();
+          next.failure.showDialogue(context);
+        }
+      }
+    });
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
@@ -75,7 +100,12 @@ class AddProductPage extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10.h),
-              KTextField(controller: nameController, lebelText: 'Name'),
+              Text(
+                '* Required fields.',
+                style: TextStyle(color: Theme.of(context).hintColor),
+              ),
+              SizedBox(height: 10.h),
+              KTextField(controller: nameController, lebelText: 'Name *'),
               SizedBox(height: 10.h),
               KTextField(controller: brand, lebelText: 'Brand'),
               SizedBox(height: 10.h),
@@ -89,6 +119,7 @@ class AddProductPage extends HookConsumerWidget {
               KTextField(
                 controller: mpn,
                 lebelText: 'mpn',
+                numberFormatters: true,
               ),
               SizedBox(
                 height: 10.h,
@@ -137,6 +168,7 @@ class AddProductPage extends HookConsumerWidget {
               KTextField(
                 controller: gtin,
                 lebelText: 'gtin',
+                numberFormatters: true,
               ),
               SizedBox(
                 height: 10.h,
@@ -148,10 +180,12 @@ class AddProductPage extends HookConsumerWidget {
                 height: 10.h,
               ),
               SizedBox(
-                height: 50.h,
+                // height: 50.h,
                 child: DropdownButtonHideUnderline(
                   child: DropdownButtonFormField(
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 15),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(width: 1.w),
                         borderRadius: BorderRadius.circular(10.r),
@@ -190,9 +224,43 @@ class AddProductPage extends HookConsumerWidget {
               SizedBox(
                 height: 10.h,
               ),
-              KTextField(
-                controller: originCountry,
-                lebelText: 'originCountry',
+              const Text(
+                "Origin country:",
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              SizedBox(
+                height: 50.h,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 1.w),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                    ),
+                    style: TextStyle(color: Colors.grey.shade800),
+                    isExpanded: true,
+                    value: selectedCountry.value,
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    items: countryList.map<DropdownMenuItem<KeyValueData>>(
+                        (KeyValueData value) {
+                      return DropdownMenuItem<KeyValueData>(
+                        value: value,
+                        child: Text(
+                          value.value,
+                          style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (KeyValueData? newValue) {
+                      selectedCountry.value = newValue!;
+                    },
+                  ),
+                ),
               ),
               SizedBox(
                 height: 10.h,
@@ -228,7 +296,7 @@ class AddProductPage extends HookConsumerWidget {
               ),
               SizedBox(height: 10.h),
               MultipleKeyValueSelector(
-                  title: "Select Categories",
+                  title: "Select Categories *",
                   allData: allCategories,
                   onSelect: (list) {
                     selectedCategories.value = list;
@@ -259,36 +327,51 @@ class AddProductPage extends HookConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Logger.i(nameController.text
-                          .toLowerCase()
-                          .replaceAll(RegExp(r' '), '-'));
-                      final product = CreateProductModel(
-                        manufacturerId: int.parse(selectedMenufectur.value.id),
-                        brand: brand.text,
-                        name: nameController.text,
-                        modeNumber: modelNumer.text,
-                        mpn: mpn.text,
-                        gtin: gtin.text,
-                        gtinType: selectedGtin.value.value,
-                        description: description.text,
-                        originCountry: originCountry.text,
-                        slug: nameController.text
-                            .toLowerCase()
-                            .replaceAll(RegExp(r' '), '-'),
-                        categoryList: selectedCategories.value
-                            .map((element) => int.tryParse(element.key) ?? 0)
-                            .toList(),
-                        tagList: selectedTags.value.unlock,
-                        active: active.value,
-                        requireShipping: shipping.value,
-                      );
-                      ref.read(productProvider.notifier).createProduct(product);
-                      Navigator.of(context).pop();
+                      if (nameController.text.isNotEmpty &&
+                          description.text.isNotEmpty &&
+                          brand.text.isNotEmpty &&
+                          modelNumer.text.isNotEmpty &&
+                          mpn.text.isNotEmpty &&
+                          gtin.text.isNotEmpty &&
+                          selectedTags.value.isNotEmpty &&
+                          selectedCategories.value.isNotEmpty) {
+                        final product = CreateProductModel(
+                          manufacturerId:
+                              int.parse(selectedMenufectur.value.id),
+                          brand: brand.text,
+                          name: nameController.text,
+                          modeNumber: modelNumer.text,
+                          mpn: mpn.text,
+                          gtin: gtin.text,
+                          gtinType: selectedGtin.value.value,
+                          description: description.text,
+                          originCountry: selectedCountry.value.key,
+                          slug: nameController.text
+                              .toLowerCase()
+                              .replaceAll(RegExp(r' '), '-'),
+                          categoryList: selectedCategories.value
+                              .map((element) => int.tryParse(element.key) ?? 0)
+                              .toList(),
+                          tagList: selectedTags.value.unlock,
+                          active: active.value,
+                          requireShipping: shipping.value,
+                        );
+                        ref
+                            .read(productProvider.notifier)
+                            .createProduct(product);
+                        buttonPressed.value = true;
+                      } else {
+                        CherryToast.info(
+                          title: const Text('Fill all fields'),
+                          animationType: AnimationType.fromTop,
+                        ).show(context);
+                      }
                     },
                     child: const Text('Create'),
                   ),
                 ],
               ),
+              SizedBox(height: 15.h),
             ],
           ),
         ),

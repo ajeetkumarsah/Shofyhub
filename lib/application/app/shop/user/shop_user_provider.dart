@@ -35,6 +35,7 @@ class ShopUserNotifier extends StateNotifier<ShopUserState> {
         failure: CleanFailure.none(),
       ),
     );
+    getShopUser();
   }
 
   shopUserDetails({required int userId}) async {
@@ -54,9 +55,9 @@ class ShopUserNotifier extends StateNotifier<ShopUserState> {
     required String name,
     required String niceName,
     required String email,
-    required String password,
-    required String dob,
-    required String sex,
+    required int active,
+    // required String dob,
+    // required String sex,
     required String description,
   }) async {
     state = state.copyWith(loading: true);
@@ -67,12 +68,13 @@ class ShopUserNotifier extends StateNotifier<ShopUserState> {
         name: name,
         niceName: niceName,
         email: email,
-        password: password,
-        dob: dob,
-        sex: sex,
+        active: active,
+        // dob: dob,
+        // sex: sex,
         description: description);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getShopUser();
   }
 
   trashShopUser({required int userId}) async {
@@ -80,5 +82,6 @@ class ShopUserNotifier extends StateNotifier<ShopUserState> {
     final data = await shopUserRepo.trashShopUser(userId: userId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getShopUser();
   }
 }

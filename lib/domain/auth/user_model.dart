@@ -67,7 +67,7 @@ class UserModel extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'id': id,
       'shop_id': shop_id,
       'role_id': role_id,
@@ -86,26 +86,26 @@ class UserModel extends Equatable {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] as int,
-      shop_id: map['shop_id'] as int,
-      role_id: map['role_id'] as int,
-      name: map['name'] as String,
-      nice_name: map['nice_name'] as String,
-      dob: map['dob'] as String,
-      sex: map['sex'] as String,
-      description: map['description'] as String,
-      active: map['active'] as bool,
-      email: map['email'] as String,
-      member_since: map['member_since'] as String,
-      avatar: map['avatar'] as String,
-      api_token: map['api_token'] as String,
+      id: map['id']?.toInt() ?? 0,
+      shop_id: map['shop_id']?.toInt() ?? 0,
+      role_id: map['role_id']?.toInt() ?? 0,
+      name: map['name'] ?? '',
+      nice_name: map['nice_name'] ?? '',
+      dob: map['dob'] ?? '',
+      sex: map['sex'] ?? '',
+      description: map['description'] ?? '',
+      active: map['active'] ?? false,
+      email: map['email'] ?? '',
+      member_since: map['member_since'] ?? '',
+      avatar: map['avatar'] ?? '',
+      api_token: map['api_token'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+      UserModel.fromMap(json.decode(source));
 
   @override
   bool get stringify => true;
@@ -143,4 +143,9 @@ class UserModel extends Equatable {
       member_since: '',
       avatar: '',
       api_token: '');
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, shop_id: $shop_id, role_id: $role_id, name: $name, nice_name: $nice_name, dob: $dob, sex: $sex, description: $description, active: $active, email: $email, member_since: $member_since, avatar: $avatar, api_token: $api_token)';
+  }
 }

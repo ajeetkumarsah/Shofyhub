@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/category/category%20sub%20group/cat
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/create_category_sub_group_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
 class AddCategorySubGroupDialog extends HookConsumerWidget {
   final int categoryGroupId;
@@ -29,8 +30,8 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
     ref.listen<CategorySubGroupState>(categorySubGroupProvider(categoryGroupId),
         (previous, next) {
       if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
-          Navigator.of(context).pop();
           CherryToast.info(
             title: const Text('Category sub group added'),
             animationType: AnimationType.fromTop,
@@ -38,44 +39,73 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-          Navigator.of(context).pop();
-          next.failure.showDialogue(context);
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
         }
       }
     });
+    final loading = ref.watch(categorySubGroupProvider(categoryGroupId)
+        .select((value) => value.loading));
+    final formKey = useMemoized(() => GlobalKey<FormState>());
     return AlertDialog(
       title: const Text('Add Category Sub Group'),
       insetPadding: EdgeInsets.zero,
       content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            KTextField(controller: nameController, lebelText: 'Name'),
-            SizedBox(
-              height: 10.h,
-              width: 300.w,
-            ),
-            KTextField(controller: descController, lebelText: 'Description'),
-            SizedBox(height: 10.h),
-            KTextField(
-                controller: metaTitleController, lebelText: 'Meta title'),
-            SizedBox(height: 10.h),
-            KTextField(
-                controller: metaDescController, lebelText: 'Meta description'),
-            SizedBox(height: 10.h),
-            KTextField(controller: orderController, lebelText: 'Order'),
-            SizedBox(height: 10.h),
-            Row(
-              children: [
-                const Text('Active:'),
-                Checkbox(
-                    value: active.value,
-                    onChanged: (value) {
-                      active.value = value!;
-                    }),
-              ],
-            ),
-          ],
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('* Required fields.',
+                  style: TextStyle(color: Theme.of(context).hintColor)),
+              SizedBox(height: 10.h),
+              KTextField(
+                controller: nameController,
+                lebelText: 'Name *  ',
+                validator: (text) =>
+                    ValidatorLogic.requiredField(text, fieldName: 'Name'),
+              ),
+              SizedBox(
+                height: 10.h,
+                width: 300.w,
+              ),
+              KTextField(
+                controller: descController,
+                lebelText: 'Description *  ',
+                validator: (text) =>
+                    ValidatorLogic.requiredField(text, fieldName: 'Name'),
+              ),
+              SizedBox(height: 10.h),
+              KTextField(
+                  controller: metaTitleController, lebelText: 'Meta title'),
+              SizedBox(height: 10.h),
+              KTextField(
+                  controller: metaDescController,
+                  lebelText: 'Meta description'),
+              SizedBox(height: 10.h),
+              KTextField(
+                controller: orderController,
+                lebelText: 'Order',
+                numberFormatters: true,
+              ),
+              SizedBox(height: 10.h),
+              Row(
+                children: [
+                  const Text('Active:'),
+                  Checkbox(
+                      value: active.value,
+                      onChanged: (value) {
+                        active.value = value!;
+                      }),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
@@ -90,10 +120,7 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
         ),
         TextButton(
           onPressed: () {
-            if (nameController.text.isNotEmpty &&
-                descController.text.isNotEmpty &&
-                metaTitleController.text.isNotEmpty &&
-                metaDescController.text.isNotEmpty) {
+            if (formKey.currentState?.validate() ?? false) {
               final createCategorySubGroupModel = CreateCategorySubGroupModel(
                 categoryGroupId: categoryGroupId,
                 name: nameController.text,
@@ -104,21 +131,19 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                 metaTitle: metaTitleController.text,
                 metaDescription: metaDescController.text,
                 active: active.value,
-                order: int.parse(orderController.text),
+                order: orderController.text.isNotEmpty
+                    ? int.parse(orderController.text)
+                    : 0,
               );
 
               buttonPressed.value = true;
               ref
                   .read(categorySubGroupProvider(categoryGroupId).notifier)
                   .createCategorySubGroup(createCategorySubGroupModel);
-            } else {
-              CherryToast.info(
-                title: const Text('Please fill all fields'),
-                animationType: AnimationType.fromTop,
-              ).show(context);
             }
           },
-          child: const Text('Add'),
+          child:
+              loading ? const CircularProgressIndicator() : const Text('Add'),
         ),
       ],
     );

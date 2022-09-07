@@ -106,7 +106,7 @@ class _MyRadioState extends State<MyRadio> {
           ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
-              primary: Colors.red,
+              backgroundColor: Colors.red,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.r),
               ),

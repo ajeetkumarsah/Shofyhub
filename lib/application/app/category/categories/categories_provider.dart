@@ -6,7 +6,7 @@ import 'package:zcart_seller/domain/app/category/categories/create_category_mode
 import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
 
 import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
-import 'package:zcart_seller/infrastructure/app/category%20management/categories/category_repo.dart';
+import 'package:zcart_seller/infrastructure/app/category_management/categories/category_repo.dart';
 
 final categoryProvider =
     StateNotifierProvider.family<CategoryNotifier, CategoryState, int>(

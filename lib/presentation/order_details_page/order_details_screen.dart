@@ -3,13 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
-import 'package:zcart_seller/application/app/delivary%20boys/delivary_provider.dart';
+import 'package:zcart_seller/application/app/delivary_boys/delivary_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/order/fullfill_order_dialog.dart';
-import 'package:zcart_seller/presentation/order/proceed_order_page.dart';
 import 'package:zcart_seller/presentation/order/widget/add_admin_note.dart';
 import 'package:zcart_seller/presentation/order/widget/archive_order_confirmation.dart';
 import 'package:zcart_seller/presentation/order/widget/cancle_order_confirmation_dialog.dart';
@@ -509,7 +507,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: const Color(0xffFFD0D0),
+                    backgroundColor: const Color(0xffFFD0D0),
                     shape: const StadiumBorder()),
                 child: const Text(
                   'Cancel',
@@ -529,7 +527,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: const Color(0xff683CB7),
+                    backgroundColor: const Color(0xff683CB7),
                     shape: const StadiumBorder()),
                 child: Text(
                   orderDetails.payment_status == "UNPAID"

@@ -2,7 +2,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_details_state.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/i_category_sub_group_repo.dart';
-import 'package:zcart_seller/infrastructure/app/category%20management/category%20sub%20group/category_sub_group_repo.dart';
+import 'package:zcart_seller/infrastructure/app/category_management/category%20sub%20group/category_sub_group_repo.dart';
 
 final categorySubGroupDetalsProvider = StateNotifierProvider.family.autoDispose<
     CategorySubGroupDetalsNotifier,

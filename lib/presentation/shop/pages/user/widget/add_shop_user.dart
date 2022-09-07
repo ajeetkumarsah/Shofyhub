@@ -36,7 +36,7 @@ class AddShopUserPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Delivary Boy Added'),
+            title: const Text('User Added'),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {

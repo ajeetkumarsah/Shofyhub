@@ -1,10 +1,11 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/Product/product_state.dart';
-import 'package:zcart_seller/domain/app/Product/create_product/create_product_model.dart';
+import 'package:zcart_seller/application/app/product/product_state.dart';
+import 'package:zcart_seller/domain/app/product/create_product/create_product_model.dart';
+import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
 import 'package:zcart_seller/infrastructure/app/Products/product_repo.dart';
 
-import '../../../domain/app/Product/i_product_repo.dart';
+import '../../../domain/app/product/i_product_repo.dart';
 
 final productProvider =
     StateNotifierProvider<ProductNotifier, ProductState>((ref) {
@@ -32,10 +33,11 @@ class ProductNotifier extends StateNotifier<ProductState> {
     getProducts();
   }
 
-  updateProduct(CreateProductModel updateDetails, int productId) async {
+  updateProduct(UpdateProductModel updateDetails) async {
     state = state.copyWith(loading: true);
     final data = await productRepo.updateProduct(
-        updateDetails: updateDetails, productId: productId);
+      updateDetails: updateDetails,
+    );
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),
       (r) => state.copyWith(

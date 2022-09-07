@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/Product/product_provider.dart';
+import 'package:zcart_seller/application/app/product/product_provider.dart';
 
 class DeleteProductDialog extends HookConsumerWidget {
   final int productId;

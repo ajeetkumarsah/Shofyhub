@@ -26,6 +26,16 @@ class EditAttributesDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        ref
+            .read(getAttributesProvider.notifier)
+            .getAlAtributes(attributeId: attribute.id);
+      });
+      return null;
+    }, []);
+    final attributeDetails =
+        ref.watch(getAttributesProvider.select((value) => value.atributeId));
     final nameController = useTextEditingController();
     final orderController = useTextEditingController();
 
@@ -48,11 +58,12 @@ class EditAttributesDialog extends HookConsumerWidget {
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.info(
-            title: const Text('Something went wrong'),
-            animationType: AnimationType.fromTop,
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
           ).show(context);
-          // next.failure.showDialogue(context);
         }
       }
     });
@@ -62,6 +73,15 @@ class EditAttributesDialog extends HookConsumerWidget {
         ref.read(categoryListProvider.notifier).loadData();
         nameController.text = attribute.name;
         orderController.text = attribute.order.toString();
+        selectedAttributeType.value = attributeTypes
+            .where((element) => element.name == attribute.attributeType)
+            .toList()[0];
+
+        // selectedCategories.value.addAll(allCategories.where((e) =>
+        //     e.key ==
+        //     attributeDetails.categories
+        //         .map((value) => value.id.toString())
+        //         .toList()));
       });
       return null;
     }, []);
@@ -121,14 +141,22 @@ class EditAttributesDialog extends HookConsumerWidget {
                 ),
               ),
               SizedBox(height: 10.h),
-              KTextField(controller: orderController, lebelText: 'Order'),
+              KTextField(
+                controller: orderController,
+                lebelText: 'Order',
+                numberFormatters: true,
+              ),
               SizedBox(height: 10.h),
-              MultipleKeyValueSelector(
-                  title: "Select Categories",
-                  allData: allCategories,
-                  onSelect: (list) {
-                    selectedCategories.value = list;
-                  }),
+              if (allCategories.isNotEmpty)
+                MultipleKeyValueSelector(
+                    title: "Select Categories",
+                    initialData: attributeDetails.categories
+                        .map((e) => e.toKeyValue())
+                        .toIList(),
+                    allData: allCategories,
+                    onSelect: (list) {
+                      selectedCategories.value = list;
+                    }),
               Row(
                 children: [
                   TextButton(
@@ -149,10 +177,14 @@ class EditAttributesDialog extends HookConsumerWidget {
                       Logger.i(endPoint);
                       ref.read(atributesProvider.notifier).updateAtributes(
                             attributeId: attribute.id,
-                            name: nameController.text,
+                            name: nameController.text.isEmpty
+                                ? attribute.name
+                                : nameController.text,
                             attributeTypeId: selectedAttributeType.value.id,
                             categoriesIds: endPoint,
-                            order: orderController.text,
+                            order: orderController.text.isEmpty
+                                ? attribute.order.toString()
+                                : orderController.text,
                           );
                     },
                     child: const Text('Save'),

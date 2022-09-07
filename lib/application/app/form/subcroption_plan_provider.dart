@@ -5,15 +5,15 @@ import 'package:zcart_seller/infrastructure/app/form/form_repo.dart';
 import 'key_value_form_state.dart';
 
 final subscriptionplanProvider =
-    StateNotifierProvider.autoDispose<SubcriptionPlanNotifier, KeyValueFormState>(
-        (ref) {
+    StateNotifierProvider<SubcriptionPlanNotifier, KeyValueFormState>((ref) {
   return SubcriptionPlanNotifier(repo: FormRepo());
 });
 
 class SubcriptionPlanNotifier extends StateNotifier<KeyValueFormState> {
   final IFormRepo repo;
-  SubcriptionPlanNotifier({required this.repo}): super(KeyValueFormState.init());
-  
+  SubcriptionPlanNotifier({required this.repo})
+      : super(KeyValueFormState.init());
+
   getPlans() async {
     state = state.copyWith(loading: true);
     final data = await repo.getPlans();

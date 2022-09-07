@@ -8,7 +8,7 @@ import 'package:zcart_seller/application/app/order/order_status_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/order/order_list_page.dart';
 
-import '../../application/app/delivary boys/delivary_provider.dart';
+import '../../application/app/delivary_boys/delivary_provider.dart';
 
 class OrderMainPage extends HookConsumerWidget {
   final int index;

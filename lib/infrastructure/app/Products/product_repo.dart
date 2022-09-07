@@ -1,11 +1,12 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/Product/create_product/manufacturer_id.dart';
+import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
+import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
 
-import '../../../domain/app/Product/create_product/create_product_model.dart';
-import '../../../domain/app/Product/create_product/gtin_types_model.dart';
-import '../../../domain/app/Product/create_product/tag_list.dart';
-import '../../../domain/app/Product/i_product_repo.dart';
-import '../../../domain/app/Product/product_model.dart';
+import '../../../domain/app/product/create_product/create_product_model.dart';
+import '../../../domain/app/product/create_product/gtin_types_model.dart';
+import '../../../domain/app/product/create_product/tag_list.dart';
+import '../../../domain/app/product/i_product_repo.dart';
+import '../../../domain/app/product/product_model.dart';
 
 class ProductRepo extends IProductRepo {
   final cleanApi = CleanApi.instance;
@@ -27,13 +28,11 @@ class ProductRepo extends IProductRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> updateProduct(
-      {required CreateProductModel updateDetails,
-      required int productId}) async {
-    return cleanApi.get(
-        fromData: (json) => unit,
-        endPoint:
-            'product/$productId/update?manufacturer_id=${updateDetails.manufacturerId}&brand=${updateDetails.brand}&name=${updateDetails.name}&model_number=${updateDetails.modeNumber}&mpn=${updateDetails.mpn}&gtin=${updateDetails.gtin}&gtin_type=${updateDetails.gtinType}&description=${updateDetails.description}&origin_country=${updateDetails.originCountry}&slug=${updateDetails.slug}&category_list[]=${updateDetails.categoryList}&active=${updateDetails.active}');
+  Future<Either<CleanFailure, Unit>> updateProduct({
+    required UpdateProductModel updateDetails,
+  }) async {
+    return cleanApi.put(
+        fromData: (json) => unit, body: null, endPoint: updateDetails.endPoint);
   }
 
   @override

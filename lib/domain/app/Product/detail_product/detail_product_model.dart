@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/Product/Detail%20Product/manufacturer_model.dart';
+import 'manufacturer_model.dart';
 
 class DetailProductModel extends Equatable {
   final int id;
@@ -73,48 +73,47 @@ class DetailProductModel extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+    return {
       'id': id,
       'slug': slug,
       'name': name,
-      'modelNumber': modelNumber,
+      'model_number': modelNumber,
       'gtin': gtin,
-      'gtinType': gtinType,
+      'gtin_type': gtinType,
       'mpn': mpn,
       'brand': brand,
       'manufacturer': manufacturer.toMap(),
       'origin': origin,
-      'listingCount': listingCount,
+      'listing_count': listingCount,
       'description': description,
-      'availableFrom': availableFrom,
+      'available_from': availableFrom,
       'image': image,
     };
   }
 
   factory DetailProductModel.fromMap(Map<String, dynamic> map) {
     return DetailProductModel(
-      id: map['id'] as int,
-      slug: map['slug'] as String,
-      name: map['name'] as String,
-      modelNumber: map['modelNumber'] as String,
-      gtin: map['gtin'] as String,
-      gtinType: map['gtinType'] as String,
-      mpn: map['mpn'] as String,
-      brand: map['brand'] as String,
-      manufacturer: ManufacturerModel.fromMap(
-          map['manufacturer'] as Map<String, dynamic>),
-      origin: map['origin'] as String,
-      listingCount: map['listingCount'] as String,
-      description: map['description'] as String,
-      availableFrom: map['availableFrom'] as String,
-      image: map['image'] as String,
+      id: map['id']?.toInt() ?? 0,
+      slug: map['slug'] ?? '',
+      name: map['name'] ?? '',
+      modelNumber: map['model_number'] ?? '',
+      gtin: map['gtin'] ?? '',
+      gtinType: map['gtin_type'] ?? '',
+      mpn: map['mpn'] ?? '',
+      brand: map['brand'] ?? '',
+      manufacturer: ManufacturerModel.fromMap(map['manufacturer']),
+      origin: map['origin'] ?? '',
+      listingCount: map['listing_count'] ?? '',
+      description: map['description'] ?? '',
+      availableFrom: map['available_from'] ?? '',
+      image: map['image'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory DetailProductModel.fromJson(String source) =>
-      DetailProductModel.fromMap(json.decode(source) as Map<String, dynamic>);
+      DetailProductModel.fromMap(json.decode(source));
 
   @override
   bool get stringify => true;
@@ -155,4 +154,9 @@ class DetailProductModel extends Equatable {
         availableFrom: '',
         image: '',
       );
+
+  @override
+  String toString() {
+    return 'DetailProductModel(id: $id, slug: $slug, name: $name, modelNumber: $modelNumber, gtin: $gtin, gtinType: $gtinType, mpn: $mpn, brand: $brand, manufacturer: $manufacturer, origin: $origin, listingCount: $listingCount, description: $description, availableFrom: $availableFrom, image: $image)';
+  }
 }

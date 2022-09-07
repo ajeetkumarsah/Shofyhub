@@ -4,8 +4,7 @@ import 'package:zcart_seller/domain/app/form/i_form_repo.dart';
 import 'package:zcart_seller/infrastructure/app/form/form_repo.dart';
 
 final countryProvider =
-    StateNotifierProvider.autoDispose<CountryNotifier, KeyValueFormState>(
-        (ref) {
+    StateNotifierProvider<CountryNotifier, KeyValueFormState>((ref) {
   return CountryNotifier(repo: FormRepo());
 });
 

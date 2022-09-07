@@ -36,7 +36,8 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
     final orderController = useTextEditingController();
     final buttonPressed = useState(false);
     final active = useState(false);
-
+    final categoryGroup = ref.watch(categoryGroupFamilyProvider(categoryGroupId)
+        .select((value) => value.categoryGroupDetails));
     ref.listen<CategoryGroupFamilyState>(
         categoryGroupFamilyProvider(categoryGroupId), (previous, next) {
       if (previous != next && !next.loading) {
@@ -62,8 +63,12 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
             buttonPressed.value = false;
           }
         } else if (next.failure != CleanFailure.none()) {
-          Navigator.of(context).pop();
-          next.failure.showDialogue(context);
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
         }
       }
     });
@@ -108,28 +113,28 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
         ),
         TextButton(
           onPressed: () {
-            if (nameController.text.isNotEmpty &&
-                descController.text.isNotEmpty &&
-                metaTitleController.text.isNotEmpty &&
-                metaDescController.text.isNotEmpty) {
-              buttonPressed.value = true;
-              ref.read(categoryGroupProvider.notifier).updateCategoryGroup(
-                    categoryGroupId: categoryGroupId,
-                    name: nameController.text,
-                    slug: nameController.text,
-                    description: descController.text,
-                    metaTitle: metaTitleController.text,
-                    metaDescription: metaDescController.text,
-                    order: int.parse(orderController.text),
-                    icon: iconController.text,
-                    active: active.value,
-                  );
-            } else {
-              CherryToast.info(
-                title: const Text('Please fill all fields'),
-                animationType: AnimationType.fromTop,
-              ).show(context);
-            }
+            buttonPressed.value = true;
+            ref.read(categoryGroupProvider.notifier).updateCategoryGroup(
+                  categoryGroupId: categoryGroupId,
+                  name: nameController.text.isEmpty
+                      ? categoryGroup.name
+                      : nameController.text,
+                  slug: nameController.text.isEmpty
+                      ? categoryGroup.name
+                      : nameController.text,
+                  description: descController.text.isEmpty
+                      ? categoryGroup.description
+                      : descController.text,
+                  metaTitle: metaTitleController.text.isEmpty
+                      ? categoryGroup.metaTitle
+                      : metaTitleController.text,
+                  metaDescription: metaDescController.text.isEmpty
+                      ? categoryGroup.metaDescription
+                      : metaDescController.text,
+                  order: int.parse(orderController.text),
+                  icon: iconController.text,
+                  active: active.value,
+                );
           },
           child: const Text('Save'),
         ),

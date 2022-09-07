@@ -7,10 +7,10 @@ class ShopUserRepo extends IShopUserRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<GetShopUsersModel>>> getShopUser() async {
+  Future<Either<CleanFailure, List<ShopUsersModel>>> getShopUser() async {
     return cleanApi.get(
-      fromData: ((json) => GetShopUsersModel.from(
-          json['data'].map((e) => GetShopUsersModel.fromMap(e)))),
+      fromData: ((json) => List<ShopUsersModel>.from(
+          json['data'].map((e) => ShopUsersModel.fromMap(e)))),
       endPoint: 'users',
     );
   }
@@ -54,15 +54,15 @@ class ShopUserRepo extends IShopUserRepo {
       required String name,
       required String niceName,
       required String email,
-      required String password,
-      required String dob,
-      required String sex,
+      required int active,
+      // required String dob,
+      // required String sex,
       required String description}) async {
     return cleanApi.put(
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'user/$userId/update?shop_id=$shopId&role_id=$roleId&name=$name&nice_name=$niceName&email=$email&password=$password&dob=$dob&sex=$sex&description=$description',
+          'user/$userId/update?shop_id=$shopId&role_id=$roleId&name=$name&nice_name=$niceName&email=$email&description=$description&active=$active',
     );
   }
 }
