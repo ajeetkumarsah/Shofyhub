@@ -18,7 +18,8 @@ class CategoryGroupFamilyNotifier
 
   getCategoryGroupDetails() async {
     state = state.copyWith(loading: true);
-    final data = await categoryGroupRepo.getCategoryGroupById(id: id);
+    final data =
+        await categoryGroupRepo.detailsCategoryGroup(categoryGroupId: id);
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(

@@ -19,7 +19,7 @@ abstract class ICategoryRepo {
   //     {required int id});
 
   Future<Either<CleanFailure, Unit>> trashCategory({required int categoryId});
-  Future<Either<CleanFailure, CategoryModel>> restoreCatetory(
+  Future<Either<CleanFailure, Unit>> restoreCatetory(
       {required CategoryModel categoryId});
   Future<Either<CleanFailure, CategoryDetailsModel>> detailsCategory(
       {required int categoryId});

@@ -22,8 +22,7 @@ class CategorySubgroupPage extends HookConsumerWidget {
       });
       return null;
     }, []);
-    final categoryGroupList = ref.watch(
-        categorySubGroupProvider(id).select((value) => value.categorySubGroup));
+    final state = ref.watch(categorySubGroupProvider(id));
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
@@ -33,7 +32,16 @@ class CategorySubgroupPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: Text(groupName),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Category sub-group'),
+            Text(
+              groupName,
+              style: TextStyle(fontSize: 13.sp),
+            ),
+          ],
+        ),
         elevation: 0,
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -50,21 +58,27 @@ class CategorySubgroupPage extends HookConsumerWidget {
         ),
         icon: const Icon(Icons.add),
       ),
-      body: categoryGroupList.isEmpty
-          ? const Center(
-              child: Text('No item available'),
+      body: state.loading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Constants.buttonColor,
+              ),
             )
-          : ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              itemCount: categoryGroupList.length,
-              itemBuilder: (context, index) => CategorySubgroupListTile(
-                categoryGroupId: id,
-                categorySubGroup: categoryGroupList[index],
-              ),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10.h,
-              ),
-            ),
+          : state.categorySubGroup.isEmpty
+              ? const Center(
+                  child: Text('No item available'),
+                )
+              : ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  itemCount: state.categorySubGroup.length,
+                  itemBuilder: (context, index) => CategorySubgroupListTile(
+                    categoryGroupId: id,
+                    categorySubGroup: state.categorySubGroup[index],
+                  ),
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 10.h,
+                  ),
+                ),
     );
   }
 }

@@ -1,8 +1,12 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:search_choices/search_choices.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_provider.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';
@@ -14,6 +18,9 @@ import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.d
 import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
+
+import '../../../../application/app/product/product_state.dart';
 
 class UpdateProductPage extends HookConsumerWidget {
   final int productId;
@@ -42,6 +49,11 @@ class UpdateProductPage extends HookConsumerWidget {
     final ValueNotifier<GtinTypes> selectedGtin = useState(gtinList[0]);
     final ValueNotifier<ManufacturerId> selectedMenufectur =
         useState(manufacturerIdList[0]);
+    final allCategories =
+        ref.watch(categoryListProvider.select((value) => value.dataList));
+    final ValueNotifier<IList<KeyValueData>> selectedCategories =
+        useState(const IListConst([]));
+
     final ValueNotifier<KeyValueData> selectedCountry =
         useState(countryList[0]);
     final active = useState(true);
@@ -66,6 +78,25 @@ class UpdateProductPage extends HookConsumerWidget {
         selectedCountry.value = countryList
             .where((element) => element.value == next.detailProduct.origin)
             .toList()[0];
+      }
+    });
+
+    ref.listen<ProductState>(productProvider, (previous, next) {
+      if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none()) {
+          CherryToast.info(
+            title: const Text('Product updated'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+        } else if (next.failure != CleanFailure.none()) {
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
+        }
       }
     });
 
@@ -246,36 +277,12 @@ class UpdateProductPage extends HookConsumerWidget {
               SizedBox(
                 height: 10.h,
               ),
-              // SearchChoices<TagListModel>.multiple(
-              //   items: List<DropdownMenuItem<TagListModel>>.from(
-              //       tagList.map<DropdownMenuItem<TagListModel>>(
-              //           (e) => DropdownMenuItem<TagListModel>(
-              //                 value: e,
-              //                 child: Text(
-              //                   e.value,
-              //                   textDirection: TextDirection.rtl,
-              //                 ),
-              //               ))),
-              //   selectedItems: selectedTags.value.unlock,
-              //   hint: const Padding(
-              //     padding: EdgeInsets.all(12.0),
-              //     child: Text("Select Tags"),
-              //   ),
-              //   searchHint: "Select Tags",
-              //   onChanged: (List<int> value) {
-              //     selectedTags.value = value.lock;
-              //     Logger.i(selectedTags.value);
-
-              //     //  selectedCategories.value = value;
-              //   },
-              //   closeButton: (selectedItems) {
-              //     return (selectedItems.isNotEmpty
-              //         ? "Save ${selectedItems.length == 1 ? '"${tagList[selectedItems.first].value}"' : '(${selectedItems.length})'}"
-              //         : "Save without selection");
-              //   },
-              //   isExpanded: true,
-              // ),
-
+              MultipleKeyValueSelector(
+                  title: "Select Categories *",
+                  allData: allCategories,
+                  onSelect: (list) {
+                    selectedCategories.value = list;
+                  }),
               SizedBox(height: 10.h),
               SwitchListTile(
                 value: active.value,
@@ -302,28 +309,41 @@ class UpdateProductPage extends HookConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      Logger.i(nameController.text
-                          .toLowerCase()
-                          .replaceAll(RegExp(r' '), '-'));
-                      final product = UpdateProductModel(
-                        id: productId,
-                        slug: nameController.text
+                      if (selectedCategories.value.isNotEmpty) {
+                        Logger.i(nameController.text
                             .toLowerCase()
-                            .replaceAll(RegExp(r' '), '-'),
-                        manufacturerId: int.parse(selectedMenufectur.value.id),
-                        brand: brandController.text,
-                        name: nameController.text,
-                        modeNumber: modelNumer.text,
-                        mpn: mpn.text,
-                        gtin: gtin.text,
-                        gtinType: selectedGtin.value.value,
-                        description: description.text,
-                        originCountry: originCountry.text,
-                        active: active.value ? 1 : 0,
-                        requireShipping: shipping.value,
-                      );
-                      ref.read(productProvider.notifier).updateProduct(product);
-                      Navigator.of(context).pop();
+                            .replaceAll(RegExp(r' '), '-'));
+                        final product = UpdateProductModel(
+                          id: productId,
+                          slug: nameController.text
+                              .toLowerCase()
+                              .replaceAll(RegExp(r' '), '-'),
+                          manufacturerId:
+                              int.parse(selectedMenufectur.value.id),
+                          brand: brandController.text,
+                          name: nameController.text,
+                          modeNumber: modelNumer.text,
+                          mpn: mpn.text,
+                          gtin: gtin.text,
+                          gtinType: selectedGtin.value.value,
+                          description: description.text,
+                          originCountry: originCountry.text,
+                          active: active.value ? 1 : 0,
+                          requireShipping: shipping.value,
+                          categoryList: selectedCategories.value
+                              .map((element) => int.tryParse(element.key) ?? 0)
+                              .toList(),
+                        );
+                        ref
+                            .read(productProvider.notifier)
+                            .updateProduct(product);
+                        Navigator.of(context).pop();
+                      } else {
+                        CherryToast.info(
+                                title: const Text(
+                                    'Please select atleast one category'))
+                            .show(context);
+                      }
                     },
                     child: const Text('Update'),
                   ),

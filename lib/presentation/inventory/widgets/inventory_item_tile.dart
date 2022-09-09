@@ -10,6 +10,7 @@ class InventoryItemTile extends StatelessWidget {
   final String condition;
   final int quantity;
   final Function()? quickUpdate;
+  final Function()? deleteInventory;
   const InventoryItemTile(
       {Key? key,
       required this.quickUpdate,
@@ -18,6 +19,7 @@ class InventoryItemTile extends StatelessWidget {
       required this.sku,
       required this.title,
       required this.image,
+      required this.deleteInventory,
       required this.price})
       : super(key: key);
 
@@ -138,19 +140,22 @@ class InventoryItemTile extends StatelessWidget {
               ),
               SizedBox(width: 8.w),
               Expanded(
-                child: Container(
-                  height: 30.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 1.w),
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Delete Product',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15.sp,
+                child: InkWell(
+                  onTap: deleteInventory,
+                  child: Container(
+                    height: 30.h,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1.w),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Delete Inventory',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15.sp,
+                        ),
                       ),
                     ),
                   ),

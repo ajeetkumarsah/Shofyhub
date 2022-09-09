@@ -12,4 +12,5 @@ abstract class IInventoriesRepo {
 
   Future<Either<CleanFailure, Unit>> quickUpdate(
       {required QuickUpdateModel quickUpdateModel, required int id});
+  Future<Either<CleanFailure, Unit>> moveToTrash({required inventoryId});
 }

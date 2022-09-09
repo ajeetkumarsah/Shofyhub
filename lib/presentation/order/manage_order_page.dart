@@ -604,7 +604,7 @@ class ManageOrderPage extends HookConsumerWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => ProceedOrderScreen(
+                    builder: (context) => AssigenDelivaryBoyScreen(
                       orderId: orderDetails.id,
                     ),
                   );

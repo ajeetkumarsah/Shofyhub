@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zcart_seller/domain/app/order/order_delivaryboy.dart';
 import 'package:zcart_seller/domain/app/order/order_model.dart';
 import 'package:zcart_seller/presentation/order/fullfill_order_dialog.dart';
 import 'package:zcart_seller/presentation/order/proceed_order_page.dart';
@@ -43,7 +44,7 @@ class OrderTile extends StatelessWidget {
                   ),
                   Container(
                     height: 16.h,
-                    width: 50.h,
+                    // width: 50.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3.r),
                       color: order.paymentStatus == 'PAID'
@@ -96,32 +97,39 @@ class OrderTile extends StatelessWidget {
                       color: Colors.black54,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ProceedOrderScreen(
-                          orderId: order.id,
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 16.h,
-                      width: 50.h,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black45),
-                        borderRadius: BorderRadius.circular(3.r),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Assign",
-                          style: TextStyle(
+                  order.deliveryBoy != OrderDelivaryBoyModel.init()
+                      ? Text(
+                          order.deliveryBoy.niceName,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
+                        )
+                      : InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AssigenDelivaryBoyScreen(
+                                orderId: order.id,
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 16.h,
+                            width: 50.h,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black45),
+                              borderRadius: BorderRadius.circular(3.r),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                "Assign",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
               SizedBox(

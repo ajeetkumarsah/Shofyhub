@@ -22,13 +22,61 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, Unit>> createNewCategory(
       {required CreateCategoryModel categoryModel}) async {
     return await cleanApi.post(
-        fromData: (josn) => unit, body: null, endPoint: categoryModel.endpoint);
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
+        fromData: (josn) => unit,
+        body: null,
+        endPoint: categoryModel.endpoint);
   }
 
   @override
   Future<Either<CleanFailure, Unit>> updateCategory(
       {required UpdateCategoryModel updateCategoryModel}) async {
     return await cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: (josn) => unit,
         body: null,
         endPoint: updateCategoryModel.endpoint);
@@ -46,28 +94,123 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, Unit>> trashCategory(
       {required int categoryId}) async {
     return cleanApi.delete(
-        fromData: (json) => unit, endPoint: 'category/$categoryId/trash');
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        endPoint: 'category/$categoryId/trash');
   }
 
   @override
-  Future<Either<CleanFailure, CategoryModel>> restoreCatetory(
+  Future<Either<CleanFailure, Unit>> restoreCatetory(
       {required CategoryModel categoryId}) async {
-    return cleanApi.get(
-        fromData: (json) => CategoryModel.fromMap(json),
-        endPoint: 'category/$categoryId/all');
+    return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        body: null,
+        endPoint: 'category/$categoryId/restore');
   }
 
   @override
   Future<Either<CleanFailure, Unit>> deleteCategory(
       {required int categoryId}) async {
     return cleanApi.delete(
-        fromData: (json) => unit, endPoint: 'category/$categoryId/delete');
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        endPoint: 'category/$categoryId/delete');
   }
 
   @override
   Future<Either<CleanFailure, CategoryDetailsModel>> detailsCategory(
       {required int categoryId}) {
     return cleanApi.get(
+        failureHandler: <CategoryDetailsModel>(int statusCode,
+            Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => CategoryDetailsModel.fromMap(json['data']),
         endPoint: 'category/$categoryId');
   }

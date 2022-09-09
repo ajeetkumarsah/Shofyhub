@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+import 'package:zcart_seller/domain/app/order/order_delivaryboy.dart';
+
 class OrderModel extends Equatable {
   final int id;
   final String orderNumber;
@@ -16,6 +18,7 @@ class OrderModel extends Equatable {
   final String orderDate;
   final bool canEvaluate;
   final String trackingId;
+  final OrderDelivaryBoyModel deliveryBoy;
   final int itemCount;
   const OrderModel({
     required this.id,
@@ -30,6 +33,7 @@ class OrderModel extends Equatable {
     required this.orderDate,
     required this.canEvaluate,
     required this.trackingId,
+    required this.deliveryBoy,
     required this.itemCount,
   });
 
@@ -46,6 +50,7 @@ class OrderModel extends Equatable {
     String? orderDate,
     bool? canEvaluate,
     String? trackingId,
+    OrderDelivaryBoyModel? deliveryBoy,
     int? itemCount,
   }) {
     return OrderModel(
@@ -61,6 +66,7 @@ class OrderModel extends Equatable {
       orderDate: orderDate ?? this.orderDate,
       canEvaluate: canEvaluate ?? this.canEvaluate,
       trackingId: trackingId ?? this.trackingId,
+      deliveryBoy: deliveryBoy ?? this.deliveryBoy,
       itemCount: itemCount ?? this.itemCount,
     );
   }
@@ -79,6 +85,7 @@ class OrderModel extends Equatable {
       'order_date': orderDate,
       'can_evaluate': canEvaluate,
       'tracking_id': trackingId,
+      'delivery_boy': deliveryBoy.toMap(),
       'item_count': itemCount,
     };
   }
@@ -97,6 +104,9 @@ class OrderModel extends Equatable {
       orderDate: map['order_date'] ?? '',
       canEvaluate: map['can_evaluate'] ?? false,
       trackingId: map['tracking_id'] ?? '',
+      deliveryBoy: map['delivery_boy'] != null
+          ? OrderDelivaryBoyModel.fromMap(map['delivery_boy'])
+          : OrderDelivaryBoyModel.init(),
       itemCount: map['item_count']?.toInt() ?? 0,
     );
   }
@@ -124,12 +134,13 @@ class OrderModel extends Equatable {
       orderDate,
       canEvaluate,
       trackingId,
+      deliveryBoy,
       itemCount,
     ];
   }
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, orderNumber: $orderNumber, customerId: $customerId, customerName: $customerName, disputeId: $disputeId, orderStatus: $orderStatus, paymentStatus: $paymentStatus, grandTotal: $grandTotal, grandTotalRaw: $grandTotalRaw, orderDate: $orderDate, canEvaluate: $canEvaluate, trackingId: $trackingId, itemCount: $itemCount)';
+    return 'OrderModel(id: $id, orderNumber: $orderNumber, customerId: $customerId, customerName: $customerName, disputeId: $disputeId, orderStatus: $orderStatus, paymentStatus: $paymentStatus, grandTotal: $grandTotal, grandTotalRaw: $grandTotalRaw, orderDate: $orderDate, canEvaluate: $canEvaluate, trackingId: $trackingId, deliveryBoy: $deliveryBoy, itemCount: $itemCount)';
   }
 }

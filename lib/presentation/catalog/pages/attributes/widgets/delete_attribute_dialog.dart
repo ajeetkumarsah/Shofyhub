@@ -1,7 +1,11 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
+import 'package:clean_api/models/clean_failure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_provider.dart';
+import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.dart';
 
 class DeleteAttributeDialog extends HookConsumerWidget {
   final int attributeId;
@@ -13,6 +17,26 @@ class DeleteAttributeDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    ref.listen<AtributesState>(atributesProvider, (previous, next) {
+      if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none()) {
+          CherryToast.info(
+            title: const Text('Attribute Deleted'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+        } else if (next.failure != CleanFailure.none()) {
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
+        }
+      }
+    });
+    final loading =
+        ref.watch(atributesProvider.select((value) => value.loading));
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -101,15 +125,16 @@ class DeleteAttributeDialog extends HookConsumerWidget {
                         ref
                             .read(atributesProvider.notifier)
                             .trashAttributes(attributeId: attributeId);
-                        Navigator.pop(context);
                       },
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
+                      child: loading
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              "Delete",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).canvasColor,
+                              ),
+                            ),
                     ),
                   ),
                 ],

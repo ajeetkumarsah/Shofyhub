@@ -69,7 +69,9 @@ class CategoryDetailsModel extends Equatable {
       categorySubGroupId: map['category_sub_group_id']?.toInt() ?? 0,
       featureImage: map['feature_image'] ?? '',
       coverImage: map['cover_image'] ?? '',
-      attributes: KeyValueData.listFromMap(map['attributes'] ?? {}),
+      attributes: map['attributes'] != null && map['attributes'].isNotEmpty
+          ? KeyValueData.listFromMap(map['attributes'] ?? {})
+          : const IListConst([]),
     );
   }
 

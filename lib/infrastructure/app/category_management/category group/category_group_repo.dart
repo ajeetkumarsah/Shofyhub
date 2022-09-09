@@ -10,6 +10,29 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, List<CategoryGroupModel>>>
       getAllCategoryGroup() async {
     return cleanApi.get(
+        failureHandler: <CategoryGroupModel>(int statusCode,
+            Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: ((json) => List<CategoryGroupModel>.from(
             json['data'].map((e) => CategoryGroupModel.fromMap(e)))),
         endPoint: 'category-groups');
@@ -19,6 +42,29 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> createCategoryGroup(
       {required CreateCategoryGroupModel categoryGroupModel}) async {
     return cleanApi.post(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint:
@@ -29,6 +75,29 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, CategoryGroupDetailsModel>> getCategoryGroupById(
       {required int id}) async {
     return cleanApi.get(
+        failureHandler: <CategoryGroupDetailsModel>(int statusCode,
+            Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => CategoryGroupDetailsModel.fromMap(json['data']),
         endPoint: 'category/$id');
   }
@@ -45,6 +114,28 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
       required String icon,
       required bool active}) async {
     return cleanApi.put(
+      failureHandler:
+          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        if (responseBody['errors'] != null) {
+          final errors =
+              Map<String, dynamic>.from(responseBody['errors']).values.toList();
+          final error = List.from(errors.first);
+          return left(CleanFailure(tag: 'category', error: error.first));
+        } else if (responseBody['message'] != null) {
+          return left(CleanFailure(
+              tag: 'category',
+              error: responseBody['message'],
+              statusCode: statusCode));
+        } else if (responseBody['error'] != null) {
+          return left(CleanFailure(
+              tag: 'category',
+              error: responseBody['error'],
+              statusCode: statusCode));
+        } else {
+          return left(
+              CleanFailure(tag: 'category', error: responseBody.toString()));
+        }
+      },
       fromData: (json) => unit,
       body: null,
       endPoint:
@@ -56,6 +147,29 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> trashCategoryGroup(
       {required int categoryGroupId}) async {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'category-group/$categoryGroupId/trash');
@@ -65,6 +179,29 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> restoreCategoryGroup(
       {required int categoryGroupId}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'category-group/$categoryGroupId/restore');
@@ -74,6 +211,29 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> deleteCategoryGroup(
       {required int categoryGroupId}) async {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'category-group/$categoryGroupId/delete');
@@ -83,7 +243,30 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, CategoryGroupDetailsModel>> detailsCategoryGroup(
       {required int categoryGroupId}) {
     return cleanApi.get(
-        fromData: (json) => CategoryGroupDetailsModel.fromMap(json),
+        failureHandler: <CategoryGroupDetailsModel>(int statusCode,
+            Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'category', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'category',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'category', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => CategoryGroupDetailsModel.fromMap(json["data"]),
         endPoint: 'category-group/$categoryGroupId');
   }
 }

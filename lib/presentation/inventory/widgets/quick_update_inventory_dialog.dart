@@ -23,7 +23,7 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
     final amount = inventoryInfo.stockQuantity;
     final active = useState(inventoryInfo.active);
     final buttonPressed = useState(false);
-    ref.listen<InventoriesState>(inventoryProvider, (previous, next) {
+    ref.listen<InventoriesState>(stockeInventoryProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           Navigator.of(context).pop();
@@ -34,88 +34,94 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-          Navigator.of(context).pop();
-          next.failure.showDialogue(context);
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
         }
       }
     });
     final quantity = useState(amount);
 
     final loading =
-        ref.watch(inventoryProvider.select((value) => value.loading));
+        ref.watch(stockeInventoryProvider.select((value) => value.loading));
 
     return AlertDialog(
       title: const Text('Inventory Update'),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          KTextField(controller: titleController, lebelText: 'Title'),
-          SizedBox(height: 15.h),
-          KTextField(controller: priceController, lebelText: 'Price'),
-          SizedBox(height: 15.h),
-          const Text('Quantity'),
-          SizedBox(height: 10.h),
-          Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  quantity.value = quantity.value + 1;
-                },
-                icon: const Icon(Icons.add),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              Expanded(
-                child: Container(
-                    padding: EdgeInsets.all(10.sp),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: BorderRadius.circular(10.sp),
-                    ),
-                    child: Text(
-                      quantity.value.toString(),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    )),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              IconButton(
-                onPressed: () {
-                  if (quantity.value > 1) {
-                    quantity.value--;
-                  }
-                },
-                icon: const Icon(Icons.remove),
-              ),
-            ],
-          ),
-          SizedBox(height: 15.h),
-          Row(
-            children: [
-              active.value
-                  ? InkWell(
-                      onTap: () {
-                        active.value = !active.value;
-                      },
-                      child: const Icon(Icons.check_box))
-                  : InkWell(
-                      onTap: () {
-                        active.value = !active.value;
-                      },
-                      child: const Icon(Icons.check_box_outline_blank)),
-              SizedBox(
-                width: 15.w,
-              ),
-              Text(
-                'Active',
-                style: TextStyle(fontSize: 18.sp),
-              ),
-            ],
-          )
-        ],
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            KTextField(controller: titleController, lebelText: 'Title'),
+            SizedBox(height: 15.h),
+            KTextField(controller: priceController, lebelText: 'Price'),
+            SizedBox(height: 15.h),
+            const Text('Quantity'),
+            SizedBox(height: 10.h),
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    quantity.value = quantity.value + 1;
+                  },
+                  icon: const Icon(Icons.add),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Expanded(
+                  child: Container(
+                      padding: EdgeInsets.all(10.sp),
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(10.sp),
+                      ),
+                      child: Text(
+                        quantity.value.toString(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                IconButton(
+                  onPressed: () {
+                    if (quantity.value > 1) {
+                      quantity.value--;
+                    }
+                  },
+                  icon: const Icon(Icons.remove),
+                ),
+              ],
+            ),
+            SizedBox(height: 15.h),
+            Row(
+              children: [
+                active.value
+                    ? InkWell(
+                        onTap: () {
+                          active.value = !active.value;
+                        },
+                        child: const Icon(Icons.check_box))
+                    : InkWell(
+                        onTap: () {
+                          active.value = !active.value;
+                        },
+                        child: const Icon(Icons.check_box_outline_blank)),
+                SizedBox(
+                  width: 15.w,
+                ),
+                Text(
+                  'Active',
+                  style: TextStyle(fontSize: 18.sp),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
       actions: [
         TextButton(
@@ -139,7 +145,7 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
                 active: active.value ? 1 : 0,
                 expiryDate: '');
             ref
-                .read(inventoryProvider.notifier)
+                .read(stockeInventoryProvider.notifier)
                 .quickUpdate(quickUpdateModel, inventoryInfo.id);
           },
           child: loading

@@ -35,6 +35,28 @@ class AtributesRepo extends IAtributesRepo {
       required String categoriesIds,
       required String order}) async {
     return cleanApi.post(
+      failureHandler:
+          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        if (responseBody['errors'] != null) {
+          final errors =
+              Map<String, dynamic>.from(responseBody['errors']).values.toList();
+          final error = List.from(errors.first);
+          return left(CleanFailure(tag: 'attribute', error: error.first));
+        } else if (responseBody['message'] != null) {
+          return left(CleanFailure(
+              tag: 'attribute',
+              error: responseBody['message'],
+              statusCode: statusCode));
+        } else if (responseBody['error'] != null) {
+          return left(CleanFailure(
+              tag: 'attribute',
+              error: responseBody['error'],
+              statusCode: statusCode));
+        } else {
+          return left(
+              CleanFailure(tag: 'attribute', error: responseBody.toString()));
+        }
+      },
       fromData: (json) => unit,
       body: null,
       endPoint:
@@ -50,6 +72,28 @@ class AtributesRepo extends IAtributesRepo {
       required categoriesIds,
       required order}) async {
     return cleanApi.put(
+      failureHandler:
+          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        if (responseBody['errors'] != null) {
+          final errors =
+              Map<String, dynamic>.from(responseBody['errors']).values.toList();
+          final error = List.from(errors.first);
+          return left(CleanFailure(tag: 'attribute', error: error.first));
+        } else if (responseBody['message'] != null) {
+          return left(CleanFailure(
+              tag: 'attribute',
+              error: responseBody['message'],
+              statusCode: statusCode));
+        } else if (responseBody['error'] != null) {
+          return left(CleanFailure(
+              tag: 'attribute',
+              error: responseBody['error'],
+              statusCode: statusCode));
+        } else {
+          return left(
+              CleanFailure(tag: 'attribute', error: responseBody.toString()));
+        }
+      },
       fromData: (json) => unit,
       body: null,
       endPoint:
@@ -61,6 +105,29 @@ class AtributesRepo extends IAtributesRepo {
   Future<Either<CleanFailure, Unit>> trashAttributes(
       {required int attributeId}) async {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'attribute', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'attribute', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'attribute/$attributeId/trash');
@@ -70,6 +137,29 @@ class AtributesRepo extends IAtributesRepo {
   Future<Either<CleanFailure, Unit>> restoreAttributes(
       {required int attributeId}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'attribute', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'attribute', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'attribute/$attributeId/restore');
@@ -79,6 +169,29 @@ class AtributesRepo extends IAtributesRepo {
   Future<Either<CleanFailure, Unit>> deleteAttributes(
       {required int attributeId}) async {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'attribute', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'attribute', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'attribute/$attributeId/delete');

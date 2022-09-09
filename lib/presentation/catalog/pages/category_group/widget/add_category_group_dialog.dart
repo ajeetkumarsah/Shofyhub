@@ -27,8 +27,8 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
 
     ref.listen<CategoryGroupState>(categoryGroupProvider, (previous, next) {
       if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
-          Navigator.of(context).pop();
           CherryToast.info(
             title: const Text('Category group added'),
             animationType: AnimationType.fromTop,
@@ -45,6 +45,8 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
         }
       }
     });
+    final loading =
+        ref.watch(categoryGroupProvider.select((value) => value.loading));
     final formKey = useMemoized(() => GlobalKey<FormState>());
     return AlertDialog(
       insetPadding: EdgeInsets.zero,
@@ -53,6 +55,7 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
         child: Form(
           key: formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('* Required fields.',
@@ -127,7 +130,8 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                   .createCategoryGroup(categoryGroupModel);
             }
           },
-          child: const Text('Add'),
+          child:
+              loading ? const CircularProgressIndicator() : const Text('Add'),
         ),
       ],
     );

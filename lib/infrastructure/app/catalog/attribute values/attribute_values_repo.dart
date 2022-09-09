@@ -18,6 +18,30 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, AttributeValueDetailsModel>>
       getAttributeValueDetails({required int attributeValueId}) async {
     return cleanApi.get(
+        failureHandler: <AttributeValueDetailsModel>(int statusCode,
+            Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'attribute value', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'attribute value', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => AttributeValueDetailsModel.fromMap(json["data"]),
         endPoint: 'attribute-value/$attributeValueId');
   }
@@ -29,6 +53,30 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
       required String color,
       required int order}) async {
     return cleanApi.post(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'attribute value', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'attribute value', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint:
@@ -43,6 +91,30 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
       required int attributeId,
       required int order}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'attribute value', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'attribute value', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint:
@@ -53,6 +125,30 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, Unit>> trashAttributeValue(
       {required int attributeValueId}) async {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'attribute value', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'attribute value', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'attribute-value/$attributeValueId/trash');
@@ -62,6 +158,30 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, Unit>> restoreAttributeValue(
       {required int attributeValueId}) {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'attribute value', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'attribute value', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'attribute-value/$attributeValueId/restore');
@@ -71,6 +191,30 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, Unit>> deleteAttributeValue(
       {required int attributeValueId}) async {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'attribute value', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'attribute value',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'attribute value', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'attribute-value/$attributeValueId/delete');

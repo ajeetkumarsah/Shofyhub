@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/inventory_details_page.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/delete_inventory.dart';
 import 'package:zcart_seller/presentation/inventory/widgets/inventory_item_tile.dart';
 import 'package:zcart_seller/presentation/inventory/widgets/quick_update_inventory_dialog.dart';
 
@@ -12,8 +13,8 @@ class InventoryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final inventoryList =
-        ref.watch(inventoryProvider.select((value) => value.allInventories));
+    final inventoryList = ref
+        .watch(stockeInventoryProvider.select((value) => value.allInventories));
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
@@ -57,6 +58,12 @@ class InventoryPage extends HookConsumerWidget {
                                 )));
                   },
                   child: InventoryItemTile(
+                      deleteInventory: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => DeleteInventory(
+                                inventoryId: inventoryList[index].id));
+                      },
                       quickUpdate: () {
                         showDialog(
                             context: context,

@@ -4,25 +4,22 @@ import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_provider.dart';
-import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_state.dart';
+import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
+import 'package:zcart_seller/application/app/stocks/inventories/inventories_state.dart';
 
-class DeleteAttributeValuesDialog extends HookConsumerWidget {
-  final int attributeId;
-  final int attributeValueId;
-  const DeleteAttributeValuesDialog(
-      {Key? key, required this.attributeId, required this.attributeValueId})
+class DeleteInventory extends HookConsumerWidget {
+  final int inventoryId;
+  const DeleteInventory({Key? key, required this.inventoryId})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<AttributeValuesState>(attributeValuesProvider(attributeId),
-        (previous, next) {
+    ref.listen<InventoriesState>(stockeInventoryProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Attribute value Deleted'),
+            title: const Text('Inventory Deleted'),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -35,8 +32,8 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
         }
       }
     });
-    final loading = ref.watch(
-        attributeValuesProvider(attributeId).select((value) => value.loading));
+    final loading =
+        ref.watch(stockeInventoryProvider.select((value) => value.loading));
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -47,7 +44,7 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Delete Attribute Value',
+                  'Delete Inventory',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -72,7 +69,7 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: const Padding(
         padding: EdgeInsets.all(8.0),
-        child: Text('Are you sure you want to delete this Attribute Value?'),
+        child: Text('Are you sure you want to delete this Inventory?'),
       ),
       actions: [
         const Divider(
@@ -123,8 +120,8 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
                       ),
                       onPressed: () {
                         ref
-                            .read(attributeValuesProvider(attributeId).notifier)
-                            .trashAttributeValue(attributeValueId);
+                            .read(stockeInventoryProvider.notifier)
+                            .trashInventory(inventoryId);
                       },
                       child: loading
                           ? const CircularProgressIndicator()

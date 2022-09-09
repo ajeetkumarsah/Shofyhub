@@ -74,12 +74,12 @@ class AuthRepo extends IAuthRepo {
             return left(CleanFailure(tag: 'registration', error: error.first));
           } else if (responseBody['message'] != null) {
             return left(CleanFailure(
-                tag: 'login',
+                tag: 'registation',
                 error: responseBody['message'],
                 statusCode: statusCode));
           } else if (responseBody['error'] != null) {
             return left(CleanFailure(
-                tag: 'login',
+                tag: 'registation',
                 error: responseBody['error'],
                 statusCode: statusCode));
           } else {

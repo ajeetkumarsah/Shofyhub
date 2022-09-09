@@ -17,6 +17,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, List<OrderModel>>> getOrders(
       {required String? filter}) async {
     return cleanApi.get(
+        failureHandler:
+            <OrderModel>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: ((json) => List<OrderModel>.from(
             json['data'].map((e) => OrderModel.fromMap(e)))),
         endPoint: "orders?filter=$filter");
@@ -25,6 +48,29 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, List<OrderModel>>> getArchivedOrder() async {
     return cleanApi.get(
+        failureHandler:
+            <OrderModel>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: ((json) => List<OrderModel>.from(
             json['data'].map((e) => OrderModel.fromMap(e)))),
         endPoint: 'orders?filter=archived');
@@ -34,6 +80,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> assignDelivaryBoy(
       {required int orderId, required int delivaryBoyId}) async {
     return cleanApi.post(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint:
@@ -47,6 +116,29 @@ class OrderRepo extends IOrderRepo {
       required String trackingId,
       required bool notifyCustomer}) async {
     return cleanApi.post(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint:
@@ -59,6 +151,29 @@ class OrderRepo extends IOrderRepo {
       required int orderStatusId,
       required bool notifyCustomer}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint:
@@ -68,6 +183,29 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, Unit>> markAsPaid({required int orderId}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'order/$orderId/mark_as_paid');
@@ -77,6 +215,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> markAsUnpaid(
       {required int orderId}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'order/$orderId/mark_as_unpaid');
@@ -86,6 +247,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> markAsDelivered(
       {required int orderId, required bool notifyCustomer}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'order/$orderId/delivered?notify_customer=$notifyCustomer');
@@ -95,6 +279,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> cancleOrder(
       {required int orderId, required bool notifyCustomer}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'order/$orderId/cancel?notify_customer=$notifyCustomer');
@@ -104,6 +311,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> unarchiveOrder(
       {required int orderId}) async {
     return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'order/$orderId/unarchive');
@@ -113,6 +343,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> archiveOrder(
       {required int orderId}) async {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'order/$orderId/archive');
@@ -121,13 +374,61 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, Unit>> deleteOrder({required int orderId}) async {
     return cleanApi.delete(
-        fromData: (json) => unit, body: null, endPoint: 'order/$orderId');
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        body: null,
+        endPoint: 'order/$orderId');
   }
 
   @override
   Future<Either<CleanFailure, OrderDetailsModel>> getOrderDetails(
       {required int orderId}) async {
     return cleanApi.get(
+        failureHandler: <OrderDetailsModel>(int statusCode,
+            Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => OrderDetailsModel.fromMap(json["data"]),
         endPoint: "order/$orderId");
   }
@@ -135,6 +436,29 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, List<OrderStatusModel>>> getOrderStatus() async {
     return cleanApi.get(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => List<OrderStatusModel>.from(json
             .map((key, value) =>
                 MapEntry(key, OrderStatusModel(id: key, name: value)))
@@ -146,6 +470,29 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> adminNote(
       {required int orderId, required String adminNote}) async {
     return await cleanApi.post(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'order', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'order',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'order', error: responseBody.toString()));
+          }
+        },
         fromData: (json) => unit,
         body: null,
         endPoint: 'order/$orderId/add_note?note=$adminNote');

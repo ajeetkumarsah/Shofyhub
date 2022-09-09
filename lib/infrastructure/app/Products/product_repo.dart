@@ -14,6 +14,29 @@ class ProductRepo extends IProductRepo {
   @override
   Future<Either<CleanFailure, List<ProductModel>>> getProducts() {
     return cleanApi.get(
+        failureHandler:
+            <ProductModel>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'product', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'product', error: responseBody.toString()));
+          }
+        },
         fromData: ((json) => List<ProductModel>.from(
             json['data'].map((e) => ProductModel.fromMap(e)))),
         endPoint: 'products');
@@ -22,6 +45,29 @@ class ProductRepo extends IProductRepo {
   @override
   Future<Either<CleanFailure, Unit>> deleteProduct(int productId) {
     return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'product', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'product', error: responseBody.toString()));
+          }
+        },
         body: null,
         fromData: (json) => unit,
         endPoint: 'product/$productId/trash');
@@ -32,14 +78,64 @@ class ProductRepo extends IProductRepo {
     required UpdateProductModel updateDetails,
   }) async {
     return cleanApi.put(
-        fromData: (json) => unit, body: null, endPoint: updateDetails.endPoint);
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'product', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'product', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        body: null,
+        endPoint: updateDetails.endPoint);
   }
 
   @override
   Future<Either<CleanFailure, Unit>> createProduct(
       CreateProductModel body) async {
     return await cleanApi.post(
-        fromData: (data) => unit, body: null, endPoint: body.endPoint);
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'product', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'product',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'product', error: responseBody.toString()));
+          }
+        },
+        fromData: (data) => unit,
+        body: null,
+        endPoint: body.endPoint);
   }
 
   @override

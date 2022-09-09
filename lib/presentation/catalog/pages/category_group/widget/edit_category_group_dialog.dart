@@ -74,6 +74,7 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
     });
 
     return AlertDialog(
+      insetPadding: EdgeInsets.zero,
       title: const Text('Edit Category Group'),
       content: SingleChildScrollView(
         child: Column(
@@ -82,7 +83,10 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
             KTextField(controller: nameController, lebelText: 'Name'),
             SizedBox(height: 10.h),
             KTextField(controller: descController, lebelText: 'Description'),
-            SizedBox(height: 10.h),
+            SizedBox(
+              height: 10.h,
+              width: 300.w,
+            ),
             KTextField(
                 controller: metaTitleController, lebelText: 'Meta title'),
             SizedBox(height: 10.h),

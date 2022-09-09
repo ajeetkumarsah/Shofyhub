@@ -1,16 +1,20 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
+import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/delivary_boys/delivary_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/application/app/order/order_state.dart';
 import 'package:zcart_seller/domain/app/delivary%20boy/delivary_boy_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 
-class ProceedOrderScreen extends HookConsumerWidget {
+class AssigenDelivaryBoyScreen extends HookConsumerWidget {
   final int orderId;
 
-  const ProceedOrderScreen({
+  const AssigenDelivaryBoyScreen({
     required this.orderId,
     Key? key,
   }) : super(key: key);
@@ -21,6 +25,27 @@ class ProceedOrderScreen extends HookConsumerWidget {
         ref.watch(delivaryProvider).delivaryBoys;
     final ValueNotifier<DelivaryBoy> selectedDelivaryBoy =
         useState(delivaryBoyList[0]);
+    ref.listen<OrderState>(orderProvider(null), (previous, next) {
+      if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none()) {
+          ref.read(orderProvider(null).notifier).getOrders();
+          ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
+          ref.read(orderProvider(OrderFilter.archived).notifier).getOrders();
+          CherryToast.info(
+            title: const Text('Delivay boy assigned'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+        } else if (next.failure != CleanFailure.none()) {
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
+        }
+      }
+    });
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -72,7 +97,6 @@ class ProceedOrderScreen extends HookConsumerWidget {
           onPressed: () {
             ref.read(orderProvider(null).notifier).assignDelivaryBoy(
                 orderId, int.parse(selectedDelivaryBoy.value.id));
-            Navigator.of(context).pop();
           },
           child: const Text("Proceed"),
         ),

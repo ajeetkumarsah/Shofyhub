@@ -59,12 +59,13 @@ class EditCategoryDialog extends HookConsumerWidget {
       }
     });
 
-    ref.listen<CategoryState>(categoryProvider(categoryId), (previous, next) {
+    ref.listen<CategoryState>(categoryProvider(category.categorySubGroupId),
+        (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           CherryToast.info(
-            title: const Text('Category added'),
+            title: const Text('Category updated'),
             animationType: AnimationType.fromTop,
           ).show(context);
 
@@ -80,6 +81,7 @@ class EditCategoryDialog extends HookConsumerWidget {
       }
     });
     return AlertDialog(
+      insetPadding: EdgeInsets.zero,
       title: const Text('Edit Category'),
       content: SingleChildScrollView(
         child: Column(
@@ -89,7 +91,10 @@ class EditCategoryDialog extends HookConsumerWidget {
             SizedBox(height: 10.h),
             KTextField(controller: descController, lebelText: 'Description'),
             SizedBox(height: 10.h),
-            SizedBox(height: 10.h),
+            SizedBox(
+              height: 10.h,
+              width: 300.w,
+            ),
             if (attributes.isNotEmpty)
               MultipleKeyValueSelector(
                   title: "Select Attribute",
@@ -122,6 +127,11 @@ class EditCategoryDialog extends HookConsumerWidget {
           onPressed: () {
             buttonPressed.value = true;
             final updatecategoryModel = UpdateCategoryModel(
+              slug: nameController.text.isEmpty
+                  ? category.name.toLowerCase().replaceAll(RegExp(r' '), '-')
+                  : nameController.text
+                      .toLowerCase()
+                      .replaceAll(RegExp(r' '), '-'),
               id: category.id,
               categorySubGroupId: category.categorySubGroupId,
               name: nameController.text.isEmpty

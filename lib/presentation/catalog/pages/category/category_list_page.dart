@@ -47,7 +47,16 @@ class CategoryListPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: Text(subGroupName),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Category list'),
+            Text(
+              subGroupName,
+              style: TextStyle(fontSize: 13.sp),
+            ),
+          ],
+        ),
         elevation: 0,
       ),
       body: categoryList.isEmpty

@@ -26,11 +26,12 @@ class ArchivedOrderConfirmation extends HookConsumerWidget {
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.info(
-            title: const Text('Something went wrong'),
-            animationType: AnimationType.fromTop,
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
           ).show(context);
-          next.failure.showDialogue(context);
         }
       }
     });

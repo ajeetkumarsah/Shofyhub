@@ -20,6 +20,7 @@ import 'package:zcart_seller/infrastructure/app/constants.dart';
 
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
+import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
 class AddProductPage extends HookConsumerWidget {
   const AddProductPage({Key? key}) : super(key: key);
@@ -65,10 +66,11 @@ class AddProductPage extends HookConsumerWidget {
       return null;
     }, []);
     final buttonPressed = useState(false);
+
     ref.listen<ProductState>(productProvider, (previous, next) {
       if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
-          Navigator.of(context).pop();
           CherryToast.info(
             title: const Text('Product added'),
             animationType: AnimationType.fromTop,
@@ -76,11 +78,16 @@ class AddProductPage extends HookConsumerWidget {
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-          Navigator.of(context).pop();
-          next.failure.showDialogue(context);
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
         }
       }
     });
+    final formKey = useMemoized(() => GlobalKey<FormState>());
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
@@ -96,283 +103,290 @@ class AddProductPage extends HookConsumerWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10.h),
-              Text(
-                '* Required fields.',
-                style: TextStyle(color: Theme.of(context).hintColor),
-              ),
-              SizedBox(height: 10.h),
-              KTextField(controller: nameController, lebelText: 'Name *'),
-              SizedBox(height: 10.h),
-              KTextField(controller: brand, lebelText: 'Brand'),
-              SizedBox(height: 10.h),
-              KTextField(
-                controller: modelNumer,
-                lebelText: 'Model Number',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: mpn,
-                lebelText: 'mpn',
-                numberFormatters: true,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Text(
-                "GTIn Types:",
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 50.h,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.w),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                    isExpanded: true,
-                    value: selectedGtin.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    items: gtinList
-                        .map<DropdownMenuItem<GtinTypes>>((GtinTypes value) {
-                      return DropdownMenuItem<GtinTypes>(
-                        value: value,
-                        child: Text(
-                          value.name,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500),
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10.h),
+                Text(
+                  '* Required fields.',
+                  style: TextStyle(color: Theme.of(context).hintColor),
+                ),
+                SizedBox(height: 10.h),
+                KTextField(
+                  controller: nameController,
+                  lebelText: 'Name *',
+                  validator: (text) => ValidatorLogic.requiredField(text),
+                ),
+                SizedBox(height: 10.h),
+                KTextField(controller: brand, lebelText: 'Brand'),
+                SizedBox(height: 10.h),
+                KTextField(
+                  controller: modelNumer,
+                  lebelText: 'Model Number',
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                KTextField(
+                  controller: mpn,
+                  lebelText: 'mpn',
+                  numberFormatters: true,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                const Text(
+                  "GTIn Types:",
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SizedBox(
+                  height: 50.h,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1.w),
+                          borderRadius: BorderRadius.circular(10.r),
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (GtinTypes? newValue) {
-                      selectedGtin.value = newValue!;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: gtin,
-                lebelText: 'gtin',
-                numberFormatters: true,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Text(
-                "Manufacturer:",
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                // height: 50.h,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 15),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.w),
-                        borderRadius: BorderRadius.circular(10.r),
                       ),
-                    ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                    isExpanded: true,
-                    value: selectedMenufectur.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    items: manufacturerIdList
-                        .map<DropdownMenuItem<ManufacturerId>>(
-                            (ManufacturerId value) {
-                      return DropdownMenuItem<ManufacturerId>(
-                        value: value,
-                        child: Text(
-                          value.value,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (ManufacturerId? newValue) {
-                      selectedMenufectur.value = newValue!;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: description,
-                lebelText: 'Description',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Text(
-                "Origin country:",
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 50.h,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.w),
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                    ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                    isExpanded: true,
-                    value: selectedCountry.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    items: countryList.map<DropdownMenuItem<KeyValueData>>(
-                        (KeyValueData value) {
-                      return DropdownMenuItem<KeyValueData>(
-                        value: value,
-                        child: Text(
-                          value.value,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (KeyValueData? newValue) {
-                      selectedCountry.value = newValue!;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SearchChoices<TagListModel>.multiple(
-                items: List<DropdownMenuItem<TagListModel>>.from(
-                    tagList.map<DropdownMenuItem<TagListModel>>(
-                        (e) => DropdownMenuItem<TagListModel>(
-                              value: e,
-                              child: Text(
-                                e.value,
-                                textDirection: TextDirection.rtl,
-                              ),
-                            ))),
-                selectedItems: selectedTags.value.unlock,
-                hint: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Text("Select Tags"),
-                ),
-                searchHint: "Select Tags",
-                onChanged: (List<int> value) {
-                  selectedTags.value = value.lock;
-                  Logger.i(selectedTags.value);
-
-                  //  selectedCategories.value = value;
-                },
-                closeButton: (selectedItems) {
-                  return (selectedItems.isNotEmpty
-                      ? "Save ${selectedItems.length == 1 ? '"${tagList[selectedItems.first].value}"' : '(${selectedItems.length})'}"
-                      : "Save without selection");
-                },
-                isExpanded: true,
-              ),
-              SizedBox(height: 10.h),
-              MultipleKeyValueSelector(
-                  title: "Select Categories *",
-                  allData: allCategories,
-                  onSelect: (list) {
-                    selectedCategories.value = list;
-                  }),
-              SizedBox(height: 10.h),
-              SwitchListTile(
-                value: active.value,
-                onChanged: (value) => active.value = value,
-                title: const Text('Active '),
-              ),
-              SizedBox(height: 10.h),
-              SwitchListTile(
-                value: shipping.value,
-                onChanged: (value) => shipping.value = value,
-                title: const Text('Require Shipping'),
-              ),
-              SizedBox(height: 10.h),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (nameController.text.isNotEmpty &&
-                          description.text.isNotEmpty &&
-                          brand.text.isNotEmpty &&
-                          modelNumer.text.isNotEmpty &&
-                          mpn.text.isNotEmpty &&
-                          gtin.text.isNotEmpty &&
-                          selectedTags.value.isNotEmpty &&
-                          selectedCategories.value.isNotEmpty) {
-                        final product = CreateProductModel(
-                          manufacturerId:
-                              int.parse(selectedMenufectur.value.id),
-                          brand: brand.text,
-                          name: nameController.text,
-                          modeNumber: modelNumer.text,
-                          mpn: mpn.text,
-                          gtin: gtin.text,
-                          gtinType: selectedGtin.value.value,
-                          description: description.text,
-                          originCountry: selectedCountry.value.key,
-                          slug: nameController.text
-                              .toLowerCase()
-                              .replaceAll(RegExp(r' '), '-'),
-                          categoryList: selectedCategories.value
-                              .map((element) => int.tryParse(element.key) ?? 0)
-                              .toList(),
-                          tagList: selectedTags.value.unlock,
-                          active: active.value,
-                          requireShipping: shipping.value,
+                      style: TextStyle(color: Colors.grey.shade800),
+                      isExpanded: true,
+                      value: selectedGtin.value,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      items: gtinList
+                          .map<DropdownMenuItem<GtinTypes>>((GtinTypes value) {
+                        return DropdownMenuItem<GtinTypes>(
+                          value: value,
+                          child: Text(
+                            value.name,
+                            style: TextStyle(
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.w500),
+                          ),
                         );
-                        ref
-                            .read(productProvider.notifier)
-                            .createProduct(product);
-                        buttonPressed.value = true;
-                      } else {
-                        CherryToast.info(
-                          title: const Text('Fill all fields'),
-                          animationType: AnimationType.fromTop,
-                        ).show(context);
-                      }
-                    },
-                    child: const Text('Create'),
+                      }).toList(),
+                      onChanged: (GtinTypes? newValue) {
+                        selectedGtin.value = newValue!;
+                      },
+                    ),
                   ),
-                ],
-              ),
-              SizedBox(height: 15.h),
-            ],
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                KTextField(
+                  controller: gtin,
+                  lebelText: 'gtin',
+                  numberFormatters: true,
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                const Text(
+                  "Manufacturer:",
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SizedBox(
+                  // height: 50.h,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1.w),
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.grey.shade800),
+                      isExpanded: true,
+                      value: selectedMenufectur.value,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      items: manufacturerIdList
+                          .map<DropdownMenuItem<ManufacturerId>>(
+                              (ManufacturerId value) {
+                        return DropdownMenuItem<ManufacturerId>(
+                          value: value,
+                          child: Text(
+                            value.value,
+                            style: TextStyle(
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (ManufacturerId? newValue) {
+                        selectedMenufectur.value = newValue!;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                KTextField(
+                  controller: description,
+                  lebelText: 'Description *',
+                  validator: (text) => ValidatorLogic.requiredField(text),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                const Text(
+                  "Origin country:",
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SizedBox(
+                  height: 50.h,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButtonFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1.w),
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.grey.shade800),
+                      isExpanded: true,
+                      value: selectedCountry.value,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                      items: countryList.map<DropdownMenuItem<KeyValueData>>(
+                          (KeyValueData value) {
+                        return DropdownMenuItem<KeyValueData>(
+                          value: value,
+                          child: Text(
+                            value.value,
+                            style: TextStyle(
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (KeyValueData? newValue) {
+                        selectedCountry.value = newValue!;
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                SearchChoices<TagListModel>.multiple(
+                  items: List<DropdownMenuItem<TagListModel>>.from(
+                      tagList.map<DropdownMenuItem<TagListModel>>(
+                          (e) => DropdownMenuItem<TagListModel>(
+                                value: e,
+                                child: Text(
+                                  e.value,
+                                  textDirection: TextDirection.rtl,
+                                ),
+                              ))),
+                  selectedItems: selectedTags.value.unlock,
+                  hint: const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Text("Select Tags"),
+                  ),
+                  searchHint: "Select Tags",
+                  onChanged: (List<int> value) {
+                    selectedTags.value = value.lock;
+                    Logger.i(selectedTags.value);
+
+                    //  selectedCategories.value = value;
+                  },
+                  closeButton: (selectedItems) {
+                    return (selectedItems.isNotEmpty
+                        ? "Save ${selectedItems.length == 1 ? '"${tagList[selectedItems.first].value}"' : '(${selectedItems.length})'}"
+                        : "Save without selection");
+                  },
+                  isExpanded: true,
+                ),
+                SizedBox(height: 10.h),
+                MultipleKeyValueSelector(
+                    title: "Select Categories *",
+                    allData: allCategories,
+                    onSelect: (list) {
+                      selectedCategories.value = list;
+                    }),
+                SizedBox(height: 10.h),
+                SwitchListTile(
+                  value: active.value,
+                  onChanged: (value) => active.value = value,
+                  title: const Text('Active '),
+                ),
+                SizedBox(height: 10.h),
+                SwitchListTile(
+                  value: shipping.value,
+                  onChanged: (value) => shipping.value = value,
+                  title: const Text('Require Shipping'),
+                ),
+                SizedBox(height: 10.h),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Logger.i(selectedCategories.value);
+                        if (formKey.currentState?.validate() ?? false) {
+                          if (selectedCategories.value.isNotEmpty) {
+                            final product = CreateProductModel(
+                              manufacturerId:
+                                  int.parse(selectedMenufectur.value.id),
+                              brand: brand.text,
+                              name: nameController.text,
+                              modeNumber: modelNumer.text,
+                              mpn: mpn.text,
+                              gtin: gtin.text,
+                              gtinType: selectedGtin.value.value,
+                              description: description.text,
+                              originCountry: selectedCountry.value.key,
+                              slug: nameController.text
+                                  .toLowerCase()
+                                  .replaceAll(RegExp(r' '), '-'),
+                              categoryList: selectedCategories.value
+                                  .map((element) =>
+                                      int.tryParse(element.key) ?? 0)
+                                  .toList(),
+                              tagList: selectedTags.value.unlock,
+                              active: active.value,
+                              requireShipping: shipping.value,
+                            );
+                            ref
+                                .read(productProvider.notifier)
+                                .createProduct(product);
+                            buttonPressed.value = true;
+                          } else {
+                            CherryToast.error(
+                              title: const Text(
+                                'Category group is required',
+                              ),
+                              toastPosition: Position.bottom,
+                            ).show(context);
+                          }
+                        }
+                      },
+                      child: const Text('Create'),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.h),
+              ],
+            ),
           ),
         ),
       ),

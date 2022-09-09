@@ -39,7 +39,7 @@ class CreateProductModel extends Equatable {
 
   String get tagsEndPoint => tagList.map((id) => "tag_list[]=$id").join('&');
   String get categoriesEndPoint =>
-      tagList.map((id) => "category_list[]=$id").join('&');
+      categoryList.map((id) => "category_list[]=$id").join('&');
   String get endPoint =>
       'product/create?name=$name&active=$active&mpn=$mpn&gtin=$gtin&gtin_type=$gtinType&description=$description&$tagsEndPoint&requires_shipping=$requireShipping&manufacturer_id=$manufacturerId&brand=$brand&model_number=$modeNumber&origin_country=$originCountry&slug=$slug&$categoriesEndPoint';
 

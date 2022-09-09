@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class UpdateProductModel extends Equatable {
@@ -16,6 +18,7 @@ class UpdateProductModel extends Equatable {
   final String originCountry;
   final int active;
   final bool requireShipping;
+  final List<int> categoryList;
   const UpdateProductModel({
     required this.id,
     required this.slug,
@@ -30,10 +33,13 @@ class UpdateProductModel extends Equatable {
     required this.originCountry,
     required this.active,
     required this.requireShipping,
+    required this.categoryList,
   });
 
+  String get categoriesEndPoint =>
+      categoryList.map((id) => "category_list[]=$id").join('&');
   String get endPoint =>
-      'product/$id/update?name=$name&slug=$slug&active=$active&mpn=$mpn&gtin=$gtin&gtin_type=$gtinType&description=$description&requires_shipping=$requireShipping&manufacturer_id=$manufacturerId&brand=$brand&model_number=$modeNumber';
+      'product/$id/update?name=$name&slug=$slug&active=$active&mpn=$mpn&gtin=$gtin&gtin_type=$gtinType&description=$description&requires_shipping=$requireShipping&manufacturer_id=$manufacturerId&brand=$brand&model_number=$modeNumber&$categoriesEndPoint';
 
   @override
   bool get stringify => true;
@@ -54,6 +60,7 @@ class UpdateProductModel extends Equatable {
       originCountry,
       active,
       requireShipping,
+      categoryList,
     ];
   }
 
@@ -71,6 +78,7 @@ class UpdateProductModel extends Equatable {
     String? originCountry,
     int? active,
     bool? requireShipping,
+    List<int>? categoryList,
   }) {
     return UpdateProductModel(
       id: id ?? this.id,
@@ -86,11 +94,55 @@ class UpdateProductModel extends Equatable {
       originCountry: originCountry ?? this.originCountry,
       active: active ?? this.active,
       requireShipping: requireShipping ?? this.requireShipping,
+      categoryList: categoryList ?? this.categoryList,
     );
   }
 
   @override
   String toString() {
-    return 'UpdateProductModel(id: $id, slug: $slug, manufacturerId: $manufacturerId, brand: $brand, name: $name, modeNumber: $modeNumber, mpn: $mpn, gtin: $gtin, gtinType: $gtinType, description: $description, originCountry: $originCountry, active: $active, requireShipping: $requireShipping)';
+    return 'UpdateProductModel(id: $id, slug: $slug, manufacturerId: $manufacturerId, brand: $brand, name: $name, modeNumber: $modeNumber, mpn: $mpn, gtin: $gtin, gtinType: $gtinType, description: $description, originCountry: $originCountry, active: $active, requireShipping: $requireShipping, categoryList: $categoryList)';
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'slug': slug,
+      'manufacturer_id': manufacturerId,
+      'brand': brand,
+      'name': name,
+      'mode_number': modeNumber,
+      'mpn': mpn,
+      'gtin': gtin,
+      'gtin_type': gtinType,
+      'description': description,
+      'origin_country': originCountry,
+      'active': active,
+      'require_shipping': requireShipping,
+      'category_list': categoryList,
+    };
+  }
+
+  factory UpdateProductModel.fromMap(Map<String, dynamic> map) {
+    return UpdateProductModel(
+      id: map['id']?.toInt() ?? 0,
+      slug: map['slug'] ?? '',
+      manufacturerId: map['manufacturer_id']?.toInt() ?? 0,
+      brand: map['brand'] ?? '',
+      name: map['name'] ?? '',
+      modeNumber: map['mode_number'] ?? '',
+      mpn: map['mpn'] ?? '',
+      gtin: map['gtin'] ?? '',
+      gtinType: map['gtin_type'] ?? '',
+      description: map['description'] ?? '',
+      originCountry: map['origin_country'] ?? '',
+      active: map['active']?.toInt() ?? 0,
+      requireShipping: map['require_shipping'] ?? false,
+      categoryList: List<int>.from(map['category_list']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UpdateProductModel.fromJson(String source) =>
+      UpdateProductModel.fromMap(json.decode(source));
 }

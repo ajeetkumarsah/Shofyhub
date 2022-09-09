@@ -28,7 +28,7 @@ class DashboardPage extends HookConsumerWidget {
         ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
         ref.read(orderProvider(OrderFilter.archived).notifier).getOrders();
         ref
-            .read(inventoryProvider.notifier)
+            .read(stockeInventoryProvider.notifier)
             .getAllInventories(inventoryFilter: 'active');
         ref.read(categoryGroupProvider.notifier).getAllCategoryGroup();
       });

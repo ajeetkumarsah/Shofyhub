@@ -74,6 +74,7 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
     });
 
     return AlertDialog(
+      insetPadding: EdgeInsets.zero,
       title: const Text('Edit Category Group'),
       content: SingleChildScrollView(
         child: Column(
