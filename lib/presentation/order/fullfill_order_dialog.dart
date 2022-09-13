@@ -49,6 +49,8 @@ class FullfillorderDialog extends HookConsumerWidget {
         }
       }
     });
+    final loading =
+        ref.watch(orderProvider(null).select((value) => value.loading));
 
     return AlertDialog(
       shape: const RoundedRectangleBorder(
@@ -170,9 +172,10 @@ class FullfillorderDialog extends HookConsumerWidget {
                           selectedCarrier.value.id,
                           trackingIdController.text,
                           sendNotification.value);
-                      Navigator.pop(context);
                     },
-                    child: const Text("Update"),
+                    child: loading
+                        ? const CircularProgressIndicator()
+                        : const Text("Update"),
                   ),
                 ],
               ),

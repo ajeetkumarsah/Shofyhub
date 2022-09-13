@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/presentation/app/order%20management/refunds/refund_home.dart';
 import 'package:zcart_seller/presentation/order/archived_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 
@@ -20,7 +22,8 @@ class OrderGrid extends ConsumerWidget {
             .select((value) => value.orderList.length));
     final totalArchivedOrder = ref.watch(orderProvider(OrderFilter.archived)
         .select((value) => value.orderList.length));
-
+    final totalRefunds =
+        ref.watch(refundProvider.select((value) => value.openRefunds.length));
     return Container(
       padding: EdgeInsets.only(top: 10.h),
       decoration: BoxDecoration(
@@ -68,9 +71,13 @@ class OrderGrid extends ConsumerWidget {
             itemValues: '1200',
             itemName: 'DISPUTES',
           ),
-          const StoreReportItems(
+          StoreReportItems(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => const RefundHome()));
+            },
             icon: FontAwesomeIcons.sellcast,
-            itemValues: '1200',
+            itemValues: '$totalRefunds',
             itemName: 'REFUND REQUESTS',
           ),
         ],

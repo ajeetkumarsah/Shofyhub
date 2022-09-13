@@ -1,7 +1,11 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
+import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
+import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 
 class DeleteCategoryDialog extends HookConsumerWidget {
   final int categoryId;
@@ -9,6 +13,24 @@ class DeleteCategoryDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    ref.listen<CategoryState>(categoryProvider(categoryId), (previous, next) {
+      if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none()) {
+          CherryToast.info(
+            title: const Text('Category Deleted'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+        } else if (next.failure != CleanFailure.none()) {
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
+        }
+      }
+    });
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -19,7 +41,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Delete Category Group',
+                  'Delete Category',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -97,8 +119,6 @@ class DeleteCategoryDialog extends HookConsumerWidget {
                         ref
                             .read(categoryProvider(categoryId).notifier)
                             .trashcategory(categoryId);
-
-                        Navigator.pop(context);
                       },
                       child: Text(
                         "Delete",

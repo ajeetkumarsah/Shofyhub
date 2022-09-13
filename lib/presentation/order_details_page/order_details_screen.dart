@@ -8,6 +8,7 @@ import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/app/order%20management/refunds/pages/widgets/initiate_refunt_page.dart';
 import 'package:zcart_seller/presentation/order/widget/add_admin_note.dart';
 import 'package:zcart_seller/presentation/order/widget/archive_order_confirmation.dart';
 import 'package:zcart_seller/presentation/order/widget/cancle_order_confirmation_dialog.dart';
@@ -51,6 +52,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                   showDialog(
                       context: context,
                       builder: (context) => ArchivedOrderConfirmation(
+                            details: true,
                             orderId: orderDetails.id,
                           ));
                 } else if (index == 3) {
@@ -64,6 +66,12 @@ class OrderDetailsScreen extends HookConsumerWidget {
                       builder: (context) => OrderStatusDialog(
                             orderId: orderDetails.id,
                             orderStatus: orderDetails.order_status,
+                          ));
+                } else if (index == 5) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => InitiateRefundPage(
+                            orderId: orderDetails.id,
                           ));
                 }
               },
@@ -84,6 +92,10 @@ class OrderDetailsScreen extends HookConsumerWidget {
                     const PopupMenuItem(
                       value: 4,
                       child: Text("Update order status"),
+                    ),
+                    const PopupMenuItem(
+                      value: 5,
+                      child: Text("Initiate Refund"),
                     )
                   ])
         ],

@@ -1,7 +1,11 @@
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:cherry_toast/resources/arrays.dart';
+import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
+import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
 
 class DeleteCategoryGroupDialog extends HookConsumerWidget {
   final int categoryGroupId;
@@ -13,6 +17,24 @@ class DeleteCategoryGroupDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    ref.listen<CategoryGroupState>(categoryGroupProvider, (previous, next) {
+      if (previous != next && !next.loading) {
+        Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none()) {
+          CherryToast.info(
+            title: const Text('Category Deleted'),
+            animationType: AnimationType.fromTop,
+          ).show(context);
+        } else if (next.failure != CleanFailure.none()) {
+          CherryToast.error(
+            title: Text(
+              next.failure.error,
+            ),
+            toastPosition: Position.bottom,
+          ).show(context);
+        }
+      }
+    });
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -102,7 +124,6 @@ class DeleteCategoryGroupDialog extends HookConsumerWidget {
                             .read(categoryGroupProvider.notifier)
                             .trashCategoryGroup(
                                 categoryGroupId: categoryGroupId);
-                        Navigator.pop(context);
                       },
                       child: Text(
                         "Delete",

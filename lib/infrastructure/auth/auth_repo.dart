@@ -103,4 +103,37 @@ class AuthRepo extends IAuthRepo {
       return right(r);
     });
   }
+
+  @override
+  Future<Either<CleanFailure, Unit>> forgetPassword(
+      {required String email}) async {
+    return cleanApi.post(
+        failureHandler:
+            <unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'Forget Password', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'Forget Password',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'Forget Password',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'Forget Password', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        body: null,
+        endPoint: 'auth/forgot?email=$email');
+  }
 }

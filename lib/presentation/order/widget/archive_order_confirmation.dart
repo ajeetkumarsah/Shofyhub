@@ -10,8 +10,9 @@ import 'package:zcart_seller/application/app/order/order_state.dart';
 class ArchivedOrderConfirmation extends HookConsumerWidget {
   final int orderId;
   final String? filter;
+  final bool? details;
   const ArchivedOrderConfirmation(
-      {Key? key, required this.orderId, this.filter})
+      {Key? key, required this.orderId, this.filter, this.details = false})
       : super(key: key);
 
   @override
@@ -21,6 +22,9 @@ class ArchivedOrderConfirmation extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          if (details == true) {
+            Navigator.of(context).pop();
+          }
           CherryToast.info(
             title: const Text('Successfully Arcived'),
             animationType: AnimationType.fromTop,
@@ -56,6 +60,10 @@ class ArchivedOrderConfirmation extends HookConsumerWidget {
                 .read(orderProvider(OrderFilter.archived).notifier)
                 .archiveOrder(orderId, reloadList: () {
               ref.read(orderProvider(filter).notifier).getOrders();
+              ref
+                  .read(orderProvider(OrderFilter.unfullfill).notifier)
+                  .getOrders();
+              ref.read(orderProvider(OrderFilter.unpaid).notifier).getOrders();
             });
             // Navigator.of(context).pop();
           },

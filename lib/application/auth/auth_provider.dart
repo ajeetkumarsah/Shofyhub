@@ -1,9 +1,11 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
 import 'package:zcart_seller/domain/auth/i_auth_repo.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/registration_body.dart';
+import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/auth/auth_repo.dart';
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
@@ -31,6 +33,28 @@ class AuthNotifier extends StateNotifier<AuthState> {
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
             loading: false, failure: CleanFailure.none(), user: r));
+    Logger.i(state.user);
+  }
+
+  forgetPassword({required String email}) async {
+    state = state.copyWith(loading: true);
+    final data = await authRepo.forgetPassword(email: email);
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+              loading: false,
+              failure: CleanFailure.none(),
+            ));
+  }
+
+  logout() async {
+    final preferences = await SharedPreferences.getInstance();
+    preferences.setString('token', '');
+    state = state.copyWith(
+      loading: false,
+      failure: CleanFailure.none(),
+      user: UserModel.init(),
+    );
     Logger.i(state.user);
   }
 }

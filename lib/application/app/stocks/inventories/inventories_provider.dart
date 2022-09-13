@@ -26,6 +26,17 @@ class AllInventoriesNotifier extends StateNotifier<InventoriesState> {
     );
   }
 
+  getTrashInventories() async {
+    state = state.copyWith(loading: true);
+    final inventoriesData =
+        await inventoryRepo.getAllInventories(inventoryFilter: 'trash');
+    state = inventoriesData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(
+          loading: false, failure: CleanFailure.none(), trashInventory: r),
+    );
+  }
+
   quickUpdate(QuickUpdateModel quickUpdateModel, int id) async {
     state = state.copyWith(loading: true);
     final quickUpdateData = await inventoryRepo.quickUpdate(
@@ -39,6 +50,7 @@ class AllInventoriesNotifier extends StateNotifier<InventoriesState> {
       ),
     );
     getAllInventories(inventoryFilter: 'active');
+    getTrashInventories();
   }
 
   trashInventory(int inventoryId) async {
@@ -51,5 +63,32 @@ class AllInventoriesNotifier extends StateNotifier<InventoriesState> {
       (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
     );
     getAllInventories(inventoryFilter: 'active');
+    getTrashInventories();
+  }
+
+  restoreInventory(int inventoryId) async {
+    state = state.copyWith(loading: true);
+    final quickUpdateData =
+        await inventoryRepo.restoreInventory(inventoryId: inventoryId);
+
+    state = quickUpdateData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
+    );
+    getAllInventories(inventoryFilter: 'active');
+    getTrashInventories();
+  }
+
+  deleteInventory(int inventoryId) async {
+    state = state.copyWith(loading: true);
+    final quickUpdateData =
+        await inventoryRepo.deleteInventory(inventoryId: inventoryId);
+
+    state = quickUpdateData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
+    );
+    getAllInventories(inventoryFilter: 'active');
+    getTrashInventories();
   }
 }

@@ -150,7 +150,7 @@ class InventoryItemTile extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        'Delete Inventory',
+                        'Move to trash',
                         style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.w500,

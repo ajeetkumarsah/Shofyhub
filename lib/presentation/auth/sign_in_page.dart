@@ -12,6 +12,7 @@ import 'package:zcart_seller/application/auth/auth_state.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/auth/forget_password_dialog.dart';
 import 'package:zcart_seller/presentation/auth/signup_screen.dart';
 import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
@@ -196,6 +197,35 @@ class SignInPage extends HookConsumerWidget {
                                 builder: (_) => const SignupScreen()));
                           },
                           child: Text('Sign Up',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Or, Forgot your Password?',
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    const ForgetPasswordDialog());
+                          },
+                          child: Text('Forget password',
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.bold,

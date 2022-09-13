@@ -2,22 +2,22 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class ManufacturerModel extends Equatable {
+class ManufacturerProductModel extends Equatable {
   final int id;
   final String name;
   final String slug;
-  const ManufacturerModel({
+  const ManufacturerProductModel({
     required this.id,
     required this.name,
     required this.slug,
   });
 
-  ManufacturerModel copyWith({
+  ManufacturerProductModel copyWith({
     int? id,
     String? name,
     String? slug,
   }) {
-    return ManufacturerModel(
+    return ManufacturerProductModel(
       id: id ?? this.id,
       name: name ?? this.name,
       slug: slug ?? this.slug,
@@ -32,8 +32,8 @@ class ManufacturerModel extends Equatable {
     };
   }
 
-  factory ManufacturerModel.fromMap(Map<String, dynamic> map) {
-    return ManufacturerModel(
+  factory ManufacturerProductModel.fromMap(Map<String, dynamic> map) {
+    return ManufacturerProductModel(
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       slug: map['slug'] ?? '',
@@ -42,14 +42,14 @@ class ManufacturerModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory ManufacturerModel.fromJson(String source) =>
-      ManufacturerModel.fromMap(json.decode(source));
+  factory ManufacturerProductModel.fromJson(String source) =>
+      ManufacturerProductModel.fromMap(json.decode(source));
 
   @override
   String toString() => 'ManufacturerModel(id: $id, name: $name, slug: $slug)';
 
   @override
   List<Object> get props => [id, name, slug];
-  factory ManufacturerModel.init() =>
-      const ManufacturerModel(id: 0, name: '', slug: '');
+  factory ManufacturerProductModel.init() =>
+      const ManufacturerProductModel(id: 0, name: '', slug: '');
 }

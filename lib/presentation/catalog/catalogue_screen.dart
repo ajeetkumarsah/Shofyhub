@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attributes/attributes_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_group/category_group_page.dart';
+import 'package:zcart_seller/presentation/catalog/pages/manufacturer/manufacturer_list_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/product_list_page.dart';
 
 class CatalogueScreen extends StatelessWidget {
@@ -12,7 +13,7 @@ class CatalogueScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       // initialIndex: index,
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 60.h,
@@ -39,12 +40,16 @@ class CatalogueScreen extends StatelessWidget {
                 Tab(
                   text: 'Products',
                 ),
+                Tab(
+                  text: 'Manufacturer',
+                ),
               ]),
         ),
         body: const TabBarView(children: [
           CategoryGroupPage(),
           AttributePage(),
           ProductListPage(),
+          ManufacturerListPage(),
         ]),
       ),
     );

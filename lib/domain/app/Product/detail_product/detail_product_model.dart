@@ -14,7 +14,7 @@ class DetailProductModel extends Equatable {
   final String gtinType;
   final String mpn;
   final String brand;
-  final ManufacturerModel manufacturer;
+  final ManufacturerProductModel manufacturer;
   final String origin;
   final String listingCount;
   final String description;
@@ -47,7 +47,7 @@ class DetailProductModel extends Equatable {
     String? gtinType,
     String? mpn,
     String? brand,
-    ManufacturerModel? manufacturer,
+    ManufacturerProductModel? manufacturer,
     String? origin,
     String? listingCount,
     String? description,
@@ -101,7 +101,7 @@ class DetailProductModel extends Equatable {
       gtinType: map['gtin_type'] ?? '',
       mpn: map['mpn'] ?? '',
       brand: map['brand'] ?? '',
-      manufacturer: ManufacturerModel.fromMap(map['manufacturer']),
+      manufacturer: ManufacturerProductModel.fromMap(map['manufacturer']),
       origin: map['origin'] ?? '',
       listingCount: map['listing_count'] ?? '',
       description: map['description'] ?? '',
@@ -147,7 +147,7 @@ class DetailProductModel extends Equatable {
         gtinType: '',
         mpn: '',
         brand: '',
-        manufacturer: ManufacturerModel.init(),
+        manufacturer: ManufacturerProductModel.init(),
         origin: '',
         listingCount: '',
         description: '',

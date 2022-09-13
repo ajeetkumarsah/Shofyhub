@@ -97,7 +97,7 @@ class AtributesRepo extends IAtributesRepo {
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'attribute/$attributeId/update?name=$name&attribute_type_id=$attributeTypeId&categories_ids[]=$categoriesIds&categories_ids[]=$categoriesIds&order=$order',
+          'attribute/$attributeId/update?name=$name&attribute_type_id=$attributeTypeId&$categoriesIds&order=$order',
     );
   }
 

@@ -131,4 +131,65 @@ class InventoriesRepo extends IInventoriesRepo {
       endPoint: 'inventory/$inventoryId/trash',
     );
   }
+
+  @override
+  Future<Either<CleanFailure, Unit>> deleteInventory({required inventoryId}) {
+    return cleanApi.delete(
+      failureHandler:
+          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        if (responseBody['errors'] != null) {
+          final errors =
+              Map<String, dynamic>.from(responseBody['errors']).values.toList();
+          final error = List.from(errors.first);
+          return left(CleanFailure(tag: 'inventory', error: error.first));
+        } else if (responseBody['message'] != null) {
+          return left(CleanFailure(
+              tag: 'inventory',
+              error: responseBody['message'],
+              statusCode: statusCode));
+        } else if (responseBody['error'] != null) {
+          return left(CleanFailure(
+              tag: 'inventory',
+              error: responseBody['error'],
+              statusCode: statusCode));
+        } else {
+          return left(
+              CleanFailure(tag: 'inventory', error: responseBody.toString()));
+        }
+      },
+      fromData: (json) => unit,
+      endPoint: 'inventory/$inventoryId/delete',
+    );
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> restoreInventory({required inventoryId}) {
+    return cleanApi.put(
+      failureHandler:
+          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        if (responseBody['errors'] != null) {
+          final errors =
+              Map<String, dynamic>.from(responseBody['errors']).values.toList();
+          final error = List.from(errors.first);
+          return left(CleanFailure(tag: 'inventory', error: error.first));
+        } else if (responseBody['message'] != null) {
+          return left(CleanFailure(
+              tag: 'inventory',
+              error: responseBody['message'],
+              statusCode: statusCode));
+        } else if (responseBody['error'] != null) {
+          return left(CleanFailure(
+              tag: 'inventory',
+              error: responseBody['error'],
+              statusCode: statusCode));
+        } else {
+          return left(
+              CleanFailure(tag: 'inventory', error: responseBody.toString()));
+        }
+      },
+      fromData: (json) => unit,
+      body: null,
+      endPoint: 'inventory/$inventoryId/restore',
+    );
+  }
 }

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:search_choices/search_choices.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_provider.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';

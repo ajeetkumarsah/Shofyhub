@@ -1,0 +1,173 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
+
+class TrashInventoryItemTile extends StatelessWidget {
+  final String title;
+  final String price;
+  final String image;
+  final String sku;
+  final String condition;
+  final int quantity;
+  final Function()? restore;
+  final Function()? deleteInventory;
+  const TrashInventoryItemTile(
+      {Key? key,
+      required this.restore,
+      required this.condition,
+      required this.quantity,
+      required this.sku,
+      required this.title,
+      required this.image,
+      required this.deleteInventory,
+      required this.price})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(15.r),
+      ),
+      padding: const EdgeInsets.all(5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  Container(
+                    height: 135.h,
+                    width: 120.w,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.r),
+                        color: Colors.white),
+                    padding: const EdgeInsets.all(10),
+                    child: Center(
+                      child: Image.network(image),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(width: 10.w),
+              Container(
+                // height: 135.h,
+                width: 170.w,
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: Colors.grey.shade800,
+                        fontSize: 17.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 7.h),
+                    Text(
+                      'SKU: $sku',
+                      style: TextStyle(fontSize: 16.sp),
+                    ),
+                    SizedBox(height: 7.h),
+                    Container(
+                      height: 25.h,
+                      // width: 90.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.r),
+                          color: Colors.green.shade300),
+                      child: Center(
+                        child: Text(
+                          condition,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            wordSpacing: 5,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 7.h),
+                    Text(
+                      'Quantity: $quantity',
+                      style: TextStyle(fontSize: 16.sp),
+                    ),
+                    SizedBox(height: 7.h),
+                    Text(
+                      price,
+                      style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17.sp),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 5.h),
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: restore,
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: Container(
+                    height: 30.h,
+                    decoration: BoxDecoration(
+                      color: Constants.appbarColor,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Restore Inventory',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 15.sp),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: InkWell(
+                  onTap: deleteInventory,
+                  child: Container(
+                    height: 30.h,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1.w),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Delete Inventory',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+        ],
+      ),
+    );
+  }
+}

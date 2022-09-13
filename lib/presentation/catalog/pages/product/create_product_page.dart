@@ -48,11 +48,9 @@ class AddProductPage extends HookConsumerWidget {
 
     // final originCountry = useTextEditingController();
 
-    final ValueNotifier<GtinTypes> selectedGtin = useState(gtinList[0]);
-    final ValueNotifier<KeyValueData> selectedCountry =
-        useState(countryList[0]);
-    final ValueNotifier<ManufacturerId> selectedMenufectur =
-        useState(manufacturerIdList[0]);
+    final ValueNotifier<GtinTypes?> selectedGtin = useState(null);
+    final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
+    final ValueNotifier<ManufacturerId?> selectedMenufectur = useState(null);
     final allCategories =
         ref.watch(categoryListProvider.select((value) => value.dataList));
     final ValueNotifier<IList<KeyValueData>> selectedCategories =
@@ -137,12 +135,12 @@ class AddProductPage extends HookConsumerWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                const Text(
-                  "GTIn Types:",
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
+                // const Text(
+                //   "GTIn Types:",
+                // ),
+                // SizedBox(
+                //   height: 10.h,
+                // ),
                 SizedBox(
                   height: 50.h,
                   child: DropdownButtonHideUnderline(
@@ -156,6 +154,7 @@ class AddProductPage extends HookConsumerWidget {
                       style: TextStyle(color: Colors.grey.shade800),
                       isExpanded: true,
                       value: selectedGtin.value,
+                      hint: const Text('Select gtin type'),
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       items: gtinList
                           .map<DropdownMenuItem<GtinTypes>>((GtinTypes value) {
@@ -186,12 +185,12 @@ class AddProductPage extends HookConsumerWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                const Text(
-                  "Manufacturer:",
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
+                // const Text(
+                //   "Manufacturer:",
+                // ),
+                // SizedBox(
+                //   height: 10.h,
+                // ),
                 SizedBox(
                   // height: 50.h,
                   child: DropdownButtonHideUnderline(
@@ -204,6 +203,7 @@ class AddProductPage extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                       ),
+                      hint: const Text('Select manufacturer'),
                       style: TextStyle(color: Colors.grey.shade800),
                       isExpanded: true,
                       value: selectedMenufectur.value,
@@ -238,12 +238,7 @@ class AddProductPage extends HookConsumerWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                const Text(
-                  "Origin country:",
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
+
                 SizedBox(
                   height: 50.h,
                   child: DropdownButtonHideUnderline(
@@ -254,6 +249,7 @@ class AddProductPage extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                       ),
+                      hint: const Text('Select origin country'),
                       style: TextStyle(color: Colors.grey.shade800),
                       isExpanded: true,
                       value: selectedCountry.value,
@@ -345,16 +341,21 @@ class AddProductPage extends HookConsumerWidget {
                         if (formKey.currentState?.validate() ?? false) {
                           if (selectedCategories.value.isNotEmpty) {
                             final product = CreateProductModel(
-                              manufacturerId:
-                                  int.parse(selectedMenufectur.value.id),
+                              manufacturerId: selectedMenufectur.value != null
+                                  ? int.parse(selectedMenufectur.value!.id)
+                                  : 0,
                               brand: brand.text,
                               name: nameController.text,
                               modeNumber: modelNumer.text,
                               mpn: mpn.text,
                               gtin: gtin.text,
-                              gtinType: selectedGtin.value.value,
+                              gtinType: selectedGtin.value != null
+                                  ? selectedGtin.value!.value
+                                  : '',
                               description: description.text,
-                              originCountry: selectedCountry.value.key,
+                              originCountry: selectedCountry.value != null
+                                  ? selectedCountry.value!.key
+                                  : '',
                               slug: nameController.text
                                   .toLowerCase()
                                   .replaceAll(RegExp(r' '), '-'),

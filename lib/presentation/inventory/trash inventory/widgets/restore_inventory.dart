@@ -7,9 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_state.dart';
 
-class DeleteInventory extends HookConsumerWidget {
+class RestoreInventory extends HookConsumerWidget {
   final int inventoryId;
-  const DeleteInventory({Key? key, required this.inventoryId})
+  const RestoreInventory({Key? key, required this.inventoryId})
       : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class DeleteInventory extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Inventory Deleted'),
+            title: const Text('Inventory Restored'),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -44,7 +44,7 @@ class DeleteInventory extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Delete Inventory',
+                  'Restore Inventory',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -69,7 +69,7 @@ class DeleteInventory extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: const Padding(
         padding: EdgeInsets.all(8.0),
-        child: Text('Are you sure you want to delete this Inventory?'),
+        child: Text('Are you sure you want to restore this Inventory?'),
       ),
       actions: [
         const Divider(
@@ -121,12 +121,12 @@ class DeleteInventory extends HookConsumerWidget {
                       onPressed: () {
                         ref
                             .read(stockeInventoryProvider.notifier)
-                            .trashInventory(inventoryId);
+                            .deleteInventory(inventoryId);
                       },
                       child: loading
                           ? const CircularProgressIndicator()
                           : Text(
-                              "Delete",
+                              "Restore",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,

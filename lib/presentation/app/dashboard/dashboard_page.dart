@@ -4,12 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
+import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 import 'package:zcart_seller/presentation/shop/shop_home.dart';
+import 'package:zcart_seller/presentation/stock/stock_home.dart';
 import 'package:zcart_seller/presentation/widget_for_all/zcart_appbar.dart';
 
 import 'widgets/more_option_item.dart';
@@ -31,6 +34,7 @@ class DashboardPage extends HookConsumerWidget {
             .read(stockeInventoryProvider.notifier)
             .getAllInventories(inventoryFilter: 'active');
         ref.read(categoryGroupProvider.notifier).getAllCategoryGroup();
+        ref.read(refundProvider.notifier).getOpenRefunds();
       });
       return null;
     }, []);
@@ -39,6 +43,16 @@ class DashboardPage extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFEFEFEF),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Constants.buttonColor,
+        onPressed: () {
+          showDialog(
+              context: context, builder: (context) => const LogoutDialog());
+        },
+        label: const Text(
+          'Logout',
+        ),
+      ),
       appBar: const ZcartAppBar(
         title: 'Dashboard',
       ),
@@ -137,7 +151,7 @@ class DashboardPage extends HookConsumerWidget {
                     MoreOptionItems(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const InventoryPage()));
+                            builder: (_) => const StockHome()));
                       },
                       icon: FontAwesomeIcons.store,
                       title: 'Stock',
