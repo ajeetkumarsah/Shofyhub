@@ -421,7 +421,7 @@ class _EditProductState extends State<EditProduct> {
               ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    primary: Colors.green,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),
@@ -584,7 +584,7 @@ class _EditProductState extends State<EditProduct> {
               ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Constants.appbarColor,
+                    primary: Constants.appbarColor,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                   ),

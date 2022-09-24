@@ -87,7 +87,7 @@ class AssigenDelivaryBoyScreen extends HookConsumerWidget {
       actions: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Constants.buttonColor,
+            primary: Constants.buttonColor,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),

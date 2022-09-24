@@ -28,13 +28,13 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cherry_toast: ^1.0.8
-  clean_api: ^0.2.2
-  cloud_firestore: ^3.4.5
+  clean_api: ^0.2.3
+  # cloud_firestore: ^3.4.5
   cupertino_icons: ^1.0.2
   easy_localization: ^3.0.1
   equatable: ^2.0.3
   fast_immutable_collections: ^7.4.1
-  firebase_core: ^1.21.0
+  # firebase_core: ^1.21.0
   flutter:
     sdk: flutter
   flutter_custom_selector: ^0.0.3
@@ -74,6 +74,7 @@ flutter:
   assets:
     - assets/images/
     - assets/zcart_logo/
+    - assets/translations/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

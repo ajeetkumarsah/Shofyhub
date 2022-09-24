@@ -1,20 +1,20 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
-import 'firebase_options.dart';
+// import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   CleanApi.instance
       .setup(baseUrl: "https://test.incevio.cloud/api/vendor/", showLogs: true);
   runApp(ProviderScope(

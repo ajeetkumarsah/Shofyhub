@@ -312,7 +312,7 @@ class ManageOrderPage extends HookConsumerWidget {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffEA2264),
+                          primary: const Color(0xffEA2264),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.r),

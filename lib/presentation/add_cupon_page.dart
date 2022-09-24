@@ -196,7 +196,7 @@ class _AddCuponState extends State<AddCupon> {
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Constants.appbarColor,
+                  primary: Constants.appbarColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.r),
                   ),

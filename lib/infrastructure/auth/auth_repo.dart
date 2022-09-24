@@ -1,5 +1,5 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zcart_seller/domain/auth/i_auth_repo.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/registration_body.dart';
@@ -35,10 +35,10 @@ class AuthRepo extends IAuthRepo {
         body: null,
         endPoint: "auth/login?email=${body.email}&password=${body.password}");
     return data.fold((l) => left(l), (r) async {
-      await FirebaseFirestore.instance
-          .collection('setting')
-          .doc('app-setting')
-          .set({'token': r.api_token});
+      // await FirebaseFirestore.instance
+      //     .collection('setting')
+      //     .doc('app-setting')
+      //     .set({'token': r.api_token});
       final preferences = await SharedPreferences.getInstance();
       listenForTokenChange();
       preferences.setString('token', r.api_token);
@@ -48,16 +48,16 @@ class AuthRepo extends IAuthRepo {
   }
 
   listenForTokenChange() {
-    Stream documentStream = FirebaseFirestore.instance
-        .collection('setting')
-        .doc('app-setting')
-        .snapshots();
+    // Stream documentStream = FirebaseFirestore.instance
+    //     .collection('setting')
+    //     .doc('app-setting')
+    //     .snapshots();
 
-    documentStream.listen((event) {
-      final data = (event as DocumentSnapshot).data() as Map;
-      Logger.i("token changed: ${data['token']}");
-      cleanApi.setToken({'Authorization': "Bearer ${data['token']}"});
-    });
+    // documentStream.listen((event) {
+    //   final data = (event as DocumentSnapshot).data() as Map;
+    //   Logger.i("token changed: ${data['token']}");
+    //   cleanApi.setToken({'Authorization': "Bearer ${data['token']}"});
+    // });
   }
 
   @override
@@ -92,10 +92,10 @@ class AuthRepo extends IAuthRepo {
         endPoint:
             "auth/register?email=${body.email}&shop_name=${body.shopName}&plan=${body.planId}&password=${body.password}&password_confirmation=${body.confirmPassword}&agree=${body.agree}");
     return data.fold((l) => left(l), (r) async {
-      await FirebaseFirestore.instance
-          .collection('setting')
-          .doc('app-setting')
-          .set({'token': r.api_token});
+      // await FirebaseFirestore.instance
+      //     .collection('setting')
+      //     .doc('app-setting')
+      //     .set({'token': r.api_token});
       final preferences = await SharedPreferences.getInstance();
       listenForTokenChange();
       preferences.setString('token', r.api_token);
