@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
@@ -16,7 +18,7 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
       : super(CategoryGroupState.init());
 
   getAllCategoryGroup() async {
-    state = state.copyWith(loading: false);
+    state = state.copyWith(loading: true);
     final data = await categoryGroupRepo.getAllCategoryGroup();
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
@@ -27,7 +29,7 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
   }
 
   createCategoryGroup(CreateCategoryGroupModel categoryGroupModel) async {
-    state = state.copyWith(loading: false);
+    state = state.copyWith(loading: true);
     final data = await categoryGroupRepo.createCategoryGroup(
         categoryGroupModel: categoryGroupModel);
     state = data.fold(
@@ -62,7 +64,7 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
       required String metaDescription,
       required int order,
       required String icon,
-      required bool active}) async {
+      required int active}) async {
     state = state.copyWith(loading: true);
     final data = await categoryGroupRepo.updateCategoryGroup(
       categoryGroupId: categoryGroupId,

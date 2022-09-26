@@ -25,7 +25,7 @@ abstract class ICategoryGroupRepo {
     required String metaDescription,
     required int order,
     required String icon,
-    required bool active,
+    required int active,
   });
 
   Future<Either<CleanFailure, Unit>> trashCategoryGroup(

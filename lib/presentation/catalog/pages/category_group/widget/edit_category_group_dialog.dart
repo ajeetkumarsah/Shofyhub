@@ -136,7 +136,9 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                       ? categoryGroup.metaDescription
                       : metaDescController.text,
                   order: int.parse(orderController.text),
-                  icon: iconController.text,
+                  icon: iconController.text.isEmpty
+                      ? categoryGroup.icon
+                      : iconController.text,
                   active: active.value,
                 );
           },

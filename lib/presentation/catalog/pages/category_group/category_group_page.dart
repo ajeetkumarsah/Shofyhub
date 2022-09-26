@@ -14,8 +14,7 @@ class CategoryGroupPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final categoryGroupList = ref.watch(
-        categoryGroupProvider.select((value) => value.allCategoryGroups));
+    final categoryGroupList = ref.watch(categoryGroupProvider);
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
@@ -27,41 +26,56 @@ class CategoryGroupPage extends HookConsumerWidget {
         label: const Text('Add new'),
         icon: const Icon(Icons.add),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              itemCount: categoryGroupList.length,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CategorySubgroupPage(
-                          groupName: categoryGroupList[index].name,
-                          id: categoryGroupList[index].id)));
-                },
-                child: CategoryGroupTile(
-                  categoryGroup: categoryGroupList[index],
-                ),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return ref
+              .refresh(categoryGroupProvider.notifier)
+              .getAllCategoryGroup();
+        },
+        child: categoryGroupList.loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      itemCount: categoryGroupList.allCategoryGroups.length,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) => InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CategorySubgroupPage(
+                                  groupName: categoryGroupList
+                                      .allCategoryGroups[index].name,
+                                  id: categoryGroupList
+                                      .allCategoryGroups[index].id)));
+                        },
+                        child: CategoryGroupTile(
+                          categoryGroup:
+                              categoryGroupList.allCategoryGroups[index],
+                        ),
+                      ),
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: 10.h,
+                      ),
+                    ),
+                  ),
+                  // Expanded(
+                  //   child: ListView.separated(
+                  //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                  //     itemCount: categoryGroupList.length,
+                  //     itemBuilder: (context, index) => CategoryGroupTile(
+                  //       categoryGroup: categoryGroupList[index],
+                  //     ),
+                  //     separatorBuilder: (context, index) => SizedBox(
+                  //       height: 10.h,
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10.h,
-              ),
-            ),
-          ),
-          // Expanded(
-          //   child: ListView.separated(
-          //     padding: const EdgeInsets.symmetric(horizontal: 10),
-          //     itemCount: categoryGroupList.length,
-          //     itemBuilder: (context, index) => CategoryGroupTile(
-          //       categoryGroup: categoryGroupList[index],
-          //     ),
-          //     separatorBuilder: (context, index) => SizedBox(
-          //       height: 10.h,
-          //     ),
-          //   ),
-          // ),
-        ],
       ),
     );
   }

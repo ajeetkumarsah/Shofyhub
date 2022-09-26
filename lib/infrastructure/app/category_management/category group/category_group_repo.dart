@@ -112,7 +112,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
       required String metaDescription,
       required int order,
       required String icon,
-      required bool active}) async {
+      required int active}) async {
     return cleanApi.put(
       failureHandler:
           <Unit>(int statusCode, Map<String, dynamic> responseBody) {
