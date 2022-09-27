@@ -36,6 +36,9 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
     final orderController = useTextEditingController();
     final buttonPressed = useState(false);
     final active = useState(false);
+
+    final loading =
+        ref.watch(categoryGroupProvider.select((value) => value.loading));
     final categoryGroup = ref.watch(categoryGroupFamilyProvider(categoryGroupId)
         .select((value) => value.categoryGroupDetails));
     ref.listen<CategoryGroupFamilyState>(
@@ -139,10 +142,10 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                   icon: iconController.text.isEmpty
                       ? categoryGroup.icon
                       : iconController.text,
-                  active: active.value,
+                  active: active.value == true ? 1 : 0,
                 );
           },
-          child: const Text('Save'),
+          child: loading ? const CircularProgressIndicator() : const Text('Save'),
         ),
       ],
     );

@@ -40,7 +40,7 @@ class CategoryGroupPage extends HookConsumerWidget {
                 children: [
                   Expanded(
                     child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       itemCount: categoryGroupList.allCategoryGroups.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) => InkWell(
@@ -58,7 +58,7 @@ class CategoryGroupPage extends HookConsumerWidget {
                         ),
                       ),
                       separatorBuilder: (context, index) => SizedBox(
-                        height: 10.h,
+                        height: 3.h,
                       ),
                     ),
                   ),

@@ -17,80 +17,83 @@ class CategoryGroupTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CategorySubgroupPage(
-                groupName: categoryGroup.name, id: categoryGroup.id)));
-      },
-      tileColor: Colors.white,
-      leading: categoryGroup.coverImage.isEmpty
-          ? null
-          : Container(
-              padding: const EdgeInsets.all(10),
-              height: 120.h,
-              width: 70.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                color: Colors.white70,
-              ),
-              child: Image.network(categoryGroup.coverImage),
-            ),
-      title: Text(
-        categoryGroup.name,
-        style: TextStyle(
-          color: Colors.grey.shade800,
-          fontWeight: FontWeight.w500,
-          fontSize: 16.sp,
-        ),
-      ),
-      // trailing: IconButton(
-      //   onPressed: onPressed,
-      //   icon: const Icon(Icons.create),
-      // ),
-      subtitle: Text(
-        'Slug: ${categoryGroup.slug}',
-        style: TextStyle(
-          fontSize: 14.sp,
-          color: Colors.grey.shade800,
-          fontWeight: FontWeight.w500,
-        ),
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
-      ),
-      trailing: PopupMenuButton(
-        tooltip: '',
-        padding: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
-        icon: const Icon(Icons.more_horiz),
-        onSelected: (index) {
-          if (index == 1) {
-            showDialog(
-                context: context,
-                builder: (context) =>
-                    EditCategoryGroupDialog(categoryGroupId: categoryGroup.id));
-          }
-          if (index == 2) {
-            showDialog(
-                context: context,
-                builder: (context) => DeleteCategoryGroupDialog(
-                    categoryGroupId: categoryGroup.id));
-          }
+    return Card(
+      color: categoryGroup.active ? Colors.white : Colors.redAccent[100],
+      child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CategorySubgroupPage(
+                  groupName: categoryGroup.name, id: categoryGroup.id)));
         },
-        itemBuilder: (context) => [
-          const PopupMenuItem(
-            value: 1,
-            child: Text("Edit"),
+        // tileColor: Colors.white,
+        leading: categoryGroup.coverImage.isEmpty
+            ? null
+            : Container(
+                padding: const EdgeInsets.all(10),
+                height: 120.h,
+                width: 70.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  color: Colors.white70,
+                ),
+                child: Image.network(categoryGroup.coverImage),
+              ),
+        title: Text(
+          categoryGroup.name,
+          style: TextStyle(
+            color: Colors.grey.shade800,
+            fontWeight: FontWeight.w500,
+            fontSize: 16.sp,
           ),
-          const PopupMenuItem(
-            value: 2,
-            child: Text(
-              "Delete",
-              style: TextStyle(color: Colors.red),
+        ),
+        // trailing: IconButton(
+        //   onPressed: onPressed,
+        //   icon: const Icon(Icons.create),
+        // ),
+        // subtitle: Text(
+        //   'Slug: ${categoryGroup.slug}',
+        //   style: TextStyle(
+        //     fontSize: 14.sp,
+        //     color: Colors.grey.shade800,
+        //     fontWeight: FontWeight.w500,
+        //   ),
+        //   overflow: TextOverflow.ellipsis,
+        //   maxLines: 2,
+        // ),
+        trailing: PopupMenuButton(
+          tooltip: '',
+          padding: EdgeInsets.zero,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
+          icon: const Icon(Icons.more_horiz),
+          onSelected: (index) {
+            if (index == 1) {
+              showDialog(
+                  context: context,
+                  builder: (context) => EditCategoryGroupDialog(
+                      categoryGroupId: categoryGroup.id));
+            }
+            if (index == 2) {
+              showDialog(
+                  context: context,
+                  builder: (context) => DeleteCategoryGroupDialog(
+                      categoryGroupId: categoryGroup.id));
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 1,
+              child: Text("Edit"),
             ),
-          )
-        ],
+            const PopupMenuItem(
+              value: 2,
+              child: Text(
+                "Delete",
+                style: TextStyle(color: Colors.red),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

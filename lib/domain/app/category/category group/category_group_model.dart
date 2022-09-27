@@ -11,6 +11,7 @@ class CategoryGroupModel extends Equatable {
   final String icon;
   final String iconImage;
   final String coverImage;
+  final bool active;
   const CategoryGroupModel({
     required this.id,
     required this.name,
@@ -19,6 +20,7 @@ class CategoryGroupModel extends Equatable {
     required this.icon,
     required this.iconImage,
     required this.coverImage,
+    required this.active,
   });
 
   CategoryGroupModel copyWith({
@@ -29,6 +31,7 @@ class CategoryGroupModel extends Equatable {
     String? icon,
     String? iconImage,
     String? coverImage,
+    bool? active,
   }) {
     return CategoryGroupModel(
       id: id ?? this.id,
@@ -38,6 +41,7 @@ class CategoryGroupModel extends Equatable {
       icon: icon ?? this.icon,
       iconImage: iconImage ?? this.iconImage,
       coverImage: coverImage ?? this.coverImage,
+      active: active ?? this.active,
     );
   }
 
@@ -50,6 +54,7 @@ class CategoryGroupModel extends Equatable {
       'icon': icon,
       'icon_image': iconImage,
       'cover_image': coverImage,
+      'active': active,
     };
   }
 
@@ -62,6 +67,7 @@ class CategoryGroupModel extends Equatable {
       icon: map['icon'] ?? '',
       iconImage: map['icon_image'] ?? '',
       coverImage: map['cover_image'] ?? '',
+      active: map['active'] ?? '',
     );
   }
 
@@ -72,28 +78,22 @@ class CategoryGroupModel extends Equatable {
 
   @override
   String toString() {
-    return 'CategoryGroupModel(id: $id, name: $name, slug: $slug, description: $description, icon: $icon, iconImage: $iconImage, coverImage: $coverImage)';
+    return 'CategoryGroupModel(id: $id, name: $name, slug: $slug, description: $description, icon: $icon, iconImage: $iconImage, coverImage: $coverImage, active: $active)';
   }
 
   @override
   List<Object> get props {
-    return [
-      id,
-      name,
-      slug,
-      description,
-      icon,
-      iconImage,
-      coverImage,
-    ];
+    return [id, name, slug, description, icon, iconImage, coverImage, active];
   }
 
   factory CategoryGroupModel.init() => const CategoryGroupModel(
-      id: 0,
-      name: '',
-      slug: '',
-      description: '',
-      icon: '',
-      iconImage: '',
-      coverImage: '');
+        id: 0,
+        name: '',
+        slug: '',
+        description: '',
+        icon: '',
+        iconImage: '',
+        coverImage: '',
+        active: false,
+      );
 }
