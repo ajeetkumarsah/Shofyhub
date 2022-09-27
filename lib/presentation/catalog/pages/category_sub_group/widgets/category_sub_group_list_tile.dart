@@ -16,86 +16,89 @@ class CategorySubgroupListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CategoryListPage(
-                categorySubGroupId: categorySubGroup.id,
-                subGroupName: categorySubGroup.name)));
-      },
-      tileColor: Colors.white,
-      title: Text(
-        categorySubGroup.name,
-        style: TextStyle(
-          color: Colors.grey.shade800,
-          fontWeight: FontWeight.bold,
-          fontSize: 16.sp,
-        ),
-      ),
-      trailing: PopupMenuButton(
-        tooltip: '',
-        padding: EdgeInsets.zero,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
-        icon: const Icon(Icons.more_horiz),
-        onSelected: (index) {
-          if (index == 1) {
-            showDialog(
-                context: context,
-                builder: (context) => EditCategorySubGroupDialog(
-                    categoryGroupId: categoryGroupId,
-                    categorySubGroupId: categorySubGroup.id));
-          }
-          if (index == 2) {
-            showDialog(
-                context: context,
-                builder: (context) => DeleteCategorySubGroupDialog(
-                      categoryGroupId: categoryGroupId,
-                      categorySubGroupId: categorySubGroup.id,
-                    ));
-          }
+    return Card(
+      color: categorySubGroup.active ? Colors.white : Colors.redAccent[100],
+      child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CategoryListPage(
+                  categorySubGroupId: categorySubGroup.id,
+                  subGroupName: categorySubGroup.name)));
         },
-        itemBuilder: (context) => [
-          const PopupMenuItem(
-            value: 1,
-            child: Text("Edit"),
+        // tileColor: Colors.white,
+        title: Text(
+          categorySubGroup.name,
+          style: TextStyle(
+            color: Colors.grey.shade800,
+            fontWeight: FontWeight.bold,
+            fontSize: 16.sp,
           ),
-          const PopupMenuItem(
-            value: 2,
-            child: Text(
-              "Delete",
-              style: TextStyle(color: Colors.red),
+        ),
+        trailing: PopupMenuButton(
+          tooltip: '',
+          padding: EdgeInsets.zero,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
+          icon: const Icon(Icons.more_horiz),
+          onSelected: (index) {
+            if (index == 1) {
+              showDialog(
+                  context: context,
+                  builder: (context) => EditCategorySubGroupDialog(
+                      categoryGroupId: categoryGroupId,
+                      categorySubGroupId: categorySubGroup.id));
+            }
+            if (index == 2) {
+              showDialog(
+                  context: context,
+                  builder: (context) => DeleteCategorySubGroupDialog(
+                        categoryGroupId: categoryGroupId,
+                        categorySubGroupId: categorySubGroup.id,
+                      ));
+            }
+          },
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              value: 1,
+              child: Text("Edit"),
             ),
-          )
-        ],
-      ),
-      subtitle: Row(
-        children: [
-          Expanded(
-            child: Text(
-              'Category Count : ${categorySubGroup.categoriesCount}',
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.grey.shade800,
-                fontWeight: FontWeight.w500,
+            const PopupMenuItem(
+              value: 2,
+              child: Text(
+                "Delete",
+                style: TextStyle(color: Colors.red),
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              'Acitve : ${categorySubGroup.active}',
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.grey.shade800,
-                fontWeight: FontWeight.w500,
+            )
+          ],
+        ),
+        subtitle: Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Category Count : ${categorySubGroup.categoriesCount}',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.grey.shade800,
+                  fontWeight: FontWeight.w500,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
             ),
-          ),
-        ],
+            Expanded(
+              child: Text(
+                'Acitve : ${categorySubGroup.active}',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.grey.shade800,
+                  fontWeight: FontWeight.w500,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

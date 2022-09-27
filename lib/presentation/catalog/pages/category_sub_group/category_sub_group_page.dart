@@ -68,15 +68,24 @@ class CategorySubgroupPage extends HookConsumerWidget {
               ? const Center(
                   child: Text('No item available'),
                 )
-              : ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  itemCount: state.categorySubGroup.length,
-                  itemBuilder: (context, index) => CategorySubgroupListTile(
-                    categoryGroupId: id,
-                    categorySubGroup: state.categorySubGroup[index],
-                  ),
-                  separatorBuilder: (context, index) => SizedBox(
-                    height: 10.h,
+              : RefreshIndicator(
+                  onRefresh: () {
+                    return ref
+                        .refresh(categorySubGroupProvider(id).notifier)
+                        .getCategorySubGroup();
+                  },
+                  child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    itemCount: state.categorySubGroup.length,
+                    itemBuilder: (context, index) => CategorySubgroupListTile(
+                      categoryGroupId: id,
+                      categorySubGroup: state.categorySubGroup[index],
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 3.h,
+                    ),
                   ),
                 ),
     );

@@ -39,6 +39,8 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
 
     final loading =
         ref.watch(categoryGroupProvider.select((value) => value.loading));
+    final dataLoading = ref.watch(categoryGroupFamilyProvider(categoryGroupId)
+        .select((value) => value.loading));
     final categoryGroup = ref.watch(categoryGroupFamilyProvider(categoryGroupId)
         .select((value) => value.categoryGroupDetails));
     ref.listen<CategoryGroupFamilyState>(
@@ -80,33 +82,39 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
       insetPadding: EdgeInsets.zero,
       title: const Text('Edit Category Group'),
       content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            KTextField(controller: nameController, lebelText: 'Name'),
-            SizedBox(height: 10.h),
-            KTextField(controller: descController, lebelText: 'Description'),
-            SizedBox(
-              height: 10.h,
-              width: 300.w,
-            ),
-            KTextField(
-                controller: metaTitleController, lebelText: 'Meta title'),
-            SizedBox(height: 10.h),
-            KTextField(
-                controller: metaDescController, lebelText: 'Meta description'),
-            SizedBox(height: 10.h),
-            KTextField(controller: iconController, lebelText: 'Icon'),
-            SizedBox(height: 10.h),
-            KTextField(controller: orderController, lebelText: 'Order'),
-            SizedBox(height: 10.h),
-            SwitchListTile(
-              value: active.value,
-              onChanged: (value) => active.value = value,
-              title: const Text('Active status'),
-            ),
-          ],
-        ),
+        child: dataLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  KTextField(controller: nameController, lebelText: 'Name'),
+                  SizedBox(height: 10.h),
+                  KTextField(
+                      controller: descController, lebelText: 'Description'),
+                  SizedBox(
+                    height: 10.h,
+                    width: 300.w,
+                  ),
+                  KTextField(
+                      controller: metaTitleController, lebelText: 'Meta title'),
+                  SizedBox(height: 10.h),
+                  KTextField(
+                      controller: metaDescController,
+                      lebelText: 'Meta description'),
+                  SizedBox(height: 10.h),
+                  KTextField(controller: iconController, lebelText: 'Icon'),
+                  SizedBox(height: 10.h),
+                  KTextField(controller: orderController, lebelText: 'Order'),
+                  SizedBox(height: 10.h),
+                  SwitchListTile(
+                    value: active.value,
+                    onChanged: (value) => active.value = value,
+                    title: const Text('Active status'),
+                  ),
+                ],
+              ),
       ),
       actions: [
         TextButton(
@@ -145,7 +153,8 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                   active: active.value == true ? 1 : 0,
                 );
           },
-          child: loading ? const CircularProgressIndicator() : const Text('Save'),
+          child:
+              loading ? const CircularProgressIndicator() : const Text('Save'),
         ),
       ],
     );

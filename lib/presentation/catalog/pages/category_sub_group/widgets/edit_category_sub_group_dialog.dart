@@ -38,6 +38,12 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
     final active = useState(true);
     final buttonPressed = useState(false);
 
+    final loading = ref.watch(categorySubGroupProvider(categoryGroupId)
+        .select((value) => value.loading));
+    final dataLoading = ref.watch(
+        categorySubGroupDetalsProvider(categorySubGroupId)
+            .select((value) => value.loading));
+
     ref.listen<CategorySubGroupDetalsState>(
         categorySubGroupDetalsProvider(categorySubGroupId), (previous, next) {
       if (previous != next && !next.loading) {
@@ -77,28 +83,33 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
       insetPadding: EdgeInsets.zero,
       title: const Text('Edit Category Group'),
       content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            KTextField(controller: nameController, lebelText: 'Name'),
-            SizedBox(
-              height: 10.h,
-              width: 300.w,
-            ),
-            KTextField(controller: descController, lebelText: 'Description'),
-            SizedBox(height: 10.h),
-            Row(
-              children: [
-                const Text('Active:'),
-                Checkbox(
-                    value: active.value,
-                    onChanged: (value) {
-                      active.value = value!;
-                    }),
-              ],
-            ),
-          ],
-        ),
+        child: dataLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  KTextField(controller: nameController, lebelText: 'Name'),
+                  SizedBox(
+                    height: 10.h,
+                    width: 300.w,
+                  ),
+                  KTextField(
+                      controller: descController, lebelText: 'Description'),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      const Text('Active:'),
+                      Checkbox(
+                          value: active.value,
+                          onChanged: (value) {
+                            active.value = value!;
+                          }),
+                    ],
+                  ),
+                ],
+              ),
       ),
       actions: [
         TextButton(
@@ -137,7 +148,8 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
               ).show(context);
             }
           },
-          child: const Text('Save'),
+          child:
+              loading ? const CircularProgressIndicator() : const Text('Save'),
         ),
       ],
     );

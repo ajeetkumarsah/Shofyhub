@@ -29,7 +29,7 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
 
   createCategorySubGroup(
       CreateCategorySubGroupModel createCategorySubGroupModel) async {
-    state = state.copyWith(loading: false);
+    state = state.copyWith(loading: true);
     final data = await subGroupRepo.createCategorySubgroup(
         createCategorySubGroupModel: createCategorySubGroupModel);
     state = data.fold(

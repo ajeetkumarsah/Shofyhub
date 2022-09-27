@@ -19,6 +19,8 @@ class DeleteCategorySubGroupDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final loading = ref.watch(categorySubGroupProvider(categoryGroupId)
+        .select((value) => value.loading));
     ref.listen<CategorySubGroupState>(categorySubGroupProvider(categoryGroupId),
         (previous, next) {
       if (previous != next && !next.loading) {
@@ -43,7 +45,7 @@ class DeleteCategorySubGroupDialog extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -72,7 +74,7 @@ class DeleteCategorySubGroupDialog extends HookConsumerWidget {
       ),
       contentPadding: EdgeInsets.zero,
       content: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text('Are you sure you want to delete this Category Group ?'),
       ),
       actions: [
@@ -122,20 +124,32 @@ class DeleteCategorySubGroupDialog extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
-                      onPressed: () {
-                        ref
-                            .read(categorySubGroupProvider(categoryGroupId)
-                                .notifier)
-                            .trashCategorySubGroup(
-                                categorySubGroupId: categorySubGroupId);
-                      },
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
+                      onPressed: loading
+                          ? null
+                          : () {
+                              ref
+                                  .read(
+                                      categorySubGroupProvider(categoryGroupId)
+                                          .notifier)
+                                  .trashCategorySubGroup(
+                                      categorySubGroupId: categorySubGroupId);
+                            },
+                      child: loading
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
+                          : Text(
+                              "Delete",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).canvasColor,
+                              ),
+                            ),
                     ),
                   ),
                 ],
