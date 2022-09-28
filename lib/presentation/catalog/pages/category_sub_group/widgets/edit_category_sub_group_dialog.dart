@@ -140,7 +140,7 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
                       description: descController.text.isEmpty
                           ? data.description
                           : descController.text,
-                      active: active.value);
+                      active: active.value == true ? 1 :0);
             } else {
               CherryToast.info(
                 title: const Text('Please fill all fields'),

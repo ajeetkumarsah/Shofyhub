@@ -13,6 +13,9 @@ class DeleteCategoryDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final loading = ref
+        .watch(categoryProvider(categoryId).select((value) => value.loading));
+
     ref.listen<CategoryState>(categoryProvider(categoryId), (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
@@ -36,7 +39,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -65,7 +68,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
       ),
       contentPadding: EdgeInsets.zero,
       content: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text('Are you sure you want to delete this Category ?'),
       ),
       actions: [
@@ -120,13 +123,22 @@ class DeleteCategoryDialog extends HookConsumerWidget {
                             .read(categoryProvider(categoryId).notifier)
                             .trashcategory(categoryId);
                       },
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
+                      child: loading
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
+                          : Text(
+                              "Delete",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).canvasColor,
+                              ),
+                            ),
                     ),
                   ),
                 ],

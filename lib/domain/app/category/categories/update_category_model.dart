@@ -10,7 +10,7 @@ class UpdateCategoryModel extends Equatable {
   final String slug;
   final String description;
   final IList<KeyValueData> attributes;
-  final bool active;
+  final int active;
   const UpdateCategoryModel({
     required this.id,
     required this.categorySubGroupId,
@@ -37,7 +37,7 @@ class UpdateCategoryModel extends Equatable {
       slug: slug ?? this.slug,
       description: description ?? this.description,
       attributes: attributes ?? this.attributes,
-      active: active ?? this.active,
+      active: this.active,
     );
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -42,10 +44,20 @@ class EditCategoryDialog extends HookConsumerWidget {
 
     final buttonPressed = useState(false);
     final active = useState(false);
+
+    final attributeLoading =
+        ref.watch(attributeListProvider.select((value) => value.loading));
     final attributes =
         ref.watch(attributeListProvider.select((value) => value.dataList));
     final category = ref.watch(categoryFamilyProvider(categoryId)
         .select((value) => value.categoryDetails));
+
+    final categoryLoading = ref.watch(
+        categoryProvider(category.categorySubGroupId)
+            .select((value) => value.loading));
+
+    final loading = ref.watch(
+        categoryFamilyProvider(categoryId).select((value) => value.loading));
 
     ref.listen<CategoryFamilyState>(categoryFamilyProvider(categoryId),
         (previous, next) {
@@ -84,34 +96,43 @@ class EditCategoryDialog extends HookConsumerWidget {
       insetPadding: EdgeInsets.zero,
       title: const Text('Edit Category'),
       content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            KTextField(controller: nameController, lebelText: 'Name'),
-            SizedBox(height: 10.h),
-            KTextField(controller: descController, lebelText: 'Description'),
-            SizedBox(height: 10.h),
-            SizedBox(
-              height: 10.h,
-              width: 300.w,
-            ),
-            if (attributes.isNotEmpty)
-              MultipleKeyValueSelector(
-                  title: "Select Attribute",
-                  allData: attributes,
-                  initialData: category.attributes,
-                  onSelect: (list) {
-                    Logger.i(list.length);
-                    selectedAttributes.value = list;
-                  }),
-            SizedBox(height: 10.h),
-            SwitchListTile(
-              value: active.value,
-              onChanged: (value) => active.value = value,
-              title: const Text('Active status'),
-            ),
-          ],
-        ),
+        child: loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  KTextField(controller: nameController, lebelText: 'Name'),
+                  SizedBox(height: 10.h),
+                  KTextField(
+                      controller: descController, lebelText: 'Description'),
+                  SizedBox(height: 10.h),
+                  SizedBox(
+                    height: 10.h,
+                    width: 300.w,
+                  ),
+                  if (attributes.isNotEmpty)
+                    attributeLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : MultipleKeyValueSelector(
+                            title: "Select Attribute",
+                            allData: attributes,
+                            initialData: category.attributes,
+                            onSelect: (list) {
+                              Logger.i(list.length);
+                              selectedAttributes.value = list;
+                            }),
+                  SizedBox(height: 10.h),
+                  SwitchListTile(
+                    value: active.value,
+                    onChanged: (value) => active.value = value,
+                    title: const Text('Active status'),
+                  ),
+                ],
+              ),
       ),
       actions: [
         TextButton(
@@ -143,13 +164,16 @@ class EditCategoryDialog extends HookConsumerWidget {
               attributes: selectedAttributes.value.isEmpty
                   ? category.attributes
                   : selectedAttributes.value,
-              active: active.value,
+              active: active.value == true ? 1 : 0,
             );
+
             ref
                 .read(categoryProvider(category.categorySubGroupId).notifier)
                 .updateCategory(updatecategoryModel);
           },
-          child: const Text('Save'),
+          child: categoryLoading
+              ? const CircularProgressIndicator()
+              : const Text('Save'),
         ),
       ],
     );

@@ -17,6 +17,8 @@ class DeleteCategoryGroupDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final loading =
+        ref.watch(categoryGroupProvider.select((value) => value.loading));
     ref.listen<CategoryGroupState>(categoryGroupProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
@@ -125,13 +127,22 @@ class DeleteCategoryGroupDialog extends HookConsumerWidget {
                             .trashCategoryGroup(
                                 categoryGroupId: categoryGroupId);
                       },
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
+                      child: loading
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
+                          : Text(
+                              "Delete",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).canvasColor,
+                              ),
+                            ),
                     ),
                   ),
                 ],

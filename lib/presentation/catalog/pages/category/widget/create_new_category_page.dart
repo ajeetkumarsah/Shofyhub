@@ -79,7 +79,7 @@ class CreateNewCategoryPage extends HookConsumerWidget {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Form(
           key: formKey,
           child: SingleChildScrollView(
@@ -129,7 +129,9 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                         Logger.i(list.length);
                         selectedAttributes.value = list;
                       }),
+                SizedBox(height: 10.h),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
                       onPressed: () {

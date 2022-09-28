@@ -82,7 +82,7 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
     required String description,
     //required String metaTitle,
     //required String metaDescription,
-    required bool active,
+    required int active,
   }) async {
     return cleanApi.put(
         failureHandler:

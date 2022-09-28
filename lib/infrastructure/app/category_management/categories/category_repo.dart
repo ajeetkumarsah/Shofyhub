@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_details_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
@@ -53,6 +55,7 @@ class CategoryRepo extends ICategoryRepo {
   @override
   Future<Either<CleanFailure, Unit>> updateCategory(
       {required UpdateCategoryModel updateCategoryModel}) async {
+    log('Updatecartegory endpoint: /category/${updateCategoryModel.id}/update?active=${updateCategoryModel.active}&attribute_ids[]=${updateCategoryModel.attributes}&description=${updateCategoryModel.description}&name=${updateCategoryModel.name}&slug=${updateCategoryModel.slug}&category_sub_group_id=${updateCategoryModel.categorySubGroupId}');
     return await cleanApi.put(
         failureHandler:
             <Unit>(int statusCode, Map<String, dynamic> responseBody) {
@@ -79,7 +82,11 @@ class CategoryRepo extends ICategoryRepo {
         },
         fromData: (josn) => unit,
         body: null,
-        endPoint: updateCategoryModel.endpoint);
+        endPoint:
+            'category/${updateCategoryModel.id}/update?active=${updateCategoryModel.active}&attribute_ids[]=${updateCategoryModel.attributesEndPoint}&description=${updateCategoryModel.active}&name=${updateCategoryModel.name}&slug=${updateCategoryModel.slug}&category_sub_group_id=${updateCategoryModel.categorySubGroupId}'
+        // updateCategoryModel.endpoint
+        // '/category/${updateCategoryModel.id}/update?active=${updateCategoryModel.active}&attribute_ids[]=${updateCategoryModel.attributes}&description=${updateCategoryModel.description}&name=${updateCategoryModel.name}&slug=${updateCategoryModel.slug}&category_sub_group_id=${updateCategoryModel.categorySubGroupId}',
+        );
   }
 
   @override

@@ -27,6 +27,8 @@ class CategoryListPage extends HookConsumerWidget {
 
     final categoryList = ref.watch(categoryProvider(categorySubGroupId)
         .select((value) => value.allCategoris));
+    final loading = ref.watch(
+        categoryProvider(categorySubGroupId).select((value) => value.loading));
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
@@ -59,25 +61,38 @@ class CategoryListPage extends HookConsumerWidget {
         ),
         elevation: 0,
       ),
-      body: categoryList.isEmpty
-          ? Center(
-              child: Text(
-                'No Category Available',
-                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-              ),
+      body: loading
+          ? const Center(
+              child: CircularProgressIndicator(),
             )
-          : ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              itemCount: categoryList.length,
-              itemBuilder: (context, index) => InkWell(
-                child: CategoryListTile(
-                  category: categoryList[index],
+          : categoryList.isEmpty
+              ? Center(
+                  child: Text(
+                    'No Category Available',
+                    style:
+                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                  ),
+                )
+              : RefreshIndicator(
+                  onRefresh: () {
+                    return ref
+                        .refresh(categoryProvider(categorySubGroupId).notifier)
+                        .getAllCategories();
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    itemCount: categoryList.length,
+                    itemBuilder: (context, index) => InkWell(
+                      child: CategoryListTile(
+                        category: categoryList[index],
+                      ),
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 3.h,
+                    ),
+                  ),
                 ),
-              ),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10.h,
-              ),
-            ),
     );
   }
 }
