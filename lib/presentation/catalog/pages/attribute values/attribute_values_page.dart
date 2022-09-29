@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,9 @@ class AttributeValuesPage extends HookConsumerWidget {
     }, []);
     final attributeValuesList = ref.watch(attributeValuesProvider(attributeId)
         .select((value) => value.attributeValues));
+
+    final loading = ref.watch(
+        attributeValuesProvider(attributeId).select((value) => value.loading));
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
@@ -47,28 +51,43 @@ class AttributeValuesPage extends HookConsumerWidget {
                     attributeId: attributeId,
                   ));
         },
-        label: const Text(
-          'Add attribute value',
+        label: Text(
+          'add_attribute'.tr(),
         ),
         icon: const Icon(Icons.add),
       ),
-      body: attributeValuesList.isEmpty
+      body: loading
           ? const Center(
-              child: Text('No data available'),
+              child: CircularProgressIndicator(),
             )
-          : ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              itemCount: attributeValuesList.length,
-              itemBuilder: (context, index) => InkWell(
-                child: AttributeValuesTile(
-                  attributeId: attributeId,
-                  atrributeValue: attributeValuesList[index],
+          : attributeValuesList.isEmpty
+              ? Center(
+                  child: Text(
+                    'no_item_available'.tr(),
+                    style:
+                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                  ),
+                )
+              : RefreshIndicator(
+                  onRefresh: () {
+                    return ref
+                        .refresh(attributeValuesProvider(attributeId).notifier)
+                        .getAttributeValues();
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+                    itemCount: attributeValuesList.length,
+                    itemBuilder: (context, index) => InkWell(
+                      child: AttributeValuesTile(
+                        attributeId: attributeId,
+                        atrributeValue: attributeValuesList[index],
+                      ),
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 3.h,
+                    ),
+                  ),
                 ),
-              ),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10.h,
-              ),
-            ),
     );
   }
 }

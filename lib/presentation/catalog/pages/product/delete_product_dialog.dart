@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,18 +13,19 @@ class DeleteProductDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final loading = ref.watch(productProvider.select((value) => value.loading));
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Delete Product',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Text(
+                  'delete_product'.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
@@ -45,9 +47,9 @@ class DeleteProductDialog extends HookConsumerWidget {
         ],
       ),
       contentPadding: EdgeInsets.zero,
-      content: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('Are you sure you want to delete this product'),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Text('are_you_sure_delete_product'.tr()),
       ),
       actions: [
         const Divider(
@@ -78,8 +80,8 @@ class DeleteProductDialog extends HookConsumerWidget {
                           color: Theme.of(context).shadowColor.withOpacity(.5),
                         ),
                       ),
-                      child: const Center(
-                        child: Text('Cancel'),
+                      child: Center(
+                        child: Text('cancel'.tr()),
                       ),
                     ),
                   ),
@@ -96,19 +98,29 @@ class DeleteProductDialog extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
-                      onPressed: () {
-                        ref
+                      onPressed: () async {
+                        await ref
                             .read(productProvider.notifier)
                             .deleteProduct(productId);
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                       },
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
+                      child: loading
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
+                          : Text(
+                              "delete".tr(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).canvasColor,
+                              ),
+                            ),
                     ),
                   ),
                 ],

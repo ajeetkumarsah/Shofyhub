@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';
@@ -17,6 +19,7 @@ class DetailProductNotifier extends StateNotifier<DetailProductState> {
   getDetailProduct() async {
     state = state.copyWith(loading: true);
     final data = await repo.getDetailProduct(productId: productId);
+    log('Detail Product: $data');
     state = state.copyWith(loading: true);
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),

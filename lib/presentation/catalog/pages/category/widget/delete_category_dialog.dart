@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,7 +22,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Category Deleted'),
+            title: Text('category_deleted'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -43,9 +44,9 @@ class DeleteCategoryDialog extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Delete Category',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Text(
+                  'delete_category'.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
@@ -67,9 +68,9 @@ class DeleteCategoryDialog extends HookConsumerWidget {
         ],
       ),
       contentPadding: EdgeInsets.zero,
-      content: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('Are you sure you want to delete this Category ?'),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Text('are_you_sure_delete_category'.tr()),
       ),
       actions: [
         const Divider(
@@ -100,8 +101,8 @@ class DeleteCategoryDialog extends HookConsumerWidget {
                           color: Theme.of(context).shadowColor.withOpacity(.5),
                         ),
                       ),
-                      child: const Center(
-                        child: Text('Cancel'),
+                      child: Center(
+                        child: Text('cancel'.tr()),
                       ),
                     ),
                   ),
@@ -133,7 +134,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
                                   )),
                             )
                           : Text(
-                              "Delete",
+                              "delete".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,

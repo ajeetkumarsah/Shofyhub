@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -41,12 +42,15 @@ class AddAttributesPage extends HookConsumerWidget {
     final ValueNotifier<AttributeTypeModel> selectedAttributes =
         useState(attributes[0]);
 
+    final loading =
+        ref.watch(atributesProvider.select((value) => value.loading));
+
     ref.listen<AtributesState>(atributesProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Attribute Added'),
+            title: Text('attribute_added'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -70,7 +74,7 @@ class AddAttributesPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: const Text('Add Attributes'),
+        title: Text('add_attribute'.tr()),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -134,7 +138,7 @@ class AddAttributesPage extends HookConsumerWidget {
                 ),
                 SizedBox(height: 10.h),
                 MultipleKeyValueSelector(
-                    title: "Select Categories",
+                    title: "select_categories".tr(),
                     allData: allCategories,
                     onSelect: (list) {
                       selectedCategories.value = list;
@@ -180,14 +184,17 @@ class AddAttributesPage extends HookConsumerWidget {
                 //   optionTextStyle: const TextStyle(fontSize: 16),
                 //   selectedOptionIcon: const Icon(Icons.check_circle),
                 // ),
+                SizedBox(height: 30.h),
+
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text(
-                        'Cancel',
+                      child: Text(
+                        'cancel'.tr(),
                         style: TextStyle(color: Colors.red),
                       ),
                     ),
@@ -208,7 +215,9 @@ class AddAttributesPage extends HookConsumerWidget {
                               );
                         }
                       },
-                      child: const Text('Add'),
+                      child: loading
+                          ? const CircularProgressIndicator()
+                          : Text('add'.tr()),
                     ),
                   ],
                 ),

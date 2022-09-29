@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -36,7 +37,7 @@ class CreateManufactuererPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Manufacturer added'),
+            title: Text('manufacturer_added'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -61,11 +62,11 @@ class CreateManufactuererPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: const Text('Add Manufactuerer'),
+        title: Text('add_manufactuerer'.tr()),
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.all(20),
         child: Form(
             key: formKey,
             child: SingleChildScrollView(
@@ -115,7 +116,7 @@ class CreateManufactuererPage extends HookConsumerWidget {
                         style: TextStyle(color: Colors.grey.shade800),
                         isExpanded: true,
                         value: selectedCountry.value,
-                        hint: const Text('Select Country'),
+                        hint: Text('select_country'.tr()),
                         icon: const Icon(Icons.keyboard_arrow_down_rounded),
                         items: countryList.map<DropdownMenuItem<KeyValueData?>>(
                             (KeyValueData? value) {
@@ -139,20 +140,22 @@ class CreateManufactuererPage extends HookConsumerWidget {
                     height: 10.h,
                   ),
                   CheckboxListTile(
-                      title: const Text('Active Status'),
+                      title: Text('active'.tr()),
                       value: active.value,
                       onChanged: (value) {
                         active.value = value!;
                       }),
+                  SizedBox(height: 30.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.red),
+                        child: Text(
+                          'cancel'.tr(),
+                          style: const TextStyle(color: Colors.red),
                         ),
                       ),
                       TextButton(
@@ -177,7 +180,7 @@ class CreateManufactuererPage extends HookConsumerWidget {
                         },
                         child: loading
                             ? const CircularProgressIndicator()
-                            : const Text('Add'),
+                            : Text('add'.tr()),
                       ),
                     ],
                   ),

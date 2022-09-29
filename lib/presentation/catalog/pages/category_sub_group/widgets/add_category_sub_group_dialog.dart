@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,7 +53,7 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
         .select((value) => value.loading));
     final formKey = useMemoized(() => GlobalKey<FormState>());
     return AlertDialog(
-      title: const Text('Add Category Sub Group'),
+      title: Text('add_category_sub_group'.tr()),
       insetPadding: EdgeInsets.zero,
       content: SingleChildScrollView(
         child: Form(
@@ -113,9 +114,9 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: Colors.red),
+          child: Text(
+            'cancel'.tr(),
+            style: const TextStyle(color: Colors.red),
           ),
         ),
         TextButton(
@@ -142,8 +143,7 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                   .createCategorySubGroup(createCategorySubGroupModel);
             }
           },
-          child:
-              loading ? const CircularProgressIndicator() : const Text('Add'),
+          child: loading ? const CircularProgressIndicator() : Text('add'.tr()),
         ),
       ],
     );

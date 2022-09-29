@@ -10,15 +10,17 @@ class DetailProductModel extends Equatable {
   final String slug;
   final String name;
   final String modelNumber;
+  final bool status;
   final String gtin;
   final String gtinType;
   final String mpn;
   final String brand;
   final ManufacturerProductModel manufacturer;
+  final bool requirementShipping;
+  // final Categories categories;
   final String origin;
   final String listingCount;
   final String description;
-
   final String availableFrom;
   final String image;
   const DetailProductModel({
@@ -26,11 +28,14 @@ class DetailProductModel extends Equatable {
     required this.slug,
     required this.name,
     required this.modelNumber,
+    required this.status,
     required this.gtin,
     required this.gtinType,
     required this.mpn,
     required this.brand,
     required this.manufacturer,
+    required this.requirementShipping,
+    // required this.categories,
     required this.origin,
     required this.listingCount,
     required this.description,
@@ -43,11 +48,14 @@ class DetailProductModel extends Equatable {
     String? slug,
     String? name,
     String? modelNumber,
+    bool? status,
     String? gtin,
     String? gtinType,
     String? mpn,
     String? brand,
     ManufacturerProductModel? manufacturer,
+    bool? requirementShipping,
+    // Categories? categories,
     String? origin,
     String? listingCount,
     String? description,
@@ -59,11 +67,14 @@ class DetailProductModel extends Equatable {
       slug: slug ?? this.slug,
       name: name ?? this.name,
       modelNumber: modelNumber ?? this.modelNumber,
+      status: status ?? this.status,
       gtin: gtin ?? this.gtin,
       gtinType: gtinType ?? this.gtinType,
       mpn: mpn ?? this.mpn,
       brand: brand ?? this.brand,
       manufacturer: manufacturer ?? this.manufacturer,
+      requirementShipping: requirementShipping ?? this.requirementShipping,
+      // categories: categories ?? this.categories,
       origin: origin ?? this.origin,
       listingCount: listingCount ?? this.listingCount,
       description: description ?? this.description,
@@ -78,11 +89,14 @@ class DetailProductModel extends Equatable {
       'slug': slug,
       'name': name,
       'model_number': modelNumber,
+      'status': status,
       'gtin': gtin,
       'gtin_type': gtinType,
       'mpn': mpn,
       'brand': brand,
       'manufacturer': manufacturer.toMap(),
+      'requirement_shipping': requirementShipping,
+      // 'categories': categories.toJson(),
       'origin': origin,
       'listing_count': listingCount,
       'description': description,
@@ -97,11 +111,14 @@ class DetailProductModel extends Equatable {
       slug: map['slug'] ?? '',
       name: map['name'] ?? '',
       modelNumber: map['model_number'] ?? '',
+      status: map['status'] ?? '',
       gtin: map['gtin'] ?? '',
       gtinType: map['gtin_type'] ?? '',
       mpn: map['mpn'] ?? '',
       brand: map['brand'] ?? '',
       manufacturer: ManufacturerProductModel.fromMap(map['manufacturer']),
+      requirementShipping: map['requirement_shipping'],
+      // categories: Categories.fromJson(map['categories']),
       origin: map['origin'] ?? '',
       listingCount: map['listing_count'] ?? '',
       description: map['description'] ?? '',
@@ -125,11 +142,14 @@ class DetailProductModel extends Equatable {
       slug,
       name,
       modelNumber,
+      status,
       gtin,
       gtinType,
       mpn,
       brand,
       manufacturer,
+      requirementShipping,
+      // categories,
       origin,
       listingCount,
       description,
@@ -143,11 +163,14 @@ class DetailProductModel extends Equatable {
         slug: '',
         name: '',
         modelNumber: '',
+        status: false,
         gtin: '',
         gtinType: '',
         mpn: '',
         brand: '',
         manufacturer: ManufacturerProductModel.init(),
+        requirementShipping: false,
+        // categories: Categories.init(),
         origin: '',
         listingCount: '',
         description: '',
@@ -157,6 +180,6 @@ class DetailProductModel extends Equatable {
 
   @override
   String toString() {
-    return 'DetailProductModel(id: $id, slug: $slug, name: $name, modelNumber: $modelNumber, gtin: $gtin, gtinType: $gtinType, mpn: $mpn, brand: $brand, manufacturer: $manufacturer, origin: $origin, listingCount: $listingCount, description: $description, availableFrom: $availableFrom, image: $image)';
+    return 'DetailProductModel(id: $id, slug: $slug, name: $name, modelNumber: $modelNumber, status: $status gtin: $gtin, gtinType: $gtinType, mpn: $mpn, brand: $brand, manufacturer: $manufacturer, requirementShipping: $requirementShipping, origin: $origin, listingCount: $listingCount, description: $description, availableFrom: $availableFrom, image: $image)';
   }
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +39,7 @@ class CategoryListPage extends HookConsumerWidget {
                     categorySubgroupId: categorySubGroupId,
                   )));
         },
-        label: const Text('Add category'),
+        label: Text('add_category'.tr()),
         icon: const Icon(Icons.add),
       ),
       appBar: AppBar(
@@ -52,7 +53,7 @@ class CategoryListPage extends HookConsumerWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Category list'),
+            Text('category_list'.tr()),
             Text(
               subGroupName,
               style: TextStyle(fontSize: 13.sp),
@@ -68,7 +69,7 @@ class CategoryListPage extends HookConsumerWidget {
           : categoryList.isEmpty
               ? Center(
                   child: Text(
-                    'No Category Available',
+                    'no_item_available'.tr(),
                     style:
                         TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                   ),
@@ -80,8 +81,7 @@ class CategoryListPage extends HookConsumerWidget {
                         .getAllCategories();
                   },
                   child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
                     itemCount: categoryList.length,
                     itemBuilder: (context, index) => InkWell(
                       child: CategoryListTile(

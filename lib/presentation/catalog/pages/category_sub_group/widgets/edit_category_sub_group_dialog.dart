@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,7 +64,7 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
           if (buttonPressed.value) {
             Navigator.of(context).pop();
             CherryToast.info(
-              title: const Text('Category sub-group edited'),
+              title: Text('category_subgroup_edited'.tr()),
               animationType: AnimationType.fromTop,
             ).show(context);
             buttonPressed.value = false;
@@ -81,7 +82,7 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
 
     return AlertDialog(
       insetPadding: EdgeInsets.zero,
-      title: const Text('Edit Category Group'),
+      title: Text('edit_Category_group'.tr()),
       content: SingleChildScrollView(
         child: dataLoading
             ? const Center(
@@ -90,17 +91,19 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  KTextField(controller: nameController, lebelText: 'Name'),
+                  KTextField(
+                      controller: nameController, lebelText: 'name'.tr()),
                   SizedBox(
                     height: 10.h,
                     width: 300.w,
                   ),
                   KTextField(
-                      controller: descController, lebelText: 'Description'),
+                      controller: descController,
+                      lebelText: 'description'.tr()),
                   SizedBox(height: 10.h),
                   Row(
                     children: [
-                      const Text('Active:'),
+                      Text('active'.tr()),
                       Checkbox(
                           value: active.value,
                           onChanged: (value) {
@@ -116,9 +119,9 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: Colors.red),
+          child: Text(
+            'cancel'.tr(),
+            style: const TextStyle(color: Colors.red),
           ),
         ),
         TextButton(
@@ -140,16 +143,16 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
                       description: descController.text.isEmpty
                           ? data.description
                           : descController.text,
-                      active: active.value == true ? 1 :0);
+                      active: active.value == true ? 1 : 0);
             } else {
               CherryToast.info(
-                title: const Text('Please fill all fields'),
+                title: const Text('please_fill_all_fields'),
                 animationType: AnimationType.fromTop,
               ).show(context);
             }
           },
           child:
-              loading ? const CircularProgressIndicator() : const Text('Save'),
+              loading ? const CircularProgressIndicator() : Text('save'.tr()),
         ),
       ],
     );

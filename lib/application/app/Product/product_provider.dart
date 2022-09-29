@@ -29,7 +29,9 @@ class ProductNotifier extends StateNotifier<ProductState> {
   }
 
   deleteProduct(int productId) async {
+    state = state.copyWith(loading: true);
     await productRepo.deleteProduct(productId);
+    state = state.copyWith(loading: false);
     getProducts();
   }
 
@@ -45,6 +47,7 @@ class ProductNotifier extends StateNotifier<ProductState> {
         failure: CleanFailure.none(),
       ),
     );
+    getProducts();
   }
 
   createProduct(CreateProductModel createProduct) async {

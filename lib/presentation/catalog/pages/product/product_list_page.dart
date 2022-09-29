@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +30,9 @@ class ProductListPage extends HookConsumerWidget {
     }, []);
     final products =
         ref.watch(productProvider.select((value) => value.productList));
+
+    final loading = ref.watch(productProvider.select((value) => value.loading));
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
@@ -36,24 +40,36 @@ class ProductListPage extends HookConsumerWidget {
           showDialog(
               context: context, builder: (context) => const AddProductPage());
         },
-        label: const Text('Add new'),
+        label: Text('add_new'.tr()),
         icon: const Icon(Icons.add),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              itemCount: products.length,
-              itemBuilder: (context, index) =>
-                  ProductTile(product: products[index]),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10.h,
-              ),
+      body: loading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () {
+                      return ref
+                          .refresh(productProvider.notifier)
+                          .getProducts();
+                    },
+                    child: ListView.separated(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) =>
+                          ProductTile(product: products[index]),
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: 3.h,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

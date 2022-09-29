@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,8 @@ class AttributePage extends HookConsumerWidget {
     }, []);
     final attributeList =
         ref.watch(atributesProvider.select((value) => value.atributes));
+    final loading =
+        ref.watch(atributesProvider.select((value) => value.loading));
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -37,33 +40,47 @@ class AttributePage extends HookConsumerWidget {
                 builder: (context) => const AddAttributesPage(),
               ));
         },
-        label: const Text(
-          'Add attribute',
+        label: Text(
+          'add_attribute'.tr(),
         ),
         icon: const Icon(Icons.add),
       ),
-      body: attributeList.isEmpty
+      body: loading
           ? const Center(
-              child: Text('No data available'),
+              child: CircularProgressIndicator(),
             )
-          : ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              itemCount: attributeList.length,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AttributeValuesPage(
-                          groupName: attributeList[index].name,
-                          attributeId: attributeList[index].id)));
-                },
-                child: AttributeTile(
-                  attribute: attributeList[index],
+          : attributeList.isEmpty
+              ? Center(
+                  child: Text(
+                    'no_item_available'.tr(),
+                  ),
+                )
+              : RefreshIndicator(
+                  onRefresh: () {
+                    return ref
+                        .refresh(atributesProvider.notifier)
+                        .getAtributes();
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+                    itemCount: attributeList.length,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AttributeValuesPage(
+                                groupName: attributeList[index].name,
+                                attributeId: attributeList[index].id)));
+                      },
+                      child: AttributeTile(
+                        attribute: attributeList[index],
+                      ),
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 3.h,
+                    ),
+                  ),
                 ),
-              ),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10.h,
-              ),
-            ),
     );
   }
 }

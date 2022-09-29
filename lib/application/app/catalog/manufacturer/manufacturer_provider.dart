@@ -74,6 +74,7 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
   }
 
   deleteManufacturer({required int manufacturerId}) async {
+    state = state.copyWith(loading: true);
     final date = await manufacturerRepo.deleteManufacturer(
         manufacturerId: manufacturerId);
     state = date.fold((l) => state.copyWith(loading: false, failure: l),
@@ -82,6 +83,7 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
   }
 
   restoreManufacturer({required int manufacturerId}) async {
+    state = state.copyWith(loading: true);
     final date = await manufacturerRepo.restoreManufacturer(
         manufacturerId: manufacturerId);
     state = date.fold((l) => state.copyWith(loading: false, failure: l),
@@ -90,6 +92,7 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
   }
 
   trashManufacturer({required int manufacturerId}) async {
+    state = state.copyWith(loading: true);
     final date = await manufacturerRepo.trashManufacturer(
         manufacturerId: manufacturerId);
     state = date.fold((l) => state.copyWith(loading: false, failure: l),

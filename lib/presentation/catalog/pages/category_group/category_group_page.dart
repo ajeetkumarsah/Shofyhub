@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,7 +24,7 @@ class CategoryGroupPage extends HookConsumerWidget {
               context: context,
               builder: (context) => const AddCategoryGroupDialog());
         },
-        label: const Text('Add new'),
+        label: const Text('add_new').tr(),
         icon: const Icon(Icons.add),
       ),
       body: RefreshIndicator(
@@ -40,7 +41,7 @@ class CategoryGroupPage extends HookConsumerWidget {
                 children: [
                   Expanded(
                     child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
                       itemCount: categoryGroupList.allCategoryGroups.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) => InkWell(

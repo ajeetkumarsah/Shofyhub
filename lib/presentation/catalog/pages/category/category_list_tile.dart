@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
@@ -66,15 +67,15 @@ class CategoryListTile extends StatelessWidget {
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 1,
-              child: Text("Edit"),
+              child: Text("edit".tr()),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 2,
               child: Text(
-                "Delete",
-                style: TextStyle(color: Colors.red),
+                "delete".tr(),
+                style: const TextStyle(color: Colors.red),
               ),
             )
           ],

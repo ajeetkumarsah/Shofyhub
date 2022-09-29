@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -48,7 +49,7 @@ class CreateNewCategoryPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           CherryToast.info(
-            title: const Text('Category added'),
+            title: Text('category_added'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
 
@@ -75,7 +76,7 @@ class CreateNewCategoryPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: const Text('Add category'),
+        title: Text('add_category'.tr()),
         elevation: 0,
       ),
       body: Padding(
@@ -94,27 +95,28 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                 KTextField(
                   controller: nameController,
                   lebelText: 'Name *',
-                  validator: (text) =>
-                      ValidatorLogic.requiredField(text, fieldName: 'Name'),
+                  validator: (text) => ValidatorLogic.requiredField(text,
+                      fieldName: 'name'.tr()),
                 ),
                 SizedBox(height: 10.h),
                 KTextField(
-                    controller: descController, lebelText: 'description'),
+                    controller: descController, lebelText: 'description'.tr()),
                 SizedBox(height: 10.h),
-                KTextField(controller: metaController, lebelText: 'meta_title'),
+                KTextField(
+                    controller: metaController, lebelText: 'meta_title'.tr()),
                 SizedBox(height: 10.h),
                 KTextField(
                     controller: metaDescController,
-                    lebelText: 'meta_description'),
+                    lebelText: 'meta_description'.tr()),
                 SizedBox(height: 10.h),
                 KTextField(
                   controller: orderDescController,
-                  lebelText: 'Order',
+                  lebelText: 'order'.tr(),
                   numberFormatters: true,
                 ),
                 SizedBox(height: 10.h),
                 CheckboxListTile(
-                    title: const Text('Active'),
+                    title: Text('active'.tr()),
                     value: active.value,
                     onChanged: (value) {
                       active.value = value!;
@@ -122,7 +124,7 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                 SizedBox(height: 10.h),
                 if (attributes.isNotEmpty)
                   MultipleKeyValueSelector(
-                      title: "Select Attribute",
+                      title: "select_attribute".tr(),
                       allData: attributes,
                       initialData: const IListConst([]),
                       onSelect: (list) {
@@ -137,9 +139,9 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: Colors.red),
+                      child: Text(
+                        'cancel'.tr(),
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                     TextButton(
@@ -168,7 +170,7 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                       },
                       child: loading
                           ? const CircularProgressIndicator()
-                          : const Text('Add'),
+                          : Text('add'.tr()),
                     ),
                   ],
                 ),

@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,6 +12,7 @@ import 'package:zcart_seller/application/app/product/detail_product/detail_produ
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';
 import 'package:zcart_seller/application/app/product/product_provider.dart';
 import 'package:zcart_seller/application/app/form/category_list_provider.dart';
+import 'package:zcart_seller/domain/app/Product/detail_product/detail_product_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
@@ -28,6 +30,12 @@ class UpdateProductPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final loading = ref.watch(
+        detailProcuctProvider(productId).select((value) => value.loading));
+
+    final loadingUpdate =
+        ref.watch(productProvider.select((value) => value.loading));
+
     final gtinList =
         ref.watch(productProvider.select((value) => value.gtinTypes));
 
@@ -39,6 +47,7 @@ class UpdateProductPage extends HookConsumerWidget {
     final nameController = useTextEditingController();
     final brandController = useTextEditingController();
     final modelNumer = useTextEditingController();
+
     final mpn = useTextEditingController();
     final gtin = useTextEditingController();
     final description = useTextEditingController();
@@ -77,15 +86,16 @@ class UpdateProductPage extends HookConsumerWidget {
         selectedCountry.value = countryList
             .where((element) => element.value == next.detailProduct.origin)
             .toList()[0];
+        // active.value = next.detailProduct.status
+        // shipping.value = next.detailProduct;
       }
     });
-
     ref.listen<ProductState>(productProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Product updated'),
+            title: Text('product_updated'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -109,247 +119,259 @@ class UpdateProductPage extends HookConsumerWidget {
           ),
         ),
         elevation: 0,
-        title: const Text('Update Product'),
+        title: Text('update_product'.tr()),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10.h),
-              KTextField(controller: nameController, lebelText: 'Name'),
-              SizedBox(height: 10.h),
-              KTextField(controller: brandController, lebelText: 'Brand'),
-              SizedBox(height: 10.h),
-              KTextField(
-                controller: modelNumer,
-                lebelText: 'Model Number',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: mpn,
-                lebelText: 'mpn',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Text(
-                "GTIn Types:",
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 50.h,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 15),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.w),
-                        borderRadius: BorderRadius.circular(10.r),
+          child: loading
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: const Center(child: CircularProgressIndicator()))
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10.h),
+                    KTextField(
+                        controller: nameController, lebelText: 'name'.tr()),
+                    SizedBox(height: 10.h),
+                    KTextField(
+                        controller: brandController, lebelText: 'brand'.tr()),
+                    SizedBox(height: 10.h),
+                    KTextField(
+                      controller: modelNumer,
+                      lebelText: 'model_number'.tr(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    KTextField(
+                      controller: mpn,
+                      lebelText: 'mpn'.tr(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    const Text(
+                      "GTIn Types:",
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 15),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 1.w),
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                          ),
+                          style: TextStyle(color: Colors.grey.shade800),
+                          isExpanded: true,
+                          value: selectedGtin.value,
+                          icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                          items: gtinList.map<DropdownMenuItem<GtinTypes>>(
+                              (GtinTypes value) {
+                            return DropdownMenuItem<GtinTypes>(
+                              value: value,
+                              child: Text(
+                                value.name,
+                                style: TextStyle(
+                                    color: Colors.grey.shade700,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (GtinTypes? newValue) {
+                            selectedGtin.value = newValue!;
+                          },
+                        ),
                       ),
                     ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                    isExpanded: true,
-                    value: selectedGtin.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    items: gtinList
-                        .map<DropdownMenuItem<GtinTypes>>((GtinTypes value) {
-                      return DropdownMenuItem<GtinTypes>(
-                        value: value,
-                        child: Text(
-                          value.name,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    KTextField(
+                      controller: gtin,
+                      lebelText: 'gtin',
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      "manufacturer".tr(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 1.w),
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                          ),
+                          style: TextStyle(color: Colors.grey.shade800),
+                          isExpanded: true,
+                          value: selectedMenufectur.value,
+                          icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                          items: manufacturerIdList
+                              .map<DropdownMenuItem<ManufacturerId>>(
+                                  (ManufacturerId value) {
+                            return DropdownMenuItem<ManufacturerId>(
+                              value: value,
+                              child: Text(
+                                value.value,
+                                style: TextStyle(
+                                    color: Colors.grey.shade700,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (ManufacturerId? newValue) {
+                            selectedMenufectur.value = newValue!;
+                          },
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (GtinTypes? newValue) {
-                      selectedGtin.value = newValue!;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: gtin,
-                lebelText: 'gtin',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Text(
-                "Manufacturer:",
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 50.h,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.w),
-                        borderRadius: BorderRadius.circular(10.r),
                       ),
                     ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                    isExpanded: true,
-                    value: selectedMenufectur.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    items: manufacturerIdList
-                        .map<DropdownMenuItem<ManufacturerId>>(
-                            (ManufacturerId value) {
-                      return DropdownMenuItem<ManufacturerId>(
-                        value: value,
-                        child: Text(
-                          value.value,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    KTextField(
+                      controller: description,
+                      lebelText: 'description'.tr(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Text(
+                      "origin_country".tr(),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    SizedBox(
+                      height: 50.h,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 1.w),
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                          ),
+                          style: TextStyle(color: Colors.grey.shade800),
+                          isExpanded: true,
+                          value: selectedCountry.value,
+                          icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                          items: countryList
+                              .map<DropdownMenuItem<KeyValueData>>(
+                                  (KeyValueData value) {
+                            return DropdownMenuItem<KeyValueData>(
+                              value: value,
+                              child: Text(
+                                value.value,
+                                style: TextStyle(
+                                    color: Colors.grey.shade700,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (KeyValueData? newValue) {
+                            selectedCountry.value = newValue!;
+                          },
                         ),
-                      );
-                    }).toList(),
-                    onChanged: (ManufacturerId? newValue) {
-                      selectedMenufectur.value = newValue!;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              KTextField(
-                controller: description,
-                lebelText: 'Description',
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              const Text(
-                "Origin country:",
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              SizedBox(
-                height: 50.h,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.w),
-                        borderRadius: BorderRadius.circular(10.r),
                       ),
                     ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                    isExpanded: true,
-                    value: selectedCountry.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    items: countryList.map<DropdownMenuItem<KeyValueData>>(
-                        (KeyValueData value) {
-                      return DropdownMenuItem<KeyValueData>(
-                        value: value,
-                        child: Text(
-                          value.value,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (KeyValueData? newValue) {
-                      selectedCountry.value = newValue!;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              MultipleKeyValueSelector(
-                  title: "Select Categories *",
-                  allData: allCategories,
-                  onSelect: (list) {
-                    selectedCategories.value = list;
-                  }),
-              SizedBox(height: 10.h),
-              SwitchListTile(
-                value: active.value,
-                onChanged: (value) => active.value = value,
-                title: const Text('Active '),
-              ),
-              SizedBox(height: 10.h),
-              SwitchListTile(
-                value: shipping.value,
-                onChanged: (value) => shipping.value = value,
-                title: const Text('Require Shipping'),
-              ),
-              SizedBox(height: 10.h),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red),
+                    SizedBox(
+                      height: 10.h,
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (selectedCategories.value.isNotEmpty) {
-                        Logger.i(nameController.text
-                            .toLowerCase()
-                            .replaceAll(RegExp(r' '), '-'));
-                        final product = UpdateProductModel(
-                          id: productId,
-                          slug: nameController.text
-                              .toLowerCase()
-                              .replaceAll(RegExp(r' '), '-'),
-                          manufacturerId:
-                              int.parse(selectedMenufectur.value.id),
-                          brand: brandController.text,
-                          name: nameController.text,
-                          modeNumber: modelNumer.text,
-                          mpn: mpn.text,
-                          gtin: gtin.text,
-                          gtinType: selectedGtin.value.value,
-                          description: description.text,
-                          originCountry: originCountry.text,
-                          active: active.value ? 1 : 0,
-                          requireShipping: shipping.value,
-                          categoryList: selectedCategories.value
-                              .map((element) => int.tryParse(element.key) ?? 0)
-                              .toList(),
-                        );
-                        ref
-                            .read(productProvider.notifier)
-                            .updateProduct(product);
-                        Navigator.of(context).pop();
-                      } else {
-                        CherryToast.info(
-                                title: const Text(
-                                    'Please select atleast one category'))
-                            .show(context);
-                      }
-                    },
-                    child: const Text('Update'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    MultipleKeyValueSelector(
+                        title: "select_categories".tr(),
+                        allData: allCategories,
+                        onSelect: (list) {
+                          selectedCategories.value = list;
+                        }),
+                    SizedBox(height: 10.h),
+                    SwitchListTile(
+                      value: active.value,
+                      onChanged: (value) => active.value = value,
+                      title: Text('active'.tr()),
+                    ),
+                    SizedBox(height: 10.h),
+                    SwitchListTile(
+                      value: shipping.value,
+                      onChanged: (value) => shipping.value = value,
+                      title: Text('require_shipping'.tr()),
+                    ),
+                    SizedBox(height: 30.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            'cancel'.tr(),
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (selectedCategories.value.isNotEmpty) {
+                              Logger.i(nameController.text
+                                  .toLowerCase()
+                                  .replaceAll(RegExp(r' '), '-'));
+                              final product = UpdateProductModel(
+                                id: productId,
+                                slug: nameController.text
+                                    .toLowerCase()
+                                    .replaceAll(RegExp(r' '), '-'),
+                                manufacturerId:
+                                    int.parse(selectedMenufectur.value.id),
+                                brand: brandController.text,
+                                name: nameController.text,
+                                modeNumber: modelNumer.text,
+                                mpn: mpn.text,
+                                gtin: gtin.text,
+                                gtinType: selectedGtin.value.value,
+                                description: description.text,
+                                originCountry: originCountry.text,
+                                active: active.value ? 1 : 0,
+                                requireShipping: shipping.value,
+                                categoryList: selectedCategories.value
+                                    .map((element) =>
+                                        int.tryParse(element.key) ?? 0)
+                                    .toList(),
+                              );
+                              ref
+                                  .read(productProvider.notifier)
+                                  .updateProduct(product);
+                              Navigator.of(context).pop();
+                            } else {
+                              CherryToast.info(
+                                      title: Text(
+                                          'please_select_atleast_one_category'
+                                              .tr()))
+                                  .show(context);
+                            }
+                          },
+                          child: loadingUpdate
+                              ? const CircularProgressIndicator()
+                              : Text('update'.tr()),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
         ),
       ),
     );

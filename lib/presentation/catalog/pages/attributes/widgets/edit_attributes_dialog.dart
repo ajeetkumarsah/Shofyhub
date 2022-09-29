@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -42,6 +43,12 @@ class EditAttributesDialog extends HookConsumerWidget {
     final List<AttributeTypeModel> attributeTypes =
         ref.watch(getAttributesProvider.select((value) => value.attributeType));
 
+    final loading =
+        ref.watch(getAttributesProvider.select((value) => value.loading));
+
+    final loadingUpdate =
+        ref.watch(atributesProvider.select((value) => value.loading));
+
     final allCategories =
         ref.watch(categoryListProvider.select((value) => value.dataList));
     final ValueNotifier<IList<KeyValueData>> selectedCategories =
@@ -54,7 +61,7 @@ class EditAttributesDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Attribute updated'),
+            title: Text('attribute_updated'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -95,104 +102,118 @@ class EditAttributesDialog extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: const Text('Edit Attributes'),
+        title: Text('edit_attributes'.tr()),
         elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 10.h),
-              KTextField(controller: nameController, lebelText: 'Name'),
-              SizedBox(height: 10.h),
-              SizedBox(
-                height: 50.h,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1.w),
-                        borderRadius: BorderRadius.circular(10.r),
+          padding: const EdgeInsets.all(20),
+          child: loading
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 10.h),
+                    KTextField(
+                        controller: nameController, lebelText: 'name'.tr()),
+                    SizedBox(height: 10.h),
+                    SizedBox(
+                      height: 50.h,
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(width: 1.w),
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                          ),
+                          style: TextStyle(color: Colors.grey.shade800),
+                          isExpanded: true,
+                          value: selectedAttributeType.value,
+                          icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                          items: attributeTypes
+                              .map<DropdownMenuItem<AttributeTypeModel>>(
+                                  (AttributeTypeModel value) {
+                            return DropdownMenuItem<AttributeTypeModel>(
+                              value: value,
+                              child: Text(
+                                value.name,
+                                style: TextStyle(
+                                    color: Colors.grey.shade700,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (AttributeTypeModel? newValue) {
+                            selectedAttributeType.value = newValue!;
+                          },
+                        ),
                       ),
                     ),
-                    style: TextStyle(color: Colors.grey.shade800),
-                    isExpanded: true,
-                    value: selectedAttributeType.value,
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                    items: attributeTypes
-                        .map<DropdownMenuItem<AttributeTypeModel>>(
-                            (AttributeTypeModel value) {
-                      return DropdownMenuItem<AttributeTypeModel>(
-                        value: value,
-                        child: Text(
-                          value.name,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (AttributeTypeModel? newValue) {
-                      selectedAttributeType.value = newValue!;
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(height: 10.h),
-              KTextField(
-                controller: orderController,
-                lebelText: 'Order',
-                numberFormatters: true,
-              ),
-              SizedBox(height: 10.h),
-              if (allCategories.isNotEmpty)
-                MultipleKeyValueSelector(
-                    title: "Select Categories",
-                    initialData: attributeDetails.categories
-                        .map((e) => e.toKeyValue())
-                        .toIList(),
-                    allData: allCategories,
-                    onSelect: (list) {
-                      selectedCategories.value = list;
-                    }),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red),
+                    SizedBox(height: 10.h),
+                    KTextField(
+                      controller: orderController,
+                      lebelText: 'order'.tr(),
+                      numberFormatters: true,
                     ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      final String endPoint = selectedCategories.value
-                          .map((category) => "categories_ids[]=${category.key}")
-                          .join('&');
+                    SizedBox(height: 10.h),
+                    if (allCategories.isNotEmpty)
+                      MultipleKeyValueSelector(
+                          title: "select_categories".tr(),
+                          initialData: attributeDetails.categories
+                              .map((e) => e.toKeyValue())
+                              .toIList(),
+                          allData: allCategories,
+                          onSelect: (list) {
+                            selectedCategories.value = list;
+                          }),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            'cancel'.tr(),
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            final String endPoint = selectedCategories.value
+                                .map((category) =>
+                                    "categories_ids[]=${category.key}")
+                                .join('&');
 
-                      Logger.i(endPoint);
-                      ref.read(atributesProvider.notifier).updateAtributes(
-                            attributeId: attribute.id,
-                            name: nameController.text.isEmpty
-                                ? attribute.name
-                                : nameController.text,
-                            attributeTypeId: selectedAttributeType.value.id,
-                            categoriesIds: endPoint,
-                            order: orderController.text.isEmpty
-                                ? attribute.order.toString()
-                                : orderController.text,
-                          );
-                    },
-                    child: const Text('Save'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                            Logger.i(endPoint);
+                            ref
+                                .read(atributesProvider.notifier)
+                                .updateAtributes(
+                                  attributeId: attribute.id,
+                                  name: nameController.text.isEmpty
+                                      ? attribute.name
+                                      : nameController.text,
+                                  attributeTypeId:
+                                      selectedAttributeType.value.id,
+                                  categoriesIds: endPoint,
+                                  order: orderController.text.isEmpty
+                                      ? attribute.order.toString()
+                                      : orderController.text,
+                                );
+                          },
+                          child: loadingUpdate
+                              ? const CircularProgressIndicator()
+                              : Text('save'.tr()),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
         ),
       ),
     );

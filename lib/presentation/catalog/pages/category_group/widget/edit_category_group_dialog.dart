@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,7 +81,7 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
 
     return AlertDialog(
       insetPadding: EdgeInsets.zero,
-      title: const Text('Edit Category Group'),
+      title: const Text('edit_category_group').tr(),
       content: SingleChildScrollView(
         child: dataLoading
             ? const Center(
@@ -122,9 +123,9 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
             Navigator.of(context).pop();
           },
           child: const Text(
-            'Cancel',
+            'cancel',
             style: TextStyle(color: Colors.red),
-          ),
+          ).tr(),
         ),
         TextButton(
           onPressed: () {
@@ -154,7 +155,7 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                 );
           },
           child:
-              loading ? const CircularProgressIndicator() : const Text('Save'),
+              loading ? const CircularProgressIndicator() : const Text('save').tr(),
         ),
       ],
     );

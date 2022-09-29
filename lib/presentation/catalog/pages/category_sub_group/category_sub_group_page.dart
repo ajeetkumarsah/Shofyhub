@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,8 +66,8 @@ class CategorySubgroupPage extends HookConsumerWidget {
               ),
             )
           : state.categorySubGroup.isEmpty
-              ? const Center(
-                  child: Text('No item available'),
+              ? Center(
+                  child: Text('no_item_available'.tr()),
                 )
               : RefreshIndicator(
                   onRefresh: () {
@@ -76,8 +77,7 @@ class CategorySubgroupPage extends HookConsumerWidget {
                   },
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
                     itemCount: state.categorySubGroup.length,
                     itemBuilder: (context, index) => CategorySubgroupListTile(
                       categoryGroupId: id,

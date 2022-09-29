@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -24,11 +25,10 @@ class EditManufactuererPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     useEffect(() {
-      Future.delayed(const Duration(seconds: 1), () async {
-        ref
-            .read(manufacturerDetailsProvider(manufacturerId).notifier)
-            .getManufacturerDetails();
-      });
+      ref
+          .read(manufacturerDetailsProvider(manufacturerId).notifier)
+          .getManufacturerDetails();
+
       return null;
     }, []);
     final IList<KeyValueData> countryList =
@@ -55,6 +55,8 @@ class EditManufactuererPage extends HookConsumerWidget {
             .toList()[0];
       }
     });
+    final loadingDetails = ref.watch(manufacturerDetailsProvider(manufacturerId)
+        .select((value) => value.loading));
     final manufactuererDetails = ref.watch(
         manufacturerDetailsProvider(manufacturerId)
             .select((value) => value.manufacturerDetails));
@@ -66,7 +68,7 @@ class EditManufactuererPage extends HookConsumerWidget {
         buttonPressed.value = false;
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Manufacturer updated'),
+            title: Text('manufacturer_updated'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -91,134 +93,148 @@ class EditManufactuererPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: const Text('Add Manufactuerer'),
+        title: Text('edit_manufactuerer'.tr()),
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10.h),
-                  Text('* Required fields.',
-                      style: TextStyle(color: Theme.of(context).hintColor)),
-                  SizedBox(height: 10.h),
-                  KTextField(
-                    controller: nameController,
-                    lebelText: 'Name *',
-                    validator: (text) =>
-                        ValidatorLogic.requiredField(text, fieldName: 'Name'),
-                  ),
-                  SizedBox(height: 10.h),
-                  KTextField(
-                      controller: descController, lebelText: 'Description'),
-                  SizedBox(height: 10.h),
-                  KTextField(controller: emailController, lebelText: 'Email'),
-                  SizedBox(height: 10.h),
-                  KTextField(
-                    controller: phoneController,
-                    lebelText: 'Phone',
-                    numberFormatters: true,
-                  ),
-                  SizedBox(height: 10.h),
-                  KTextField(
-                      controller: urlController, lebelText: 'Official Website'),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  SizedBox(
-                    height: 50.h,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButtonFormField<KeyValueData?>(
-                        // onTap: () {
-                        //   countryDropdownList.value = countryList;
-                        // },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1.w),
-                            borderRadius: BorderRadius.circular(10.r),
+      body: loadingDetails
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                  key: formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10.h),
+                        Text('* Required fields.',
+                            style:
+                                TextStyle(color: Theme.of(context).hintColor)),
+                        SizedBox(height: 10.h),
+                        KTextField(
+                          controller: nameController,
+                          lebelText: 'Name *',
+                          validator: (text) => ValidatorLogic.requiredField(
+                              text,
+                              fieldName: 'Name'),
+                        ),
+                        SizedBox(height: 10.h),
+                        KTextField(
+                            controller: descController,
+                            lebelText: 'Description'),
+                        SizedBox(height: 10.h),
+                        KTextField(
+                            controller: emailController, lebelText: 'Email'),
+                        SizedBox(height: 10.h),
+                        KTextField(
+                          controller: phoneController,
+                          lebelText: 'Phone',
+                          numberFormatters: true,
+                        ),
+                        SizedBox(height: 10.h),
+                        KTextField(
+                            controller: urlController,
+                            lebelText: 'Official Website'),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        SizedBox(
+                          height: 50.h,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField<KeyValueData?>(
+                              // onTap: () {
+                              //   countryDropdownList.value = countryList;
+                              // },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(width: 1.w),
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                              ),
+                              style: TextStyle(color: Colors.grey.shade800),
+                              isExpanded: true,
+                              value: selectedCountry.value,
+                              hint: const Text('Select Country'),
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
+                              items: countryList
+                                  .map<DropdownMenuItem<KeyValueData?>>(
+                                      (KeyValueData? value) {
+                                return DropdownMenuItem<KeyValueData?>(
+                                  value: value,
+                                  child: Text(
+                                    value!.value,
+                                    style: TextStyle(
+                                        color: Colors.grey.shade700,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (KeyValueData? newValue) {
+                                selectedCountry.value = newValue;
+                              },
+                            ),
                           ),
                         ),
-                        style: TextStyle(color: Colors.grey.shade800),
-                        isExpanded: true,
-                        value: selectedCountry.value,
-                        hint: const Text('Select Country'),
-                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                        items: countryList.map<DropdownMenuItem<KeyValueData?>>(
-                            (KeyValueData? value) {
-                          return DropdownMenuItem<KeyValueData?>(
-                            value: value,
-                            child: Text(
-                              value!.value,
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (KeyValueData? newValue) {
-                          selectedCountry.value = newValue;
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(color: Colors.red),
+                        SizedBox(
+                          height: 30.h,
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          if (formKey.currentState?.validate() ?? false) {
-                            buttonPressed.value = true;
-                            ref
-                                .read(manufacturerProvider.notifier)
-                                .updateManufacturer(
-                                    manufacturerId: manufacturerId,
-                                    name: nameController.text.isEmpty
-                                        ? manufactuererDetails.name
-                                        : nameController.text,
-                                    slug: manufactuererDetails.slug,
-                                    url: urlController.text.isEmpty
-                                        ? manufactuererDetails.url
-                                        : urlController.text,
-                                    active: false,
-                                    countryId: selectedCountry.value != null
-                                        ? selectedCountry.value!.key
-                                        : '',
-                                    email: emailController.text.isEmpty
-                                        ? manufactuererDetails.email
-                                        : emailController.text,
-                                    phone: phoneController.text.isEmpty
-                                        ? manufactuererDetails.phone
-                                        : phoneController.text,
-                                    description: descController.text.isEmpty
-                                        ? manufactuererDetails.description
-                                        : descController.text);
-                          }
-                        },
-                        child: loading
-                            ? const CircularProgressIndicator()
-                            : const Text('Update'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )),
-      ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                'cancel'.tr(),
+                                style: const TextStyle(color: Colors.red),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                if (formKey.currentState?.validate() ?? false) {
+                                  buttonPressed.value = true;
+                                  ref
+                                      .read(manufacturerProvider.notifier)
+                                      .updateManufacturer(
+                                          manufacturerId: manufacturerId,
+                                          name: nameController.text.isEmpty
+                                              ? manufactuererDetails.name
+                                              : nameController.text,
+                                          slug: manufactuererDetails.slug,
+                                          url: urlController.text.isEmpty
+                                              ? manufactuererDetails.url
+                                              : urlController.text,
+                                          active: false,
+                                          countryId:
+                                              selectedCountry.value != null
+                                                  ? selectedCountry.value!.key
+                                                  : '',
+                                          email: emailController.text.isEmpty
+                                              ? manufactuererDetails.email
+                                              : emailController.text,
+                                          phone: phoneController.text.isEmpty
+                                              ? manufactuererDetails.phone
+                                              : phoneController.text,
+                                          description: descController
+                                                  .text.isEmpty
+                                              ? manufactuererDetails.description
+                                              : descController.text);
+                                }
+                              },
+                              child: loading
+                                  ? const CircularProgressIndicator()
+                                  : Text('update'.tr()),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
     );
   }
 }

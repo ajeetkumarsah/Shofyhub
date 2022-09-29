@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,7 +31,7 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           CherryToast.info(
-            title: const Text('Category group added'),
+            title: const Text('category_group_added').tr(),
             animationType: AnimationType.fromTop,
           ).show(context);
 
@@ -50,7 +51,7 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     return AlertDialog(
       insetPadding: EdgeInsets.zero,
-      title: const Text('Add Category Group'),
+      title: const Text('add_category_group').tr(),
       content: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -103,9 +104,9 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
             Navigator.of(context).pop();
           },
           child: const Text(
-            'Cancel',
+            'cancel',
             style: TextStyle(color: Colors.red),
-          ),
+          ).tr(),
         ),
         TextButton(
           onPressed: () {
@@ -131,7 +132,7 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
             }
           },
           child:
-              loading ? const CircularProgressIndicator() : const Text('Add'),
+              loading ? const CircularProgressIndicator() : const Text('add').tr(),
         ),
       ],
     );

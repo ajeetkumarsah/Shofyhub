@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,6 +36,9 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
       });
       return null;
     }, []);
+
+    final loading = ref.watch(
+        attributeValuesProvider(attributeId).select((value) => value.loading));
     ref.listen<AttributeValuesState>(attributeValuesProvider(attributeId),
         (previous, next) {
       if (previous != next && !next.loading) {
@@ -42,8 +46,8 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
           Navigator.of(context).pop();
           CherryToast.info(
             title: attributeValues != null
-                ? const Text('Attribute value updated')
-                : const Text('Attribute value added'),
+                ? Text('attribute_value_updated'.tr())
+                : Text('attribute_value_added'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
 
@@ -61,8 +65,8 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     return AlertDialog(
       title: attributeValues != null
-          ? const Text('Update Attribute Values')
-          : const Text('Add Attribute Values'),
+          ? Text('update_attribute_value'.tr())
+          : Text('add_attribute_value'.tr()),
       content: Form(
         key: formKey,
         child: Column(
@@ -97,9 +101,9 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: Colors.red),
+          child: Text(
+            'cancel'.tr(),
+            style: const TextStyle(color: Colors.red),
           ),
         ),
         TextButton(
@@ -136,8 +140,12 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
             }
           },
           child: attributeValues != null
-              ? const Text('Update')
-              : const Text('Add'),
+              ? loading
+                  ? const CircularProgressIndicator()
+                  : Text('update'.tr())
+              : loading
+                  ? const CircularProgressIndicator()
+                  : Text('add'.tr()),
         ),
       ],
     );

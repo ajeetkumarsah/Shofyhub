@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -77,7 +78,7 @@ class EditCategoryDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           CherryToast.info(
-            title: const Text('Category updated'),
+            title: Text('category_updated'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
 
@@ -94,7 +95,7 @@ class EditCategoryDialog extends HookConsumerWidget {
     });
     return AlertDialog(
       insetPadding: EdgeInsets.zero,
-      title: const Text('Edit Category'),
+      title: Text('edit_category'.tr()),
       content: SingleChildScrollView(
         child: loading
             ? const Center(
@@ -103,10 +104,12 @@ class EditCategoryDialog extends HookConsumerWidget {
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  KTextField(controller: nameController, lebelText: 'Name'),
+                  KTextField(
+                      controller: nameController, lebelText: 'name'.tr()),
                   SizedBox(height: 10.h),
                   KTextField(
-                      controller: descController, lebelText: 'Description'),
+                      controller: descController,
+                      lebelText: 'description'.tr()),
                   SizedBox(height: 10.h),
                   SizedBox(
                     height: 10.h,
@@ -118,7 +121,7 @@ class EditCategoryDialog extends HookConsumerWidget {
                             child: CircularProgressIndicator(),
                           )
                         : MultipleKeyValueSelector(
-                            title: "Select Attribute",
+                            title: "select_attribute".tr(),
                             allData: attributes,
                             initialData: category.attributes,
                             onSelect: (list) {
@@ -129,7 +132,7 @@ class EditCategoryDialog extends HookConsumerWidget {
                   SwitchListTile(
                     value: active.value,
                     onChanged: (value) => active.value = value,
-                    title: const Text('Active status'),
+                    title: Text('active_status'.tr()),
                   ),
                 ],
               ),
@@ -139,9 +142,9 @@ class EditCategoryDialog extends HookConsumerWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: const Text(
-            'Cancel',
-            style: TextStyle(color: Colors.red),
+          child: Text(
+            'cancel'.tr(),
+            style: const TextStyle(color: Colors.red),
           ),
         ),
         TextButton(
@@ -173,7 +176,7 @@ class EditCategoryDialog extends HookConsumerWidget {
           },
           child: categoryLoading
               ? const CircularProgressIndicator()
-              : const Text('Save'),
+              : Text('save'.tr()),
         ),
       ],
     );

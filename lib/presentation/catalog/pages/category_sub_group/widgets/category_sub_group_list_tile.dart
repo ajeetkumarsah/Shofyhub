@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
@@ -62,11 +63,11 @@ class CategorySubgroupListTile extends StatelessWidget {
               value: 1,
               child: Text("Edit"),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 2,
               child: Text(
-                "Delete",
-                style: TextStyle(color: Colors.red),
+                "delete".tr(),
+                style: const TextStyle(color: Colors.red),
               ),
             )
           ],

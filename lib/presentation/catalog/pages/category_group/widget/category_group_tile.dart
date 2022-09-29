@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -81,16 +82,16 @@ class CategoryGroupTile extends StatelessWidget {
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 1,
-              child: Text("Edit"),
+              child: const Text("edit").tr(),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 2,
-              child: Text(
-                "Delete",
+              child: const Text(
+                "delete",
                 style: TextStyle(color: Colors.red),
-              ),
+              ).tr(),
             )
           ],
         ),
