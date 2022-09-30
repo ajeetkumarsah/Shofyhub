@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -12,7 +14,6 @@ import 'package:zcart_seller/application/app/product/detail_product/detail_produ
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';
 import 'package:zcart_seller/application/app/product/product_provider.dart';
 import 'package:zcart_seller/application/app/form/category_list_provider.dart';
-import 'package:zcart_seller/domain/app/Product/detail_product/detail_product_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
@@ -41,8 +42,20 @@ class UpdateProductPage extends HookConsumerWidget {
 
     final manufacturerIdList =
         ref.watch(productProvider.select((value) => value.manufacturerId));
+
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () async {
+        ref.read(categoryListProvider.notifier).loadData();
+        ref.read(detailProcuctProvider(productId).notifier).getDetailProduct();
+      });
+      return null;
+    }, []);
+
     final countryList =
         ref.watch(countryProvider.select((value) => value.dataList));
+
+    final ValueNotifier<KeyValueData> selectedCountry =
+        useState(countryList[0]);
 
     final nameController = useTextEditingController();
     final brandController = useTextEditingController();
@@ -59,20 +72,15 @@ class UpdateProductPage extends HookConsumerWidget {
         useState(manufacturerIdList[0]);
     final allCategories =
         ref.watch(categoryListProvider.select((value) => value.dataList));
+
+    final productDetails = ref.watch(detailProcuctProvider(productId)
+        .select((value) => value.detailProduct));
+
     final ValueNotifier<IList<KeyValueData>> selectedCategories =
         useState(const IListConst([]));
 
-    final ValueNotifier<KeyValueData> selectedCountry =
-        useState(countryList[0]);
     final active = useState(true);
     final shipping = useState(true);
-    useEffect(() {
-      Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(categoryListProvider.notifier).loadData();
-        ref.read(detailProcuctProvider(productId).notifier).getDetailProduct();
-      });
-      return null;
-    }, []);
 
     ref.listen<DetailProductState>(detailProcuctProvider(productId),
         (previous, next) {
@@ -86,8 +94,9 @@ class UpdateProductPage extends HookConsumerWidget {
         selectedCountry.value = countryList
             .where((element) => element.value == next.detailProduct.origin)
             .toList()[0];
-        // active.value = next.detailProduct.status
-        // shipping.value = next.detailProduct;
+
+        active.value = next.detailProduct.status;
+        shipping.value = next.detailProduct.requirementShipping;
       }
     });
     ref.listen<ProductState>(productProvider, (previous, next) {
@@ -295,6 +304,9 @@ class UpdateProductPage extends HookConsumerWidget {
                     ),
                     MultipleKeyValueSelector(
                         title: "select_categories".tr(),
+                        initialData: productDetails.categories
+                            .map((e) => e.toKeyValue())
+                            .toIList(),
                         allData: allCategories,
                         onSelect: (list) {
                           selectedCategories.value = list;
@@ -346,7 +358,7 @@ class UpdateProductPage extends HookConsumerWidget {
                                 description: description.text,
                                 originCountry: originCountry.text,
                                 active: active.value ? 1 : 0,
-                                requireShipping: shipping.value,
+                                requireShipping: shipping.value ? 1 : 0,
                                 categoryList: selectedCategories.value
                                     .map((element) =>
                                         int.tryParse(element.key) ?? 0)

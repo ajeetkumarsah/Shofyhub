@@ -1,22 +1,51 @@
-import 'package:equatable/equatable.dart';
+import 'dart:convert';
 
-class Categories extends Equatable {
-  const Categories({
+import 'package:equatable/equatable.dart';
+import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+
+class Category extends Equatable {
+  final int id;
+  final String name;
+
+  const Category({
+    required this.id,
     required this.name,
   });
 
-  final String name;
+  Category copyWith({int? id, String? name}) {
+    return Category(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
 
-  factory Categories.fromJson(Map<String, dynamic> json) => Categories(
-        name: json["4"],
-      );
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-        "4": name,
-      };
+  factory Category.fromMap(Map<String, dynamic> map) {
+    return Category(
+      id: map['id'] as int,
+      name: map['name'] as String,
+    );
+  }
 
-  factory Categories.init() => const Categories(name: '');
+  String toJson() => json.encode(toMap());
+
+  factory Category.fromJson(String source) =>
+      Category.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  KeyValueData toKeyValue() => KeyValueData(key: id.toString(), value: name);
 
   @override
-  List<Object?> get props => [name];
+  bool get stringify => true;
+
+  @override
+  List<Object> get props => [id, name];
+  factory Category.init() => const Category(id: 1, name: '');
+
+  static from(map) {}
 }

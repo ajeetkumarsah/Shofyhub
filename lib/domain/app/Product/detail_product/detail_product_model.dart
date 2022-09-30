@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:zcart_seller/domain/app/Product/detail_product/product_category_model.dart';
 
 import 'manufacturer_model.dart';
 
@@ -17,7 +18,7 @@ class DetailProductModel extends Equatable {
   final String brand;
   final ManufacturerProductModel manufacturer;
   final bool requirementShipping;
-  // final Categories categories;
+  final List<Category> categories;
   final String origin;
   final String listingCount;
   final String description;
@@ -35,7 +36,7 @@ class DetailProductModel extends Equatable {
     required this.brand,
     required this.manufacturer,
     required this.requirementShipping,
-    // required this.categories,
+    required this.categories,
     required this.origin,
     required this.listingCount,
     required this.description,
@@ -55,7 +56,7 @@ class DetailProductModel extends Equatable {
     String? brand,
     ManufacturerProductModel? manufacturer,
     bool? requirementShipping,
-    // Categories? categories,
+    List<Category>? categories,
     String? origin,
     String? listingCount,
     String? description,
@@ -74,7 +75,7 @@ class DetailProductModel extends Equatable {
       brand: brand ?? this.brand,
       manufacturer: manufacturer ?? this.manufacturer,
       requirementShipping: requirementShipping ?? this.requirementShipping,
-      // categories: categories ?? this.categories,
+      categories: categories ?? this.categories,
       origin: origin ?? this.origin,
       listingCount: listingCount ?? this.listingCount,
       description: description ?? this.description,
@@ -96,7 +97,7 @@ class DetailProductModel extends Equatable {
       'brand': brand,
       'manufacturer': manufacturer.toMap(),
       'requirement_shipping': requirementShipping,
-      // 'categories': categories.toJson(),
+      'categories': List<dynamic>.from(categories.map((x) => x.toJson())),
       'origin': origin,
       'listing_count': listingCount,
       'description': description,
@@ -111,14 +112,15 @@ class DetailProductModel extends Equatable {
       slug: map['slug'] ?? '',
       name: map['name'] ?? '',
       modelNumber: map['model_number'] ?? '',
-      status: map['status'] ?? '',
+      status: map['status'] ?? false,
       gtin: map['gtin'] ?? '',
       gtinType: map['gtin_type'] ?? '',
       mpn: map['mpn'] ?? '',
       brand: map['brand'] ?? '',
       manufacturer: ManufacturerProductModel.fromMap(map['manufacturer']),
       requirementShipping: map['requirement_shipping'],
-      // categories: Categories.fromJson(map['categories']),
+      categories: List<Category>.from(
+          map['categories'].map((x) => Category.fromJson(x))),
       origin: map['origin'] ?? '',
       listingCount: map['listing_count'] ?? '',
       description: map['description'] ?? '',
@@ -149,7 +151,7 @@ class DetailProductModel extends Equatable {
       brand,
       manufacturer,
       requirementShipping,
-      // categories,
+      categories,
       origin,
       listingCount,
       description,
@@ -170,7 +172,7 @@ class DetailProductModel extends Equatable {
         brand: '',
         manufacturer: ManufacturerProductModel.init(),
         requirementShipping: false,
-        // categories: Categories.init(),
+        categories: const [],
         origin: '',
         listingCount: '',
         description: '',
@@ -180,6 +182,6 @@ class DetailProductModel extends Equatable {
 
   @override
   String toString() {
-    return 'DetailProductModel(id: $id, slug: $slug, name: $name, modelNumber: $modelNumber, status: $status gtin: $gtin, gtinType: $gtinType, mpn: $mpn, brand: $brand, manufacturer: $manufacturer, requirementShipping: $requirementShipping, origin: $origin, listingCount: $listingCount, description: $description, availableFrom: $availableFrom, image: $image)';
+    return 'DetailProductModel(id: $id, slug: $slug, name: $name, modelNumber: $modelNumber, status: $status gtin: $gtin, gtinType: $gtinType, mpn: $mpn, brand: $brand, manufacturer: $manufacturer, requirementShipping: $requirementShipping, categories: $categories, origin: $origin, listingCount: $listingCount, description: $description, availableFrom: $availableFrom, image: $image)';
   }
 }

@@ -17,7 +17,7 @@ class UpdateProductModel extends Equatable {
   final String description;
   final String originCountry;
   final int active;
-  final bool requireShipping;
+  final int requireShipping;
   final List<int> categoryList;
   const UpdateProductModel({
     required this.id,
@@ -77,7 +77,7 @@ class UpdateProductModel extends Equatable {
     String? description,
     String? originCountry,
     int? active,
-    bool? requireShipping,
+    int? requireShipping,
     List<int>? categoryList,
   }) {
     return UpdateProductModel(
