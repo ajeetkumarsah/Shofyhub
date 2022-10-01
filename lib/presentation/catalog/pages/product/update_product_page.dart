@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -76,7 +74,7 @@ class UpdateProductPage extends HookConsumerWidget {
     final productDetails = ref.watch(detailProcuctProvider(productId)
         .select((value) => value.detailProduct));
 
-    final ValueNotifier<IList<KeyValueData>> selectedCategories =
+    ValueNotifier<IList<KeyValueData>> selectedCategories =
         useState(const IListConst([]));
 
     final active = useState(true);
@@ -94,7 +92,8 @@ class UpdateProductPage extends HookConsumerWidget {
         selectedCountry.value = countryList
             .where((element) => element.value == next.detailProduct.origin)
             .toList()[0];
-
+        selectedCategories.value =
+            productDetails.categories.map((e) => e.toKeyValue()).toIList();
         active.value = next.detailProduct.status;
         shipping.value = next.detailProduct.requirementShipping;
       }

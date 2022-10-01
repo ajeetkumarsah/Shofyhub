@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
@@ -97,7 +96,7 @@ class DetailProductModel extends Equatable {
       'brand': brand,
       'manufacturer': manufacturer.toMap(),
       'requirement_shipping': requirementShipping,
-      'categories': List<dynamic>.from(categories.map((x) => x.toJson())),
+      'categories': categories.map((x) => x.toMap()).toList(),
       'origin': origin,
       'listing_count': listingCount,
       'description': description,
@@ -120,7 +119,7 @@ class DetailProductModel extends Equatable {
       manufacturer: ManufacturerProductModel.fromMap(map['manufacturer']),
       requirementShipping: map['requirement_shipping'],
       categories: List<Category>.from(
-          map['categories'].map((x) => Category.fromJson(x))),
+          map['categories']?.map((x) => Category.fromMap(x)) ?? const []),
       origin: map['origin'] ?? '',
       listingCount: map['listing_count'] ?? '',
       description: map['description'] ?? '',
