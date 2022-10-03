@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 
 import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
@@ -7,8 +8,8 @@ import 'category_details_model.dart';
 import 'category_model.dart';
 
 abstract class ICategoryRepo {
-  Future<Either<CleanFailure, List<CategoryModel>>> getAllCatetories(
-      {required int id});
+  Future<Either<CleanFailure, CategoryPaginationModel>> getAllCatetories(
+      {required int id, required int page});
   Future<Either<CleanFailure, CategoryModel>> showCatetory(
       {required CategoryModel categoryId});
 

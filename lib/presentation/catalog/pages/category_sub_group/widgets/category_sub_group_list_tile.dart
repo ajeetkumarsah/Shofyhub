@@ -18,7 +18,7 @@ class CategorySubgroupListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: categorySubGroup.active ? Colors.white : Colors.redAccent[100],
+      color: Colors.white,
       child: ListTile(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
@@ -26,7 +26,6 @@ class CategorySubgroupListTile extends StatelessWidget {
                   categorySubGroupId: categorySubGroup.id,
                   subGroupName: categorySubGroup.name)));
         },
-        // tileColor: Colors.white,
         title: Text(
           categorySubGroup.name,
           style: TextStyle(
@@ -72,34 +71,18 @@ class CategorySubgroupListTile extends StatelessWidget {
             )
           ],
         ),
-        subtitle: Row(
-          children: [
-            Expanded(
-              child: Text(
-                'Category Count : ${categorySubGroup.categoriesCount}',
+        subtitle: !categorySubGroup.active
+            ? Text(
+                'Inactive',
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: Colors.grey.shade800,
+                  color: Colors.red.shade800,
                   fontWeight: FontWeight.w500,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                'Acitve : ${categorySubGroup.active}',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: Colors.grey.shade800,
-                  fontWeight: FontWeight.w500,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-            ),
-          ],
-        ),
+              )
+            : null,
       ),
     );
   }

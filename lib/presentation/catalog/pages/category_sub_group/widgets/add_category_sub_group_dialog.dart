@@ -131,7 +131,7 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                 description: descController.text,
                 metaTitle: metaTitleController.text,
                 metaDescription: metaDescController.text,
-                active: active.value,
+                active: active.value ? 1 :0,
                 order: orderController.text.isNotEmpty
                     ? int.parse(orderController.text)
                     : 0,

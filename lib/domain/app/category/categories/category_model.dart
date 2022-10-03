@@ -10,6 +10,7 @@ class CategoryModel extends Equatable {
   final int categorySubGroupId;
   final String featureImage;
   final String coverImage;
+  final bool active;
   const CategoryModel({
     required this.id,
     required this.name,
@@ -17,6 +18,7 @@ class CategoryModel extends Equatable {
     required this.categorySubGroupId,
     required this.featureImage,
     required this.coverImage,
+    required this.active,
   });
 
   CategoryModel copyWith({
@@ -26,6 +28,7 @@ class CategoryModel extends Equatable {
     int? categorySubGroupId,
     String? featureImage,
     String? coverImage,
+    bool? active,
   }) {
     return CategoryModel(
       id: id ?? this.id,
@@ -34,6 +37,7 @@ class CategoryModel extends Equatable {
       categorySubGroupId: categorySubGroupId ?? this.categorySubGroupId,
       featureImage: featureImage ?? this.featureImage,
       coverImage: coverImage ?? this.coverImage,
+      active: active ?? this.active,
     );
   }
 
@@ -45,6 +49,7 @@ class CategoryModel extends Equatable {
       'category_sub_group_id': categorySubGroupId,
       'feature_image': featureImage,
       'cover_image': coverImage,
+      'active': active,
     };
   }
 
@@ -56,6 +61,7 @@ class CategoryModel extends Equatable {
       categorySubGroupId: map['category_sub_group_id']?.toInt() ?? 0,
       featureImage: map['feature_image'] ?? '',
       coverImage: map['cover_image'] ?? '',
+      active: map['active'] ?? false,
     );
   }
 
@@ -76,6 +82,7 @@ class CategoryModel extends Equatable {
       categorySubGroupId,
       featureImage,
       coverImage,
+      active,
     ];
   }
 
@@ -85,5 +92,6 @@ class CategoryModel extends Equatable {
       featured: false,
       categorySubGroupId: 0,
       featureImage: '',
-      coverImage: '');
+      coverImage: '',
+      active: false);
 }

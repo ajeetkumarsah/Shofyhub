@@ -11,7 +11,7 @@ class CreateCategoryGroupModel extends Equatable {
   final String meatDesc;
   final int order;
   final String icon;
-  final bool active;
+  final int active;
   const CreateCategoryGroupModel({
     required this.name,
     required this.slug,
@@ -31,7 +31,7 @@ class CreateCategoryGroupModel extends Equatable {
     String? meatDesc,
     int? order,
     String? icon,
-    bool? active,
+    int? active,
   }) {
     return CreateCategoryGroupModel(
       name: name ?? this.name,
@@ -67,7 +67,7 @@ class CreateCategoryGroupModel extends Equatable {
       meatDesc: map['meatDesc'] as String,
       order: map['order'] as int,
       icon: map['icon'] as String,
-      active: map['active'] as bool,
+      active: map['active'] as int,
     );
   }
 
@@ -102,7 +102,7 @@ class CreateCategoryGroupModel extends Equatable {
       desc: '',
       metaTitle: '',
       meatDesc: '',
-      active: false,
+      active: 0,
       icon: '',
       order: 0);
 

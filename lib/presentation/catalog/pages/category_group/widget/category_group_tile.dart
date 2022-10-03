@@ -19,14 +19,13 @@ class CategoryGroupTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: categoryGroup.active ? Colors.white : Colors.redAccent[100],
+      color: Colors.white,
       child: ListTile(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => CategorySubgroupPage(
                   groupName: categoryGroup.name, id: categoryGroup.id)));
         },
-        // tileColor: Colors.white,
         leading: categoryGroup.coverImage.isEmpty
             ? null
             : Container(
@@ -51,16 +50,16 @@ class CategoryGroupTile extends StatelessWidget {
         //   onPressed: onPressed,
         //   icon: const Icon(Icons.create),
         // ),
-        // subtitle: Text(
-        //   'Slug: ${categoryGroup.slug}',
-        //   style: TextStyle(
-        //     fontSize: 14.sp,
-        //     color: Colors.grey.shade800,
-        //     fontWeight: FontWeight.w500,
-        //   ),
-        //   overflow: TextOverflow.ellipsis,
-        //   maxLines: 2,
-        // ),
+        subtitle: !categoryGroup.active ? Text(
+            'Inactive',
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: Colors.red.shade800,
+            fontWeight: FontWeight.w500,
+          ),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+        ) : null,
         trailing: PopupMenuButton(
           tooltip: '',
           padding: EdgeInsets.zero,

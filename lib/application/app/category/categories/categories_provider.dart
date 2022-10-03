@@ -1,9 +1,10 @@
 import 'dart:developer';
 
 import 'package:clean_api/clean_api.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
+import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
 
@@ -22,15 +23,53 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
   CategoryNotifier(this.categoryRepo, this.categorySubGroupId)
       : super(CategoryState.init());
 
+  CategoryPaginationModel categoryPaginationModel =
+      CategoryPaginationModel.init();
+  List<CategoryModel> categories = [];
+  int pageNumber = 1;
+
   getAllCategories() async {
     state = state.copyWith(loading: true);
-    final data = await categoryRepo.getAllCatetories(id: categorySubGroupId);
-    state = data.fold(
-        (l) => state.copyWith(loading: false, failure: l),
-        (r) => state.copyWith(
-            loading: false,
-            failure: CleanFailure.none(),
-            allCategoris: r.lock));
+    pageNumber = 1;
+    categories = [];
+
+    final data = await categoryRepo.getAllCatetories(
+        id: categorySubGroupId, page: pageNumber);
+    pageNumber++;
+
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      categoryPaginationModel = r;
+      categories.addAll(r.data);
+
+      return state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+        allCategoris: categories,
+      );
+    });
+  }
+
+  getMoreCategories() async {
+    state = state.copyWith(paginationLoading: true);
+    if (pageNumber == 1 ||
+        pageNumber <= categoryPaginationModel.meta.lastPage!) {
+      final data = await categoryRepo.getAllCatetories(
+          id: categorySubGroupId, page: pageNumber);
+
+      pageNumber++;
+
+      state = data.fold(
+          (l) => state.copyWith(paginationLoading: false, failure: l), (r) {
+        categories.addAll(r.data);
+
+        return state.copyWith(
+          loading: false,
+          failure: CleanFailure.none(),
+          allCategoris: categories,
+        );
+      });
+      state = state;
+    }
   }
 
   createNewCategory(CreateCategoryModel categoryModel) async {

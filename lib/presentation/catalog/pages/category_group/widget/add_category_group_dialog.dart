@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -123,7 +125,7 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                 order: orderController.text == ''
                     ? 0
                     : int.parse(orderController.text),
-                active: active.value,
+                active: active.value ? 1 : 0 ,
               );
               buttonPressed.value = true;
               ref

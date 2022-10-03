@@ -8,7 +8,7 @@ class CreateCategorySubGroupModel extends Equatable {
   final String description;
   final String metaTitle;
   final String metaDescription;
-  final bool active;
+  final int active;
   final int order;
   const CreateCategorySubGroupModel({
     required this.categoryGroupId,
@@ -28,7 +28,7 @@ class CreateCategorySubGroupModel extends Equatable {
     String? description,
     String? metaTitle,
     String? metaDescription,
-    bool? active,
+    int? active,
     int? order,
     String? coverImage,
   }) {
@@ -65,7 +65,7 @@ class CreateCategorySubGroupModel extends Equatable {
       description: map['description'] ?? '',
       metaTitle: map['meta_title'] ?? '',
       metaDescription: map['meta_description'] ?? '',
-      active: map['active'] as bool,
+      active: map['active'] as int,
       order: map['order']?.toInt() ?? 0,
     );
   }

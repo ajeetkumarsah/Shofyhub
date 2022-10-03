@@ -1,25 +1,28 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 
 class CategoryState extends Equatable {
   final bool loading;
+  final bool paginationLoading;
   final CleanFailure failure;
-  final IList<CategoryModel> allCategoris;
+  final List<CategoryModel> allCategoris;
   const CategoryState({
     required this.loading,
     required this.failure,
     required this.allCategoris,
+    required this.paginationLoading,
   });
 
   CategoryState copyWith({
     bool? loading,
+    bool? paginationLoading,
     CleanFailure? failure,
-    IList<CategoryModel>? allCategoris,
+    List<CategoryModel>? allCategoris,
   }) {
     return CategoryState(
       loading: loading ?? this.loading,
+      paginationLoading: paginationLoading ?? this.paginationLoading,
       failure: failure ?? this.failure,
       allCategoris: allCategoris ?? this.allCategoris,
     );
@@ -27,7 +30,7 @@ class CategoryState extends Equatable {
 
   @override
   String toString() {
-    return 'CategorisState(loading: $loading, failure: $failure, allCategoris: $allCategoris, )';
+    return 'CategorisState(loading: $loading, paginationLoading: $paginationLoading, failure: $failure, allCategoris: $allCategoris, )';
   }
 
   @override
@@ -35,7 +38,8 @@ class CategoryState extends Equatable {
 
   factory CategoryState.init() => CategoryState(
         loading: false,
+        paginationLoading: false,
         failure: CleanFailure.none(),
-        allCategoris: const IListConst([]),
+        allCategoris: const [],
       );
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_details_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
+import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
 
@@ -12,12 +13,12 @@ class CategoryRepo extends ICategoryRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<CategoryModel>>> getAllCatetories(
-      {required int id}) async {
+  Future<Either<CleanFailure, CategoryPaginationModel>> getAllCatetories(
+      {required int id, required int page}) async {
+    log('Catgeoy Endpoint: ${'categories?page=$page&sub_group_id=$id'}');
     return cleanApi.get(
-        fromData: ((json) => List<CategoryModel>.from(
-            json['data'].map((e) => CategoryModel.fromMap(e)))),
-        endPoint: 'categories?sub_group_id=$id');
+        fromData: ((json) => CategoryPaginationModel.fromMap(json)),
+        endPoint: 'categories?page=$page&sub_group_id=$id');
   }
 
   @override
