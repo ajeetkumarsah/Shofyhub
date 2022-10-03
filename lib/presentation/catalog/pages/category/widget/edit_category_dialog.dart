@@ -67,7 +67,7 @@ class EditCategoryDialog extends HookConsumerWidget {
         descController.text = next.categoryDetails.description;
         selectedAttributes.value =
             selectedAttributes.value.addAll(next.categoryDetails.attributes);
-        active.value = next.categoryDetails.featured;
+        active.value = next.categoryDetails.active;
         Logger.i(selectedAttributes.value);
       }
     });
@@ -123,7 +123,7 @@ class EditCategoryDialog extends HookConsumerWidget {
                         : MultipleKeyValueSelector(
                             title: "select_attribute".tr(),
                             allData: attributes,
-                            initialData: category.attributes,
+                            initialData: selectedAttributes.value,
                             onSelect: (list) {
                               Logger.i(list.length);
                               selectedAttributes.value = list;

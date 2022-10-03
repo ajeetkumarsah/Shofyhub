@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
@@ -15,6 +14,8 @@ class CategoryDetailsModel extends Equatable {
   final String featureImage;
   final String coverImage;
   final IList<KeyValueData> attributes;
+  final bool active;
+
   const CategoryDetailsModel({
     required this.id,
     required this.name,
@@ -24,6 +25,7 @@ class CategoryDetailsModel extends Equatable {
     required this.featureImage,
     required this.coverImage,
     required this.attributes,
+    required this.active,
   });
 
   CategoryDetailsModel copyWith({
@@ -35,6 +37,7 @@ class CategoryDetailsModel extends Equatable {
     String? featureImage,
     String? coverImage,
     IList<KeyValueData>? attributes,
+    bool? active,
   }) {
     return CategoryDetailsModel(
       id: id ?? this.id,
@@ -45,6 +48,7 @@ class CategoryDetailsModel extends Equatable {
       featureImage: featureImage ?? this.featureImage,
       coverImage: coverImage ?? this.coverImage,
       attributes: attributes ?? this.attributes,
+      active: active ?? this.active,
     );
   }
 
@@ -57,6 +61,7 @@ class CategoryDetailsModel extends Equatable {
       'category_sub_group_id': categorySubGroupId,
       'feature_image': featureImage,
       'cover_image': coverImage,
+      'active': active,
     };
   }
 
@@ -72,6 +77,7 @@ class CategoryDetailsModel extends Equatable {
       attributes: map['attributes'] != null && map['attributes'].isNotEmpty
           ? KeyValueData.listFromMap(map['attributes'] ?? {})
           : const IListConst([]),
+      active: map['active'] ?? false,
     );
   }
 
@@ -94,21 +100,24 @@ class CategoryDetailsModel extends Equatable {
       featureImage,
       coverImage,
       attributes,
+      active,
     ];
   }
 
   factory CategoryDetailsModel.init() => const CategoryDetailsModel(
-      id: 0,
-      name: '',
-      featured: false,
-      categorySubGroupId: 0,
-      featureImage: '',
-      coverImage: '',
-      description: '',
-      attributes: IListConst([]));
+        id: 0,
+        name: '',
+        featured: false,
+        categorySubGroupId: 0,
+        featureImage: '',
+        coverImage: '',
+        description: '',
+        attributes: IListConst([]),
+        active: false,
+      );
 
   @override
   String toString() {
-    return 'CategoryDetailsModel(id: $id, name: $name, description: $description, featured: $featured, categorySubGroupId: $categorySubGroupId, featureImage: $featureImage, coverImage: $coverImage, attributes: $attributes)';
+    return 'CategoryDetailsModel(id: $id, name: $name, description: $description, featured: $featured, categorySubGroupId: $categorySubGroupId, featureImage: $featureImage, coverImage: $coverImage, attributes: $attributes, active: $active)';
   }
 }

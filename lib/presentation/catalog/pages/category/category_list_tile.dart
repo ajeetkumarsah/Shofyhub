@@ -36,16 +36,18 @@ class CategoryListTile extends StatelessWidget {
             fontSize: 16.sp,
           ),
         ),
-        subtitle: Text(
-          'Featured : ${category.featured ? "Yes" : "No"}',
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: Colors.grey.shade800,
-            fontWeight: FontWeight.w500,
-          ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
-        ),
+        subtitle: !category.active
+            ? Text(
+                'Inactive',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.red.shade800,
+                  fontWeight: FontWeight.w500,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              )
+            : null,
         trailing: PopupMenuButton(
           tooltip: '',
           padding: EdgeInsets.zero,

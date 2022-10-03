@@ -14,9 +14,6 @@ class DeleteCategoryDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final loading = ref
-        .watch(categoryProvider(categoryId).select((value) => value.loading));
-
     ref.listen<CategoryState>(categoryProvider(categoryId), (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
@@ -35,6 +32,10 @@ class DeleteCategoryDialog extends HookConsumerWidget {
         }
       }
     });
+
+    final loading = ref
+        .watch(categoryProvider(categoryId).select((value) => value.loading));
+
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
