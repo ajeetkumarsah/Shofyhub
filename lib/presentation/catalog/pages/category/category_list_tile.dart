@@ -65,7 +65,8 @@ class CategoryListTile extends StatelessWidget {
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => DeleteCategoryDialog(category.id));
+                  builder: (context) => DeleteCategoryDialog(
+                      category.categorySubGroupId, category.id));
             }
           },
           itemBuilder: (context) => [

@@ -9,8 +9,11 @@ import 'package:zcart_seller/application/app/category/categories/categories_prov
 import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 
 class DeleteCategoryDialog extends HookConsumerWidget {
+  final int categorySubGroupId;
   final int categoryId;
-  const DeleteCategoryDialog(this.categoryId, {Key? key}) : super(key: key);
+  const DeleteCategoryDialog(this.categorySubGroupId, this.categoryId,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -33,8 +36,8 @@ class DeleteCategoryDialog extends HookConsumerWidget {
       }
     });
 
-    final loading = ref
-        .watch(categoryProvider(categoryId).select((value) => value.loading));
+    final loading = ref.watch(
+        categoryProvider(categorySubGroupId).select((value) => value.loading));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -122,8 +125,9 @@ class DeleteCategoryDialog extends HookConsumerWidget {
                       ),
                       onPressed: () {
                         ref
-                            .read(categoryProvider(categoryId).notifier)
+                            .read(categoryProvider(categorySubGroupId).notifier)
                             .trashcategory(categoryId);
+                        Navigator.of(context).pop();
                       },
                       child: loading
                           ? const Center(

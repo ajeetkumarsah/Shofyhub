@@ -35,7 +35,7 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
 
     final data = await categoryRepo.getAllCatetories(
         id: categorySubGroupId, page: pageNumber);
-    
+
     //increase the page no
     pageNumber++;
 
