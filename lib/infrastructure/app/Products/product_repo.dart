@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/domain/app/Product/product_pagination_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
 import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
 
@@ -6,13 +7,13 @@ import '../../../domain/app/product/create_product/create_product_model.dart';
 import '../../../domain/app/product/create_product/gtin_types_model.dart';
 import '../../../domain/app/product/create_product/tag_list.dart';
 import '../../../domain/app/product/i_product_repo.dart';
-import '../../../domain/app/product/product_model.dart';
 
 class ProductRepo extends IProductRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<ProductModel>>> getProducts() {
+  Future<Either<CleanFailure, ProductPaginationModel>> getProducts(
+      {required int page}) {
     return cleanApi.get(
         failureHandler:
             <ProductModel>(int statusCode, Map<String, dynamic> responseBody) {
@@ -37,9 +38,8 @@ class ProductRepo extends IProductRepo {
                 CleanFailure(tag: 'product', error: responseBody.toString()));
           }
         },
-        fromData: ((json) => List<ProductModel>.from(
-            json['data'].map((e) => ProductModel.fromMap(e)))),
-        endPoint: 'products');
+        fromData: ((json) => ProductPaginationModel.fromMap(json)),
+        endPoint: 'products?page=$page');
   }
 
   @override

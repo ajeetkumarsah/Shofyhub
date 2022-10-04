@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -29,6 +30,9 @@ class AddProductPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final ValueNotifier<IList<int>> selectedTags =
         useState(const IListConst([]));
+
+    final loading =
+        ref.watch(productProvider.select((value) => value.loading));
 
     final gtinList =
         ref.watch(productProvider.select((value) => value.gtinTypes));
@@ -70,7 +74,7 @@ class AddProductPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           CherryToast.info(
-            title: const Text('Product added'),
+            title: Text('product_added'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
 
@@ -96,10 +100,10 @@ class AddProductPage extends HookConsumerWidget {
           ),
         ),
         elevation: 0,
-        title: const Text('Create Product'),
+        title: Text('create_product'.tr()),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: SingleChildScrollView(
           child: Form(
             key: formKey,
@@ -108,28 +112,28 @@ class AddProductPage extends HookConsumerWidget {
               children: [
                 SizedBox(height: 10.h),
                 Text(
-                  '* Required fields.',
+                  'required_fields'.tr(),
                   style: TextStyle(color: Theme.of(context).hintColor),
                 ),
                 SizedBox(height: 10.h),
                 KTextField(
                   controller: nameController,
-                  lebelText: 'Name *',
+                  lebelText: '${'name'.tr()} *',
                   validator: (text) => ValidatorLogic.requiredField(text),
                 ),
                 SizedBox(height: 10.h),
-                KTextField(controller: brand, lebelText: 'Brand'),
+                KTextField(controller: brand, lebelText: 'brand'.tr()),
                 SizedBox(height: 10.h),
                 KTextField(
                   controller: modelNumer,
-                  lebelText: 'Model Number',
+                  lebelText: 'model_number'.tr(),
                 ),
                 SizedBox(
                   height: 10.h,
                 ),
                 KTextField(
                   controller: mpn,
-                  lebelText: 'mpn',
+                  lebelText: 'mpn'.tr(),
                   numberFormatters: true,
                 ),
                 SizedBox(
@@ -154,7 +158,7 @@ class AddProductPage extends HookConsumerWidget {
                       style: TextStyle(color: Colors.grey.shade800),
                       isExpanded: true,
                       value: selectedGtin.value,
-                      hint: const Text('Select gtin type'),
+                      hint: Text('select_gtin_type'.tr()),
                       icon: const Icon(Icons.keyboard_arrow_down_rounded),
                       items: gtinList
                           .map<DropdownMenuItem<GtinTypes>>((GtinTypes value) {
@@ -179,7 +183,7 @@ class AddProductPage extends HookConsumerWidget {
                 ),
                 KTextField(
                   controller: gtin,
-                  lebelText: 'gtin',
+                  lebelText: 'gtin'.tr(),
                   numberFormatters: true,
                 ),
                 SizedBox(
@@ -203,7 +207,7 @@ class AddProductPage extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                       ),
-                      hint: const Text('Select manufacturer'),
+                      hint: Text('select_manufacturer'.tr()),
                       style: TextStyle(color: Colors.grey.shade800),
                       isExpanded: true,
                       value: selectedMenufectur.value,
@@ -232,7 +236,7 @@ class AddProductPage extends HookConsumerWidget {
                 ),
                 KTextField(
                   controller: description,
-                  lebelText: 'Description *',
+                  lebelText: '${'description'.tr()} *',
                   validator: (text) => ValidatorLogic.requiredField(text),
                 ),
                 SizedBox(
@@ -249,7 +253,7 @@ class AddProductPage extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(10.r),
                         ),
                       ),
-                      hint: const Text('Select origin country'),
+                      hint: Text('select_origin_country'.tr()),
                       style: TextStyle(color: Colors.grey.shade800),
                       isExpanded: true,
                       value: selectedCountry.value,
@@ -282,15 +286,15 @@ class AddProductPage extends HookConsumerWidget {
                                 value: e,
                                 child: Text(
                                   e.value,
-                                  textDirection: TextDirection.rtl,
+                                  // textDirection: TextDirection.RTL,
                                 ),
                               ))),
                   selectedItems: selectedTags.value.unlock,
-                  hint: const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text("Select Tags"),
+                  hint: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text("select_tags".tr()),
                   ),
-                  searchHint: "Select Tags",
+                  searchHint: "select_tags".tr(),
                   onChanged: (List<int> value) {
                     selectedTags.value = value.lock;
                     Logger.i(selectedTags.value);
@@ -306,7 +310,7 @@ class AddProductPage extends HookConsumerWidget {
                 ),
                 SizedBox(height: 10.h),
                 MultipleKeyValueSelector(
-                    title: "Select Categories *",
+                    title: "${'select_Categories'.tr()} *",
                     allData: allCategories,
                     onSelect: (list) {
                       selectedCategories.value = list;
@@ -315,24 +319,25 @@ class AddProductPage extends HookConsumerWidget {
                 SwitchListTile(
                   value: active.value,
                   onChanged: (value) => active.value = value,
-                  title: const Text('Active '),
+                  title: Text('active'.tr()),
                 ),
                 SizedBox(height: 10.h),
                 SwitchListTile(
                   value: shipping.value,
                   onChanged: (value) => shipping.value = value,
-                  title: const Text('Require Shipping'),
+                  title: Text('require_shipping'.tr()),
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 30.h),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(color: Colors.red),
+                      child: Text(
+                        'cancel'.tr(),
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                     TextButton(
@@ -373,15 +378,17 @@ class AddProductPage extends HookConsumerWidget {
                             buttonPressed.value = true;
                           } else {
                             CherryToast.error(
-                              title: const Text(
-                                'Category group is required',
+                              title: Text(
+                                'category_group_is_required'.tr(),
                               ),
                               toastPosition: Position.bottom,
                             ).show(context);
                           }
                         }
                       },
-                      child: const Text('Create'),
+                      child: loading
+                          ? const CircularProgressIndicator()
+                          : Text('create'.tr()),
                     ),
                   ],
                 ),

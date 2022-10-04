@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -71,9 +73,6 @@ class UpdateProductPage extends HookConsumerWidget {
     final allCategories =
         ref.watch(categoryListProvider.select((value) => value.dataList));
 
-    final productDetails = ref.watch(detailProcuctProvider(productId)
-        .select((value) => value.detailProduct));
-
     ValueNotifier<IList<KeyValueData>> selectedCategories =
         useState(const IListConst([]));
 
@@ -89,13 +88,14 @@ class UpdateProductPage extends HookConsumerWidget {
         mpn.text = next.detailProduct.mpn;
         gtin.text = next.detailProduct.gtin;
         description.text = next.detailProduct.description;
+        selectedCategories.value =
+            next.detailProduct.categories.map((e) => e.toKeyValue()).toIList();
+
+        active.value = next.detailProduct.status;
+        shipping.value = next.detailProduct.requirementShipping;
         selectedCountry.value = countryList
             .where((element) => element.value == next.detailProduct.origin)
             .toList()[0];
-        selectedCategories.value =
-            productDetails.categories.map((e) => e.toKeyValue()).toIList();
-        active.value = next.detailProduct.status;
-        shipping.value = next.detailProduct.requirementShipping;
       }
     });
     ref.listen<ProductState>(productProvider, (previous, next) {
@@ -303,9 +303,7 @@ class UpdateProductPage extends HookConsumerWidget {
                     ),
                     MultipleKeyValueSelector(
                         title: "select_categories".tr(),
-                        initialData: productDetails.categories
-                            .map((e) => e.toKeyValue())
-                            .toIList(),
+                        initialData: selectedCategories.value,
                         allData: allCategories,
                         onSelect: (list) {
                           selectedCategories.value = list;

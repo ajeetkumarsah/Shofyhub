@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,7 +18,17 @@ class ProductListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final scrollController = useScrollController();
+
     useEffect(() {
+      scrollController.addListener(
+        () {
+          if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent) {
+            ref.read(productProvider.notifier).getMoreProducts();
+          }
+        },
+      );
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(productProvider.notifier).getProducts();
         ref.read(getAttributesProvider.notifier).getCategories();
@@ -28,8 +40,11 @@ class ProductListPage extends HookConsumerWidget {
 
       return null;
     }, []);
-    final products =
-        ref.watch(productProvider.select((value) => value.productList));
+
+    final productPaginationModel =
+        ref.watch(productProvider.notifier).productPaginationModel;
+
+    final products = ref.watch(productProvider).productList;
 
     final loading = ref.watch(productProvider.select((value) => value.loading));
 
@@ -57,11 +72,23 @@ class ProductListPage extends HookConsumerWidget {
                           .getProducts();
                     },
                     child: ListView.separated(
+                      controller: scrollController,
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
                       physics: const BouncingScrollPhysics(),
                       itemCount: products.length,
-                      itemBuilder: (context, index) =>
-                          ProductTile(product: products[index]),
+                      itemBuilder: (context, index) {
+                        if ((index == products.length - 1) &&
+                            products.length <
+                                productPaginationModel.meta.total!) {
+                          return const SizedBox(
+                            height: 100,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        return ProductTile(product: products[index]);
+                      },
                       separatorBuilder: (context, index) => SizedBox(
                         height: 3.h,
                       ),

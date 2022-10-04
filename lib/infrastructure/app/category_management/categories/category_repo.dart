@@ -15,7 +15,6 @@ class CategoryRepo extends ICategoryRepo {
   @override
   Future<Either<CleanFailure, CategoryPaginationModel>> getAllCatetories(
       {required int id, required int page}) async {
-    log('Catgeoy Endpoint: ${'categories?page=$page&sub_group_id=$id'}');
     return cleanApi.get(
         fromData: ((json) => CategoryPaginationModel.fromMap(json)),
         endPoint: 'categories?page=$page&sub_group_id=$id');

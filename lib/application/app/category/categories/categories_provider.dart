@@ -35,6 +35,8 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
 
     final data = await categoryRepo.getAllCatetories(
         id: categorySubGroupId, page: pageNumber);
+    
+    //increase the page no
     pageNumber++;
 
     state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
@@ -90,10 +92,10 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
   }
 
   trashcategory(int categoryId) async {
-    // state = state.copyWith(loading: true);
-    // final data = await categoryRepo.trashCategory(categoryId: categoryId);
-    // state = data.fold((l) => state.copyWith(loading: false, failure: l),
-    //     (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    state = state.copyWith(loading: true);
+    final data = await categoryRepo.trashCategory(categoryId: categoryId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllCategories();
   }
 
