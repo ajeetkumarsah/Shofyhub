@@ -39,7 +39,7 @@ class RestoreInventory extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -68,7 +68,7 @@ class RestoreInventory extends HookConsumerWidget {
       ),
       contentPadding: EdgeInsets.zero,
       content: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text('Are you sure you want to restore this Inventory?'),
       ),
       actions: [
@@ -121,10 +121,17 @@ class RestoreInventory extends HookConsumerWidget {
                       onPressed: () {
                         ref
                             .read(stockeInventoryProvider.notifier)
-                            .deleteInventory(inventoryId);
+                            .restoreInventory(inventoryId);
                       },
                       child: loading
-                          ? const CircularProgressIndicator()
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
                           : Text(
                               "Restore",
                               style: TextStyle(

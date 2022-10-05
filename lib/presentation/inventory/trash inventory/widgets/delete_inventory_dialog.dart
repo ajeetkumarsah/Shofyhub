@@ -39,7 +39,7 @@ class DeleteInventory extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -68,7 +68,7 @@ class DeleteInventory extends HookConsumerWidget {
       ),
       contentPadding: EdgeInsets.zero,
       content: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text('Are you sure you want to delete this Inventory?'),
       ),
       actions: [
@@ -124,7 +124,14 @@ class DeleteInventory extends HookConsumerWidget {
                             .deleteInventory(inventoryId);
                       },
                       child: loading
-                          ? const CircularProgressIndicator()
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
                           : Text(
                               "Delete",
                               style: TextStyle(

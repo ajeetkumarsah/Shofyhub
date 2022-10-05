@@ -38,7 +38,7 @@ class TrashInventory extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -67,7 +67,7 @@ class TrashInventory extends HookConsumerWidget {
       ),
       contentPadding: EdgeInsets.zero,
       content: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text('Are you sure you want to trash this Inventory?'),
       ),
       actions: [
@@ -123,7 +123,14 @@ class TrashInventory extends HookConsumerWidget {
                             .trashInventory(inventoryId);
                       },
                       child: loading
-                          ? const CircularProgressIndicator()
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
                           : Text(
                               "Trash",
                               style: TextStyle(

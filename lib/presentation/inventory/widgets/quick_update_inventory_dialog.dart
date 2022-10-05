@@ -136,7 +136,7 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             final double priceValue =
-                double.parse(priceController.text.replaceAll('\$', ''));
+                double.parse(priceController.text.replaceAll('R', ''));
             buttonPressed.value = true;
             final quickUpdateModel = QuickUpdateModel(
                 title: titleController.text,

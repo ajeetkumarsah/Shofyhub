@@ -21,63 +21,53 @@ class TrashInventoryPage extends HookConsumerWidget {
     }, []);
     final inventoryList = ref
         .watch(stockeInventoryProvider.select((value) => value.trashInventory));
+    final loading =
+        ref.watch(stockeInventoryProvider.select((value) => value.loading));
+
     return Scaffold(
-      // appBar: AppBar(
-      //   toolbarHeight: 60.h,
-      //   backgroundColor: Constants.appbarColor,
-      //   shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.vertical(
-      //       bottom: Radius.circular(22.r),
-      //     ),
-      //   ),
-      //   title: const Text('Inventory'),
-      //   elevation: 0,
-      // ),
       body: Padding(
         padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            // Container(
-            //   height: 45.h,
-            //   decoration: BoxDecoration(
-            //     color: Colors.grey.shade300,
-            //     borderRadius: BorderRadius.circular(15.r),
-            //   ),
-            //   child: const TextField(
-            //     decoration: InputDecoration(
-            //       prefixIcon: Icon(Icons.search),
-            //       border: OutlineInputBorder(borderSide: BorderSide.none),
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(height: 15.h),
-            Expanded(
-              child: ListView.separated(
-                itemCount: inventoryList.length,
-                itemBuilder: (context, index) => TrashInventoryItemTile(
-                    deleteInventory: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => DeleteInventory(
-                              inventoryId: inventoryList[index].id));
-                    },
-                    restore: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => RestoreInventory(
-                              inventoryId: inventoryList[index].id));
-                    },
-                    sku: inventoryList[index].sku,
-                    title: inventoryList[index].title,
-                    price: inventoryList[index].price,
-                    quantity: inventoryList[index].stockQuantity,
-                    condition: inventoryList[index].condition,
-                    image: inventoryList[index].image),
-                separatorBuilder: (context, index) => SizedBox(height: 15.h),
+        child: loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () {
+                        return ref
+                            .read(stockeInventoryProvider.notifier)
+                            .getTrashInventories();
+                      },
+                      child: ListView.separated(
+                        itemCount: inventoryList.length,
+                        itemBuilder: (context, index) => TrashInventoryItemTile(
+                            deleteInventory: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => DeleteInventory(
+                                      inventoryId: inventoryList[index].id));
+                            },
+                            restore: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => RestoreInventory(
+                                      inventoryId: inventoryList[index].id));
+                            },
+                            sku: inventoryList[index].sku,
+                            title: inventoryList[index].title,
+                            price: inventoryList[index].price,
+                            quantity: inventoryList[index].stockQuantity,
+                            condition: inventoryList[index].condition,
+                            image: inventoryList[index].image),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 15.h),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_page.dart';
 import 'package:zcart_seller/presentation/inventory/trash%20inventory/trash_inventory_page.dart';
+import 'package:zcart_seller/presentation/stock/suppliers/suppliers_list_page.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/warehouse_page.dart';
 
 class StockHome extends StatelessWidget {
@@ -32,8 +33,11 @@ class StockHome extends StatelessWidget {
               Tab(
                 text: 'Inventory',
               ),
+              // Tab(
+              //   text: 'Trash\nInventory',
+              // ),
               Tab(
-                text: 'Trash\nInventory',
+                text: 'Suppliers',
               ),
               Tab(
                 text: 'Warehouse',
@@ -43,7 +47,8 @@ class StockHome extends StatelessWidget {
         ),
         body: const TabBarView(children: [
           InventoryPage(),
-          TrashInventoryPage(),
+          // TrashInventoryPage(),
+          SuppliersListPage(),
           WarehousePage(),
         ]),
       ),
