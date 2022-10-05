@@ -288,13 +288,18 @@
   "delete_manufactuer": "Delete Manufacturer",
   "are_you_sure_delete_manufacturer": "Are you sure you want to delete this Manufactuer?",
   "select_country": "Select Country",
-  "product_added" : "Product Added",
+  "product_added": "Product Added",
   "create_product": "Create Product",
   "required_fields": "* Required fields.",
   "select_gtin_type": "Select gin type",
   "select_manufacturer": "Select Manufactuer",
   "select_origin_country": "Select Origin Country",
   "select_tags": "Select Tags",
-  "category_group_is_required" : "Category Group is required",
-  "create": "Create"
+  "category_group_is_required": "Category Group is required",
+  "create": "Create",
+  "add_warehouse": "Add Warehouse",
+  "warehouse_deleted": "Warehouse Deleted",
+  "warehouse_moved_trash": "Warehouse Moved to Trash",
+  "trash": "Trash",
+  "are_you_sure_trash_this_item": "Are you sure, you want to move this item to trash ?"
 }
