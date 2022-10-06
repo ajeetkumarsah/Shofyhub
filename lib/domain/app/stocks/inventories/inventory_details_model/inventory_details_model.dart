@@ -27,7 +27,7 @@ class InventoryDetailsModel extends Equatable {
   final String offerEnd;
   final String shippingWeight;
   final int minOrderQuantity;
-  final List linkedItems;
+  final dynamic linkedItems;
   final String metaTitle;
   final String metaDescription;
   final String inspectionStatus;
@@ -89,7 +89,7 @@ class InventoryDetailsModel extends Equatable {
     String? offerEnd,
     String? shippingWeight,
     int? minOrderQuantity,
-    List? linkedItems,
+    dynamic linkedItems,
     String? metaTitle,
     String? metaDescription,
     String? inspectionStatus,
@@ -188,7 +188,7 @@ class InventoryDetailsModel extends Equatable {
       offerEnd: map['offer_end'] ?? '',
       shippingWeight: map['shipping_weight'] ?? '',
       minOrderQuantity: map['min_order_quantity']?.toInt() ?? 0,
-      linkedItems: List.from(map['linked_items'] ?? const []),
+      linkedItems: map['linked_items'],
       metaTitle: map['meta_title'] ?? '',
       metaDescription: map['meta_description'] ?? '',
       inspectionStatus: map['inspection_status'] ?? '',

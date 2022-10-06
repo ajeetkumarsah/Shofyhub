@@ -7,6 +7,7 @@ import 'package:zcart_seller/domain/app/stocks/inventories/i_inventories_repo.da
 import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/inventory_pagination_model.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/quick_update_model.dart';
+import 'package:zcart_seller/domain/app/stocks/inventories/update_inventory_model.dart';
 import 'package:zcart_seller/infrastructure/app/stocks/inventories/inventories_repo.dart';
 
 final stockeInventoryProvider =
@@ -83,6 +84,22 @@ class AllInventoriesNotifier extends StateNotifier<InventoriesState> {
     state = state.copyWith(loading: true);
     final quickUpdateData = await inventoryRepo.quickUpdate(
         quickUpdateModel: quickUpdateModel, id: id);
+
+    state = quickUpdateData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+      ),
+    );
+    getAllInventories(inventoryFilter: 'active');
+    getTrashInventories();
+  }
+
+  updateInventory(UpdateInventoryModel updateInventoryModel) async {
+    state = state.copyWith(loading: true);
+    final quickUpdateData = await inventoryRepo.updateInventory(
+        updateinventory: updateInventoryModel);
 
     state = quickUpdateData.fold(
       (l) => state.copyWith(loading: false, failure: l),

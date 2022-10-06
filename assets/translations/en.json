@@ -301,5 +301,17 @@
   "warehouse_deleted": "Warehouse Deleted",
   "warehouse_moved_trash": "Warehouse Moved to Trash",
   "trash": "Trash",
-  "are_you_sure_trash_this_item": "Are you sure, you want to move this item to trash ?"
+  "are_you_sure_trash_this_item": "Are you sure, you want to move this item to trash ?",
+  "inventory_updated": "Inventory Updated",
+  "update_inventory": "Update Inventory",
+  "condition_note": "Condition Note",
+  "free_shipping": "Free Shipping",
+  "supplier_id": "Supplier Id",
+  "purchase_price": "Purchase Price",
+  "warehouse_id": "Warehouse Id",
+  "offer_start": "Offer Start",
+  "offer_end": "Offer End",
+  "min_order_quantity": "Min Order Quantity",
+  "stock_quantity": "Stock Quantity",
+  "sale_price": "Sale Price"
 }

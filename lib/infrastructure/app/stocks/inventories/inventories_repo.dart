@@ -3,6 +3,7 @@ import 'package:zcart_seller/domain/app/stocks/inventories/i_inventories_repo.da
 import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/inventory_pagination_model.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/quick_update_model.dart';
+import 'package:zcart_seller/domain/app/stocks/inventories/update_inventory_model.dart';
 
 class InventoriesRepo extends IInventoriesRepo {
   final cleanApi = CleanApi.instance;
@@ -34,7 +35,7 @@ class InventoriesRepo extends IInventoriesRepo {
           }
         },
         fromData: ((json) => InventoryPaginationModel.fromMap(json)),
-        endPoint: 'inventories?filter=$inventoryFilter&page=$page');
+        endPoint: 'inventories?filter=null&page=$page');
   }
 
   @override
@@ -190,5 +191,37 @@ class InventoriesRepo extends IInventoriesRepo {
       body: null,
       endPoint: 'inventory/$inventoryId/restore',
     );
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> updateInventory(
+      {required UpdateInventoryModel updateinventory}) {
+    return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'inventories', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'inventories',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'inventories',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'inventories', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        body: null,
+        endPoint: updateinventory.endPoint);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +11,7 @@ import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/li
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/offer.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/product.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/right_side_text.dart';
+import 'package:zcart_seller/presentation/inventory/update_inventory_page.dart';
 
 class InventoryDetailsPage extends HookConsumerWidget {
   final int id;
@@ -291,13 +293,23 @@ class InventoryDetailsPage extends HookConsumerWidget {
             ),
             SizedBox(
               // width: double.infinity,
-              height: 700.h,
+              height: 500.h,
               child: PageView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: pageContoller,
                 itemCount: pages.length,
                 itemBuilder: (context, index) => pages[navigationSelect.value],
               ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return UpdateInventoryPage(inventoryId: productDetails.id);
+                }));
+              },
+              child: SizedBox(
+                  height: 60,
+                  child: Center(child: Text('update_inventory'.tr()))),
             ),
           ],
         ),

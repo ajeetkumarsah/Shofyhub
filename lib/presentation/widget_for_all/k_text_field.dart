@@ -7,7 +7,9 @@ class KTextField extends StatelessWidget {
   final String lebelText;
   final Widget? prefixIcon;
   final String? Function(String?)? validator;
+  final Function()? onTap;
   final TextEditingController controller;
+  final bool readOnly;
 
   const KTextField(
       {Key? key,
@@ -15,9 +17,11 @@ class KTextField extends StatelessWidget {
       required this.lebelText,
       this.prefixIcon,
       this.validator,
+      this.onTap,
       this.suffixIcon,
       this.numberFormatters = false,
-      this.obscureText = false})
+      this.obscureText = false,
+      this.readOnly = false})
       : super(key: key);
   final bool obscureText, numberFormatters;
 
@@ -35,6 +39,8 @@ class KTextField extends StatelessWidget {
         ),
         suffixIcon: suffixIcon,
       ),
+      readOnly: readOnly,
+      onTap: onTap,
       obscureText: obscureText,
       inputFormatters: [
         if (numberFormatters)
