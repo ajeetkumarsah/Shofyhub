@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SuppliersListPage extends StatelessWidget {
-  const SuppliersListPage({Key? key}) : super(key: key);
+class TrashSupplierPage extends StatelessWidget {
+  const TrashSupplierPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

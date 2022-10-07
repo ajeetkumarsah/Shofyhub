@@ -10,12 +10,12 @@ class UpdateInventoryModel extends Equatable {
   final String condition;
   final String conditionNote;
   final String description;
-  final String expiryDate;
+  // final DateTime expiryDate;
   final String keyFeatures;
   final int minOrderQuantity;
-  final double offerPrice;
-  final String offerStart;
-  final String offerEnd;
+  // final double offerPrice;
+  // final String offerStart;
+  // final String offerEnd;
   final String sku;
   final int quantity;
   final int supplierId;
@@ -31,12 +31,12 @@ class UpdateInventoryModel extends Equatable {
     required this.condition,
     required this.conditionNote,
     required this.description,
-    required this.expiryDate,
+    // required this.expiryDate,
     required this.keyFeatures,
     required this.minOrderQuantity,
-    required this.offerPrice,
-    required this.offerStart,
-    required this.offerEnd,
+    // required this.offerPrice,
+    // required this.offerStart,
+    // required this.offerEnd,
     required this.sku,
     required this.quantity,
     required this.supplierId,
@@ -54,12 +54,12 @@ class UpdateInventoryModel extends Equatable {
     String? condition,
     String? conditionNote,
     String? description,
-    String? expiryDate,
+    // DateTime? expiryDate,
     String? keyFeatures,
     int? minOrderQuantity,
-    double? offerPrice,
-    String? offerStart,
-    String? offerEnd,
+    // double? offerPrice,
+    // String? offerStart,
+    // String? offerEnd,
     String? sku,
     int? quantity,
     int? supplierId,
@@ -76,12 +76,12 @@ class UpdateInventoryModel extends Equatable {
       condition: condition ?? this.condition,
       conditionNote: conditionNote ?? this.conditionNote,
       description: description ?? this.description,
-      expiryDate: expiryDate ?? this.expiryDate,
+      // expiryDate: expiryDate ?? this.expiryDate,
       keyFeatures: keyFeatures ?? this.keyFeatures,
       minOrderQuantity: minOrderQuantity ?? this.minOrderQuantity,
-      offerPrice: offerPrice ?? this.offerPrice,
-      offerStart: offerStart ?? this.offerStart,
-      offerEnd: offerEnd ?? this.offerEnd,
+      // offerPrice: offerPrice ?? this.offerPrice,
+      // offerStart: offerStart ?? this.offerStart,
+      // offerEnd: offerEnd ?? this.offerEnd,
       sku: sku ?? this.sku,
       quantity: quantity ?? this.quantity,
       supplierId: supplierId ?? this.supplierId,
@@ -101,12 +101,12 @@ class UpdateInventoryModel extends Equatable {
       'condition': condition,
       'condition_note': conditionNote,
       'description': description,
-      'expiray_date': expiryDate,
+      // 'expiray_date': expiryDate,
       'key_features': keyFeatures,
       'min_order_quantity': minOrderQuantity,
-      'offer_price': offerPrice,
-      'offer_start': offerStart,
-      'offer_end': offerEnd,
+      // 'offer_price': offerPrice,
+      // 'offer_start': offerStart,
+      // 'offer_end': offerEnd,
       'sku': sku,
       'quantity': quantity,
       'supplier_id': supplierId,
@@ -126,12 +126,12 @@ class UpdateInventoryModel extends Equatable {
       condition: map['condition'] ?? '',
       conditionNote: map['title'] ?? '',
       description: map['description'] ?? '',
-      expiryDate: map['expiry_date'] ?? '',
+      // expiryDate: map['expiry_date'] ?? '',
       keyFeatures: map['key_features'] ?? '',
       minOrderQuantity: map['min_order_quantity'] ?? '',
-      offerPrice: map['offer_price'].toDouble() ?? '',
-      offerStart: map['offer_start'] ?? '',
-      offerEnd: map['offer_end'] ?? '',
+      // offerPrice: map['offer_price'].toDouble() ?? '',
+      // offerStart: map['offer_start'] ?? '',
+      // offerEnd: map['offer_end'] ?? '',
       sku: map['sku'] ?? '',
       quantity: map['quantity']?.toInt() ?? 0,
       supplierId: map['supplier_id']?.toInt() ?? 0,
@@ -149,11 +149,11 @@ class UpdateInventoryModel extends Equatable {
 
   @override
   String toString() {
-    return 'UpdateInventoryModel(title: $title, quantity: $quantity, salePrice: $salePrice, active: $active, expiryDate: $expiryDate)';
+    return 'UpdateInventoryModel(title: $title, quantity: $quantity, salePrice: $salePrice, active: $active)';
   }
 
   String get endPoint =>
-      'inventory/$id/update?active=$active&brand=$brand&condition=$condition&condition_note=$conditionNote&description=$description&expiry_date=$expiryDate&free_shipping=$freeShipping&key_features=$keyFeatures&min_order_quantity=$minOrderQuantity&offer_price=$offerPrice&offer_start=$offerStart&offer_end=$offerEnd&sku=$sku&slug=$slug&stock_quantity=$quantity&sale_price=$salePrice&shipping_weight=$shippingWeight&supplier_id=$supplierId&title=$title';
+      'inventory/$id/update?active=$active&brand=$brand&condition=$condition&condition_note=$conditionNote&description=$description&free_shipping=$freeShipping&key_features=$keyFeatures&min_order_quantity=$minOrderQuantity&sku=$sku&slug=$slug&stock_quantity=$quantity&sale_price=$salePrice&shipping_weight=$shippingWeight&supplier_id=$supplierId&title=$title';
 
   @override
   bool get stringify => true;
@@ -168,12 +168,12 @@ class UpdateInventoryModel extends Equatable {
       condition,
       conditionNote,
       description,
-      expiryDate,
+      // expiryDate,
       keyFeatures,
       minOrderQuantity,
-      offerPrice,
-      offerStart,
-      offerEnd,
+      // offerPrice,
+      // offerStart,
+      // offerEnd,
       sku,
       quantity,
       supplierId,

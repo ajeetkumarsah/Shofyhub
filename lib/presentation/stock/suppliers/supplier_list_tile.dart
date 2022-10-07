@@ -1,12 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
+import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
+import 'package:zcart_seller/presentation/stock/suppliers/trash_supplier_dialog.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/widgets/trash_warehouse_dialog.dart';
 
-class WarehouseListTile extends StatelessWidget {
-  final WarehouseModel warehouseItem;
-  const WarehouseListTile({Key? key, required this.warehouseItem})
+class SupplierListTile extends StatelessWidget {
+  final SupplierModel supplierItem;
+  const SupplierListTile({Key? key, required this.supplierItem})
       : super(key: key);
 
   @override
@@ -23,10 +24,10 @@ class WarehouseListTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.r),
             color: Colors.white70,
           ),
-          child: Image.network(warehouseItem.image),
+          child: Image.network(supplierItem.image.toString()),
         ),
         title: Text(
-          warehouseItem.name,
+          supplierItem.name ?? '',
           style: TextStyle(
             color: Colors.grey.shade800,
             fontWeight: FontWeight.w500,
@@ -34,7 +35,7 @@ class WarehouseListTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          'Email : ${warehouseItem.email}',
+          'Email : ${supplierItem.email}',
           style: TextStyle(
             fontSize: 14.sp,
             color: Colors.grey.shade800,
@@ -60,7 +61,7 @@ class WarehouseListTile extends StatelessWidget {
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => TrashWarehouseDialog(warehouseItem.id));
+                  builder: (context) => TrashSupplierDialog(supplierItem.id!));
             }
           },
           itemBuilder: (context) => [

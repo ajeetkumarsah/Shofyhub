@@ -313,5 +313,7 @@
   "offer_end": "Offer End",
   "min_order_quantity": "Min Order Quantity",
   "stock_quantity": "Stock Quantity",
-  "sale_price": "Sale Price"
+  "sale_price": "Sale Price",
+  "add_suppliers": "Add Suupliers",
+  "moved_to_trash": "Moved to Trash"
 }

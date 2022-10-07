@@ -293,7 +293,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
             ),
             SizedBox(
               // width: double.infinity,
-              height: 500.h,
+              height: 350.h,
               child: PageView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: pageContoller,

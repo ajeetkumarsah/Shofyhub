@@ -198,27 +198,26 @@ class UpdateInventoryPage extends HookConsumerWidget {
                         validator: (text) => ValidatorLogic.requiredField(text,
                             fieldName: 'stock_quantity'.tr()),
                       ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      KTextField(
-                        controller: expirayDateController,
-                        lebelText: 'expiray_date'.tr(),
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2021),
-                            lastDate: DateTime(2101),
-                          );
-                          if (pickedDate != null) {
-                            expirayDateController.text =
-                                DateFormat("dd-MM-yyyy").format(pickedDate);
-                          }
-                        },
-                        suffixIcon: const Icon(Icons.date_range),
-                      ),
+                      // SizedBox(
+                      //   height: 10.h,
+                      // ),
+                      // KTextField(
+                      //   controller: expirayDateController,
+                      //   lebelText: 'expiray_date'.tr(),
+                      //   readOnly: true,
+                      //   onTap: () async {
+                      //     DateTime? pickedDate = await showDatePicker(
+                      //       context: context,
+                      //       initialDate: DateTime.now(),
+                      //       firstDate: DateTime(2021),
+                      //       lastDate: DateTime(2101),
+                      //     );
+                      //     if (pickedDate != null) {
+                      //       expirayDateController.text = pickedDate.toString();
+                      //     }
+                      //   },
+                      //   suffixIcon: const Icon(Icons.date_range),
+                      // ),
                       SizedBox(
                         height: 10.h,
                       ),
@@ -242,57 +241,57 @@ class UpdateInventoryPage extends HookConsumerWidget {
                         controller: offerPriceController,
                         lebelText: 'offer_price'.tr(),
                       ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      KTextField(
-                        controller: shippingWeightController,
-                        lebelText: '${'shipping_weight'.tr()} *',
-                        validator: (text) => ValidatorLogic.requiredField(text,
-                            fieldName: 'shipping_weight'.tr()),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      KTextField(
-                        controller: offerStartsController,
-                        lebelText: 'offer_start'.tr(),
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2021),
-                            lastDate: DateTime(2101),
-                          );
-                          if (pickedDate != null) {
-                            offerStartsController.text =
-                                DateFormat("dd-MM-yyyy").format(pickedDate);
-                          }
-                        },
-                        suffixIcon: const Icon(Icons.date_range),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      KTextField(
-                        controller: offerEndsController,
-                        lebelText: 'offer_end'.tr(),
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2021),
-                            lastDate: DateTime(2101),
-                          );
-                          if (pickedDate != null) {
-                            offerEndsController.text =
-                                DateFormat("dd-MM-yyyy").format(pickedDate);
-                          }
-                        },
-                        suffixIcon: const Icon(Icons.date_range),
-                      ),
+                      // SizedBox(
+                      //   height: 10.h,
+                      // ),
+                      // KTextField(
+                      //   controller: shippingWeightController,
+                      //   lebelText: '${'shipping_weight'.tr()} *',
+                      //   validator: (text) => ValidatorLogic.requiredField(text,
+                      //       fieldName: 'shipping_weight'.tr()),
+                      // ),
+                      // SizedBox(
+                      //   height: 10.h,
+                      // ),
+                      // KTextField(
+                      //   controller: offerStartsController,
+                      //   lebelText: 'offer_start'.tr(),
+                      //   readOnly: true,
+                      //   onTap: () async {
+                      //     DateTime? pickedDate = await showDatePicker(
+                      //       context: context,
+                      //       initialDate: DateTime.now(),
+                      //       firstDate: DateTime(2021),
+                      //       lastDate: DateTime(2101),
+                      //     );
+                      //     if (pickedDate != null) {
+                      //       offerStartsController.text =
+                      //           DateFormat("dd-MM-yyyy").format(pickedDate);
+                      //     }
+                      //   },
+                      //   suffixIcon: const Icon(Icons.date_range),
+                      // ),
+                      // SizedBox(
+                      //   height: 10.h,
+                      // ),
+                      // KTextField(
+                      //   controller: offerEndsController,
+                      //   lebelText: 'offer_end'.tr(),
+                      //   readOnly: true,
+                      //   onTap: () async {
+                      //     DateTime? pickedDate = await showDatePicker(
+                      //       context: context,
+                      //       initialDate: DateTime.now(),
+                      //       firstDate: DateTime(2021),
+                      //       lastDate: DateTime(2101),
+                      //     );
+                      //     if (pickedDate != null) {
+                      //       offerEndsController.text =
+                      //           DateFormat("dd-MM-yyyy").format(pickedDate);
+                      //     }
+                      //   },
+                      //   suffixIcon: const Icon(Icons.date_range),
+                      // ),
                       SizedBox(
                         height: 10.h,
                       ),
@@ -345,14 +344,15 @@ class UpdateInventoryPage extends HookConsumerWidget {
                                   condition: conditionController.text,
                                   conditionNote: conditionController.text,
                                   description: descriptionController.text,
-                                  expiryDate: expirayDateController.text,
+                                  // expiryDate: DateTime.tryParse(
+                                  //     expirayDateController.text)!,
                                   keyFeatures: keyFeaturesController.text,
                                   minOrderQuantity: int.tryParse(
                                       minOrderQuantiryController.text)!,
-                                  offerPrice: double.tryParse(
-                                      offerPriceController.text) ?? 0,
-                                  offerStart: offerStartsController.text,
-                                  offerEnd: offerEndsController.text,
+                                  // offerPrice: double.tryParse(
+                                  //     offerPriceController.text) ?? 0,
+                                  // offerStart: offerStartsController.text,
+                                  // offerEnd: offerEndsController.text,
                                   sku: skuController.text,
                                   quantity: int.tryParse(
                                       stockQuantityController.text)!,

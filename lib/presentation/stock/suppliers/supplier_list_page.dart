@@ -5,10 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/stock/suppliers/supplier_list_tile.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/widgets/warehouse_list_tile.dart';
 
-class WarehousePage extends HookConsumerWidget {
-  const WarehousePage({Key? key}) : super(key: key);
+import '../../../application/app/stocks/supplier/supplier_provider.dart';
+
+class SupplierListPage extends HookConsumerWidget {
+  const SupplierListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -19,23 +22,23 @@ class WarehousePage extends HookConsumerWidget {
         () {
           if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent) {
-            ref.read(warehouseProvider.notifier).getMoreWarehouseItems();
+            ref.read(supplierProvider.notifier).getMoreSuppliers();
           }
         },
       );
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(warehouseProvider.notifier).getWarehouseItems();
+        ref.read(supplierProvider.notifier).getAllSuppliers();
       });
       return null;
     }, []);
 
-    final warehousePaginationModel =
-        ref.watch(warehouseProvider.notifier).warehousePaginationModel;
+    final supplierPaginationModel =
+        ref.watch(supplierProvider.notifier).supplierPaginationModel;
 
     final loading =
-        ref.watch(warehouseProvider.select((value) => value.loading));
+        ref.watch(supplierProvider.select((value) => value.loading));
 
-    final warehouseList = ref.watch(warehouseProvider).warehouseItemList;
+    final supplierList = ref.watch(supplierProvider).allSuppliers;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -46,14 +49,14 @@ class WarehousePage extends HookConsumerWidget {
           //           categorySubgroupId: categorySubGroupId,
           //         )));
         },
-        label: Text('add_warehouse'.tr()),
+        label: Text('add_suppliers'.tr()),
         icon: const Icon(Icons.add),
       ),
       body: loading
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : warehouseList.isEmpty
+          : supplierList.isEmpty
               ? Center(
                   child: Text(
                     'no_item_available'.tr(),
@@ -64,19 +67,19 @@ class WarehousePage extends HookConsumerWidget {
               : RefreshIndicator(
                   onRefresh: () {
                     return ref
-                        .read(warehouseProvider.notifier)
-                        .getWarehouseItems();
+                        .read(supplierProvider.notifier)
+                        .getAllSuppliers();
                   },
                   child: ListView.separated(
                     controller: scrollController,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10),
-                    itemCount: warehouseList.length,
+                    itemCount: supplierList.length,
                     itemBuilder: (context, index) {
-                      if ((index == warehouseList.length - 1) &&
-                          warehouseList.length <
-                              warehousePaginationModel.meta.total!) {
+                      if ((index == supplierList.length - 1) &&
+                          supplierList.length <
+                              supplierPaginationModel.meta.total!) {
                         return const SizedBox(
                           height: 100,
                           child: Center(
@@ -85,8 +88,8 @@ class WarehousePage extends HookConsumerWidget {
                         );
                       }
                       return InkWell(
-                        child: WarehouseListTile(
-                          warehouseItem: warehouseList[index],
+                        child: SupplierListTile(
+                          supplierItem: supplierList[index],
                         ),
                       );
                     },
