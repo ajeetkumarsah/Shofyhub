@@ -3,9 +3,10 @@ import 'package:zcart_seller/domain/app/stocks/supplier/supplier_pagination_mode
 
 abstract class ISupplierRepo {
   Future<Either<CleanFailure, SupplierPaginationModel>> getSuppliers(
-      {required int page});
+      {required String supplierFilter, required int page});
   Future<Either<CleanFailure, Unit>> trashSupplier({required int supplierId});
-
+  Future<Either<CleanFailure, Unit>> restoreSupplier({required supplierId});
+  Future<Either<CleanFailure, Unit>> deleteSupplier({required supplierId});
   // Future<Either<CleanFailure, Unit>> deleteSuppliers(int supplierId);
   // Future<Either<CleanFailure, Unit>> createSuppliers(CreateSupplierModel body);
   // Future<Either<CleanFailure, Unit>> updateSupplier({

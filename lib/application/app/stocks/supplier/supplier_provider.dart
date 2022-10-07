@@ -21,12 +21,16 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
   List<SupplierModel> suppliers = [];
   int pageNumber = 1;
 
+  List<SupplierModel> trashSuppliers = [];
+  int trashPageNumber = 1;
+
   getAllSuppliers() async {
     pageNumber = 1;
     suppliers = [];
 
     state = state.copyWith(loading: true);
-    final inventoriesData = await supplierRepo.getSuppliers(page: pageNumber);
+    final inventoriesData = await supplierRepo.getSuppliers(
+        supplierFilter: 'null', page: pageNumber);
 
     //increase the page no
     pageNumber++;
@@ -45,7 +49,8 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
   getMoreSuppliers() async {
     if (pageNumber == 1 ||
         pageNumber <= supplierPaginationModel.meta.lastPage!) {
-      final inventoriesData = await supplierRepo.getSuppliers(page: pageNumber);
+      final inventoriesData = await supplierRepo.getSuppliers(
+          supplierFilter: 'null', page: pageNumber);
 
       //increase the page no
       pageNumber++;
@@ -63,40 +68,60 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
     }
   }
 
+  getTrashSuppliers() async {
+    trashPageNumber = 1;
+    trashSuppliers = [];
+
+    state = state.copyWith(loading: true);
+
+    //increase the page no
+    trashPageNumber++;
+    final suppliersData =
+        await supplierRepo.getSuppliers(supplierFilter: 'trash', page: 1);
+
+    state = suppliersData
+        .fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      supplierPaginationModel = r;
+      trashSuppliers.addAll(supplierPaginationModel.data);
+
+      return state.copyWith(
+          loading: false,
+          failure: CleanFailure.none(),
+          trashSupplier: trashSuppliers);
+    });
+  }
+
+  getMoreTrashSuppliers() async {
+    if (trashPageNumber == 1 ||
+        trashPageNumber <= supplierPaginationModel.meta.lastPage!) {
+      final inventoriesData = await supplierRepo.getSuppliers(
+          supplierFilter: 'trash', page: trashPageNumber);
+
+      //increase the page no
+      trashPageNumber++;
+
+      state = inventoriesData
+          .fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        supplierPaginationModel = r;
+        trashSuppliers.addAll(supplierPaginationModel.data);
+
+        return state.copyWith(
+            loading: false,
+            failure: CleanFailure.none(),
+            trashSupplier: trashSuppliers);
+      });
+    }
+  }
+
   trashsupplier(int supplierId) async {
     state = state.copyWith(loading: true);
+
     final data = await supplierRepo.trashSupplier(supplierId: supplierId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+
     getAllSuppliers();
   }
-
-  // getTrashInventories() async {
-  //   state = state.copyWith(loading: true);
-  //   final inventoriesData =
-  //       await supplierRepo.getAllInventories(inventoryFilter: 'trash', page: 1);
-  //   state = inventoriesData.fold(
-  //     (l) => state.copyWith(loading: false, failure: l),
-  //     (r) => state.copyWith(
-  //         loading: false, failure: CleanFailure.none(), trashInventory: r.data),
-  //   );
-  // }
-
-  // quickUpdate(QuickUpdateModel quickUpdateModel, int id) async {
-  //   state = state.copyWith(loading: true);
-  //   final quickUpdateData = await supplierRepo.quickUpdate(
-  //       quickUpdateModel: quickUpdateModel, id: id);
-
-  //   state = quickUpdateData.fold(
-  //     (l) => state.copyWith(loading: false, failure: l),
-  //     (r) => state.copyWith(
-  //       loading: false,
-  //       failure: CleanFailure.none(),
-  //     ),
-  //   );
-  //   getAllInventories(inventoryFilter: 'active');
-  //   getTrashInventories();
-  // }
 
   // updateInventory(UpdateInventoryModel updateInventoryModel) async {
   //   state = state.copyWith(loading: true);
@@ -127,29 +152,29 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
   //   getTrashInventories();
   // }
 
-  // restoreInventory(int inventoryId) async {
-  //   state = state.copyWith(loading: true);
-  //   final quickUpdateData =
-  //       await supplierRepo.restoreInventory(inventoryId: inventoryId);
+  restoreSupplier(int supplierId) async {
+    state = state.copyWith(loading: true);
+    final quickUpdateData =
+        await supplierRepo.restoreSupplier(supplierId: supplierId);
 
-  //   state = quickUpdateData.fold(
-  //     (l) => state.copyWith(loading: false, failure: l),
-  //     (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
-  //   );
-  //   getAllInventories(inventoryFilter: 'active');
-  //   getTrashInventories();
-  // }
+    state = quickUpdateData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
+    );
+    getAllSuppliers();
+    getTrashSuppliers();
+  }
 
-  // deleteInventory(int inventoryId) async {
-  //   state = state.copyWith(loading: true);
-  //   final quickUpdateData =
-  //       await supplierRepo.deleteInventory(inventoryId: inventoryId);
+  deleteSupplier(int supplierId) async {
+    state = state.copyWith(loading: true);
+    final quickUpdateData =
+        await supplierRepo.deleteSupplier(supplierId: supplierId);
 
-  //   state = quickUpdateData.fold(
-  //     (l) => state.copyWith(loading: false, failure: l),
-  //     (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
-  //   );
-  //   getAllInventories(inventoryFilter: 'active');
-  //   getTrashInventories();
-  // }
+    state = quickUpdateData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
+    );
+    getAllSuppliers();
+    getTrashSuppliers();
+  }
 }

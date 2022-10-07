@@ -23,7 +23,7 @@ class InventoryListPage extends HookConsumerWidget {
               scrollController.position.maxScrollExtent) {
             ref
                 .read(stockeInventoryProvider.notifier)
-                .getMoreInventories(inventoryFilter: 'active');
+                .getMoreInventories(inventoryFilter: 'null');
           }
         },
       );
@@ -89,7 +89,7 @@ class InventoryListPage extends HookConsumerWidget {
                             onRefresh: () {
                               return ref
                                   .read(stockeInventoryProvider.notifier)
-                                  .getAllInventories(inventoryFilter: 'active');
+                                  .getAllInventories(inventoryFilter: 'null');
                             },
                             child: ListView.separated(
                               controller: scrollController,

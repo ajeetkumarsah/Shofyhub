@@ -315,5 +315,10 @@
   "stock_quantity": "Stock Quantity",
   "sale_price": "Sale Price",
   "add_suppliers": "Add Suupliers",
-  "moved_to_trash": "Moved to Trash"
+  "moved_to_trash": "Moved to Trash",
+  "restore": "Restore",
+  "are_you_sure_delete_this_item": "Are you sure, you want to delete this item ?",
+  "are_you_sure_restore_this_item" : "Are you sure you want to restore this Item?",
+  "item_deleted": "Item Deleted",
+  "item_restored" : "Item Restored"
 }

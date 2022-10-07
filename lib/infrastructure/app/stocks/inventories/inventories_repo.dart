@@ -35,7 +35,7 @@ class InventoriesRepo extends IInventoriesRepo {
           }
         },
         fromData: ((json) => InventoryPaginationModel.fromMap(json)),
-        endPoint: 'inventories?filter=null&page=$page');
+        endPoint: 'inventories?filter=$inventoryFilter&page=$page');
   }
 
   @override

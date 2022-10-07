@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/supplier_list_page.dart';
-import 'package:zcart_seller/presentation/stock/suppliers/trash_supplier_page.dart';
+import 'package:zcart_seller/presentation/stock/suppliers/trash_supplier_list_page.dart';
 
 class SupplierPage extends HookConsumerWidget {
   const SupplierPage({Key? key}) : super(key: key);
@@ -16,11 +16,11 @@ class SupplierPage extends HookConsumerWidget {
     ];
 
     return ValueListenableBuilder(
-        valueListenable: Utility.index,
+        valueListenable: SupplierUtility.index,
         builder: (context, value, child) {
           return Scaffold(
             body: IndexedStack(
-              index: Utility.index.value,
+              index: SupplierUtility.index.value,
               children: screens,
             ),
             bottomNavigationBar: BottomNavigationBar(
@@ -28,9 +28,9 @@ class SupplierPage extends HookConsumerWidget {
                 selectedItemColor: Constants.appbarColor,
                 unselectedItemColor: Colors.grey,
                 selectedFontSize: 12,
-                currentIndex: Utility.index.value,
+                currentIndex: SupplierUtility.index.value,
                 onTap: (value) {
-                  Utility.index.value = value;
+                  SupplierUtility.index.value = value;
                 },
                 items: const [
                   BottomNavigationBarItem(
