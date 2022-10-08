@@ -1,13 +1,13 @@
 import 'dart:io';
-
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/order/order_details/order_details_model.dart';
 import 'package:zcart_seller/domain/app/order/order_model.dart';
+import 'package:zcart_seller/domain/app/order/order_pagination_model.dart';
 import 'package:zcart_seller/domain/app/order/order_status_model.dart';
 
 abstract class IOrderRepo {
-  Future<Either<CleanFailure, List<OrderModel>>> getOrders(
-      {required String? filter});
+  Future<Either<CleanFailure, OrderPaginationModel>> getOrders(
+      {required String? filter, required int page});
   Future<Either<CleanFailure, List<OrderModel>>> getArchivedOrder();
   Future<Either<CleanFailure, Unit>> assignDelivaryBoy(
       {required int orderId, required int delivaryBoyId});

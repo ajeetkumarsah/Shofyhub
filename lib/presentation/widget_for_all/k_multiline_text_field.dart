@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class KTextField extends StatelessWidget {
+class KMultiLineTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String lebelText;
   final Widget? prefixIcon;
@@ -10,20 +9,19 @@ class KTextField extends StatelessWidget {
   final Function()? onTap;
   final TextEditingController controller;
   final bool readOnly;
+  final int? maxLines;
 
-  const KTextField(
-      {Key? key,
-      required this.controller,
-      required this.lebelText,
-      this.prefixIcon,
-      this.validator,
-      this.onTap,
-      this.suffixIcon,
-      this.numberFormatters = false,
-      this.obscureText = false,
-      this.readOnly = false})
-      : super(key: key);
-  final bool obscureText, numberFormatters;
+  const KMultiLineTextField({
+    Key? key,
+    required this.controller,
+    required this.lebelText,
+    this.prefixIcon,
+    this.validator,
+    this.onTap,
+    this.suffixIcon,
+    this.readOnly = false,
+    this.maxLines,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +39,7 @@ class KTextField extends StatelessWidget {
       ),
       readOnly: readOnly,
       onTap: onTap,
-      obscureText: obscureText,
-      keyboardType:
-          numberFormatters ? TextInputType.number : TextInputType.name,
-      inputFormatters: [
-        if (numberFormatters)
-          FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-      ],
+      maxLines: maxLines,
     );
   }
 }

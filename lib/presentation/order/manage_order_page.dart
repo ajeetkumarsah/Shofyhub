@@ -15,7 +15,7 @@ import 'package:zcart_seller/presentation/order/widget/order_status_dialog.dart'
 import 'package:zcart_seller/presentation/order/widget/view_address_popup.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
 
-import 'proceed_order_page.dart';
+import 'widget/assign_delivery_boy_dialog.dart';
 import 'fullfill_order_dialog.dart';
 
 class ManageOrderPage extends HookConsumerWidget {

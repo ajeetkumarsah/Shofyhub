@@ -6,6 +6,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/order/i_order_repo.dart';
 import 'package:zcart_seller/domain/app/order/order_details/order_details_model.dart';
 import 'package:zcart_seller/domain/app/order/order_model.dart';
+import 'package:zcart_seller/domain/app/order/order_pagination_model.dart';
 import 'package:zcart_seller/domain/app/order/order_status_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
@@ -14,8 +15,8 @@ class OrderRepo extends IOrderRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<OrderModel>>> getOrders(
-      {required String? filter}) async {
+  Future<Either<CleanFailure, OrderPaginationModel>> getOrders(
+      {required String? filter, required int page}) async {
     return cleanApi.get(
         failureHandler:
             <OrderModel>(int statusCode, Map<String, dynamic> responseBody) {
@@ -40,9 +41,8 @@ class OrderRepo extends IOrderRepo {
                 CleanFailure(tag: 'order', error: responseBody.toString()));
           }
         },
-        fromData: ((json) => List<OrderModel>.from(
-            json['data'].map((e) => OrderModel.fromMap(e)))),
-        endPoint: "orders?filter=$filter");
+        fromData: ((json) => OrderPaginationModel.fromMap(json)),
+        endPoint: "orders?filter=$filter&page=$page");
   }
 
   @override

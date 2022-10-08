@@ -12,49 +12,85 @@ class OrderListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final scrollController = useScrollController();
+
     useEffect(() {
+      scrollController.addListener(
+        () {
+          if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent) {
+            ref.read(orderProvider(filter).notifier).getMoreOrders();
+          }
+        },
+      );
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(orderProvider(filter).notifier).getOrders();
       });
       return null;
     }, []);
 
+    final orderPaginationModel =
+        ref.watch(orderProvider(filter).notifier).orderPaginationModel;
+
     final orderList = ref.watch(orderProvider(filter)).orderList;
+    final loading = ref.watch(orderProvider(filter)).loading;
+
     return Scaffold(
       backgroundColor: const Color(0xffEFEFEF),
-      body: ListView.separated(
-        padding: const EdgeInsets.only(
-          top: 30,
-          left: 15,
-          right: 15,
-        ).r,
-        itemCount: orderList.length,
-        separatorBuilder: (BuildContext context, int index) => const Divider(
-          height: 20,
-          color: Color(0xffEFEFEF),
-        ),
-        itemBuilder: (context, index) {
-          final order = orderList[index];
-          return Column(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => OrderDetailsScreen(
-                                id: order.id,
-                              )));
-                },
-                child: OrderTile(
-                  order: order,
-                  filter: filter,
+      body: loading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : RefreshIndicator(
+              onRefresh: () {
+                return ref.read(orderProvider(filter).notifier).getOrders();
+              },
+              child: ListView.separated(
+                padding: const EdgeInsets.only(
+                  top: 15,
+                  left: 15,
+                  right: 15,
+                ).r,
+                controller: scrollController,
+                itemCount: orderList.length,
+                physics: const BouncingScrollPhysics(),
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(
+                  height: 20,
+                  color: Color(0xffEFEFEF),
                 ),
+                itemBuilder: (context, index) {
+                  if ((index == orderList.length - 1) &&
+                      orderList.length < orderPaginationModel.meta.total!) {
+                    return const SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  final order = orderList[index];
+                  return Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => OrderDetailsScreen(
+                                        id: order.id,
+                                      )));
+                        },
+                        child: OrderTile(
+                          order: order,
+                          filter: filter,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
-            ],
-          );
-        },
-      ),
+            ),
     );
   }
 }

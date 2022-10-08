@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/order/order_delivaryboy.dart';
 import 'package:zcart_seller/domain/app/order/order_model.dart';
 import 'package:zcart_seller/presentation/order/fullfill_order_dialog.dart';
-import 'package:zcart_seller/presentation/order/proceed_order_page.dart';
+import 'package:zcart_seller/presentation/order/widget/assign_delivery_boy_dialog.dart';
 
 import 'archive_order_confirmation.dart';
 import 'order_status_dialog.dart';
@@ -43,8 +43,9 @@ class OrderTile extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    height: 16.h,
+                    height: 20.h,
                     // width: 50.h,
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3.r),
                       color: order.paymentStatus == 'PAID'
@@ -114,8 +115,9 @@ class OrderTile extends StatelessWidget {
                             );
                           },
                           child: Container(
-                            height: 16.h,
-                            width: 50.h,
+                            height: 20.h,
+                            width: 60.h,
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black45),
                               borderRadius: BorderRadius.circular(3.r),

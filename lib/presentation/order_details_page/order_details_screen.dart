@@ -5,13 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
 import 'package:zcart_seller/application/app/delivary_boys/delivary_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
-import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/app/order%20management/refunds/pages/widgets/initiate_refunt_page.dart';
+import 'package:zcart_seller/presentation/app/support/refund/initiate_refunt_page.dart';
 import 'package:zcart_seller/presentation/order/widget/add_admin_note.dart';
 import 'package:zcart_seller/presentation/order/widget/archive_order_confirmation.dart';
 import 'package:zcart_seller/presentation/order/widget/cancle_order_confirmation_dialog.dart';
+import 'package:zcart_seller/presentation/order/widget/mark_as_delivered_dialog.dart';
+import 'package:zcart_seller/presentation/order/widget/mark_as_paid_undaip_dialog.dart';
 import 'package:zcart_seller/presentation/order/widget/order_status_dialog.dart';
 import 'package:zcart_seller/presentation/order_details_page/widget/productlist.dart';
 
@@ -56,10 +57,11 @@ class OrderDetailsScreen extends HookConsumerWidget {
                             orderId: orderDetails.id,
                           ));
                 } else if (index == 3) {
-                  ref
-                      .read(orderProvider(null).notifier)
-                      .markAsDelivered(orderDetails.id, true);
-                  ref.read(orderDetailsProvider(id).notifier).getOrderDetails();
+                  showDialog(
+                      context: context,
+                      builder: (context) => MarkAsDeliveredDialog(
+                            orderId: orderDetails.id,
+                          ));
                 } else if (index == 4) {
                   showDialog(
                       context: context,
@@ -72,6 +74,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                       context: context,
                       builder: (context) => InitiateRefundPage(
                             orderId: orderDetails.id,
+                            orderNuber: orderDetails.order_number,
                           ));
                 }
               },
@@ -532,11 +535,15 @@ class OrderDetailsScreen extends HookConsumerWidget {
               width: 160.w,
               child: ElevatedButton(
                 onPressed: () {
-                  if (orderDetails.payment_status == "UNPAID") {
-                    ref.read(orderDetailsProvider(id).notifier).markAsPaid();
-                  } else {
-                    ref.read(orderDetailsProvider(id).notifier).markAsUnpaid();
-                  }
+                  showDialog(
+                    context: context,
+                    builder: (context) => MarkAsPaidUnpaidDialog(
+                      orderId: orderDetails.id,
+                      isPaid: orderDetails.payment_status == "UNPAID"
+                          ? false
+                          : true,
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                     primary: const Color(0xff683CB7),

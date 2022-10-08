@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
+import 'package:zcart_seller/presentation/app/support/support_home_page.dart';
 import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 import 'package:zcart_seller/presentation/shop/shop_home.dart';
@@ -161,9 +162,13 @@ class DashboardPage extends HookConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const MoreOptionItems(
-                      icon: FontAwesomeIcons.truck,
-                      title: 'Shipping',
+                    MoreOptionItems(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const SupportHome()));
+                      },
+                      icon: FontAwesomeIcons.firstOrder,
+                      title: 'Support',
                     ),
                     MoreOptionItems(
                       onTap: () {
