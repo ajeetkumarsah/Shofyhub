@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/app/support/refund/close_refund_page.dart';
-import 'package:zcart_seller/presentation/app/support/refund/open_refund_page.dart';
+import 'package:zcart_seller/presentation/support/refund/close_refund_page.dart';
+import 'package:zcart_seller/presentation/support/refund/open_refund_page.dart';
 
 class RefundHome extends StatelessWidget {
   const RefundHome({Key? key}) : super(key: key);

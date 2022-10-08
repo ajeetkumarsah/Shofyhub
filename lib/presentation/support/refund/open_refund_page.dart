@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
-import 'package:zcart_seller/presentation/app/support/refund/approve_refund_dialog.dart';
-import 'package:zcart_seller/presentation/app/support/refund/decline_refund_dailog.dart';
+import 'package:zcart_seller/presentation/support/refund/approve_refund_dialog.dart';
+import 'package:zcart_seller/presentation/support/refund/decline_refund_dailog.dart';
 
 class OpenRefundPage extends HookConsumerWidget {
   const OpenRefundPage({Key? key}) : super(key: key);

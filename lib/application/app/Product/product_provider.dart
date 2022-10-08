@@ -54,7 +54,6 @@ class ProductNotifier extends StateNotifier<ProductState> {
 
       state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
         productPaginationModel = r;
-
         products.addAll(productPaginationModel.data);
 
         return state.copyWith(

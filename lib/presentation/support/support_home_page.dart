@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/app/support/cancellation/cancalletion_list_page.dart';
-import 'package:zcart_seller/presentation/app/support/dispute/dispute_list_page.dart';
-import 'package:zcart_seller/presentation/app/support/refund/refund_home.dart';
+import 'package:zcart_seller/presentation/support/cancellation/cancalletion_list_page.dart';
+import 'package:zcart_seller/presentation/support/dispute/dispute_list_page.dart';
+import 'package:zcart_seller/presentation/support/refund/refund_home.dart';
 
 class SupportHome extends StatelessWidget {
   const SupportHome({Key? key}) : super(key: key);
@@ -41,8 +41,7 @@ class SupportHome extends StatelessWidget {
             ],
           ),
         ),
-        body: 
-        const TabBarView(children: [
+        body: const TabBarView(children: [
           RefundHome(),
           DisputeListPage(),
           CancellationListPage(),
