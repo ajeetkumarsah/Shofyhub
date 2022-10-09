@@ -4,16 +4,21 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/domain/app/dashboard/statistic_model.dart';
+import 'package:zcart_seller/presentation/app/dashboard/out_of_stock_page.dart';
 import 'package:zcart_seller/presentation/order/archived_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 import 'package:zcart_seller/presentation/support/refund/refund_home.dart';
 
 import 'store_report_item.dart';
 
-class OrderGrid extends ConsumerWidget {
+class OrderGrid extends HookConsumerWidget {
   const OrderGrid({
     Key? key,
+    required this.statistics,
   }) : super(key: key);
+
+  final StatisticModel statistics;
 
   @override
   Widget build(BuildContext context, ref) {
@@ -56,20 +61,26 @@ class OrderGrid extends ConsumerWidget {
             itemValues: '$totalArchivedOrder',
             itemName: 'ARCHIVED ORDERS',
           ),
-          const StoreReportItems(
+          StoreReportItems(
             icon: FontAwesomeIcons.calendarDay,
-            itemValues: '1200',
-            itemName: 'TODAY\'S TOTAL',
+            itemValues: statistics.yesterdaysSaleAmount,
+            itemName: 'YESTERDAY\'S TOTAL',
           ),
-          const StoreReportItems(
-            icon: FontAwesomeIcons.store,
-            itemValues: '1200',
-            itemName: 'STOCK OUTS',
+          InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const OutOfStockItemsPage()));
+            },
+            child: StoreReportItems(
+              icon: FontAwesomeIcons.store,
+              itemValues: statistics.stockOutCount.toString(),
+              itemName: 'STOCK OUTS',
+            ),
           ),
-          const StoreReportItems(
+          StoreReportItems(
             icon: FontAwesomeIcons.person,
-            itemValues: '1200',
-            itemName: 'DISPUTES',
+            itemValues: statistics.stockCount.toString(),
+            itemName: 'TOTAL STOCK',
           ),
           StoreReportItems(
             onTap: () {

@@ -53,8 +53,7 @@ class DisputeResponseDialog extends HookConsumerWidget {
         }
       }
     });
-    final loading =
-        ref.watch(disputeProvider.select((value) => value.loading));
+    final loading = ref.watch(disputeProvider.select((value) => value.loading));
 
     return AlertDialog(
       title: const Text('Add a Response'),
@@ -103,7 +102,7 @@ class DisputeResponseDialog extends HookConsumerWidget {
             SizedBox(height: 10.h),
             KMultiLineTextField(
               controller: messageController,
-              lebelText: 'Message',
+              lebelText: 'Reply',
               maxLines: 4,
             ),
           ],

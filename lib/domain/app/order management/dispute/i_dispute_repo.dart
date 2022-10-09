@@ -5,5 +5,5 @@ abstract class IDisputeRepo {
   Future<Either<CleanFailure, DisputePaginationModel>> getDisputes(
       {required int page});
   Future<Either<CleanFailure, Unit>> responseDisputes(
-      {required disputeId, required int statusId, required String message});
+      {required disputeId, required int statusId, required String reply});
 }

@@ -64,10 +64,10 @@ class DisputeNotifier extends StateNotifier<DisputeState> {
     }
   }
 
-  responseDispute(int disputeId, int statusId, String message) async {
+  responseDispute(int disputeId, int statusId, String reply) async {
     state = state.copyWith(loading: true);
     await disputeRepo.responseDisputes(
-        disputeId: disputeId, statusId: statusId, message: message);
+        disputeId: disputeId, statusId: statusId, reply: reply);
     state = state.copyWith(loading: false);
     getDisputes();
   }

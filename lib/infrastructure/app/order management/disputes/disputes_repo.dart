@@ -42,7 +42,7 @@ class DisputeRepo extends IDisputeRepo {
   Future<Either<CleanFailure, Unit>> responseDisputes(
       {required disputeId,
       required int statusId,
-      required String message}) async {
+      required String reply}) async {
     return await cleanApi.post(
         failureHandler:
             <Unit>(int statusCode, Map<String, dynamic> responseBody) {
@@ -70,6 +70,6 @@ class DisputeRepo extends IDisputeRepo {
         fromData: (josn) => unit,
         body: null,
         endPoint:
-            'dispute/$disputeId/response?status_id=$statusId&message=$message');
+            'dispute/$disputeId/response?status_id=$statusId&reply=$reply');
   }
 }

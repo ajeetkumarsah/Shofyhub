@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TotalInfoWidget extends StatelessWidget {
   final void Function() onTap;
-  final int value;
+  final String value;
   final String title;
   final Color color;
   final IconData icon;
@@ -53,7 +53,7 @@ class TotalInfoWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '$value',
+                  value,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.sp,

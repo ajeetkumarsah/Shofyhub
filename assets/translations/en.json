@@ -348,5 +348,6 @@
   "approve": "Approve",
   "refund_declined": "Refund Declined",
   "decline_refund": "Decline Refund",
-  "cancellation": "Cancellation"
+  "cancellation": "Cancellation",
+  "reply": "Reply"
 }

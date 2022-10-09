@@ -18,7 +18,7 @@ class CancellationListTile extends StatelessWidget {
         contentPadding: const EdgeInsets.all(10),
         tileColor: Colors.white,
         title: Text(
-          "Id: ${cancellation.id}",
+          "Customer Id: ${cancellation.customerId}",
           style: TextStyle(
             color: Colors.grey.shade800,
             fontWeight: FontWeight.w500,
@@ -26,7 +26,7 @@ class CancellationListTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          'Name: ${cancellation.name}',
+          'Description: ${cancellation.description}',
         ),
         trailing: PopupMenuButton(
           tooltip: '',
@@ -39,14 +39,14 @@ class CancellationListTile extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) => ApproveCancellationDialog(
-                        id: cancellation.id,
+                        id: cancellation.orderId,
                       ));
             }
             if (index2 == 2) {
               showDialog(
                   context: context,
                   builder: (context) => DeclineCancellationDialog(
-                        id: cancellation.id,
+                        id: cancellation.orderId,
                       ));
             }
           },

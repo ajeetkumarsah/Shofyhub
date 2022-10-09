@@ -20,8 +20,6 @@ class DeclineCancellationDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          ref.read(cancellationProvider.notifier).getCancellations();
-
           CherryToast.info(
             title: const Text('Cancellation Decline'),
             animationType: AnimationType.fromTop,
