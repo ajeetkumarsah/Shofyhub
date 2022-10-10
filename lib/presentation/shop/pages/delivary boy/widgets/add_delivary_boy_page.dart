@@ -24,6 +24,10 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
     final List<String> genderList = ['Male', 'Female', 'Others'];
     final shopId =
         ref.watch(authProvider.select((value) => value.user.shop_id));
+
+    final loading =
+        ref.watch(delivaryBoyProvider.select((value) => value.loading));
+
     final firstNameController = useTextEditingController();
     final lastNameController = useTextEditingController();
     final nickNameController = useTextEditingController();
@@ -78,7 +82,7 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(10.sp),
+          padding: EdgeInsets.all(20.sp),
           child: Column(
             children: [
               KTextField(
@@ -164,8 +168,9 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 30.h),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
@@ -215,7 +220,9 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                         ).show(context);
                       }
                     },
-                    child: const Text('Add'),
+                    child: loading
+                        ? const CircularProgressIndicator()
+                        : const Text('Add'),
                   ),
                 ],
               ),

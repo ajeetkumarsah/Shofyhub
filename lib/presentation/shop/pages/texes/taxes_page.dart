@@ -6,7 +6,7 @@ class TaxesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('Tax'),
+      body: Center(child: Text('Tax')),
     );
   }
 }

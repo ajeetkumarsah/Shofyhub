@@ -20,6 +20,9 @@ class DelivaryBoyPage extends HookConsumerWidget {
     }, []);
     final delivaryBoyList =
         ref.watch(delivaryBoyProvider.select((value) => value.delivaryBoyList));
+    final loading =
+        ref.watch(delivaryBoyProvider.select((value) => value.loading));
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
@@ -31,68 +34,80 @@ class DelivaryBoyPage extends HookConsumerWidget {
         label: const Text('Add new'),
         icon: const Icon(Icons.add),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              itemCount: delivaryBoyList.length,
-              itemBuilder: (context, index) => ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(delivaryBoyList[index].avatar),
-                ),
-                isThreeLine: true,
-                title: Text(
-                  '${delivaryBoyList[index].firstName} ${delivaryBoyList[index].lastName}',
-                  style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 18.sp),
-                ),
-                subtitle: Text(
-                    '${delivaryBoyList[index].email}\n${delivaryBoyList[index].phoneNumber}'),
-                trailing: PopupMenuButton(
-                  tooltip: '',
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.sp)),
-                  icon: const Icon(Icons.more_horiz),
-                  onSelected: (index2) {
-                    if (index2 == 1) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddUpdateDelivaryBoyPage(
-                                    delivaryBoyDetails: delivaryBoyList[index],
-                                  )));
-                    }
-                    if (index2 == 2) {
-                      showDialog(
-                          context: context,
-                          builder: (context) => DeleteDelivaryDialog(
-                                delivaryBoyId: delivaryBoyList[index].id,
-                              ));
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 1,
-                      child: Text("Edit"),
-                    ),
-                    const PopupMenuItem(
-                      value: 2,
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(color: Colors.red),
+      body: loading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    itemCount: delivaryBoyList.length,
+                    itemBuilder: (context, index) => Card(
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(delivaryBoyList[index].avatar),
+                        ),
+                        isThreeLine: true,
+                        title: Text(
+                          '${delivaryBoyList[index].firstName} ${delivaryBoyList[index].lastName}',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.sp),
+                        ),
+                        subtitle: Text(
+                            '${delivaryBoyList[index].email}\n${delivaryBoyList[index].phoneNumber}'),
+                        trailing: PopupMenuButton(
+                          tooltip: '',
+                          padding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.sp)),
+                          icon: const Icon(Icons.more_horiz),
+                          onSelected: (index2) {
+                            if (index2 == 1) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AddUpdateDelivaryBoyPage(
+                                            delivaryBoyDetails:
+                                                delivaryBoyList[index],
+                                          )));
+                            }
+                            if (index2 == 2) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => DeleteDelivaryDialog(
+                                        delivaryBoyId:
+                                            delivaryBoyList[index].id,
+                                      ));
+                            }
+                          },
+                          itemBuilder: (context) => [
+                            const PopupMenuItem(
+                              value: 1,
+                              child: Text("Edit"),
+                            ),
+                            const PopupMenuItem(
+                              value: 2,
+                              child: Text(
+                                "Delete",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                    ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 3.h,
+                    ),
+                  ),
                 ),
-              ),
-              separatorBuilder: (context, index) => SizedBox(
-                height: 5.h,
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

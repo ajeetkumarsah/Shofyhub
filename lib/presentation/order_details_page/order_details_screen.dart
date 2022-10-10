@@ -14,7 +14,7 @@ import 'package:zcart_seller/presentation/order/widget/mark_as_delivered_dialog.
 import 'package:zcart_seller/presentation/order/widget/mark_as_paid_undaip_dialog.dart';
 import 'package:zcart_seller/presentation/order/widget/order_status_dialog.dart';
 import 'package:zcart_seller/presentation/order_details_page/widget/productlist.dart';
-import 'package:zcart_seller/presentation/support/refund/initiate_refunt_page.dart';
+import 'package:zcart_seller/presentation/support/refund/initiate_refund_page.dart';
 
 class OrderDetailsScreen extends HookConsumerWidget {
   final int id;

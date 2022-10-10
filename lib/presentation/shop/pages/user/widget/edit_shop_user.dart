@@ -21,6 +21,10 @@ class EditShopUser extends HookConsumerWidget {
     // final List<String> genderList = ['Male', 'Female', 'Others'];
     final shopId =
         ref.watch(authProvider.select((value) => value.user.shop_id));
+
+    final loading =
+        ref.watch(shopUserProvider.select((value) => value.loading));
+
     final nameController = useTextEditingController();
     // final confirmPasswordController = useTextEditingController();
     final nickNameController = useTextEditingController();
@@ -47,7 +51,7 @@ class EditShopUser extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Delivary Boy Added'),
+            title: const Text('User updated'),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -74,7 +78,7 @@ class EditShopUser extends HookConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(10.sp),
+          padding: EdgeInsets.all(20.sp),
           child: Column(
             children: [
               KTextField(controller: nameController, lebelText: 'Name'),
@@ -152,8 +156,9 @@ class EditShopUser extends HookConsumerWidget {
               //     ),
               //   ),
               // ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 30.h),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
@@ -190,7 +195,9 @@ class EditShopUser extends HookConsumerWidget {
                         ).show(context);
                       }
                     },
-                    child: const Text('Update'),
+                    child: loading
+                        ? const CircularProgressIndicator()
+                        : const Text('Update'),
                   ),
                 ],
               ),

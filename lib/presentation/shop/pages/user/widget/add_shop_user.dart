@@ -31,6 +31,9 @@ class AddShopUserPage extends HookConsumerWidget {
 
     final ValueNotifier<String> selectedGender = useState('Male');
 
+    final loading =
+        ref.watch(shopUserProvider.select((value) => value.loading));
+
     ref.listen<ShopUserState>(shopUserProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
@@ -64,7 +67,7 @@ class AddShopUserPage extends HookConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(10.sp),
+          padding: EdgeInsets.all(20.sp),
           child: Column(
             children: [
               KTextField(controller: firstNameController, lebelText: 'Name'),
@@ -91,14 +94,14 @@ class AddShopUserPage extends HookConsumerWidget {
               TextField(
                 controller: dobController,
                 style: const TextStyle(fontWeight: FontWeight.bold),
+                readOnly: true,
                 decoration: InputDecoration(
                   // prefixIcon: prefixIcon,
                   labelText: 'Date Of Birth',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.r),
                   ),
-
-                  // suffixIcon: suffixIcon,
+                  suffixIcon: const Icon(Icons.date_range),
                 ),
                 onTap: () {
                   showDatePicker(
@@ -147,8 +150,9 @@ class AddShopUserPage extends HookConsumerWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 10.h),
+              SizedBox(height: 30.h),
               Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                     onPressed: () {
@@ -190,7 +194,9 @@ class AddShopUserPage extends HookConsumerWidget {
                         ).show(context);
                       }
                     },
-                    child: const Text('Add'),
+                    child: loading
+                        ? const CircularProgressIndicator()
+                        : const Text('Add'),
                   ),
                 ],
               ),
