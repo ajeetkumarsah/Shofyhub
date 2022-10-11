@@ -1,6 +1,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:zcart_seller/domain/app/shop/roles/permission_list_model.dart';
+import 'package:zcart_seller/domain/app/shop/roles/role_details_model.dart';
 import 'package:zcart_seller/domain/app/shop/roles/role_model.dart';
 
 class RolesState extends Equatable {
@@ -8,7 +9,7 @@ class RolesState extends Equatable {
   final CleanFailure failure;
   final List<RoleModel> roleList;
   final List<PermissionListModel> permissionList;
-  final RoleModel roleDetails;
+  final RoleDetailsModel roleDetails;
   const RolesState({
     required this.loading,
     required this.failure,
@@ -22,7 +23,7 @@ class RolesState extends Equatable {
     CleanFailure? failure,
     List<RoleModel>? roleList,
     List<PermissionListModel>? permissionList,
-    RoleModel? roleDetails,
+    RoleDetailsModel? roleDetails,
   }) {
     return RolesState(
       loading: loading ?? this.loading,
@@ -47,6 +48,6 @@ class RolesState extends Equatable {
         failure: CleanFailure.none(),
         roleList: const [],
         permissionList: const [],
-        roleDetails: RoleModel.init(),
+        roleDetails: RoleDetailsModel.init(),
       );
 }

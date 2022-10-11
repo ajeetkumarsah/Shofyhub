@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 class CreateTaxModel extends Equatable {
   final String name;
-  final int taxrate;
+  final double taxrate;
   final String countryId;
   final String stateId;
   final int active;
@@ -18,7 +18,7 @@ class CreateTaxModel extends Equatable {
 
   CreateTaxModel copyWith({
     String? name,
-    int? taxrate,
+    double? taxrate,
     String? countryId,
     String? stateId,
     int? active,

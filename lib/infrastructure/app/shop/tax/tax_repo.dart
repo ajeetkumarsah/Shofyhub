@@ -35,7 +35,7 @@ class TaxRepo extends ITaxRepo {
   Future<Either<CleanFailure, TaxModel>> getTaxDetails(
       {required int taxId}) async {
     return cleanApi.get(
-        fromData: (json) => TaxModel.fromMap(json), endPoint: 'tax/$taxId');
+        fromData: (json) => TaxModel.fromMap(json['data']), endPoint: 'tax/$taxId');
   }
 
   @override

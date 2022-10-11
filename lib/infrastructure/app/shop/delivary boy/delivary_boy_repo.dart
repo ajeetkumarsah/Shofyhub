@@ -23,7 +23,7 @@ class DelivaryBoyRepo extends IDelivaryBoyRepo {
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'delivery-boy/create?shop_id=${delivaryBoy.shopId}&first_name=${delivaryBoy.firstName}&last_name=${delivaryBoy.lastName}&nice_name=${delivaryBoy.niceName}&email=${delivaryBoy.email}&phone_number=${delivaryBoy.phoneNumber}&password=${delivaryBoy.password}&status=${delivaryBoy.status}&dob=${delivaryBoy.dob}&sex=${delivaryBoy.sex}',
+          'delivery-boy/create?shop_id=${delivaryBoy.shopId}&first_name=${delivaryBoy.firstName}&last_name=${delivaryBoy.lastName}&nice_name=${delivaryBoy.niceName}&email=${delivaryBoy.email}&phone_number=${delivaryBoy.phoneNumber}&password=${delivaryBoy.password}&password_confirmation=${delivaryBoy.confirmPassword}&status=${delivaryBoy.status}&dob=${delivaryBoy.dob}&sex=${delivaryBoy.sex}',
     );
   }
 

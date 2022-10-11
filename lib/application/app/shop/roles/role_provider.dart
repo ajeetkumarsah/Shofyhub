@@ -30,14 +30,15 @@ class RoleNotifier extends StateNotifier<RolesState> {
             loading: false, failure: CleanFailure.none(), permissionList: r));
   }
 
-  // getTaxDetails({required int taxId}) async {
-  //   state = state.copyWith(loading: true);
-  //   final data = await rolesRepo.getTaxDetails(taxId: taxId);
-  //   state = data.fold(
-  //       (l) => state.copyWith(loading: false, failure: l),
-  //       (r) => state.copyWith(
-  //           loading: false, failure: CleanFailure.none(), taxDetails: r));
-  // }
+  getRoleDetails({required int roleId}) async {
+    state = state.copyWith(loading: true);
+    final data = await rolesRepo.getRoleDetails(id: roleId);
+    Logger.i(data);
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false, failure: CleanFailure.none(), roleDetails: r));
+  }
 
   createNewRole({required CreateUpdateRoleModel roleModel}) async {
     state = state.copyWith(loading: true);

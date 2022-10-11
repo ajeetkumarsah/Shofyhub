@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivary_boy_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/roles_list_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/taxes_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/texes/tax_list_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/user/user_page.dart';
 
 class ShopHome extends StatelessWidget {
@@ -50,7 +50,7 @@ class ShopHome extends StatelessWidget {
           UserPage(),
           DelivaryBoyPage(),
           RolesListPage(),
-          TaxesPage(),
+          TaxListPage(),
         ]),
       ),
     );

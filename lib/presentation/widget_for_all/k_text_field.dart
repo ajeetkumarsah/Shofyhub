@@ -10,6 +10,7 @@ class KTextField extends StatelessWidget {
   final Function()? onTap;
   final TextEditingController controller;
   final bool readOnly;
+  final String? hintText;
 
   const KTextField(
       {Key? key,
@@ -21,6 +22,7 @@ class KTextField extends StatelessWidget {
       this.suffixIcon,
       this.numberFormatters = false,
       this.obscureText = false,
+      this.hintText,
       this.readOnly = false})
       : super(key: key);
   final bool obscureText, numberFormatters;
@@ -32,6 +34,7 @@ class KTextField extends StatelessWidget {
       style: const TextStyle(fontWeight: FontWeight.bold),
       validator: validator,
       decoration: InputDecoration(
+        hintText: hintText,
         prefixIcon: prefixIcon,
         labelText: lebelText,
         border: OutlineInputBorder(

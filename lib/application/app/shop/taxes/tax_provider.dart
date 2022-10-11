@@ -3,6 +3,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_state.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/i_tex_repo.dart';
+import 'package:zcart_seller/infrastructure/app/shop/tax/tax_repo.dart';
+
+final taxProvider = StateNotifierProvider<TaxNotifier, TaxState>((ref) {
+  return TaxNotifier(TaxRepo());
+});
 
 class TaxNotifier extends StateNotifier<TaxState> {
   final ITaxRepo taxRepo;
@@ -31,6 +36,7 @@ class TaxNotifier extends StateNotifier<TaxState> {
     final data = await taxRepo.createNewTax(taxInfo: taxInfo);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllTax();
   }
 
   updateTax({required CreateTaxModel taxInfo, required int taxId}) async {
@@ -38,6 +44,7 @@ class TaxNotifier extends StateNotifier<TaxState> {
     final data = await taxRepo.updateTax(taxInfo: taxInfo, taxId: taxId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllTax();
   }
 
   trashTax({required int taxId}) async {
@@ -45,6 +52,7 @@ class TaxNotifier extends StateNotifier<TaxState> {
     final data = await taxRepo.trashTax(taxId: taxId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllTax();
   }
 
   restoreTax({required int taxId}) async {
@@ -52,6 +60,7 @@ class TaxNotifier extends StateNotifier<TaxState> {
     final data = await taxRepo.restoreTax(taxId: taxId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllTax();
   }
 
   deleteTax({required int taxId}) async {
@@ -59,5 +68,6 @@ class TaxNotifier extends StateNotifier<TaxState> {
     final data = await taxRepo.deleteTax(taxId: taxId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllTax();
   }
 }

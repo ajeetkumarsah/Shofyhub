@@ -77,11 +77,16 @@ class AddShopUserPage extends HookConsumerWidget {
               SizedBox(height: 10.h),
               KTextField(controller: emailController, lebelText: 'Email'),
               SizedBox(height: 10.h),
-              KTextField(controller: passwordController, lebelText: 'Password'),
+              KTextField(
+                controller: passwordController,
+                lebelText: 'Password',
+                hintText: 'Password must be 6 characters long',
+              ),
               SizedBox(height: 10.h),
               KTextField(
-                  controller: confirmPasswordController,
-                  lebelText: 'Confirm Password'),
+                controller: confirmPasswordController,
+                lebelText: 'Confirm Password',
+              ),
               SizedBox(height: 10.h),
               KTextField(controller: descController, lebelText: 'Description'),
               SizedBox(height: 10.h),
@@ -113,7 +118,7 @@ class AddShopUserPage extends HookConsumerWidget {
                     helpText: 'Select a date',
                   ).then((value) {
                     dobController.text =
-                        DateFormat('yyyy-MM-dd').format(value!);
+                        DateFormat('yyyy-MM-dd hh:mm a').format(value!);
                   });
                 },
               ),

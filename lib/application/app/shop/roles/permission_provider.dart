@@ -5,7 +5,7 @@ final permissionProvider =
     ChangeNotifierProvider((ref) => PermissionNotifier());
 
 class PermissionNotifier extends ChangeNotifier {
-  final List<int> selectedPermissionIds = [];
+  List<int> selectedPermissionIds = [];
 
   addId(int id) {
     selectedPermissionIds.add(id);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/shop/roles/role_model.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/trash_role_dialog.dart';
+import 'package:zcart_seller/presentation/shop/pages/roles/update_role_page.dart';
 
 class RoleListTile extends StatelessWidget {
   const RoleListTile({Key? key, required this.role}) : super(key: key);
@@ -43,11 +44,11 @@ class RoleListTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index2) {
             if (index2 == 1) {
-              // showDialog(
-              //     context: context,
-              //     builder: (context) => roleResponseDialog(
-              //           roleId: role.id,
-              //         ));
+              showDialog(
+                  context: context,
+                  builder: (context) => UpdateRolePage(
+                        roleId: role.id,
+                      ));
             }
             if (index2 == 2) {
               showDialog(

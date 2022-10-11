@@ -10,14 +10,14 @@ class TaxModel extends Equatable {
   final String taxrate;
   final bool active;
   final CountryStateModel country;
-  final CountryStateModel state;
+  // final CountryStateModel state;
   const TaxModel({
     required this.id,
     required this.name,
     required this.taxrate,
     required this.active,
     required this.country,
-    required this.state,
+    // required this.state,
   });
 
   TaxModel copyWith({
@@ -34,7 +34,7 @@ class TaxModel extends Equatable {
       taxrate: taxrate ?? this.taxrate,
       active: active ?? this.active,
       country: country ?? this.country,
-      state: state ?? this.state,
+      // state: state ?? this.state,
     );
   }
 
@@ -45,7 +45,7 @@ class TaxModel extends Equatable {
       'taxrate': taxrate,
       'active': active,
       'country': country.toMap(),
-      'state': state.toMap(),
+      // 'state': state.toMap(),
     };
   }
 
@@ -56,7 +56,7 @@ class TaxModel extends Equatable {
       taxrate: map['taxrate'] ?? '',
       active: map['active'] ?? false,
       country: CountryStateModel.fromMap(map['country']),
-      state: CountryStateModel.fromMap(map['state']),
+      // state: CountryStateModel.fromMap(map['state']),
     );
   }
 
@@ -67,7 +67,7 @@ class TaxModel extends Equatable {
 
   @override
   String toString() {
-    return 'TaxModel(id: $id, name: $name, taxrate: $taxrate, active: $active, country: $country, state: $state)';
+    return 'TaxModel(id: $id, name: $name, taxrate: $taxrate, active: $active, country: $country)';
   }
 
   @override
@@ -78,15 +78,16 @@ class TaxModel extends Equatable {
       taxrate,
       active,
       country,
-      state,
+      // state,
     ];
   }
 
   factory TaxModel.init() => TaxModel(
-      id: 0,
-      name: '',
-      taxrate: '',
-      active: true,
-      country: CountryStateModel.init(),
-      state: CountryStateModel.init());
+        id: 0,
+        name: '',
+        taxrate: '',
+        active: true,
+        country: CountryStateModel.init(),
+        // state: CountryStateModel.init()
+      );
 }

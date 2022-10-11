@@ -10,6 +10,7 @@ class CreateDelivaryBoyModel extends Equatable {
   final String phoneNumber;
   final String email;
   final String password;
+  final String confirmPassword;
   final String sex;
   final String dob;
   final int status;
@@ -22,6 +23,7 @@ class CreateDelivaryBoyModel extends Equatable {
     required this.phoneNumber,
     required this.email,
     required this.password,
+    required this.confirmPassword,
     required this.sex,
     required this.dob,
     required this.status,
@@ -35,6 +37,7 @@ class CreateDelivaryBoyModel extends Equatable {
     String? phoneNumber,
     String? email,
     String? password,
+    String? confirmPassword,
     String? sex,
     String? dob,
     int? status,
@@ -47,6 +50,7 @@ class CreateDelivaryBoyModel extends Equatable {
       phoneNumber: phoneNumber ?? this.phoneNumber,
       email: email ?? this.email,
       password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
       sex: sex ?? this.sex,
       dob: dob ?? this.dob,
       status: status ?? this.status,
@@ -62,6 +66,7 @@ class CreateDelivaryBoyModel extends Equatable {
       'phone_number': phoneNumber,
       'email': email,
       'password': password,
+      'confirm_password': confirmPassword,
       'sex': sex,
       'dob': dob,
       'status': status,
@@ -77,6 +82,7 @@ class CreateDelivaryBoyModel extends Equatable {
       phoneNumber: map['phone_number'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
+      confirmPassword: map['confirm_password'] ?? '',
       sex: map['sex'] ?? '',
       dob: map['dob'] ?? '',
       status: map['status']?.toInt() ?? 0,
@@ -90,7 +96,7 @@ class CreateDelivaryBoyModel extends Equatable {
 
   @override
   String toString() {
-    return 'CreateDelivaryBoyModel(shopId: $shopId, firstName: $firstName, lastName: $lastName, niceName: $niceName, phoneNumber: $phoneNumber, email: $email, password: $password, sex: $sex, dob: $dob, status: $status)';
+    return 'CreateDelivaryBoyModel(shopId: $shopId, firstName: $firstName, lastName: $lastName, niceName: $niceName, phoneNumber: $phoneNumber, email: $email, password: $password, confirmPassword: $confirmPassword, sex: $sex, dob: $dob, status: $status)';
   }
 
   @override
@@ -103,6 +109,7 @@ class CreateDelivaryBoyModel extends Equatable {
       phoneNumber,
       email,
       password,
+      confirmPassword,
       sex,
       dob,
       status,
@@ -111,6 +118,7 @@ class CreateDelivaryBoyModel extends Equatable {
 
   factory CreateDelivaryBoyModel.init() => const CreateDelivaryBoyModel(
         password: '',
+        confirmPassword: '',
         shopId: 0,
         firstName: '',
         lastName: '',

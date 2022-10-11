@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -33,10 +35,12 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
     final nickNameController = useTextEditingController();
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
+    final confirmPasswordController = useTextEditingController();
     final phoneNoController = useTextEditingController();
     final dobController = useTextEditingController();
 
     final ValueNotifier<String> selectedGender = useState('Male');
+    // final deliveryBoyDob = DateTime.tryParse(delivaryBoyDetails!.dob);
 
     if (delivaryBoyDetails != null) {
       firstNameController.text = delivaryBoyDetails!.firstName;
@@ -52,7 +56,9 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('Delivary Boy Added'),
+            title: delivaryBoyDetails != null
+                ? const Text('Delivary Boy Updated')
+                : const Text('Delivary Boy Added'),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -99,6 +105,11 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
               if (delivaryBoyDetails == null)
                 KTextField(
                     controller: passwordController, lebelText: 'Password'),
+              if (delivaryBoyDetails == null) SizedBox(height: 10.h),
+              if (delivaryBoyDetails == null)
+                KTextField(
+                    controller: confirmPasswordController,
+                    lebelText: 'Confirm Password'),
               SizedBox(height: 10.h),
               KTextField(
                   controller: phoneNoController, lebelText: 'Phone Number'),
@@ -112,6 +123,7 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
               TextField(
                 controller: dobController,
                 style: const TextStyle(fontWeight: FontWeight.bold),
+                readOnly: true,
                 decoration: InputDecoration(
                   // prefixIcon: prefixIcon,
                   labelText: 'Date Of Birth',
@@ -131,7 +143,7 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                     helpText: 'Select a date',
                   ).then((value) {
                     dobController.text =
-                        DateFormat('yyyy-MM-dd').format(value!);
+                        DateFormat('yyyy-MM-dd hh:mm a').format(value!);
                   });
                 },
               ),
@@ -188,7 +200,6 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                           lastNameController.text.isNotEmpty &&
                           nickNameController.text.isNotEmpty &&
                           emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty &&
                           phoneNoController.text.isNotEmpty) {
                         final delivaryBoy = CreateDelivaryBoyModel(
                           shopId: shopId,
@@ -198,6 +209,7 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                           phoneNumber: phoneNoController.text,
                           email: emailController.text,
                           password: passwordController.text,
+                          confirmPassword: confirmPasswordController.text,
                           sex: selectedGender.value,
                           dob: dobController.text,
                           status: status.value ? 1 : 0,
@@ -212,6 +224,7 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                           ref
                               .read(delivaryBoyProvider.notifier)
                               .createDelivaryBoy(delivaryBoy: delivaryBoy);
+                          log('Add delivery bod: $delivaryBoy');
                         }
                       } else {
                         CherryToast.info(
