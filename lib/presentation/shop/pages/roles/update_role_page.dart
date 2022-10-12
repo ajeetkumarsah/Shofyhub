@@ -30,8 +30,6 @@ class UpdateRolePage extends HookConsumerWidget {
 
     final permissionList =
         ref.watch(roleProvider.select((value) => value.permissionList));
-    // final roleDetails =
-    //     ref.watch(roleProvider.select((value) => value.roleDetails));
 
     final permissionNotifier = ref.watch(permissionProvider);
 
@@ -189,12 +187,17 @@ class UpdateRolePage extends HookConsumerWidget {
                             ? null
                             : () {
                                 if (formkey.currentState?.validate() ?? false) {
+                                  final String endPoint = permissionNotifier
+                                      .selectedPermissionIds
+                                      .map(
+                                          (element) => "permissions[]=$element")
+                                      .join('&');
+
                                   final roleModel = CreateUpdateRoleModel(
                                     name: nameController.text,
                                     description: descriptionController.text,
                                     level: int.tryParse(levelController.text)!,
-                                    permissions: permissionNotifier
-                                        .selectedPermissionIds,
+                                    permissions: endPoint,
                                   );
                                   ref
                                       .read(roleProvider.notifier)

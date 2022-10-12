@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -42,15 +40,15 @@ class AddRolePage extends HookConsumerWidget {
     }, []);
 
     ref.listen<RolesState>(roleProvider, (previous, next) {
-      if (previous != next && !next.loading) {
+      if (previous != next && !next.loading && buttonPressed.value) {
         Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+        if (next.failure == CleanFailure.none()) {
           CherryToast.info(
             title: Text('role_added'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
           buttonPressed.value = false;
-        } else if (next.failure != CleanFailure.none() && buttonPressed.value) {
+        } else if (next.failure != CleanFailure.none()) {
           CherryToast.error(
             title: Text(
               next.failure.error,
@@ -168,12 +166,15 @@ class AddRolePage extends HookConsumerWidget {
                       ? null
                       : () {
                           if (formkey.currentState?.validate() ?? false) {
+                            final String endPoint = permissionNotifier
+                                .selectedPermissionIds
+                                .map((element) => "permissions[]=$element")
+                                .join('&');
                             final roleModel = CreateUpdateRoleModel(
                               name: nameController.text,
                               description: descriptionController.text,
                               level: int.tryParse(levelController.text)!,
-                              permissions:
-                                  permissionNotifier.selectedPermissionIds,
+                              permissions: endPoint,
                             );
                             ref
                                 .read(roleProvider.notifier)

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:clean_api/clean_api.dart';
@@ -104,15 +105,13 @@ class RoleRepo extends IRolesRepo {
         fromData: (data) => createRoleModel,
         body: null,
         endPoint:
-            'role?description=${createRoleModel.description}&level=${createRoleModel.level}&name=${createRoleModel.name}&permissions=${createRoleModel.permissions})');
+            'role?description=${createRoleModel.description}&level=${createRoleModel.level}&name=${createRoleModel.name}&${createRoleModel.permissions})');
   }
 
   @override
   Future<Either<CleanFailure, CreateUpdateRoleModel>> updateRole(
       {required int roleId,
       required CreateUpdateRoleModel updateRoleModel}) async {
-    log('role/$roleId?description=${updateRoleModel.description}&level=${updateRoleModel.level}&name=${updateRoleModel.name}&permissions=${updateRoleModel.permissions})');
-
     return await cleanApi.post(
         failureHandler: <CreateUpdateRoleModel>(int statusCode,
             Map<String, dynamic> responseBody) {
@@ -140,7 +139,7 @@ class RoleRepo extends IRolesRepo {
         fromData: (data) => updateRoleModel,
         body: null,
         endPoint:
-            'role/$roleId?description=${updateRoleModel.description}&level=${updateRoleModel.level}&name=${updateRoleModel.name}&permissions=${updateRoleModel.permissions})');
+            'role/$roleId?description=${updateRoleModel.description}&level=${updateRoleModel.level}&name=${updateRoleModel.name}&${updateRoleModel.permissions})');
   }
 
   @override

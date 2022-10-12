@@ -4,7 +4,7 @@ class CreateUpdateRoleModel extends Equatable {
   final String name;
   final String description;
   final int level;
-  final List<int> permissions;
+  final String permissions;
 
   const CreateUpdateRoleModel({
     required this.name,
