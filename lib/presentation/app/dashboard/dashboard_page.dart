@@ -13,6 +13,7 @@ import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.da
 import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';
 import 'package:zcart_seller/presentation/order/latest_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
+import 'package:zcart_seller/presentation/settings.dart/basic_shop_settings_page.dart';
 import 'package:zcart_seller/presentation/shop/shop_home.dart';
 import 'package:zcart_seller/presentation/stock/stock_home.dart';
 import 'package:zcart_seller/presentation/support/support_home_page.dart';
@@ -237,7 +238,11 @@ class DashboardPage extends HookConsumerWidget {
                         icon: FontAwesomeIcons.personDotsFromLine,
                         title: 'Admin',
                       ),
-                      const MoreOptionItems(
+                      MoreOptionItems(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => const ShopSettingsPage()));
+                        },
                         icon: FontAwesomeIcons.gear,
                         title: 'Setting',
                       ),
