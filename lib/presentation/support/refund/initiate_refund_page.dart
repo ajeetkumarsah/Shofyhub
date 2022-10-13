@@ -164,6 +164,8 @@ class InitiateRefundPage extends HookConsumerWidget {
                   ),
                   SizedBox(height: 30.h),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Constants.buttonColor),
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
                         ref.read(refundProvider.notifier).initiateRefund(
@@ -182,7 +184,7 @@ class InitiateRefundPage extends HookConsumerWidget {
                     },
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
-                      height: 40.h,
+                      height: 50.h,
                       child: Center(
                         child: loading
                             ? const SizedBox(

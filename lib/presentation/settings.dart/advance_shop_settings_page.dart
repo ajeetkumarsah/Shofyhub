@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
+import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
@@ -16,8 +17,10 @@ import 'package:zcart_seller/domain/app/settings/payment_method_model.dart';
 import 'package:zcart_seller/domain/app/settings/update_advance_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
+import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
+import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -47,7 +50,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
     final supportPhoneController = useTextEditingController();
     final supportPhoneTollFreeController = useTextEditingController();
     final supportEmailController = useTextEditingController();
-    final supportAgentController = useTextEditingController();
+    // final supportAgentController = useTextEditingController();
     final defaultSenderEmailController = useTextEditingController();
     final defaultEmailSenderNameController = useTextEditingController();
     final returnRefundController = useTextEditingController();
@@ -84,6 +87,10 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
         ref.watch(taxProvider.select((value) => value.taxList));
     final ValueNotifier<TaxModel> selectedTax = useState(taxList[0]);
 
+    final List<ShopUsersModel> agentList =
+        ref.watch(shopUserProvider.select((value) => value.getShopUser));
+    final ValueNotifier<ShopUsersModel> selectedAgent = useState(agentList[0]);
+
     final List<SupplierModel> supplierList =
         ref.watch(supplierProvider.select((value) => value.allSuppliers));
     final ValueNotifier<SupplierModel> selectedSupplier =
@@ -105,12 +112,34 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
 
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        alertQuanityController.text = next.advanceShopSettings.alertQuantity.toString();
+        alertQuanityController.text =
+            next.advanceShopSettings.alertQuantity.toString();
         supportPhoneController.text = next.advanceShopSettings.supportPhone;
         supportPhoneTollFreeController.text =
             next.advanceShopSettings.supportPhoneTollFree;
         supportEmailController.text = next.advanceShopSettings.supportEmail;
-        supportAgentController.text = next.advanceShopSettings.supportAgent;
+        // supportAgentController.text = next.advanceShopSettings.supportAgent;
+        selectedAgent.value = agentList
+            .where((e) => e.id == next.advanceShopSettings.supportAgent)
+            .toList()[0];
+
+        selectedPaymentMethod.value = paymentMethodList
+            .where(
+                (e) => e.id == next.advanceShopSettings.defaultPaymentMethodId)
+            .toList()[0];
+
+        selectedWarehouse.value = warehouseList
+            .where((e) => e.id == next.advanceShopSettings.defaultWarehouseId)
+            .toList()[0];
+
+        selectedSupplier.value = supplierList
+            .where((e) => e.id == next.advanceShopSettings.defaultSupplierId)
+            .toList()[0];
+
+        selectedTax.value = taxList
+            .where((e) => e.id == next.advanceShopSettings.defaultTaxId)
+            .toList()[0];
+
         paginationController.text =
             next.advanceShopSettings.pagination.toString();
         defaultSenderEmailController.text =
@@ -164,7 +193,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
     });
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading && buttonPressed.value) {
-        // Navigator.of(context).pop();
+        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
             title: Text('advance_shop_settings_updated'.tr()),
@@ -397,9 +426,43 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                         title: Text('enable_live_chat'.tr()),
                       ),
                       SizedBox(height: 10.h),
-                      KTextField(
-                        controller: supportAgentController,
-                        lebelText: 'support_agent'.tr(),
+                      Text(
+                        'support_agent'.tr(),
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      SizedBox(height: 10.h),
+                      SizedBox(
+                        height: 50.h,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(width: 1.w),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.grey.shade800),
+                            isExpanded: true,
+                            value: selectedAgent.value,
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            items: agentList
+                                .map<DropdownMenuItem<ShopUsersModel>>(
+                                    (ShopUsersModel value) {
+                              return DropdownMenuItem<ShopUsersModel>(
+                                value: value,
+                                child: Text(
+                                  value.name,
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (ShopUsersModel? newValue) {
+                              selectedAgent.value = newValue!;
+                            },
+                          ),
+                        ),
                       ),
                       SizedBox(height: 10.h),
                       KTextField(
@@ -527,85 +590,101 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                         title: Text('notify_new_chat_message'.tr()),
                       ),
                       SizedBox(height: 30.h),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              if (formKey.currentState?.validate() ?? false) {
-                                final advanceSettings =
-                                    UpdateAdvanceShopSettingsModel(
-                                  shopId: shopId,
-                                  activeEcommerce: 0,
-                                  alertQuantity: int.tryParse(
-                                          alertQuanityController.text) ??
-                                      0,
-                                  autoArchiveOrder:
-                                      autoArchiveOrder.value ? 1 : 0,
-                                  defaultEmailSenderName:
-                                      defaultEmailSenderNameController.text,
-                                  defaultPackagingIds:
-                                      defaultPackagingIds.value ? 1 : 0,
-                                  defaultPaymentMethodId:
-                                      selectedPaymentMethod.value.id,
-                                  defaultSenderEmailAddress:
-                                      defaultSenderEmailController.text,
-                                  defaultSupplierId: selectedSupplier.value.id!,
-                                  defaultTaxId: selectedTax.value.id,
-                                  defaultWarehouseId:
-                                      selectedWarehouse.value.id,
-                                  digitalGoodsOnly:
-                                      digitalGoodsOnly.value ? 1 : 0,
-                                  enableLiveChat: enableLiveChat.value ? 1 : 0,
-                                  notifyAbandonedCheckout:
-                                      notifyAbandonedCheckout.value ? 1 : 0,
-                                  notifyAlertQuantity:
-                                      notifyAlertQuantity.value ? 1 : 0,
-                                  notifyInventoryOut:
-                                      notifyInventoryOut.value ? 1 : 0,
-                                  notifyNewChat: notifyNewChat.value ? 1 : 0,
-                                  notifyNewDisput:
-                                      notifyNewDisput.value ? 1 : 0,
-                                  notifyNewMessage:
-                                      notifyNewMessage.value ? 1 : 0,
-                                  notifyNewOrder: notifyNewOrder.value ? 1 : 0,
-                                  orderHandlingCost:
-                                      orderHandlingCostController.text,
-                                  orderNumberPrefix:
-                                      orderNumerPrefixController.text,
-                                  orderNumberSuffix:
-                                      orderNumberSuffixController.text,
-                                  pagination:
-                                      int.tryParse(paginationController.text) ??
-                                          0,
-                                  payInPerson: 0,
-                                  payOnline: 0,
-                                  showRefundPolicyWithListing:
-                                      showRefundPolicyWithListing.value ? 1 : 0,
-                                  showShopDescWithListing:
-                                      showShopDescriptionWithListing.value
-                                          ? 1
-                                          : 0,
-                                  supportAgent: supportAgentController.text,
-                                  supportEmail: supportEmailController.text,
-                                  supportPhone: supportPhoneController.text,
-                                  supportPhoneTollFree:
-                                      supportPhoneTollFreeController.text,
-                                );
-                                ref
-                                    .read(shopSettingsProvider.notifier)
-                                    .updateAdvanceShopSettings(
-                                        advanceSettingsInfo: advanceSettings,
-                                        shopId: shopId);
-                                buttonPressed.value = true;
-                              }
-                            },
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Constants.buttonColor),
+                        onPressed: updateLoading
+                            ? null
+                            : () {
+                                if (formKey.currentState?.validate() ?? false) {
+                                  final advanceSettings =
+                                      UpdateAdvanceShopSettingsModel(
+                                    shopId: shopId,
+                                    activeEcommerce: 0,
+                                    alertQuantity: int.tryParse(
+                                            alertQuanityController.text) ??
+                                        0,
+                                    autoArchiveOrder:
+                                        autoArchiveOrder.value ? 1 : 0,
+                                    defaultEmailSenderName:
+                                        defaultEmailSenderNameController.text,
+                                    defaultPackagingIds:
+                                        defaultPackagingIds.value ? 1 : 0,
+                                    defaultPaymentMethodId:
+                                        selectedPaymentMethod.value.id,
+                                    defaultSenderEmailAddress:
+                                        defaultSenderEmailController.text,
+                                    defaultSupplierId:
+                                        selectedSupplier.value.id!,
+                                    defaultTaxId: selectedTax.value.id,
+                                    defaultWarehouseId:
+                                        selectedWarehouse.value.id,
+                                    digitalGoodsOnly:
+                                        digitalGoodsOnly.value ? 1 : 0,
+                                    enableLiveChat:
+                                        enableLiveChat.value ? 1 : 0,
+                                    notifyAbandonedCheckout:
+                                        notifyAbandonedCheckout.value ? 1 : 0,
+                                    notifyAlertQuantity:
+                                        notifyAlertQuantity.value ? 1 : 0,
+                                    notifyInventoryOut:
+                                        notifyInventoryOut.value ? 1 : 0,
+                                    notifyNewChat: notifyNewChat.value ? 1 : 0,
+                                    notifyNewDisput:
+                                        notifyNewDisput.value ? 1 : 0,
+                                    notifyNewMessage:
+                                        notifyNewMessage.value ? 1 : 0,
+                                    notifyNewOrder:
+                                        notifyNewOrder.value ? 1 : 0,
+                                    orderHandlingCost:
+                                        orderHandlingCostController.text,
+                                    orderNumberPrefix:
+                                        orderNumerPrefixController.text,
+                                    orderNumberSuffix:
+                                        orderNumberSuffixController.text,
+                                    pagination: int.tryParse(
+                                            paginationController.text) ??
+                                        0,
+                                    payInPerson: 0,
+                                    payOnline: 0,
+                                    showRefundPolicyWithListing:
+                                        showRefundPolicyWithListing.value
+                                            ? 1
+                                            : 0,
+                                    showShopDescWithListing:
+                                        showShopDescriptionWithListing.value
+                                            ? 1
+                                            : 0,
+                                    supportAgent: selectedAgent.value.id,
+                                    supportEmail: supportEmailController.text,
+                                    supportPhone: supportPhoneController.text,
+                                    supportPhoneTollFree:
+                                        supportPhoneTollFreeController.text,
+                                  );
+                                  ref
+                                      .read(shopSettingsProvider.notifier)
+                                      .updateAdvanceShopSettings(
+                                          advanceSettingsInfo: advanceSettings,
+                                          shopId: shopId);
+                                  buttonPressed.value = true;
+                                }
+                              },
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 50.h,
+                          child: Center(
                             child: updateLoading
-                                ? const CircularProgressIndicator()
-                                : Text('update'.tr()),
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ))
+                                : Text(
+                                    'update'.tr(),
+                                  ),
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

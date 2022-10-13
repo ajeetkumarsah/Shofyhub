@@ -5,7 +5,7 @@ class AdvanceShopSettingsModel extends Equatable {
   final String supportPhone;
   final String supportPhoneTollFree;
   final String supportEmail;
-  final String supportAgent;
+  final int supportAgent;
   final String defaultSenderEmailAddress;
   final String defaultEmailSenderName;
   final String returnRefund;
@@ -84,7 +84,7 @@ class AdvanceShopSettingsModel extends Equatable {
     String? supportPhone,
     String? supportPhoneTollFree,
     String? supportEmail,
-    String? supportAgent,
+    int? supportAgent,
     String? defaultSenderEmailAddress,
     String? defaultEmailSenderName,
     String? returnRefund,
@@ -171,7 +171,7 @@ class AdvanceShopSettingsModel extends Equatable {
         supportPhone: map["support_phone"] ?? '',
         supportPhoneTollFree: map["support_phone_toll_free"] ?? '',
         supportEmail: map["support_email"] ?? '',
-        supportAgent: map["support_agent"] ?? '',
+        supportAgent: map["support_agent"] ?? 0,
         defaultSenderEmailAddress: map["default_sender_email_address"] ?? '',
         defaultEmailSenderName: map["default_email_sender_name"] ?? '',
         returnRefund: map["return_refund"] ?? '',
@@ -212,7 +212,7 @@ class AdvanceShopSettingsModel extends Equatable {
         supportPhone: '',
         supportPhoneTollFree: '',
         supportEmail: '',
-        supportAgent: '',
+        supportAgent: 0,
         defaultSenderEmailAddress: '',
         defaultEmailSenderName: '',
         returnRefund: '',
