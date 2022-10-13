@@ -7,7 +7,10 @@ import 'package:zcart_seller/application/app/category/caegory%20group/category_g
 import 'package:zcart_seller/application/app/dashboard/dashboard_provider.dart';
 import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
+import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';
@@ -40,6 +43,9 @@ class DashboardPage extends HookConsumerWidget {
         ref.read(categoryGroupProvider.notifier).getAllCategoryGroup();
         ref.read(refundProvider.notifier).getOpenRefunds();
         ref.read(dashboardProvider.notifier).getStatistics();
+        ref.read(warehouseProvider.notifier).getWarehouseItems();
+        ref.read(taxProvider.notifier).getAllTax();
+        ref.read(supplierProvider.notifier).getAllSuppliers();
       });
       return null;
     }, []);

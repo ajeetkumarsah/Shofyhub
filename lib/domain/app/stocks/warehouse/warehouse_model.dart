@@ -57,7 +57,7 @@ class WarehouseModel extends Equatable {
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      incharge: map['incharge'],
+      incharge: map['incharge'] ?? '',
       businessDays: List<String>.from(map['business_days'] ?? const []),
       active: map['active'] ?? false,
       image: map['image'] ?? '',

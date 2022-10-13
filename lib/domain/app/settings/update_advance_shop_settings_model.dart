@@ -20,19 +20,19 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
   final dynamic supportPhone;
   final dynamic supportPhoneTollFree;
   final String supportEmail;
-  final bool autoArchiveOrder;
+  final int autoArchiveOrder;
   final String defaultSenderEmailAddress;
   final String defaultEmailSenderName;
-  final bool notifyNewMessage;
-  final bool notifyAlertQuantity;
-  final bool notifyInventoryOut;
-  final bool notifyNewOrder;
+  final int notifyNewMessage;
+  final int notifyAlertQuantity;
+  final int notifyInventoryOut;
+  final int notifyNewOrder;
   final dynamic notifyAbandonedCheckout;
-  final bool notifyNewDisput;
-  final bool notifyNewChat;
-  final bool digitalGoodsOnly;
-  final bool defaultPackagingIds;
-  final bool enableLiveChat;
+  final int notifyNewDisput;
+  final int notifyNewChat;
+  final int digitalGoodsOnly;
+  final int defaultPackagingIds;
+  final int enableLiveChat;
   // final String returnRefund;
   // final bool maintenanceMode;
   // final dynamic pendingVerification;
@@ -101,17 +101,17 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
     String? supportEmail,
     String? defaultSenderEmailAddress,
     String? defaultEmailSenderName,
-    bool? notifyNewMessage,
-    bool? notifyAlertQuantity,
-    bool? notifyInventoryOut,
-    bool? notifyNewOrder,
+    int? notifyNewMessage,
+    int? notifyAlertQuantity,
+    int? notifyInventoryOut,
+    int? notifyNewOrder,
     dynamic notifyAbandonedCheckout,
-    bool? notifyNewDisput,
-    bool? notifyNewChat,
-    bool? digitalGoodsOnly,
-    bool? defaultPackagingIds,
-    bool? autoArchiveOrder,
-    bool? enableLiveChat,
+    int? notifyNewDisput,
+    int? notifyNewChat,
+    int? digitalGoodsOnly,
+    int? defaultPackagingIds,
+    int? autoArchiveOrder,
+    int? enableLiveChat,
 
     // int? shopId,
     // dynamic supportPhone,
@@ -252,24 +252,24 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
         orderNumberSuffix: '',
         defaultTaxId: 0,
         orderHandlingCost: '',
-        autoArchiveOrder: false,
+        autoArchiveOrder: 0,
         defaultPaymentMethodId: null,
         pagination: 0,
         showShopDescWithListing: null,
         showRefundPolicyWithListing: 0,
         alertQuantity: 0,
-        digitalGoodsOnly: false,
+        digitalGoodsOnly: 0,
         defaultWarehouseId: 0,
         defaultSupplierId: 0,
-        defaultPackagingIds: false,
-        notifyNewMessage: false,
-        notifyAlertQuantity: false,
-        notifyInventoryOut: false,
-        notifyNewOrder: false,
-        notifyAbandonedCheckout: false,
-        notifyNewDisput: false,
-        enableLiveChat: false,
-        notifyNewChat: false,
+        defaultPackagingIds: 0,
+        notifyNewMessage: 0,
+        notifyAlertQuantity: 0,
+        notifyInventoryOut: 0,
+        notifyNewOrder: 0,
+        notifyAbandonedCheckout: 0,
+        notifyNewDisput: 0,
+        enableLiveChat: 0,
+        notifyNewChat: 0,
         // maintenanceMode: false,
         // pendingVerification: false,
         // createdAt: DateTime(1990, 1, 1, 0, 0, 0, 0, 0),

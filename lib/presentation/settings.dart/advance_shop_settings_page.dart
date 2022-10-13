@@ -8,8 +8,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
+import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
+import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
+import 'package:zcart_seller/domain/app/settings/payment_method_model.dart';
+import 'package:zcart_seller/domain/app/settings/update_advance_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
+import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
+import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
+import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -49,12 +57,13 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
     final orderHandlingCostController = useTextEditingController();
     final paginationController = useTextEditingController();
 
-    final activeEcommerceController = useTextEditingController();
-    final payOnlineController = useTextEditingController();
-    final payInPersonController = useTextEditingController();
+    // final activeEcommerceController = useTextEditingController();
+    // final payOnlineController = useTextEditingController();
+    // final payInPersonController = useTextEditingController();
 
     final autoArchiveOrder = useState(false);
     final showShopDescriptionWithListing = useState(false);
+    final showRefundPolicyWithListing = useState(false);
     final autoArchiveOrderController = useState(false);
     final digitalGoodsOnly = useState(false);
     final defaultPackagingIds = useState(false);
@@ -71,9 +80,32 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final buttonPressed = useState(false);
 
+    final List<TaxModel> taxList =
+        ref.watch(taxProvider.select((value) => value.taxList));
+    final ValueNotifier<TaxModel> selectedTax = useState(taxList[0]);
+
+    final List<SupplierModel> supplierList =
+        ref.watch(supplierProvider.select((value) => value.allSuppliers));
+    final ValueNotifier<SupplierModel> selectedSupplier =
+        useState(supplierList[0]);
+
+    final List<WarehouseModel> warehouseList =
+        ref.watch(warehouseProvider.select((value) => value.warehouseItemList));
+    final ValueNotifier<WarehouseModel> selectedWarehouse =
+        useState(warehouseList[0]);
+
+    const List<PaymentMethodModel> paymentMethodList = [
+      PaymentMethodModel(id: 1, title: 'Cash On Delivery'),
+      PaymentMethodModel(id: 2, title: 'Bank Wire Transfer'),
+      PaymentMethodModel(id: 3, title: 'PayPal Express Checkout'),
+      PaymentMethodModel(id: 4, title: 'Stripe'),
+    ];
+    final ValueNotifier<PaymentMethodModel> selectedPaymentMethod =
+        useState(paymentMethodList[0]);
+
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        alertQuanityController.text = next.advanceShopSettings.alertQuantity;
+        alertQuanityController.text = next.advanceShopSettings.alertQuantity.toString();
         supportPhoneController.text = next.advanceShopSettings.supportPhone;
         supportPhoneTollFreeController.text =
             next.advanceShopSettings.supportPhoneTollFree;
@@ -94,21 +126,29 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
             next.advanceShopSettings.defaultTaxId.toString();
         orderHandlingCostController.text =
             next.advanceShopSettings.orderHandlingCost;
-        activeEcommerceController.text =
-            next.advanceShopSettings.activeEcommerce.toString();
-        payOnlineController.text =
-            next.advanceShopSettings.payOnline.toString();
-        payInPersonController.text =
-            next.advanceShopSettings.payInPerson.toString();
+        // activeEcommerceController.text =
+        //     next.advanceShopSettings.activeEcommerce.toString();
+        // payOnlineController.text =
+        //     next.advanceShopSettings.payOnline.toString();
+        // payInPersonController.text =
+        //     next.advanceShopSettings.payInPerson.toString();
 
         autoArchiveOrder.value = next.advanceShopSettings.autoArchiveOrder;
         showShopDescriptionWithListing.value =
-            next.advanceShopSettings.showShopDescWithListing;
+            next.advanceShopSettings.showShopDescWithListing == 1
+                ? true
+                : false;
+        showRefundPolicyWithListing.value =
+            next.advanceShopSettings.showRefundPolicyWithListing == 1
+                ? true
+                : false;
         autoArchiveOrderController.value =
             next.advanceShopSettings.autoArchiveOrder;
         digitalGoodsOnly.value = next.advanceShopSettings.digitalGoodsOnly;
         defaultPackagingIds.value =
-            next.advanceShopSettings.defaultPackagingIds;
+            int.tryParse(next.advanceShopSettings.defaultPackagingIds) == 1
+                ? true
+                : false;
         notifyNewMessage.value = next.advanceShopSettings.notifyNewMessage;
         notifyAlertQuantity.value =
             next.advanceShopSettings.notifyAlertQuantity;
@@ -166,21 +206,95 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // INVENTORY
-                      Text('inventory'.tr()),
+                      Text(
+                        'inventory'.tr(),
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                       const Divider(),
                       KTextField(
                         controller: alertQuanityController,
                         lebelText: 'order_number_prefix'.tr(),
                         numberFormatters: true,
                       ),
+                      SizedBox(height: 10.h),
+                      Text('default_supplier'.tr()),
+                      SizedBox(height: 10.h),
+                      SizedBox(
+                        height: 50.h,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(width: 1.w),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.grey.shade800),
+                            isExpanded: true,
+                            value: selectedSupplier.value,
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            items: supplierList
+                                .map<DropdownMenuItem<SupplierModel>>(
+                                    (SupplierModel value) {
+                              return DropdownMenuItem<SupplierModel>(
+                                value: value,
+                                child: Text(
+                                  value.name ?? '',
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (SupplierModel? newValue) {
+                              selectedSupplier.value = newValue!;
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      Text('default_warehouse'.tr()),
+                      SizedBox(height: 10.h),
+                      SizedBox(
+                        height: 50.h,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(width: 1.w),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.grey.shade800),
+                            isExpanded: true,
+                            value: selectedWarehouse.value,
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            items: warehouseList
+                                .map<DropdownMenuItem<WarehouseModel>>(
+                                    (WarehouseModel value) {
+                              return DropdownMenuItem<WarehouseModel>(
+                                value: value,
+                                child: Text(
+                                  value.name,
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (WarehouseModel? newValue) {
+                              selectedWarehouse.value = newValue!;
+                            },
+                          ),
+                        ),
+                      ),
                       SizedBox(height: 30.h),
 
-                      // TODO: default supplier
-                      // TODO: default warehouse
-                      // TODO: default packaging
-
                       // ORDER
-                      Text('order'.tr()),
+                      Text(
+                        'order'.tr(),
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                       const Divider(),
                       KTextField(
                         controller: orderNumerPrefixController,
@@ -192,8 +306,79 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                         lebelText: 'order_number_suffix'.tr(),
                       ),
                       SizedBox(height: 10.h),
-                      // TODO: default payment method
-                      // TODO: default tax
+                      Text(
+                        'default_payment_method'.tr(),
+                      ),
+                      SizedBox(height: 10.h),
+                      SizedBox(
+                        height: 50.h,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(width: 1.w),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.grey.shade800),
+                            isExpanded: true,
+                            value: selectedPaymentMethod.value,
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            items: paymentMethodList
+                                .map<DropdownMenuItem<PaymentMethodModel>>(
+                                    (PaymentMethodModel value) {
+                              return DropdownMenuItem<PaymentMethodModel>(
+                                value: value,
+                                child: Text(
+                                  value.title,
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (PaymentMethodModel? newValue) {
+                              selectedPaymentMethod.value = newValue!;
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      const Text('default_tax'),
+                      SizedBox(height: 10.h),
+                      SizedBox(
+                        height: 50.h,
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButtonFormField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(width: 1.w),
+                                borderRadius: BorderRadius.circular(10.r),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.grey.shade800),
+                            isExpanded: true,
+                            value: selectedTax.value,
+                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                            items: taxList.map<DropdownMenuItem<TaxModel>>(
+                                (TaxModel value) {
+                              return DropdownMenuItem<TaxModel>(
+                                value: value,
+                                child: Text(
+                                  value.name,
+                                  style: TextStyle(
+                                      color: Colors.grey.shade700,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (TaxModel? newValue) {
+                              selectedTax.value = newValue!;
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
                       KTextField(
                         controller: orderHandlingCostController,
                         lebelText: 'order_handling_cost'.tr(),
@@ -201,7 +386,10 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       SizedBox(height: 30.h),
 
                       // SUPPORT
-                      Text('support'.tr()),
+                      Text(
+                        'support'.tr(),
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                       const Divider(),
                       SwitchListTile(
                         value: enableLiveChat.value,
@@ -249,16 +437,19 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       ),
                       KMultiLineTextField(
                         controller: returnRefundController,
-                        lebelText: '${'email'.tr()} *',
+                        lebelText: '${'return_and_refund_policy'.tr()} *',
                         maxLines: 4,
                         validator: (text) => ValidatorLogic.requiredField(text,
-                            fieldName: 'email'.tr()),
+                            fieldName: 'return_and_refund_policy'.tr()),
                       ),
 
                       SizedBox(height: 30.h),
 
                       // VIEWS
-                      Text('views'.tr()),
+                      Text(
+                        'views'.tr(),
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                       const Divider(),
 
                       SizedBox(height: 10.h),
@@ -266,6 +457,20 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                         controller: paginationController,
                         lebelText: 'pagination'.tr(),
                         numberFormatters: true,
+                      ),
+                      SizedBox(height: 10.h),
+                      SwitchListTile(
+                        value: showShopDescriptionWithListing.value,
+                        onChanged: (value) =>
+                            showShopDescriptionWithListing.value = value,
+                        title: Text('show_description_with_listing'.tr()),
+                      ),
+                      SizedBox(height: 10.h),
+                      SwitchListTile(
+                        value: showRefundPolicyWithListing.value,
+                        onChanged: (value) =>
+                            showRefundPolicyWithListing.value = value,
+                        title: Text('show_refund_policy_with_listing'.tr()),
                       ),
 
                       SizedBox(height: 30.h),
@@ -329,25 +534,71 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                           TextButton(
                             onPressed: () {
                               if (formKey.currentState?.validate() ?? false) {
-                                // final basicSettings =
-                                //     UpdateBasicShopSettingsModel(
-                                //   shopId: shopId,
-                                //   name: nameController.text,
-                                //   slug: nameController.text
-                                //       .toLowerCase()
-                                //       .replaceAll(RegExp(r' '), '-'),
-                                //   legalName: legalNameController.text,
-                                //   email: emailController.text,
-                                //   description: descriptionController.text,
-                                // );
-                                // ref
-                                //     .read(shopSettingsProvider.notifier)
-                                //     .updateBasicShopSettings(
-                                //         basicSettingsInfo: basicSettings,
-                                //         shopId: shopId);
-                                // buttonPressed.value = true;
-
-                                // Navigator.of(context).pop();
+                                final advanceSettings =
+                                    UpdateAdvanceShopSettingsModel(
+                                  shopId: shopId,
+                                  activeEcommerce: 0,
+                                  alertQuantity: int.tryParse(
+                                          alertQuanityController.text) ??
+                                      0,
+                                  autoArchiveOrder:
+                                      autoArchiveOrder.value ? 1 : 0,
+                                  defaultEmailSenderName:
+                                      defaultEmailSenderNameController.text,
+                                  defaultPackagingIds:
+                                      defaultPackagingIds.value ? 1 : 0,
+                                  defaultPaymentMethodId:
+                                      selectedPaymentMethod.value.id,
+                                  defaultSenderEmailAddress:
+                                      defaultSenderEmailController.text,
+                                  defaultSupplierId: selectedSupplier.value.id!,
+                                  defaultTaxId: selectedTax.value.id,
+                                  defaultWarehouseId:
+                                      selectedWarehouse.value.id,
+                                  digitalGoodsOnly:
+                                      digitalGoodsOnly.value ? 1 : 0,
+                                  enableLiveChat: enableLiveChat.value ? 1 : 0,
+                                  notifyAbandonedCheckout:
+                                      notifyAbandonedCheckout.value ? 1 : 0,
+                                  notifyAlertQuantity:
+                                      notifyAlertQuantity.value ? 1 : 0,
+                                  notifyInventoryOut:
+                                      notifyInventoryOut.value ? 1 : 0,
+                                  notifyNewChat: notifyNewChat.value ? 1 : 0,
+                                  notifyNewDisput:
+                                      notifyNewDisput.value ? 1 : 0,
+                                  notifyNewMessage:
+                                      notifyNewMessage.value ? 1 : 0,
+                                  notifyNewOrder: notifyNewOrder.value ? 1 : 0,
+                                  orderHandlingCost:
+                                      orderHandlingCostController.text,
+                                  orderNumberPrefix:
+                                      orderNumerPrefixController.text,
+                                  orderNumberSuffix:
+                                      orderNumberSuffixController.text,
+                                  pagination:
+                                      int.tryParse(paginationController.text) ??
+                                          0,
+                                  payInPerson: 0,
+                                  payOnline: 0,
+                                  showRefundPolicyWithListing:
+                                      showRefundPolicyWithListing.value ? 1 : 0,
+                                  showShopDescWithListing:
+                                      showShopDescriptionWithListing.value
+                                          ? 1
+                                          : 0,
+                                  supportAgent: supportAgentController.text,
+                                  supportEmail: supportEmailController.text,
+                                  supportPhone: supportPhoneController.text,
+                                  supportPhoneTollFree:
+                                      supportPhoneTollFreeController.text,
+                                );
+                                ref
+                                    .read(shopSettingsProvider.notifier)
+                                    .updateAdvanceShopSettings(
+                                        advanceSettingsInfo: advanceSettings,
+                                        shopId: shopId);
+                                buttonPressed.value = true;
                               }
                             },
                             child: updateLoading

@@ -10,6 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
+import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -156,8 +158,6 @@ class ShopSettingsPage extends HookConsumerWidget {
                                         basicSettingsInfo: basicSettings,
                                         shopId: shopId);
                                 buttonPressed.value = true;
-
-                                // Navigator.of(context).pop();
                               }
                             },
                             child: updateLoading
