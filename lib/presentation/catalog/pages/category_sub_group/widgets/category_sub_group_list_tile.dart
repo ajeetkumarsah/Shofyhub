@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_list_page.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/delete_category_sub_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/trash_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/edit_category_sub_group_dialog.dart';
 
 class CategorySubgroupListTile extends StatelessWidget {
@@ -51,7 +51,7 @@ class CategorySubgroupListTile extends StatelessWidget {
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => DeleteCategorySubGroupDialog(
+                  builder: (context) => TrashCategorySubGroupDialog(
                         categoryGroupId: categoryGroupId,
                         categorySubGroupId: categorySubGroup.id,
                       ));
@@ -65,7 +65,7 @@ class CategorySubgroupListTile extends StatelessWidget {
             PopupMenuItem(
               value: 2,
               child: Text(
-                "delete".tr(),
+                "trash".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

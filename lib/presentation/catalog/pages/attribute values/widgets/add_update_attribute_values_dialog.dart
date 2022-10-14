@@ -39,6 +39,7 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
 
     final loading = ref.watch(
         attributeValuesProvider(attributeId).select((value) => value.loading));
+        
     ref.listen<AttributeValuesState>(attributeValuesProvider(attributeId),
         (previous, next) {
       if (previous != next && !next.loading) {

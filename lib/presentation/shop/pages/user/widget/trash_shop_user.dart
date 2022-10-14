@@ -1,15 +1,16 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_state.dart';
 
-class DeleteShopUser extends HookConsumerWidget {
+class TrashShopUser extends HookConsumerWidget {
   final int userId;
-  const DeleteShopUser({Key? key, required this.userId}) : super(key: key);
+  const TrashShopUser({Key? key, required this.userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -18,7 +19,7 @@ class DeleteShopUser extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: const Text('User Deleted'),
+            title: Text('item_moved_trash'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -40,7 +41,7 @@ class DeleteShopUser extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Delete User',
+                  'Trash User',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -63,9 +64,9 @@ class DeleteShopUser extends HookConsumerWidget {
         ],
       ),
       contentPadding: EdgeInsets.zero,
-      content: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('Are you sure you want to delete this user?'),
+      content: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -96,8 +97,8 @@ class DeleteShopUser extends HookConsumerWidget {
                           color: Theme.of(context).shadowColor.withOpacity(.5),
                         ),
                       ),
-                      child: const Center(
-                        child: Text('Cancel'),
+                      child:  Center(
+                        child: Text('cancel'.tr()),
                       ),
                     ),
                   ),
@@ -120,7 +121,7 @@ class DeleteShopUser extends HookConsumerWidget {
                             .trashShopUser(userId: userId);
                       },
                       child: Text(
-                        "Delete",
+                        "trash".tr(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).canvasColor,

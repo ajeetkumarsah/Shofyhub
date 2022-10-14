@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category/widget/delete_category_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category/widget/trash_category_dialog.dart';
 
 import 'widget/edit_category_dialog.dart';
 
@@ -65,7 +65,7 @@ class CategoryListTile extends StatelessWidget {
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => DeleteCategoryDialog(
+                  builder: (context) => TrashCategoryDialog(
                       category.categorySubGroupId, category.id));
             }
           },
@@ -77,7 +77,7 @@ class CategoryListTile extends StatelessWidget {
             PopupMenuItem(
               value: 2,
               child: Text(
-                "delete".tr(),
+                "trash".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

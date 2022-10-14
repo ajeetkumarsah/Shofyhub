@@ -8,9 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_state.dart';
 
-class DeleteManufactuerDialog extends HookConsumerWidget {
+class TrashManufactuerDialog extends HookConsumerWidget {
   final int manufactuerId;
-  const DeleteManufactuerDialog({Key? key, required this.manufactuerId})
+  const TrashManufactuerDialog({Key? key, required this.manufactuerId})
       : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class DeleteManufactuerDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: Text('manufactuer_deleted'.tr()),
+            title: Text('item_moved_trash'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -45,7 +45,7 @@ class DeleteManufactuerDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'delete_manufactuer'.tr(),
+                  'trash_manufactuer'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -70,7 +70,7 @@ class DeleteManufactuerDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('are_you_sure_delete_manufacturer'.tr()),
+        child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -134,7 +134,7 @@ class DeleteManufactuerDialog extends HookConsumerWidget {
                                   )),
                             )
                           : Text(
-                              "delete".tr(),
+                              "trash".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,

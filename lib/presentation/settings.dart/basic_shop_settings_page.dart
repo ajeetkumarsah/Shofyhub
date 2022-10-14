@@ -11,6 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
+import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
@@ -35,6 +36,7 @@ class ShopSettingsPage extends HookConsumerWidget {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
+        ref.read(shopUserProvider.notifier).getShopUser();
       });
       return null;
     }, []);
@@ -57,11 +59,12 @@ class ShopSettingsPage extends HookConsumerWidget {
     });
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading && buttonPressed.value) {
-        // Navigator.of(context).pop();
+        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
             title: Text('basic_shop_settings_updated'.tr()),
             animationType: AnimationType.fromTop,
+            autoDismiss: true,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           CherryToast.error(
@@ -92,7 +95,7 @@ class ShopSettingsPage extends HookConsumerWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => const AdvanceShopSettingsPage()));
               },
-              child: const Text('Advance Settings'))
+              child: Text('advance_settings'.tr()))
         ],
       ),
       body: Padding(

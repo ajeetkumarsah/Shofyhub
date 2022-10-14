@@ -63,8 +63,10 @@ class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
           onPressed: () {
             if (isPaid) {
               ref.read(orderDetailsProvider(orderId).notifier).markAsUnpaid();
+              ref.read(orderProvider(null).notifier).getOrders();
             } else {
               ref.read(orderDetailsProvider(orderId).notifier).markAsPaid();
+              ref.read(orderProvider(null).notifier).getOrders();
             }
           },
           child: loading

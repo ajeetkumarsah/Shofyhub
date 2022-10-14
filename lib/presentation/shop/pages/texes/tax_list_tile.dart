@@ -68,13 +68,13 @@ class TaxListTile extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
-            if (index == 1) {
-              showDialog(
-                  context: context,
-                  builder: (context) => UpdateTaxPage(
-                        taxId: taxItem.id,
-                      ));
-            }
+            // if (index == 1) {
+            //   showDialog(
+            //       context: context,
+            //       builder: (context) => UpdateTaxPage(
+            //             taxId: taxItem.id,
+            //           ));
+            // }
             if (index == 2) {
               showDialog(
                   context: context,
@@ -82,10 +82,10 @@ class TaxListTile extends StatelessWidget {
             }
           },
           itemBuilder: (context) => [
-            PopupMenuItem(
-              value: 1,
-              child: Text("edit".tr()),
-            ),
+            // PopupMenuItem(
+            //   value: 1,
+            //   child: Text("edit".tr()),
+            // ),
             PopupMenuItem(
               value: 2,
               child: Text(

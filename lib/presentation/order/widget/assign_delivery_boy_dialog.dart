@@ -22,7 +22,7 @@ class AssigenDelivaryBoyScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final List<DelivaryBoy> delivaryBoyList =
-        ref.watch(delivaryProvider).delivaryBoys;
+        ref.watch(delivaryProvider.select((value) => value.delivaryBoys));
     final ValueNotifier<DelivaryBoy> selectedDelivaryBoy =
         useState(delivaryBoyList[0]);
     ref.listen<OrderState>(orderProvider(null), (previous, next) {

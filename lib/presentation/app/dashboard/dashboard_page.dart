@@ -8,6 +8,7 @@ import 'package:zcart_seller/application/app/dashboard/dashboard_provider.dart';
 import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
+import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
@@ -146,7 +147,7 @@ class DashboardPage extends HookConsumerWidget {
                 ),
                 Expanded(
                   child: TotalInfoWidget(
-                    icon: FontAwesomeIcons.percent,
+                    icon: FontAwesomeIcons.boxOpen,
                     title: 'Latest Refund',
                     color: Colors.pink,
                     value: statistics.latestRefundAmount,

@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
-import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/delete_attribute_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/trash_attribute_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/edit_attributes_dialog.dart';
 
 class AttributeTile extends StatelessWidget {
@@ -66,7 +66,7 @@ class AttributeTile extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) =>
-                      DeleteAttributeDialog(attributeId: attribute.id));
+                      TrashAttributeDialog(attributeId: attribute.id));
             }
           },
           itemBuilder: (context) => [
@@ -77,7 +77,7 @@ class AttributeTile extends StatelessWidget {
             PopupMenuItem(
               value: 2,
               child: Text(
-                "delete".tr(),
+                "trash".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

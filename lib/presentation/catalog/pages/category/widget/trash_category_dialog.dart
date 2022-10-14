@@ -8,21 +8,24 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 
-class DeleteCategoryDialog extends HookConsumerWidget {
+class TrashCategoryDialog extends HookConsumerWidget {
   final int categorySubGroupId;
   final int categoryId;
-  const DeleteCategoryDialog(this.categorySubGroupId, this.categoryId,
+  const TrashCategoryDialog(this.categorySubGroupId, this.categoryId,
       {Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<CategoryState>(categoryProvider(categoryId), (previous, next) {
+    final loading = ref.watch(
+        categoryProvider(categorySubGroupId).select((value) => value.loading));
+
+    ref.listen<CategoryState>(categoryProvider(categorySubGroupId), (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: Text('category_deleted'.tr()),
+            title: Text('item_moved_trash'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -36,9 +39,6 @@ class DeleteCategoryDialog extends HookConsumerWidget {
       }
     });
 
-    final loading = ref.watch(
-        categoryProvider(categorySubGroupId).select((value) => value.loading));
-
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -49,7 +49,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'delete_category'.tr(),
+                  'trash_category'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -74,7 +74,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('are_you_sure_delete_category'.tr()),
+        child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -127,7 +127,6 @@ class DeleteCategoryDialog extends HookConsumerWidget {
                         ref
                             .read(categoryProvider(categorySubGroupId).notifier)
                             .trashcategory(categoryId);
-                        Navigator.of(context).pop();
                       },
                       child: loading
                           ? const Center(
@@ -139,7 +138,7 @@ class DeleteCategoryDialog extends HookConsumerWidget {
                                   )),
                             )
                           : Text(
-                              "delete".tr(),
+                              "trash".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,

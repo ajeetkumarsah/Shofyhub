@@ -8,10 +8,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_provider.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.dart';
 
-class DeleteAttributeDialog extends HookConsumerWidget {
+class TrashAttributeDialog extends HookConsumerWidget {
   final int attributeId;
 
-  const DeleteAttributeDialog({
+  const TrashAttributeDialog({
     Key? key,
     required this.attributeId,
   }) : super(key: key);
@@ -23,7 +23,7 @@ class DeleteAttributeDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: Text('attribute_deleted'.tr()),
+            title: Text('item_moved_trash'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -48,7 +48,7 @@ class DeleteAttributeDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'delete_attribute'.tr(),
+                  'trash_attribute'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -73,7 +73,7 @@ class DeleteAttributeDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('are_sure_delete_attribute'.tr()),
+        child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -137,7 +137,7 @@ class DeleteAttributeDialog extends HookConsumerWidget {
                                   )),
                             )
                           : Text(
-                              "delete".tr(),
+                              "trash".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,

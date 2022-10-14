@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,21 +80,21 @@ class DelivaryBoyPage extends HookConsumerWidget {
                             if (index2 == 2) {
                               showDialog(
                                   context: context,
-                                  builder: (context) => DeleteDelivaryDialog(
+                                  builder: (context) => TrashDelivaryDialog(
                                         delivaryBoyId:
                                             delivaryBoyList[index].id,
                                       ));
                             }
                           },
                           itemBuilder: (context) => [
-                            const PopupMenuItem(
+                            PopupMenuItem(
                               value: 1,
-                              child: Text("Edit"),
+                              child: Text("edit".tr()),
                             ),
-                            const PopupMenuItem(
+                            PopupMenuItem(
                               value: 2,
                               child: Text(
-                                "Delete",
+                                "trash".tr(),
                                 style: TextStyle(color: Colors.red),
                               ),
                             )

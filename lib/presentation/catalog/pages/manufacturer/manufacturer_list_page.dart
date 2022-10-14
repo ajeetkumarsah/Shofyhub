@@ -7,7 +7,7 @@ import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_p
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/create_manufactuerer_page.dart';
-import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/delete_manufacturer_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/trash_manufacturer_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/edit_manufactuer_page.dart';
 
 class ManufacturerListPage extends HookConsumerWidget {
@@ -90,7 +90,7 @@ class ManufacturerListPage extends HookConsumerWidget {
                                 showDialog(
                                     context: context,
                                     builder: (context) =>
-                                        DeleteManufactuerDialog(
+                                        TrashManufactuerDialog(
                                             manufactuerId:
                                                 manufacturerList[index].id));
                               }
@@ -103,7 +103,7 @@ class ManufacturerListPage extends HookConsumerWidget {
                               PopupMenuItem(
                                 value: 2,
                                 child: Text(
-                                  "delete".tr(),
+                                  "trash".tr(),
                                   style: const TextStyle(color: Colors.red),
                                 ),
                               )

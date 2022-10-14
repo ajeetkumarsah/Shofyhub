@@ -49,7 +49,7 @@ class ProductTile extends StatelessWidget {
             PopupMenuItem(
               value: 2,
               child: Text(
-                "delete".tr(),
+                "trash".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

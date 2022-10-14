@@ -52,7 +52,7 @@ class AttributeValuesPage extends HookConsumerWidget {
                   ));
         },
         label: Text(
-          'add_attribute'.tr(),
+          'add_attribute_value'.tr(),
         ),
         icon: const Icon(Icons.add),
       ),

@@ -25,10 +25,11 @@ class EditManufactuererPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     useEffect(() {
-      ref
-          .read(manufacturerDetailsProvider(manufacturerId).notifier)
-          .getManufacturerDetails();
-
+      Future.delayed(const Duration(milliseconds: 100), () {
+        ref
+            .read(manufacturerDetailsProvider(manufacturerId).notifier)
+            .getManufacturerDetails();
+      });
       return null;
     }, []);
     final IList<KeyValueData> countryList =

@@ -5,25 +5,30 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_provider.dart';
-import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_state.dart';
+import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
+import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
 
-class DeleteAttributeValuesDialog extends HookConsumerWidget {
-  final int attributeId;
-  final int attributeValueId;
-  const DeleteAttributeValuesDialog(
-      {Key? key, required this.attributeId, required this.attributeValueId})
-      : super(key: key);
+class TrashCategorySubGroupDialog extends HookConsumerWidget {
+  final int categoryGroupId;
+  final int categorySubGroupId;
+
+  const TrashCategorySubGroupDialog({
+    Key? key,
+    required this.categorySubGroupId,
+    required this.categoryGroupId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<AttributeValuesState>(attributeValuesProvider(attributeId),
+    final loading = ref.watch(categorySubGroupProvider(categoryGroupId)
+        .select((value) => value.loading));
+    ref.listen<CategorySubGroupState>(categorySubGroupProvider(categoryGroupId),
         (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: Text('attribute_deleted'.tr()),
+            title: Text('item_moved_trash'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -36,8 +41,6 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
         }
       }
     });
-    final loading = ref.watch(
-        attributeValuesProvider(attributeId).select((value) => value.loading));
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -48,7 +51,7 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'delete_attribute'.tr(),
+                  'trash_category_group'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -73,7 +76,7 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('are_sure_delete_attribute'.tr()),
+        child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -122,11 +125,16 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
-                      onPressed: () {
-                        ref
-                            .read(attributeValuesProvider(attributeId).notifier)
-                            .trashAttributeValue(attributeValueId);
-                      },
+                      onPressed: loading
+                          ? null
+                          : () {
+                              ref
+                                  .read(
+                                      categorySubGroupProvider(categoryGroupId)
+                                          .notifier)
+                                  .trashCategorySubGroup(
+                                      categorySubGroupId: categorySubGroupId);
+                            },
                       child: loading
                           ? const Center(
                               child: SizedBox(
@@ -137,7 +145,7 @@ class DeleteAttributeValuesDialog extends HookConsumerWidget {
                                   )),
                             )
                           : Text(
-                              "delete".tr(),
+                              "trash".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,

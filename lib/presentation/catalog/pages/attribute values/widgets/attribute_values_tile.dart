@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 
 import 'add_update_attribute_values_dialog.dart';
-import 'delete_attribute_value_dialog.dart';
+import 'trash_attribute_value_dialog.dart';
 
 class AttributeValuesTile extends StatelessWidget {
   final AttributeValuesModel atrributeValue;
@@ -47,7 +47,7 @@ class AttributeValuesTile extends StatelessWidget {
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => DeleteAttributeValuesDialog(
+                  builder: (context) => TrashAttributeValuesDialog(
                         attributeId: attributeId,
                         attributeValueId: atrributeValue.id,
                       ));
@@ -61,7 +61,7 @@ class AttributeValuesTile extends StatelessWidget {
             PopupMenuItem(
               value: 2,
               child: Text(
-                "Delete".tr(),
+                "trash".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )
