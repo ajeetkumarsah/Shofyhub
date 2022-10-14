@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_gropu_pagination_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
 
 import 'category_sub_group_model.dart';
@@ -8,8 +9,8 @@ abstract class ICategorySubGroupRepo {
   Future<Either<CleanFailure, CategorySubGroupDetailsModel>>
       getCategorySubGroupDetails({required int categorySubGroupId});
 
-  Future<Either<CleanFailure, List<CategorySubGroupModel>>> getCategorySubGroup(
-      {required int categoryGroupId});
+  Future<Either<CleanFailure, CategorySubGropuPaginationModel>>
+      getCategorySubGroup({required int categoryGroupId, required int page});
 
   Future<Either<CleanFailure, Unit>> createCategorySubgroup(
       {required CreateCategorySubGroupModel createCategorySubGroupModel});

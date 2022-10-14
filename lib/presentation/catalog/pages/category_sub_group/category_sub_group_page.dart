@@ -17,13 +17,30 @@ class CategorySubgroupPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final scrollController = useScrollController();
+
     useEffect(() {
+      scrollController.addListener(
+        () {
+          if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent) {
+            ref
+                .read(categorySubGroupProvider(id).notifier)
+                .getMoreCategorySubGroup();
+          }
+        },
+      );
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(categorySubGroupProvider(id).notifier).getCategorySubGroup();
       });
       return null;
     }, []);
     final state = ref.watch(categorySubGroupProvider(id));
+
+    final categorySubGropuPaginationModel = ref
+        .watch(categorySubGroupProvider(id).notifier)
+        .categorySubGropuPaginationModel;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
@@ -76,13 +93,26 @@ class CategorySubgroupPage extends HookConsumerWidget {
                         .getCategorySubGroup();
                   },
                   child: ListView.separated(
+                    controller: scrollController,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
                     itemCount: state.categorySubGroup.length,
-                    itemBuilder: (context, index) => CategorySubgroupListTile(
-                      categoryGroupId: id,
-                      categorySubGroup: state.categorySubGroup[index],
-                    ),
+                    itemBuilder: (context, index) {
+                      if ((index == state.categorySubGroup.length - 1) &&
+                          state.categorySubGroup.length <
+                              categorySubGropuPaginationModel.meta.total!) {
+                        return const SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                      return CategorySubgroupListTile(
+                        categoryGroupId: id,
+                        categorySubGroup: state.categorySubGroup[index],
+                      );
+                    },
                     separatorBuilder: (context, index) => SizedBox(
                       height: 3.h,
                     ),

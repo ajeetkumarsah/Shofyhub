@@ -38,17 +38,17 @@ class WarehousePage extends HookConsumerWidget {
     final warehouseList = ref.watch(warehouseProvider).warehouseItemList;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Constants.buttonColor,
-        onPressed: () {
-          // Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (context) => CreateNewCategoryPage(
-          //           categorySubgroupId: categorySubGroupId,
-          //         )));
-        },
-        label: Text('add_warehouse'.tr()),
-        icon: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   backgroundColor: Constants.buttonColor,
+      //   onPressed: () {
+      //     // Navigator.of(context).push(MaterialPageRoute(
+      //     //     builder: (context) => CreateNewCategoryPage(
+      //     //           categorySubgroupId: categorySubGroupId,
+      //     //         )));
+      //   },
+      //   label: Text('add_warehouse'.tr()),
+      //   icon: const Icon(Icons.add),
+      // ),
       body: loading
           ? const Center(
               child: CircularProgressIndicator(),

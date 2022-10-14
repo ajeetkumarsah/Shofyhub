@@ -305,6 +305,7 @@
   "trash_category_group": "Trash Category Group",
   "are_you_sure_trash_this_item": "Are you sure, you want to move this item to trash ?",
   "confirm": "Confirm",
+  "decline": "Decline",
   "item_moved_trash": "Item Moved to Trash",
   "trash_category": "Trash Category",
   "trash_attribute": "Trash Attribute",

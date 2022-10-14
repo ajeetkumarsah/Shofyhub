@@ -25,8 +25,24 @@ class CancellationListTile extends StatelessWidget {
             fontSize: 16.sp,
           ),
         ),
-        subtitle: Text(
-          'Description: ${cancellation.description}',
+        subtitle: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Description: ${cancellation.description}',
+            ),
+            SizedBox(height: 5.h),
+            cancellation.status == 3
+                ? const Text(
+                    'Approved',
+                    style: TextStyle(color: Colors.green),
+                  )
+                : const Text(
+                    'Declined',
+                    style: TextStyle(color: Colors.red),
+                  ),
+          ],
         ),
         trailing: PopupMenuButton(
           tooltip: '',
@@ -35,14 +51,13 @@ class CancellationListTile extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
           icon: const Icon(Icons.more_horiz),
           onSelected: (index2) {
-            if (index2 == 1) {
+            if (cancellation.status == 4) {
               showDialog(
                   context: context,
                   builder: (context) => ApproveCancellationDialog(
                         id: cancellation.orderId,
                       ));
-            }
-            if (index2 == 2) {
+            } else {
               showDialog(
                   context: context,
                   builder: (context) => DeclineCancellationDialog(
@@ -53,15 +68,13 @@ class CancellationListTile extends StatelessWidget {
           itemBuilder: (context) => [
             PopupMenuItem(
               value: 1,
-              child: Text("approve".tr()),
+              child: cancellation.status == 4
+                  ? Text("approve".tr())
+                  : Text(
+                      "decline".tr(),
+                      style: const TextStyle(color: Colors.red),
+                    ),
             ),
-            PopupMenuItem(
-              value: 2,
-              child: Text(
-                "decline".tr(),
-                style: const TextStyle(color: Colors.red),
-              ),
-            )
           ],
         ),
       ),

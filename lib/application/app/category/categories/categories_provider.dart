@@ -58,7 +58,7 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
 
       pageNumber++;
 
-      state = data.fold(
+    state = data.fold(
           (l) => state.copyWith(paginationLoading: false, failure: l), (r) {
         categories.addAll(r.data);
 

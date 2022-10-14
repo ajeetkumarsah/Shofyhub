@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_gropu_pagination_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/create_category_sub_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
@@ -8,8 +9,9 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<CategorySubGroupModel>>> getCategorySubGroup(
-      {required int categoryGroupId}) async {
+  Future<Either<CleanFailure, CategorySubGropuPaginationModel>>
+      getCategorySubGroup(
+          {required int categoryGroupId, required int page}) async {
     return cleanApi.get(
         failureHandler: <CategorySubGroupModel>(int statusCode,
             Map<String, dynamic> responseBody) {
@@ -34,9 +36,8 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
                 CleanFailure(tag: 'category', error: responseBody.toString()));
           }
         },
-        fromData: ((json) => List<CategorySubGroupModel>.from(
-            json['data'].map((e) => CategorySubGroupModel.fromMap(e)))),
-        endPoint: "category-sub-groups?group_id=$categoryGroupId");
+        fromData: ((json) => CategorySubGropuPaginationModel.fromMap(json)),
+        endPoint: "category-sub-groups?group_id=$categoryGroupId&page=$page");
   }
 
   @override

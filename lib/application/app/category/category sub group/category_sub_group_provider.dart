@@ -1,6 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
+import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_gropu_pagination_model.dart';
+import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/create_category_sub_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/i_category_sub_group_repo.dart';
 import 'package:zcart_seller/infrastructure/app/category_management/category%20sub%20group/category_sub_group_repo.dart';
@@ -17,14 +19,56 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
   CategorySubGroupNotifier(this.id, this.subGroupRepo)
       : super(CategorySubGroupState.init());
 
+  CategorySubGropuPaginationModel categorySubGropuPaginationModel =
+      CategorySubGropuPaginationModel.init();
+  List<CategorySubGroupModel> items = [];
+  int pageNumber = 1;
+
   getCategorySubGroup() async {
+    pageNumber = 1;
+    items = [];
+
     state = state.copyWith(loading: true);
-    final data = await subGroupRepo.getCategorySubGroup(categoryGroupId: id);
-    state = data.fold(
-        (l) => state.copyWith(loading: false, failure: l),
-        (r) => state.copyWith(
-            loading: false, failure: CleanFailure.none(), categorySubGroup: r));
+    final data = await subGroupRepo.getCategorySubGroup(
+        categoryGroupId: id, page: pageNumber);
+
+    //increase the page no
+    pageNumber++;
+
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      categorySubGropuPaginationModel = r;
+      items.addAll(categorySubGropuPaginationModel.data);
+
+      return state.copyWith(
+        loading: false,
+        categorySubGroup: items,
+        failure: CleanFailure.none(),
+      );
+    });
     Logger.i(data);
+  }
+
+  getMoreCategorySubGroup() async {
+    if (pageNumber == 1 ||
+        pageNumber <= categorySubGropuPaginationModel.meta.lastPage!) {
+      final data = await subGroupRepo.getCategorySubGroup(
+          categoryGroupId: id, page: pageNumber);
+
+      //increase the page no
+      pageNumber++;
+
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        categorySubGropuPaginationModel = r;
+        items.addAll(categorySubGropuPaginationModel.data);
+
+        return state.copyWith(
+          loading: false,
+          categorySubGroup: items,
+          failure: CleanFailure.none(),
+        );
+      });
+      Logger.i(data);
+    }
   }
 
   createCategorySubGroup(

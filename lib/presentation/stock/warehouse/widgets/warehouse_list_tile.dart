@@ -64,10 +64,10 @@ class WarehouseListTile extends StatelessWidget {
             }
           },
           itemBuilder: (context) => [
-            PopupMenuItem(
-              value: 1,
-              child: Text("edit".tr()),
-            ),
+            // PopupMenuItem(
+            //   value: 1,
+            //   child: Text("edit".tr()),
+            // ),
             PopupMenuItem(
               value: 2,
               child: Text(
