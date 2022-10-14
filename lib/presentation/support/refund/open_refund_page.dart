@@ -42,22 +42,37 @@ class OpenRefundPage extends HookConsumerWidget {
                         child: ListTile(
                           tileColor: Colors.white,
                           title: Text(
-                            "Order Id: ${refundList[index].orderId}",
+                            "Order Number: ${refundList[index].orderNumber}",
                             style: TextStyle(
                               color: Colors.grey.shade800,
                               fontWeight: FontWeight.w500,
                               fontSize: 16.sp,
                             ),
                           ),
-                          subtitle: Text(
-                            'Amount: ${refundList[index].amount}',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.grey.shade800,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Amount: ${refundList[index].amount}',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.grey.shade800,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                              Text(
+                                'Status: ${refundList[index].status == 1 ? 'Open' : 'Closed'}',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.grey.shade800,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ],
                           ),
                           trailing: PopupMenuButton(
                             tooltip: '',

@@ -152,16 +152,21 @@ class SignInPage extends HookConsumerWidget {
                     ),
                     SizedBox(height: 40.h),
                     KButton(
-                      onPressed: () {
-                        Logger.i(formKey.currentState?.validate() ?? false);
-                        if (formKey.currentState?.validate() ?? false) {
-                          final body = LogInBody(
-                              email: emailController.text,
-                              password: passwordController.text);
-                          Logger.i(body);
-                          ref.read(authProvider.notifier).login(body: body);
-                        }
-                      },
+                      onPressed: loading
+                          ? null
+                          : () {
+                              Logger.i(
+                                  formKey.currentState?.validate() ?? false);
+                              if (formKey.currentState?.validate() ?? false) {
+                                final body = LogInBody(
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                                Logger.i(body);
+                                ref
+                                    .read(authProvider.notifier)
+                                    .login(body: body);
+                              }
+                            },
                       child: loading
                           ? const Center(
                               child: CircularProgressIndicator(

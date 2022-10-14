@@ -6,6 +6,7 @@ class RefundModel extends Equatable {
   final int id;
   final int shopId;
   final int orderId;
+  final String orderNumber;
   final int orderFulfilled;
   final int returnGoods;
   final String amount;
@@ -15,6 +16,7 @@ class RefundModel extends Equatable {
     required this.id,
     required this.shopId,
     required this.orderId,
+    required this.orderNumber,
     required this.orderFulfilled,
     required this.returnGoods,
     required this.amount,
@@ -26,6 +28,7 @@ class RefundModel extends Equatable {
     int? id,
     int? shopId,
     int? orderId,
+    final String? orderNumber,
     int? orderFulfilled,
     int? returnGoods,
     String? amount,
@@ -36,6 +39,7 @@ class RefundModel extends Equatable {
       id: id ?? this.id,
       shopId: shopId ?? this.shopId,
       orderId: orderId ?? this.orderId,
+      orderNumber: orderNumber ?? this.orderNumber,
       orderFulfilled: orderFulfilled ?? this.orderFulfilled,
       returnGoods: returnGoods ?? this.returnGoods,
       amount: amount ?? this.amount,
@@ -49,6 +53,7 @@ class RefundModel extends Equatable {
       'id': id,
       'shop_id': shopId,
       'order_id': orderId,
+      'order_number': orderNumber,
       'order_fulfilled': orderFulfilled,
       'return_goods': returnGoods,
       'amount': amount,
@@ -62,6 +67,7 @@ class RefundModel extends Equatable {
       id: map['id']?.toInt() ?? 0,
       shopId: map['shop_id']?.toInt() ?? 0,
       orderId: map['order_id']?.toInt() ?? 0,
+      orderNumber: map['order_number'] ?? '',
       orderFulfilled: map['order_fulfilled']?.toInt() ?? 0,
       returnGoods: map['return_goods']?.toInt() ?? 0,
       amount: map['amount'] ?? '',
@@ -86,6 +92,7 @@ class RefundModel extends Equatable {
       id,
       shopId,
       orderId,
+      orderNumber,
       orderFulfilled,
       returnGoods,
       amount,
@@ -98,6 +105,7 @@ class RefundModel extends Equatable {
       id: 0,
       shopId: 0,
       orderId: 0,
+      orderNumber: '',
       orderFulfilled: 0,
       returnGoods: 0,
       amount: '',
