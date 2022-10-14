@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_state.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
-import 'package:zcart_seller/application/app/order/order_state.dart';
 
 class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
   final int orderId;
@@ -62,11 +61,9 @@ class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             if (isPaid) {
-              ref.read(orderDetailsProvider(orderId).notifier).markAsUnpaid();
-              ref.read(orderProvider(null).notifier).getOrders();
+              ref.read(orderDetailsProvider(orderId).notifier).markAsUnpaid(ref);
             } else {
-              ref.read(orderDetailsProvider(orderId).notifier).markAsPaid();
-              ref.read(orderProvider(null).notifier).getOrders();
+              ref.read(orderDetailsProvider(orderId).notifier).markAsPaid(ref);
             }
           },
           child: loading

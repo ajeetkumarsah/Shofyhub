@@ -84,8 +84,8 @@ class OrderGrid extends HookConsumerWidget {
           ),
           StoreReportItems(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => const RefundHome()));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const RefundHome(hasAppbar: true)));
             },
             icon: FontAwesomeIcons.sellcast,
             itemValues: '$totalRefunds',

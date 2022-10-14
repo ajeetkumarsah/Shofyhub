@@ -35,6 +35,7 @@ class DashboardPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
+        ref.read(shopUserProvider.notifier).getShopUser();
         ref.read(orderProvider(null).notifier).getOrders();
         ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
         ref.read(orderProvider(OrderFilter.archived).notifier).getOrders();

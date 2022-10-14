@@ -1,6 +1,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_details_state.dart';
+import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/domain/app/order/i_order_repo.dart';
 import 'package:zcart_seller/infrastructure/app/order/order_repo.dart';
 
@@ -25,22 +26,24 @@ class OrderDetailsNotifier extends StateNotifier<OrderDetailsState> {
     Logger.i(data);
   }
 
-  markAsPaid() async {
+  markAsPaid(WidgetRef ref) async {
     state = state.copyWith(loading: true);
     final data = await orderRepo.markAsPaid(orderId: id);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getOrderDetails();
+    ref.read(orderProvider(null).notifier).getOrders();
   }
 
-  markAsUnpaid() async {
+  markAsUnpaid(WidgetRef ref) async {
     state = state.copyWith(loading: true);
     final data = await orderRepo.markAsUnpaid(orderId: id);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getOrderDetails();
+    ref.read(orderProvider(null).notifier).getOrders();
   }
 
   updateOrderStatus(int orderStatusId, bool notifyCustomer) async {

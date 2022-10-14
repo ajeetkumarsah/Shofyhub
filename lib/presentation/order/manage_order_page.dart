@@ -538,11 +538,11 @@ class ManageOrderPage extends HookConsumerWidget {
                           if (orderDetails.payment_status == "UNPAID") {
                             ref
                                 .read(orderDetailsProvider(id).notifier)
-                                .markAsPaid();
+                                .markAsPaid(ref);
                           } else {
                             ref
                                 .read(orderDetailsProvider(id).notifier)
-                                .markAsUnpaid();
+                                .markAsUnpaid(ref);
                           }
                         },
                         child: Text(

@@ -45,7 +45,7 @@ class OrderTile extends StatelessWidget {
                   Container(
                     height: 20.h,
                     // width: 50.h,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3.r),
                       color: order.paymentStatus == 'PAID'

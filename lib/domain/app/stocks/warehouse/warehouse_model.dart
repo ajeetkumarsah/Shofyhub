@@ -74,6 +74,16 @@ class WarehouseModel extends Equatable {
     return 'WarehouseModel(id: $id, name: $name, email: $email, incharge: $incharge, businessDays: $businessDays, active: $active, image: $image)';
   }
 
+  factory WarehouseModel.init() => const WarehouseModel(
+        id: 0,
+        name: '',
+        email: '',
+        incharge: '',
+        businessDays: [],
+        active: false,
+        image: '',
+      );
+
   @override
   List<Object> get props {
     return [

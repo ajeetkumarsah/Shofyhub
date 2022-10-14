@@ -166,22 +166,27 @@ class InitiateRefundPage extends HookConsumerWidget {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         primary: Constants.buttonColor),
-                    onPressed: () {
-                      if (formKey.currentState?.validate() ?? false) {
-                        ref.read(refundProvider.notifier).initiateRefund(
-                              amount: amountController.text,
-                              description: descriptionController.text,
-                              notifyCustomer: notify.value == true ? 1 : 0,
-                              orderFulfilled:
-                                  fullfilledOrder.value == true ? 'on' : 'off',
-                              returnGoods:
-                                  refundGood.value == true ? 'on' : 'off',
-                              orderId: orderId,
-                              shopId: shopId,
-                              status: selectedRefundStatus.value.id,
-                            );
-                      }
-                    },
+                    onPressed: loading
+                        ? null
+                        : () {
+                            if (formKey.currentState?.validate() ?? false) {
+                              ref.read(refundProvider.notifier).initiateRefund(
+                                    amount: amountController.text,
+                                    description: descriptionController.text,
+                                    notifyCustomer:
+                                        notify.value == true ? 1 : 0,
+                                    orderFulfilled:
+                                        fullfilledOrder.value == true
+                                            ? 'on'
+                                            : 'off',
+                                    returnGoods:
+                                        refundGood.value == true ? 'on' : 'off',
+                                    orderId: orderId,
+                                    shopId: shopId,
+                                    status: selectedRefundStatus.value.id,
+                                  );
+                            }
+                          },
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 50.h,

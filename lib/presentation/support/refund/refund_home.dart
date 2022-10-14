@@ -1,12 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/support/refund/close_refund_page.dart';
 import 'package:zcart_seller/presentation/support/refund/open_refund_page.dart';
 
 class RefundHome extends StatelessWidget {
-  const RefundHome({Key? key}) : super(key: key);
+  const RefundHome({Key? key, this.hasAppbar = false}) : super(key: key);
+  final bool hasAppbar;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,20 @@ class RefundHome extends StatelessWidget {
         valueListenable: RefundUtility.index,
         builder: (context, value, child) {
           return Scaffold(
+            appBar: !hasAppbar
+                ? const PreferredSize(
+                    preferredSize: Size.fromHeight(0), child: SizedBox())
+                : AppBar(
+                    toolbarHeight: 60.h,
+                    backgroundColor: Constants.appbarColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(22.r),
+                      ),
+                    ),
+                    title: Text('refund'.tr()),
+                    elevation: 0,
+                  ),
             body: IndexedStack(
               index: RefundUtility.index.value,
               children: screens,

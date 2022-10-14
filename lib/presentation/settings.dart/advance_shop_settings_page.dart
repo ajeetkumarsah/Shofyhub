@@ -69,7 +69,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
     final showRefundPolicyWithListing = useState(false);
     final autoArchiveOrderController = useState(false);
     final digitalGoodsOnly = useState(false);
-    final defaultPackagingIds = useState(false);
+    // final defaultPackagingIds = useState(false);
     final notifyNewMessage = useState(false);
     final notifyAlertQuantity = useState(false);
     final notifyInventoryOut = useState(false);
@@ -85,21 +85,27 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
 
     final List<TaxModel> taxList =
         ref.watch(taxProvider.select((value) => value.taxList));
-    final ValueNotifier<TaxModel> selectedTax = useState(taxList[0]);
+    final ValueNotifier<TaxModel> selectedTax =
+        taxList.isEmpty ? useState(TaxModel.init()) : useState(taxList[0]);
 
     final List<ShopUsersModel> agentList =
         ref.watch(shopUserProvider.select((value) => value.getShopUser));
-    final ValueNotifier<ShopUsersModel> selectedAgent = useState(agentList[0]);
+    final ValueNotifier<ShopUsersModel> selectedAgent = agentList.isEmpty
+        ? useState(ShopUsersModel.init())
+        : useState(agentList[0]);
 
     final List<SupplierModel> supplierList =
         ref.watch(supplierProvider.select((value) => value.allSuppliers));
-    final ValueNotifier<SupplierModel> selectedSupplier =
-        useState(supplierList[0]);
+    final ValueNotifier<SupplierModel> selectedSupplier = supplierList.isEmpty
+        ? useState(SupplierModel.init())
+        : useState(supplierList[0]);
 
     final List<WarehouseModel> warehouseList =
         ref.watch(warehouseProvider.select((value) => value.warehouseItemList));
     final ValueNotifier<WarehouseModel> selectedWarehouse =
-        useState(warehouseList[0]);
+        warehouseList.isEmpty
+            ? useState(WarehouseModel.init())
+            : useState(warehouseList[0]);
 
     const List<PaymentMethodModel> paymentMethodList = [
       PaymentMethodModel(id: 1, title: 'Cash On Delivery'),
@@ -119,26 +125,36 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
             next.advanceShopSettings.supportPhoneTollFree;
         supportEmailController.text = next.advanceShopSettings.supportEmail;
         // supportAgentController.text = next.advanceShopSettings.supportAgent;
-        selectedAgent.value = agentList
-            .where((e) => e.id == next.advanceShopSettings.supportAgent)
-            .toList()[0];
+        selectedAgent.value = agentList.isEmpty
+            ? ShopUsersModel.init()
+            : agentList
+                .where((e) => e.id == next.advanceShopSettings.supportAgent)
+                .toList()[0];
 
         selectedPaymentMethod.value = paymentMethodList
             .where(
                 (e) => e.id == next.advanceShopSettings.defaultPaymentMethodId)
             .toList()[0];
 
-        selectedWarehouse.value = warehouseList
-            .where((e) => e.id == next.advanceShopSettings.defaultWarehouseId)
-            .toList()[0];
+        selectedWarehouse.value = warehouseList.isEmpty
+            ? WarehouseModel.init()
+            : warehouseList
+                .where(
+                    (e) => e.id == next.advanceShopSettings.defaultWarehouseId)
+                .toList()[0];
 
-        selectedSupplier.value = supplierList
-            .where((e) => e.id == next.advanceShopSettings.defaultSupplierId)
-            .toList()[0];
+        selectedSupplier.value = supplierList.isEmpty
+            ? SupplierModel.init()
+            : supplierList
+                .where(
+                    (e) => e.id == next.advanceShopSettings.defaultSupplierId)
+                .toList()[0];
 
-        selectedTax.value = taxList
-            .where((e) => e.id == next.advanceShopSettings.defaultTaxId)
-            .toList()[0];
+        selectedTax.value = taxList.isEmpty
+            ? TaxModel.init()
+            : taxList
+                .where((e) => e.id == next.advanceShopSettings.defaultTaxId)
+                .toList()[0];
 
         paginationController.text =
             next.advanceShopSettings.pagination.toString();
@@ -174,10 +190,10 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
         autoArchiveOrderController.value =
             next.advanceShopSettings.autoArchiveOrder;
         digitalGoodsOnly.value = next.advanceShopSettings.digitalGoodsOnly;
-        defaultPackagingIds.value =
-            int.tryParse(next.advanceShopSettings.defaultPackagingIds) == 1
-                ? true
-                : false;
+        // defaultPackagingIds.value =
+        //     int.tryParse(next.advanceShopSettings.defaultPackagingIds) == 1
+        //         ? true
+        //         : false;
         notifyNewMessage.value = next.advanceShopSettings.notifyNewMessage;
         notifyAlertQuantity.value =
             next.advanceShopSettings.notifyAlertQuantity;
@@ -248,75 +264,83 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       SizedBox(height: 10.h),
                       Text('default_supplier'.tr()),
                       SizedBox(height: 10.h),
-                      SizedBox(
-                        height: 50.h,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 1.w),
-                                borderRadius: BorderRadius.circular(10.r),
+                      supplierList.isEmpty
+                          ? const Text(
+                              'No supplier found. Please add a Supplier')
+                          : SizedBox(
+                              height: 50.h,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButtonFormField(
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(width: 1.w),
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                  ),
+                                  style: TextStyle(color: Colors.grey.shade800),
+                                  isExpanded: true,
+                                  value: selectedSupplier.value,
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_rounded),
+                                  items: supplierList
+                                      .map<DropdownMenuItem<SupplierModel>>(
+                                          (SupplierModel value) {
+                                    return DropdownMenuItem<SupplierModel>(
+                                      value: value,
+                                      child: Text(
+                                        value.name ?? '',
+                                        style: TextStyle(
+                                            color: Colors.grey.shade700,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (SupplierModel? newValue) {
+                                    selectedSupplier.value = newValue!;
+                                  },
+                                ),
                               ),
                             ),
-                            style: TextStyle(color: Colors.grey.shade800),
-                            isExpanded: true,
-                            value: selectedSupplier.value,
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            items: supplierList
-                                .map<DropdownMenuItem<SupplierModel>>(
-                                    (SupplierModel value) {
-                              return DropdownMenuItem<SupplierModel>(
-                                value: value,
-                                child: Text(
-                                  value.name ?? '',
-                                  style: TextStyle(
-                                      color: Colors.grey.shade700,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (SupplierModel? newValue) {
-                              selectedSupplier.value = newValue!;
-                            },
-                          ),
-                        ),
-                      ),
                       SizedBox(height: 10.h),
                       Text('default_warehouse'.tr()),
                       SizedBox(height: 10.h),
-                      SizedBox(
-                        height: 50.h,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 1.w),
-                                borderRadius: BorderRadius.circular(10.r),
+                      warehouseList.isEmpty
+                          ? const Text(
+                              'No warehouse item found. Please add warehouse')
+                          : SizedBox(
+                              height: 50.h,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButtonFormField(
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(width: 1.w),
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                  ),
+                                  style: TextStyle(color: Colors.grey.shade800),
+                                  isExpanded: true,
+                                  value: selectedWarehouse.value,
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_rounded),
+                                  items: warehouseList
+                                      .map<DropdownMenuItem<WarehouseModel>>(
+                                          (WarehouseModel value) {
+                                    return DropdownMenuItem<WarehouseModel>(
+                                      value: value,
+                                      child: Text(
+                                        value.name,
+                                        style: TextStyle(
+                                            color: Colors.grey.shade700,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (WarehouseModel? newValue) {
+                                    selectedWarehouse.value = newValue!;
+                                  },
+                                ),
                               ),
                             ),
-                            style: TextStyle(color: Colors.grey.shade800),
-                            isExpanded: true,
-                            value: selectedWarehouse.value,
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            items: warehouseList
-                                .map<DropdownMenuItem<WarehouseModel>>(
-                                    (WarehouseModel value) {
-                              return DropdownMenuItem<WarehouseModel>(
-                                value: value,
-                                child: Text(
-                                  value.name,
-                                  style: TextStyle(
-                                      color: Colors.grey.shade700,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (WarehouseModel? newValue) {
-                              selectedWarehouse.value = newValue!;
-                            },
-                          ),
-                        ),
-                      ),
                       SizedBox(height: 30.h),
 
                       // ORDER
@@ -375,38 +399,42 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       SizedBox(height: 10.h),
                       const Text('default_tax'),
                       SizedBox(height: 10.h),
-                      SizedBox(
-                        height: 50.h,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 1.w),
-                                borderRadius: BorderRadius.circular(10.r),
+                      taxList.isEmpty
+                          ? const Text('No tax found. Please add a Tax')
+                          : SizedBox(
+                              height: 50.h,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButtonFormField(
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(width: 1.w),
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                  ),
+                                  style: TextStyle(color: Colors.grey.shade800),
+                                  isExpanded: true,
+                                  value: selectedTax.value,
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_rounded),
+                                  items: taxList
+                                      .map<DropdownMenuItem<TaxModel>>(
+                                          (TaxModel value) {
+                                    return DropdownMenuItem<TaxModel>(
+                                      value: value,
+                                      child: Text(
+                                        value.name,
+                                        style: TextStyle(
+                                            color: Colors.grey.shade700,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (TaxModel? newValue) {
+                                    selectedTax.value = newValue!;
+                                  },
+                                ),
                               ),
                             ),
-                            style: TextStyle(color: Colors.grey.shade800),
-                            isExpanded: true,
-                            value: selectedTax.value,
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            items: taxList.map<DropdownMenuItem<TaxModel>>(
-                                (TaxModel value) {
-                              return DropdownMenuItem<TaxModel>(
-                                value: value,
-                                child: Text(
-                                  value.name,
-                                  style: TextStyle(
-                                      color: Colors.grey.shade700,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (TaxModel? newValue) {
-                              selectedTax.value = newValue!;
-                            },
-                          ),
-                        ),
-                      ),
                       SizedBox(height: 10.h),
                       KTextField(
                         controller: orderHandlingCostController,
@@ -431,39 +459,42 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       SizedBox(height: 10.h),
-                      SizedBox(
-                        height: 50.h,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(width: 1.w),
-                                borderRadius: BorderRadius.circular(10.r),
+                      agentList.isEmpty
+                          ? const Text('No agent found. Please add an User')
+                          : SizedBox(
+                              height: 50.h,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButtonFormField(
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(width: 1.w),
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                  ),
+                                  style: TextStyle(color: Colors.grey.shade800),
+                                  isExpanded: true,
+                                  value: selectedAgent.value,
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_rounded),
+                                  items: agentList
+                                      .map<DropdownMenuItem<ShopUsersModel>>(
+                                          (ShopUsersModel value) {
+                                    return DropdownMenuItem<ShopUsersModel>(
+                                      value: value,
+                                      child: Text(
+                                        value.name,
+                                        style: TextStyle(
+                                            color: Colors.grey.shade700,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (ShopUsersModel? newValue) {
+                                    selectedAgent.value = newValue!;
+                                  },
+                                ),
                               ),
                             ),
-                            style: TextStyle(color: Colors.grey.shade800),
-                            isExpanded: true,
-                            value: selectedAgent.value,
-                            icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                            items: agentList
-                                .map<DropdownMenuItem<ShopUsersModel>>(
-                                    (ShopUsersModel value) {
-                              return DropdownMenuItem<ShopUsersModel>(
-                                value: value,
-                                child: Text(
-                                  value.name,
-                                  style: TextStyle(
-                                      color: Colors.grey.shade700,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (ShopUsersModel? newValue) {
-                              selectedAgent.value = newValue!;
-                            },
-                          ),
-                        ),
-                      ),
                       SizedBox(height: 10.h),
                       KTextField(
                         controller: supportPhoneController,
@@ -608,8 +639,8 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                                         autoArchiveOrder.value ? 1 : 0,
                                     defaultEmailSenderName:
                                         defaultEmailSenderNameController.text,
-                                    defaultPackagingIds:
-                                        defaultPackagingIds.value ? 1 : 0,
+                                    // defaultPackagingIds:
+                                    //     defaultPackagingIds.value ? 1 : 0,
                                     defaultPaymentMethodId:
                                         selectedPaymentMethod.value.id,
                                     defaultSenderEmailAddress:

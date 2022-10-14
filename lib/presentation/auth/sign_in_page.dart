@@ -25,7 +25,7 @@ class SignInPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final passwordController = useTextEditingController(text: '123456');
-    final emailController = useTextEditingController(text: 'merchant@demo.com');
+    final emailController = useTextEditingController(text: 'merchant2@demo.com');
     final showPassword = useState(false);
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {

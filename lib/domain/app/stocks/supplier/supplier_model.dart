@@ -45,6 +45,15 @@ class SupplierModel extends Equatable {
   factory SupplierModel.fromJson(String source) =>
       SupplierModel.fromMap(json.decode(source));
 
+  factory SupplierModel.init() => const SupplierModel(
+        active: false,
+        contactPerson: '',
+        email: '',
+        id: 0,
+        image: '',
+        name: '',
+      );
+
   @override
   List<Object?> get props => [
         id,

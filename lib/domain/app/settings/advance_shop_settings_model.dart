@@ -22,7 +22,7 @@ class AdvanceShopSettingsModel extends Equatable {
   final bool digitalGoodsOnly;
   final dynamic defaultWarehouseId;
   final dynamic defaultSupplierId;
-  final String defaultPackagingIds;
+  final dynamic defaultPackagingIds;
   final bool notifyNewMessage;
   final bool notifyAlertQuantity;
   final bool notifyInventoryOut;
@@ -189,7 +189,7 @@ class AdvanceShopSettingsModel extends Equatable {
         digitalGoodsOnly: map["digital_goods_only"] ?? false,
         defaultWarehouseId: map["default_warehouse_id"],
         defaultSupplierId: map["default_supplier_id"],
-        defaultPackagingIds: map["default_packaging_ids"] ?? '',
+        defaultPackagingIds: map["default_packaging_ids"],
         notifyNewMessage: map["notify_new_message"] ?? false,
         notifyAlertQuantity: map["notify_alert_quantity"] ?? false,
         notifyInventoryOut: map["notify_inventory_out"] ?? false,

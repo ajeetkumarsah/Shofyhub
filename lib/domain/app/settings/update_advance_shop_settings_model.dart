@@ -31,7 +31,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
   final int notifyNewDisput;
   final int notifyNewChat;
   final int digitalGoodsOnly;
-  final int defaultPackagingIds;
+  // final int defaultPackagingIds;
   final int enableLiveChat;
   // final String returnRefund;
   // final bool maintenanceMode;
@@ -61,7 +61,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
     required this.digitalGoodsOnly,
     required this.defaultWarehouseId,
     required this.defaultSupplierId,
-    required this.defaultPackagingIds,
+    // required this.defaultPackagingIds,
     required this.notifyNewMessage,
     required this.notifyAlertQuantity,
     required this.notifyInventoryOut,
@@ -109,7 +109,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
     int? notifyNewDisput,
     int? notifyNewChat,
     int? digitalGoodsOnly,
-    int? defaultPackagingIds,
+    // int? defaultPackagingIds,
     int? autoArchiveOrder,
     int? enableLiveChat,
 
@@ -176,7 +176,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
       digitalGoodsOnly: digitalGoodsOnly ?? this.digitalGoodsOnly,
       defaultWarehouseId: defaultWarehouseId ?? this.defaultWarehouseId,
       defaultSupplierId: defaultSupplierId ?? this.defaultSupplierId,
-      defaultPackagingIds: defaultPackagingIds ?? this.defaultPackagingIds,
+      // defaultPackagingIds: defaultPackagingIds ?? this.defaultPackagingIds,
       notifyAlertQuantity: notifyAlertQuantity ?? this.notifyAlertQuantity,
       notifyAbandonedCheckout:
           notifyAbandonedCheckout ?? this.notifyAbandonedCheckout,
@@ -220,7 +220,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
         digitalGoodsOnly: map["digital_goods_only"] ?? false,
         defaultWarehouseId: map["default_warehouse_id"],
         defaultSupplierId: map["default_supplier_id"],
-        defaultPackagingIds: map["default_packaging_ids"] ?? false,
+        // defaultPackagingIds: map["default_packaging_ids"] ?? false,
         notifyNewMessage: map["notify_new_message"] ?? false,
         notifyAlertQuantity: map["notify_alert_quantity"] ?? false,
         notifyInventoryOut: map["notify_inventory_out"] ?? false,
@@ -261,7 +261,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
         digitalGoodsOnly: 0,
         defaultWarehouseId: 0,
         defaultSupplierId: 0,
-        defaultPackagingIds: 0,
+        // defaultPackagingIds: 0,
         notifyNewMessage: 0,
         notifyAlertQuantity: 0,
         notifyInventoryOut: 0,
@@ -302,7 +302,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
         digitalGoodsOnly,
         defaultWarehouseId,
         defaultSupplierId,
-        defaultPackagingIds,
+        // defaultPackagingIds,
         notifyNewMessage,
         notifyAlertQuantity,
         notifyInventoryOut,
