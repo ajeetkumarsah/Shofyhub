@@ -10,14 +10,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_state.dart';
+import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
+import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
+import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
-class CreateTaxPage extends HookConsumerWidget {
-  const CreateTaxPage({Key? key}) : super(key: key);
+class CreateSupplierPage extends HookConsumerWidget {
+  const CreateSupplierPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -27,15 +31,23 @@ class CreateTaxPage extends HookConsumerWidget {
     final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
 
     final nameController = useTextEditingController();
-    final taxRateController = useTextEditingController();
+    final addressLine1Controller = useTextEditingController();
+    final addressLine2Controller = useTextEditingController();
+    final contactPersonController = useTextEditingController();
+    final cityController = useTextEditingController();
+    final descriptionController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final phoneController = useTextEditingController();
+    final urlController = useTextEditingController();
+    final zipCodeController = useTextEditingController();
     final active = useState(true);
 
-    ref.listen<TaxState>(taxProvider, (previous, next) {
+    ref.listen<SupplierState>(supplierProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: Text('tax_added'.tr()),
+            title: Text('supplier_added'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -48,7 +60,8 @@ class CreateTaxPage extends HookConsumerWidget {
         }
       }
     });
-    final loading = ref.watch(taxProvider.select((value) => value.loading));
+    final loading =
+        ref.watch(supplierProvider.select((value) => value.loading));
     final formKey = useMemoized(() => GlobalKey<FormState>());
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +72,7 @@ class CreateTaxPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: Text('add_tax'.tr()),
+        title: Text('add_suppliers'.tr()),
         elevation: 0,
       ),
       body: Padding(
@@ -76,15 +89,29 @@ class CreateTaxPage extends HookConsumerWidget {
                   SizedBox(height: 10.h),
                   KTextField(
                     controller: nameController,
-                    lebelText: 'Name *',
-                    validator: (text) =>
-                        ValidatorLogic.requiredField(text, fieldName: 'Name'),
+                    lebelText: '${'name'.tr()} *',
+                    validator: (text) => ValidatorLogic.requiredField(text,
+                        fieldName: 'name'.tr()),
                   ),
                   SizedBox(height: 10.h),
                   KTextField(
-                    controller: taxRateController,
-                    lebelText: 'Tax Rate',
-                    numberFormatters: true,
+                    controller: emailController,
+                    lebelText: 'email'.tr(),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(height: 10.h),
+                  KTextField(
+                    controller: phoneController,
+                    lebelText: 'phone'.tr(),
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  KMultiLineTextField(
+                    controller: descriptionController,
+                    lebelText: 'description'.tr(),
+                    maxLines: 3,
                   ),
                   SizedBox(
                     height: 10.h,
@@ -93,9 +120,6 @@ class CreateTaxPage extends HookConsumerWidget {
                     height: 50.h,
                     child: DropdownButtonHideUnderline(
                       child: DropdownButtonFormField<KeyValueData?>(
-                        // onTap: () {
-                        //   countryDropdownList.value = countryList;
-                        // },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderSide: BorderSide(width: 1.w),
@@ -128,6 +152,49 @@ class CreateTaxPage extends HookConsumerWidget {
                   SizedBox(
                     height: 10.h,
                   ),
+                  KTextField(
+                    controller: addressLine1Controller,
+                    lebelText: 'address_line_1'.tr(),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  KTextField(
+                    controller: addressLine2Controller,
+                    lebelText: 'address_line_2'.tr(),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  KTextField(
+                    controller: contactPersonController,
+                    lebelText: 'contact_person'.tr(),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  KTextField(
+                    controller: cityController,
+                    lebelText: 'city'.tr(),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  KTextField(
+                    controller: urlController,
+                    lebelText: 'url'.tr(),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  KTextField(
+                    controller: zipCodeController,
+                    lebelText: 'zip_code'.tr(),
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
                   CheckboxListTile(
                       title: Text('active'.tr()),
                       value: active.value,
@@ -156,18 +223,28 @@ class CreateTaxPage extends HookConsumerWidget {
                             ).show(context);
                           } else {
                             if (formKey.currentState?.validate() ?? false) {
-                              final taxInfo = CreateTaxModel(
-                                  name: nameController.text,
-                                  taxrate:
-                                      double.tryParse(taxRateController.text)!,
-                                  countryId: selectedCountry.value != null
-                                      ? selectedCountry.value!.key
-                                      : '',
-                                  stateId: '',
-                                  active: active.value ? 1 : 0);
+                              final supplierInfo = CreateSupplierModel(
+                                name: nameController.text,
+                                email: emailController.text,
+                                phone: phoneController.text,
+                                addressLine1: addressLine1Controller.text,
+                                addressLine2: addressLine2Controller.text,
+                                contactPerson: contactPersonController.text,
+                                city: cityController.text,
+                                description: descriptionController.text,
+                                url: urlController.text,
+                                zipCode: zipCodeController.text,
+                                countryId: selectedCountry.value != null
+                                    ? int.tryParse(selectedCountry.value!.key)!
+                                    : 0,
+                                // stateId: 0,
+                                active: active.value ? 1 : 0,
+                              );
+
                               ref
-                                  .read(taxProvider.notifier)
-                                  .createNewTAx(taxInfo: taxInfo);
+                                  .read(supplierProvider.notifier)
+                                  .createNewSupplier(
+                                      supplierInfo: supplierInfo);
                             }
                           }
                         },

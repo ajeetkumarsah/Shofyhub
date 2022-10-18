@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/stock/suppliers/create_supplier_page.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/widgets/supplier_list_tile.dart';
 
 import '../../../application/app/stocks/supplier/supplier_provider.dart';
@@ -42,10 +43,8 @@ class SupplierListPage extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
         onPressed: () {
-          // Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (context) => CreateNewCategoryPage(
-          //           categorySubgroupId: categorySubGroupId,
-          //         )));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const CreateSupplierPage()));
         },
         label: Text('add_suppliers'.tr()),
         icon: const Icon(Icons.add),

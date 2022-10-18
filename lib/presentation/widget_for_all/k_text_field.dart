@@ -9,6 +9,7 @@ class KTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Function()? onTap;
   final TextEditingController controller;
+  final TextInputType keyboardType;
   final bool readOnly;
   final String? hintText;
 
@@ -18,6 +19,7 @@ class KTextField extends StatelessWidget {
       required this.lebelText,
       this.prefixIcon,
       this.validator,
+      this.keyboardType = TextInputType.name,
       this.onTap,
       this.suffixIcon,
       this.numberFormatters = false,
@@ -45,8 +47,7 @@ class KTextField extends StatelessWidget {
       readOnly: readOnly,
       onTap: onTap,
       obscureText: obscureText,
-      keyboardType:
-          numberFormatters ? TextInputType.number : TextInputType.name,
+      keyboardType: keyboardType,
       inputFormatters: [
         if (numberFormatters)
           FilteringTextInputFormatter.allow(RegExp('[0-9]')),

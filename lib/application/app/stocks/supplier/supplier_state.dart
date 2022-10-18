@@ -1,5 +1,6 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
+import 'package:zcart_seller/domain/app/stocks/supplier/supplier_details_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
 
 class SupplierState extends Equatable {

@@ -1,6 +1,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/i_supplier_repo.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/supplier_pagination_model.dart';
@@ -94,14 +95,13 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
   getMoreTrashSuppliers() async {
     if (trashPageNumber == 1 ||
         trashPageNumber <= supplierPaginationModel.meta.lastPage!) {
-      final inventoriesData = await supplierRepo.getSuppliers(
+      final data = await supplierRepo.getSuppliers(
           supplierFilter: 'trash', page: trashPageNumber);
 
       //increase the page no
       trashPageNumber++;
 
-      state = inventoriesData
-          .fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
         supplierPaginationModel = r;
         trashSuppliers.addAll(supplierPaginationModel.data);
 
@@ -123,34 +123,24 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
     getAllSuppliers();
   }
 
-  // updateInventory(UpdateInventoryModel updateInventoryModel) async {
-  //   state = state.copyWith(loading: true);
-  //   final quickUpdateData = await supplierRepo.updateInventory(
-  //       updateinventory: updateInventoryModel);
+  createNewSupplier({required CreateSupplierModel supplierInfo}) async {
+    state = state.copyWith(loading: true);
+    final data = await supplierRepo.createSuppliers(supplierInfo);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllSuppliers();
+  }
 
-  //   state = quickUpdateData.fold(
-  //     (l) => state.copyWith(loading: false, failure: l),
-  //     (r) => state.copyWith(
-  //       loading: false,
-  //       failure: CleanFailure.none(),
-  //     ),
-  //   );
-  //   getAllInventories(inventoryFilter: 'active');
-  //   getTrashInventories();
-  // }
-
-  // trashInventory(int inventoryId) async {
-  //   state = state.copyWith(loading: true);
-  //   final quickUpdateData =
-  //       await supplierRepo.moveToTrash(inventoryId: inventoryId);
-
-  //   state = quickUpdateData.fold(
-  //     (l) => state.copyWith(loading: false, failure: l),
-  //     (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
-  //   );
-  //   getAllInventories(inventoryFilter: 'active');
-  //   getTrashInventories();
-  // }
+  updateSupplier(
+      {required CreateSupplierModel supplierInfo,
+      required int supplierId}) async {
+    state = state.copyWith(loading: true);
+    final data = await supplierRepo.updateSupplier(
+        body: supplierInfo, supplierId: supplierId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllSuppliers();
+  }
 
   restoreSupplier(int supplierId) async {
     state = state.copyWith(loading: true);
