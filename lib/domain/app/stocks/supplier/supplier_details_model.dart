@@ -78,7 +78,7 @@ class SupplierDetailsModel extends Equatable {
           city: '',
           zipCode: '',
           country: CountryStateModel.init(),
-          state: '',
+          state: CountryStateModel.init(),
           phone: '',
         ),
         image: '',

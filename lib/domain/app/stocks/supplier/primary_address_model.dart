@@ -10,10 +10,10 @@ class PrimaryAddressModel extends Equatable {
   final String city;
   final String zipCode;
   final CountryStateModel country;
-  dynamic state;
+  final CountryStateModel state;
   final String phone;
 
-  PrimaryAddressModel({
+  const PrimaryAddressModel({
     required this.id,
     required this.addressType,
     required this.addressTitle,
@@ -62,9 +62,9 @@ class PrimaryAddressModel extends Equatable {
         city: json["city"] ?? '',
         zipCode: json["zip_code"] ?? '',
         country: json["country"] != null
-            ? CountryStateModel.fromJson(json["country"])
+            ? CountryStateModel.fromMap(json["country"])
             : CountryStateModel.init(),
-        state: json["state"] ?? '',
+        state: CountryStateModel.fromMap(json["state"]),
         phone: json["phone"] ?? '',
       );
 

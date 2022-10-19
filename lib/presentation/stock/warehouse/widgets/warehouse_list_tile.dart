@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
+import 'package:zcart_seller/presentation/stock/warehouse/edit_warehouse_page.dart';
+import 'package:zcart_seller/presentation/stock/warehouse/warehouse_details_page.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/widgets/trash_warehouse_dialog.dart';
 
 class WarehouseListTile extends StatelessWidget {
@@ -14,6 +16,15 @@ class WarehouseListTile extends StatelessWidget {
     return Card(
       color: Colors.white,
       child: ListTile(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) =>
+                  WarehouseDetailsPage(warehouseId: warehouseItem.id),
+            ),
+          );
+        },
         contentPadding: const EdgeInsets.all(10),
         leading: Container(
           padding: const EdgeInsets.all(10),
@@ -51,11 +62,12 @@ class WarehouseListTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
             if (index == 1) {
-              // showDialog(
-              //     context: context,
-              //     builder: (context) => EditCategoryDialog(
-              //           categoryId: category.id,
-              //         ));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => EditWarehousePage(
+                            warehouseId: warehouseItem.id,
+                          )));
             }
             if (index == 2) {
               showDialog(
@@ -64,10 +76,10 @@ class WarehouseListTile extends StatelessWidget {
             }
           },
           itemBuilder: (context) => [
-            // PopupMenuItem(
-            //   value: 1,
-            //   child: Text("edit".tr()),
-            // ),
+            PopupMenuItem(
+              value: 1,
+              child: Text("edit".tr()),
+            ),
             PopupMenuItem(
               value: 2,
               child: Text(

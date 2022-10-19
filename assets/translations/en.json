@@ -408,5 +408,11 @@
   "tax_moved_trash": "Tax moved to Trash",
   "tax_updated": "Tax Updated",
   "update_tax": "Update Tax",
-  "email": "Email"
+  "email": "Email",
+  "opening_time": "Opening Time",
+  "closing_time": "Closing Time",
+  "select_incharge": "Select Incharge",
+  "warehouse_added": "Warehouse Added",
+  "warehouse_updated": "Warehouse Updated",
+  "update_warehouse": "Update Warehouse"
 }

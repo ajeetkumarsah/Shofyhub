@@ -8,29 +8,33 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
+import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_details_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_details_state.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_details_provider.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_details_state.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
-class EditSupplierPage extends HookConsumerWidget {
-  const EditSupplierPage({Key? key, required this.supplierId})
+class EditWarehousePage extends HookConsumerWidget {
+  const EditWarehousePage({Key? key, required this.warehouseId})
       : super(key: key);
-  final int supplierId;
+  final int warehouseId;
 
   @override
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref
-            .read(supplierDetailsProvider.notifier)
-            .getSupplierDetails(supplierId: supplierId);
+            .read(warehouseDetailsProvider.notifier)
+            .getWarehouseDetails(warehouseId: warehouseId);
       });
       return null;
     }, []);
@@ -40,46 +44,56 @@ class EditSupplierPage extends HookConsumerWidget {
 
     final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
 
+    final List<ShopUsersModel> staffList =
+        ref.watch(shopUserProvider.select((value) => value.getShopUser));
+
+    final ValueNotifier<ShopUsersModel?> selectedStaff = useState(null);
+
     final nameController = useTextEditingController();
     final addressLine1Controller = useTextEditingController();
     final addressLine2Controller = useTextEditingController();
-    final contactPersonController = useTextEditingController();
     final cityController = useTextEditingController();
     final descriptionController = useTextEditingController();
     final emailController = useTextEditingController();
     final phoneController = useTextEditingController();
-    final urlController = useTextEditingController();
     final zipCodeController = useTextEditingController();
+    final openingTimeController = useTextEditingController();
+    final closingTimeController = useTextEditingController();
+    final inchargeIdController = useTextEditingController();
     final active = useState(true);
 
     final buttonPressed = useState(false);
 
     final loading =
-        ref.watch(supplierDetailsProvider.select((value) => value.loading));
+        ref.watch(warehouseDetailsProvider.select((value) => value.loading));
 
     final updateLoading =
         ref.watch(supplierProvider.select((value) => value.loading));
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
-    ref.listen<SupplierDetailsState>(supplierDetailsProvider, (previous, next) {
+    ref.listen<WarehouseDetailsState>(warehouseDetailsProvider,
+        (previous, next) {
       if (previous != next && !next.loading) {
-        nameController.text = next.supplierDetails.name;
+        nameController.text = next.warehouseDetails.name;
         addressLine1Controller.text =
-            next.supplierDetails.primaryAddress.addressLine1;
+            next.warehouseDetails.primaryAddress.addressLine1;
         addressLine2Controller.text =
-            next.supplierDetails.primaryAddress.addressLine2;
-        contactPersonController.text = next.supplierDetails.contactPerson;
-        cityController.text = next.supplierDetails.primaryAddress.city;
-        descriptionController.text = next.supplierDetails.description;
-        emailController.text = next.supplierDetails.email;
-        phoneController.text = next.supplierDetails.primaryAddress.phone;
-        phoneController.text = next.supplierDetails.primaryAddress.phone;
-        urlController.text = next.supplierDetails.url;
-        zipCodeController.text = next.supplierDetails.primaryAddress.zipCode;
-        active.value = next.supplierDetails.active;
+            next.warehouseDetails.primaryAddress.addressLine2;
+        cityController.text = next.warehouseDetails.primaryAddress.city;
+        descriptionController.text = next.warehouseDetails.description;
+        emailController.text = next.warehouseDetails.email;
+        phoneController.text = next.warehouseDetails.primaryAddress.phone;
+        phoneController.text = next.warehouseDetails.primaryAddress.phone;
+        openingTimeController.text = next.warehouseDetails.openingTime;
+        closingTimeController.text = next.warehouseDetails.closingTime;
+        zipCodeController.text = next.warehouseDetails.primaryAddress.zipCode;
+        active.value = next.warehouseDetails.active;
         selectedCountry.value = countryList
             .where((e) =>
-                e.value == next.supplierDetails.primaryAddress.country.name)
+                e.value == next.warehouseDetails.primaryAddress.country.name)
+            .toList()[0];
+        selectedStaff.value = staffList
+            .where((e) => e.id == next.warehouseDetails.incharge.id)
             .toList()[0];
       }
     });
@@ -89,7 +103,7 @@ class EditSupplierPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           CherryToast.info(
-            title: Text('supplier_updated'.tr()),
+            title: Text('warehouse_updated'.tr()),
             animationType: AnimationType.fromTop,
           ).show(context);
         } else if (next.failure != CleanFailure.none()) {
@@ -112,19 +126,19 @@ class EditSupplierPage extends HookConsumerWidget {
             bottom: Radius.circular(22.r),
           ),
         ),
-        title: Text('update_supplier'.tr()),
+        title: Text('update_warehouse'.tr()),
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-            key: formKey,
-            child: SingleChildScrollView(
-              child: loading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Column(
+      body: loading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Padding(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                  key: formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 10.h),
@@ -200,6 +214,44 @@ class EditSupplierPage extends HookConsumerWidget {
                         SizedBox(
                           height: 10.h,
                         ),
+                        SizedBox(
+                          height: 50.h,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField<ShopUsersModel>(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(width: 1.w),
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                              ),
+                              style: TextStyle(color: Colors.grey.shade800),
+                              isExpanded: true,
+                              value: selectedStaff.value,
+                              hint: Text('select_incharge'.tr()),
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
+                              items: staffList
+                                  .map<DropdownMenuItem<ShopUsersModel>>(
+                                      (ShopUsersModel? value) {
+                                return DropdownMenuItem<ShopUsersModel>(
+                                  value: value,
+                                  child: Text(
+                                    value!.name.toString(),
+                                    style: TextStyle(
+                                        color: Colors.grey.shade700,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (ShopUsersModel? newValue) {
+                                selectedStaff.value = newValue;
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         KTextField(
                           controller: addressLine1Controller,
                           lebelText: 'address_line_1'.tr(),
@@ -215,8 +267,43 @@ class EditSupplierPage extends HookConsumerWidget {
                           height: 10.h,
                         ),
                         KTextField(
-                          controller: contactPersonController,
-                          lebelText: 'contact_person'.tr(),
+                          controller: openingTimeController,
+                          lebelText: 'opening_time'.tr(),
+                          readOnly: true,
+                          suffixIcon: const Icon(Icons.calendar_month),
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2101),
+                            );
+                            if (pickedDate != null) {
+                              openingTimeController.text =
+                                  pickedDate.toString();
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        KTextField(
+                          controller: closingTimeController,
+                          lebelText: 'closing_time'.tr(),
+                          readOnly: true,
+                          suffixIcon: const Icon(Icons.calendar_month),
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2101),
+                            );
+                            if (pickedDate != null) {
+                              closingTimeController.text =
+                                  pickedDate.toString();
+                            }
+                          },
                         ),
                         SizedBox(
                           height: 10.h,
@@ -227,10 +314,6 @@ class EditSupplierPage extends HookConsumerWidget {
                         ),
                         SizedBox(
                           height: 10.h,
-                        ),
-                        KTextField(
-                          controller: urlController,
-                          lebelText: 'url'.tr(),
                         ),
                         SizedBox(
                           height: 10.h,
@@ -272,46 +355,39 @@ class EditSupplierPage extends HookConsumerWidget {
                                 } else {
                                   if (formKey.currentState?.validate() ??
                                       false) {
-                                    buttonPressed.value = true;
+                                    // final supplierInfo = CreateSupplierModel(
+                                    //   name: nameController.text,
+                                    //   email: emailController.text,
+                                    //   phone: phoneController.text,
+                                    //   addressLine1: addressLine1Controller.text,
+                                    //   addressLine2: addressLine2Controller.text,
+                                    //   city: cityController.text,
+                                    //   description: descriptionController.text,
+                                    //   zipCode: zipCodeController.text,
+                                    //   countryId: selectedCountry.value != null
+                                    //       ? int.tryParse(selectedCountry.value!.key)!
+                                    //       : 0,
+                                    //   // stateId: 0,
+                                    //   active: active.value ? 1 : 0,
+                                    // );
 
-                                    final supplierInfo = CreateSupplierModel(
-                                      name: nameController.text,
-                                      email: emailController.text,
-                                      phone: phoneController.text,
-                                      addressLine1: addressLine1Controller.text,
-                                      addressLine2: addressLine2Controller.text,
-                                      contactPerson:
-                                          contactPersonController.text,
-                                      city: cityController.text,
-                                      description: descriptionController.text,
-                                      url: urlController.text,
-                                      zipCode: zipCodeController.text,
-                                      countryId: selectedCountry.value != null
-                                          ? int.tryParse(
-                                              selectedCountry.value!.key)!
-                                          : 0,
-                                      // stateId: 0,
-                                      active: active.value ? 1 : 0,
-                                    );
-
-                                    ref
-                                        .read(supplierProvider.notifier)
-                                        .updateSupplier(
-                                            supplierInfo: supplierInfo,
-                                            supplierId: supplierId);
+                                    // ref
+                                    //     .read(supplierProvider.notifier)
+                                    //     .createNewSupplier(
+                                    //         supplierInfo: supplierInfo);
                                   }
                                 }
                               },
-                              child: updateLoading
+                              child: loading
                                   ? const CircularProgressIndicator()
-                                  : Text('update'.tr()),
+                                  : Text('add'.tr()),
                             ),
                           ],
                         ),
                       ],
                     ),
-            )),
-      ),
+                  )),
+            ),
     );
   }
 }

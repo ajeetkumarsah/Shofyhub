@@ -1,6 +1,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_state.dart';
+import 'package:zcart_seller/domain/app/stocks/warehouse/create_update_warehouse_model.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/i_warehouse_repo.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_pagination_model.dart';
@@ -63,6 +64,25 @@ class WarehouseNotifier extends StateNotifier<WarehouseState> {
             warehouseItemList: warehouses);
       });
     }
+  }
+
+  createWarehouse({required CreateUpdateWarehouseModel warehouseInfo}) async {
+    state = state.copyWith(loading: true);
+    final data = await warehouseRepo.createWarehouse(warehouseInfo);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getWarehouseItems();
+  }
+
+  updateSupplier(
+      {required CreateUpdateWarehouseModel warehouseInfo,
+      required int warehouseId}) async {
+    state = state.copyWith(loading: true);
+    final data = await warehouseRepo.updateWarehouse(
+        body: warehouseInfo, warehouseId: warehouseId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getWarehouseItems();
   }
 
   trashwarehouse(int warehouseId) async {

@@ -5,6 +5,7 @@ import 'package:zcart_seller/presentation/inventory/inventory_page.dart';
 import 'package:zcart_seller/presentation/inventory/trash%20inventory/trash_inventory_page.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/supplier_list_page.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/supplier_page.dart';
+import 'package:zcart_seller/presentation/stock/warehouse/warehouse_list_page.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/warehouse_page.dart';
 
 class StockHome extends StatelessWidget {

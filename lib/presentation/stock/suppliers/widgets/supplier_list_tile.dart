@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/edit_supplier_page.dart';
+import 'package:zcart_seller/presentation/stock/suppliers/supplier_details_page.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/widgets/trash_supplier_dialog.dart';
 
 class SupplierListTile extends StatelessWidget {
@@ -15,6 +16,14 @@ class SupplierListTile extends StatelessWidget {
     return Card(
       color: Colors.white,
       child: ListTile(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => SupplierDetailsPage(supplierId: supplierItem.id!),
+            ),
+          );
+        },
         contentPadding: const EdgeInsets.all(10),
         leading: Container(
           padding: const EdgeInsets.all(10),
