@@ -13,7 +13,7 @@ class WarehousePage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     const screens = [
       WarehouseListPage(),
-      TrashWareHousePage(),
+      TrashWarehousePage(),
     ];
 
     return ValueListenableBuilder(

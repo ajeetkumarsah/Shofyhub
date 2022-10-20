@@ -5,7 +5,7 @@ import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_pagination_mo
 
 abstract class IWarehouseRepo {
   Future<Either<CleanFailure, WarehousePaginationModel>> getWarehouseItems(
-      {required int page});
+      {required String warehouseFilter, required int page});
 
   Future<Either<CleanFailure, WarehouseDetailsModel>> getWarehouseDetails(
       {required int warehouseId});
@@ -14,4 +14,6 @@ abstract class IWarehouseRepo {
   Future<Either<CleanFailure, Unit>> updateWarehouse(
       {required CreateUpdateWarehouseModel body, required warehouseId});
   Future<Either<CleanFailure, Unit>> trashWarehouse({required int warehouseId});
+  Future<Either<CleanFailure, Unit>> restoreWarehouse({required int warehouseId});
+  Future<Either<CleanFailure, Unit>> deleteWarehouse({required int warehouseId});
 }

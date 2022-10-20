@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
 import 'package:zcart_seller/application/app/dashboard/dashboard_provider.dart';
+import 'package:zcart_seller/application/app/form/business_days_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
@@ -50,6 +51,7 @@ class DashboardPage extends HookConsumerWidget {
         ref.read(taxProvider.notifier).getAllTax();
         ref.read(supplierProvider.notifier).getAllSuppliers();
         ref.read(countryProvider.notifier).loadData();
+        ref.read(businessDaysProvider.notifier).loadData();
       });
       return null;
     }, []);

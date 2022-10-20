@@ -49,7 +49,6 @@ class StockHome extends StatelessWidget {
         ),
         body: const TabBarView(children: [
           InventoryPage(),
-          // TrashInventoryPage(),
           SupplierPage(),
           WarehousePage(),
         ]),

@@ -64,7 +64,9 @@ class PrimaryAddressModel extends Equatable {
         country: json["country"] != null
             ? CountryStateModel.fromMap(json["country"])
             : CountryStateModel.init(),
-        state: CountryStateModel.fromMap(json["state"]),
+        state: json["state"] != null
+            ? CountryStateModel.fromMap(json["state"])
+            : CountryStateModel.init(),
         phone: json["phone"] ?? '',
       );
 

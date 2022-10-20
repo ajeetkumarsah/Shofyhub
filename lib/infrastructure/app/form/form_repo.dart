@@ -83,4 +83,11 @@ class FormRepo extends IFormRepo {
         fromData: (data) => KeyValueData.listFromMap(data),
         endPoint: 'data/attributes');
   }
+  
+  @override
+  Future<Either<CleanFailure, IList<KeyValueData>>> getBusinessDays() async {
+    return await api.get(
+        fromData: (data) => KeyValueData.listFromMap(data),
+        endPoint: 'data/business_days');
+  }
 }

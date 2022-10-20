@@ -10,7 +10,7 @@ class CreateUpdateWarehouseModel extends Equatable {
   final String openingTime;
   final String closeTime;
   final int inchargeId;
-  final List<String> businessDays;
+  final String businessDays;
   final String city;
   final int countryId;
   final String zipCode;
@@ -44,7 +44,7 @@ class CreateUpdateWarehouseModel extends Equatable {
     String? openingTime,
     String? closeTime,
     int? inchargeId,
-    List<String>? businessDays,
+    String? businessDays,
     String? city,
     int? countryId,
     String? zipCode,

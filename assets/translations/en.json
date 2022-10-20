@@ -414,5 +414,6 @@
   "select_incharge": "Select Incharge",
   "warehouse_added": "Warehouse Added",
   "warehouse_updated": "Warehouse Updated",
-  "update_warehouse": "Update Warehouse"
+  "update_warehouse": "Update Warehouse",
+  "business_days": "Business Days"
 }

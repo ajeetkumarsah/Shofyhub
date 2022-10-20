@@ -50,6 +50,7 @@ dependencies:
   sliver_bar_chart: ^0.0.1
   image_picker: ^0.8.6
   fluttertoast: ^8.0.9
+  flutter_multi_select_items: ^0.4.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0

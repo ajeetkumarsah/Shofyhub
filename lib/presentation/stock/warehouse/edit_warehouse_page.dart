@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
@@ -5,19 +7,25 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_seller/application/app/form/business_days_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_details_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_details_state.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/select_business_day_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_details_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_details_state.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
+import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_state.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
+import 'package:zcart_seller/domain/app/stocks/warehouse/create_update_warehouse_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -35,6 +43,7 @@ class EditWarehousePage extends HookConsumerWidget {
         ref
             .read(warehouseDetailsProvider.notifier)
             .getWarehouseDetails(warehouseId: warehouseId);
+        ref.read(selectBusinessDaysProvider).clear();
       });
       return null;
     }, []);
@@ -49,6 +58,10 @@ class EditWarehousePage extends HookConsumerWidget {
 
     final ValueNotifier<ShopUsersModel?> selectedStaff = useState(null);
 
+    final IList<KeyValueData> businessDaysList =
+        ref.watch(businessDaysProvider.select((value) => value.dataList));
+    List<String> selectedBusinessDays = [];
+
     final nameController = useTextEditingController();
     final addressLine1Controller = useTextEditingController();
     final addressLine2Controller = useTextEditingController();
@@ -59,7 +72,7 @@ class EditWarehousePage extends HookConsumerWidget {
     final zipCodeController = useTextEditingController();
     final openingTimeController = useTextEditingController();
     final closingTimeController = useTextEditingController();
-    final inchargeIdController = useTextEditingController();
+    // final inchargeIdController = useTextEditingController();
     final active = useState(true);
 
     final buttonPressed = useState(false);
@@ -68,7 +81,7 @@ class EditWarehousePage extends HookConsumerWidget {
         ref.watch(warehouseDetailsProvider.select((value) => value.loading));
 
     final updateLoading =
-        ref.watch(supplierProvider.select((value) => value.loading));
+        ref.watch(warehouseProvider.select((value) => value.loading));
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
     ref.listen<WarehouseDetailsState>(warehouseDetailsProvider,
@@ -88,6 +101,10 @@ class EditWarehousePage extends HookConsumerWidget {
         closingTimeController.text = next.warehouseDetails.closingTime;
         zipCodeController.text = next.warehouseDetails.primaryAddress.zipCode;
         active.value = next.warehouseDetails.active;
+        log('Business Days: ${next.warehouseDetails.businessDays}');
+        selectedBusinessDays = next.warehouseDetails.businessDays;
+        log('selectedBusinessDays : $selectedBusinessDays');
+
         selectedCountry.value = countryList
             .where((e) =>
                 e.value == next.warehouseDetails.primaryAddress.country.name)
@@ -98,7 +115,7 @@ class EditWarehousePage extends HookConsumerWidget {
       }
     });
 
-    ref.listen<SupplierState>(supplierProvider, (previous, next) {
+    ref.listen<WarehouseState>(warehouseProvider, (previous, next) {
       if (previous != next && !next.loading && buttonPressed.value) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
@@ -266,21 +283,42 @@ class EditWarehousePage extends HookConsumerWidget {
                         SizedBox(
                           height: 10.h,
                         ),
+                        // Business Days
+                        Text(
+                          'business_days'.tr(),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(),
+                        MultiSelectContainer<String>(
+                            items: businessDaysList
+                                .map((element) => MultiSelectCard(
+                                    value: element.key,
+                                    label: element.value,
+                                    selected: selectedBusinessDays
+                                        .contains(element.key)))
+                                .toList(),
+                            onChange: (allSelectedItems, selectedItem) {
+                              ref
+                                  .read(selectBusinessDaysProvider)
+                                  .addBusinessDays(allSelectedItems);
+                            }),
+                        SizedBox(height: 20.h),
                         KTextField(
                           controller: openingTimeController,
                           lebelText: 'opening_time'.tr(),
                           readOnly: true,
-                          suffixIcon: const Icon(Icons.calendar_month),
+                          suffixIcon: const Icon(Icons.punch_clock),
+                          validator: (text) => ValidatorLogic.requiredField(
+                              text,
+                              fieldName: 'opening_time'.tr()),
                           onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
+                            TimeOfDay? pickedTime = await showTimePicker(
                               context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2021),
-                              lastDate: DateTime(2101),
+                              initialTime: TimeOfDay.now(),
                             );
-                            if (pickedDate != null) {
+                            if (pickedTime != null) {
                               openingTimeController.text =
-                                  pickedDate.toString();
+                                  '${pickedTime.hour}:${pickedTime.minute}';
                             }
                           },
                         ),
@@ -291,17 +329,18 @@ class EditWarehousePage extends HookConsumerWidget {
                           controller: closingTimeController,
                           lebelText: 'closing_time'.tr(),
                           readOnly: true,
-                          suffixIcon: const Icon(Icons.calendar_month),
+                          suffixIcon: const Icon(Icons.punch_clock),
+                          validator: (text) => ValidatorLogic.requiredField(
+                              text,
+                              fieldName: 'closing_time'.tr()),
                           onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
+                            TimeOfDay? pickedTime = await showTimePicker(
                               context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2021),
-                              lastDate: DateTime(2101),
+                              initialTime: TimeOfDay.now(),
                             );
-                            if (pickedDate != null) {
+                            if (pickedTime != null) {
                               closingTimeController.text =
-                                  pickedDate.toString();
+                                  '${pickedTime.hour}:${pickedTime.minute}';
                             }
                           },
                         ),
@@ -355,32 +394,50 @@ class EditWarehousePage extends HookConsumerWidget {
                                 } else {
                                   if (formKey.currentState?.validate() ??
                                       false) {
-                                    // final supplierInfo = CreateSupplierModel(
-                                    //   name: nameController.text,
-                                    //   email: emailController.text,
-                                    //   phone: phoneController.text,
-                                    //   addressLine1: addressLine1Controller.text,
-                                    //   addressLine2: addressLine2Controller.text,
-                                    //   city: cityController.text,
-                                    //   description: descriptionController.text,
-                                    //   zipCode: zipCodeController.text,
-                                    //   countryId: selectedCountry.value != null
-                                    //       ? int.tryParse(selectedCountry.value!.key)!
-                                    //       : 0,
-                                    //   // stateId: 0,
-                                    //   active: active.value ? 1 : 0,
-                                    // );
+                                    if (formKey.currentState?.validate() ??
+                                        false) {
+                                      final String endPoint = ref
+                                          .read(selectBusinessDaysProvider)
+                                          .selectedBusinessDays
+                                          .map((element) =>
+                                              "business_days[]=$element")
+                                          .join('&');
+                                      final warehouseInfo =
+                                          CreateUpdateWarehouseModel(
+                                        name: nameController.text,
+                                        email: emailController.text,
+                                        phone: phoneController.text,
+                                        description: descriptionController.text,
+                                        addressLine1:
+                                            addressLine1Controller.text,
+                                        addressLine2:
+                                            addressLine2Controller.text,
+                                        openingTime: openingTimeController.text,
+                                        closeTime: closingTimeController.text,
+                                        inchargeId: selectedStaff.value!.id,
+                                        businessDays: endPoint,
+                                        city: cityController.text,
+                                        countryId: selectedCountry.value != null
+                                            ? int.tryParse(
+                                                selectedCountry.value!.key)!
+                                            : 0,
+                                        // stateId: 0,
+                                        active: active.value ? 1 : 0,
+                                        zipCode: zipCodeController.text,
+                                      );
 
-                                    // ref
-                                    //     .read(supplierProvider.notifier)
-                                    //     .createNewSupplier(
-                                    //         supplierInfo: supplierInfo);
+                                      ref
+                                          .read(warehouseProvider.notifier)
+                                          .updateWarehouse(
+                                              warehouseInfo: warehouseInfo,
+                                              warehouseId: warehouseId);
+                                    }
                                   }
                                 }
                               },
-                              child: loading
+                              child: updateLoading
                                   ? const CircularProgressIndicator()
-                                  : Text('add'.tr()),
+                                  : Text('update'.tr()),
                             ),
                           ],
                         ),

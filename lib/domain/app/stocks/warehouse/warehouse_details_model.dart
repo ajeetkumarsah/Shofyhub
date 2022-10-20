@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/country_state_model.dart';
+import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/primary_address_model.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/incharge_model.dart';
 
@@ -13,7 +14,7 @@ class WarehouseDetailsModel extends Equatable {
   final dynamic closingTime;
   final List<String> businessDays;
   final PrimaryAddressModel primaryAddress;
-  final List<dynamic> manager;
+  final ShopUsersModel manager;
   final bool active;
   final String image;
 
@@ -42,7 +43,7 @@ class WarehouseDetailsModel extends Equatable {
     dynamic closingTime,
     List<String>? businessDays,
     PrimaryAddressModel? primaryAddress,
-    List<dynamic>? manager,
+    ShopUsersModel? manager,
     bool? active,
     String? image,
   }) {
@@ -73,7 +74,9 @@ class WarehouseDetailsModel extends Equatable {
         closingTime: map["closing_time"] ?? '',
         businessDays: List<String>.from(map['business_days'].map((x) => x)),
         primaryAddress: PrimaryAddressModel.fromJson(map["primary_address"]),
-        manager: List<dynamic>.from(map['manager'].map((x) => x)),
+        manager: (map['manager'] != null || map['manager'] != [])
+            ? ShopUsersModel.fromMap(map['manager'])
+            : ShopUsersModel.init(),
         image: map["image"] ?? '',
         active: map["active"] ?? false,
       );
@@ -87,7 +90,7 @@ class WarehouseDetailsModel extends Equatable {
         openingTime: '',
         closingTime: '',
         businessDays: const [],
-        manager: const [],
+        manager: ShopUsersModel.init(),
         primaryAddress: PrimaryAddressModel(
           id: 0,
           addressType: '',
@@ -109,12 +112,12 @@ class WarehouseDetailsModel extends Equatable {
         id,
         name,
         email,
-        // incharge,
+        incharge,
         description,
         openingTime,
         closingTime,
         businessDays,
-        // primaryAddress,
+        primaryAddress,
         manager,
         active,
         image,

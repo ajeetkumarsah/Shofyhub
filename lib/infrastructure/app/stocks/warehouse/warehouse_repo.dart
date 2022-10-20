@@ -9,7 +9,7 @@ class WarehouseRepo extends IWarehouseRepo {
 
   @override
   Future<Either<CleanFailure, WarehousePaginationModel>> getWarehouseItems(
-      {required int page}) async {
+      {required String warehouseFilter, required int page}) async {
     return cleanApi.get(
         failureHandler:
             <Unit>(int statusCode, Map<String, dynamic> responseBody) {
@@ -35,7 +35,7 @@ class WarehouseRepo extends IWarehouseRepo {
           }
         },
         fromData: ((json) => WarehousePaginationModel.fromMap(json)),
-        endPoint: 'warehouses?page=$page');
+        endPoint: 'warehouses?filter=$warehouseFilter&page=$page');
   }
 
   @override
@@ -120,5 +120,68 @@ class WarehouseRepo extends IWarehouseRepo {
       endPoint:
           'warehouse/$warehouseId/update?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id =${body.countryId}&${body.businessDays}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&opening_time=${body.openingTime}&close_time=${body.closeTime}&zip_code=${body.zipCode}&incharge=${body.inchargeId}',
     );
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> deleteWarehouse(
+      {required int warehouseId}) {
+    return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'warehouse', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'warehouse',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'warehouse',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'warehouse', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        endPoint: 'warehouse/$warehouseId/delete');
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> restoreWarehouse(
+      {required int warehouseId}) {
+    return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'warehouse', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'warehouse',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'warehouse',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'warehouse', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        body: null,
+        endPoint: 'warehouse/$warehouseId/restore');
   }
 }

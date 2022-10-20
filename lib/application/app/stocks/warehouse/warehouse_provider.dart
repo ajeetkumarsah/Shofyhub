@@ -21,12 +21,16 @@ class WarehouseNotifier extends StateNotifier<WarehouseState> {
   List<WarehouseModel> warehouses = [];
   int pageNumber = 1;
 
+  List<WarehouseModel> trashWarehouses = [];
+  int trashPageNumber = 1;
+
   getWarehouseItems() async {
     pageNumber = 1;
     warehouses = [];
 
     state = state.copyWith(loading: true);
-    final data = await warehouseRepo.getWarehouseItems(page: pageNumber);
+    final data = await warehouseRepo.getWarehouseItems(
+        warehouseFilter: 'null', page: pageNumber);
 
     //increase the page no
     pageNumber++;
@@ -47,7 +51,8 @@ class WarehouseNotifier extends StateNotifier<WarehouseState> {
   getMoreWarehouseItems() async {
     if (pageNumber == 1 ||
         pageNumber <= warehousePaginationModel.meta.lastPage!) {
-      final data = await warehouseRepo.getWarehouseItems(page: pageNumber);
+      final data = await warehouseRepo.getWarehouseItems(
+          warehouseFilter: 'null', page: pageNumber);
 
       //increase the page no
       pageNumber++;
@@ -66,6 +71,50 @@ class WarehouseNotifier extends StateNotifier<WarehouseState> {
     }
   }
 
+  getTrashWarehouses() async {
+    trashPageNumber = 1;
+    trashWarehouses = [];
+
+    state = state.copyWith(loading: true);
+
+    //increase the page no
+    trashPageNumber++;
+    final suppliersData = await warehouseRepo.getWarehouseItems(
+        warehouseFilter: 'trash', page: pageNumber);
+
+    state = suppliersData
+        .fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      warehousePaginationModel = r;
+      trashWarehouses.addAll(warehousePaginationModel.data);
+
+      return state.copyWith(
+          loading: false,
+          failure: CleanFailure.none(),
+          trashWarehouses: trashWarehouses);
+    });
+  }
+
+  getMoreTrashWarehouses() async {
+    if (trashPageNumber == 1 ||
+        trashPageNumber <= warehousePaginationModel.meta.lastPage!) {
+      final data = await warehouseRepo.getWarehouseItems(
+          warehouseFilter: 'trash', page: trashPageNumber);
+
+      //increase the page no
+      trashPageNumber++;
+
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        warehousePaginationModel = r;
+        trashWarehouses.addAll(warehousePaginationModel.data);
+
+        return state.copyWith(
+            loading: false,
+            failure: CleanFailure.none(),
+            trashWarehouses: trashWarehouses);
+      });
+    }
+  }
+
   createWarehouse({required CreateUpdateWarehouseModel warehouseInfo}) async {
     state = state.copyWith(loading: true);
     final data = await warehouseRepo.createWarehouse(warehouseInfo);
@@ -74,7 +123,7 @@ class WarehouseNotifier extends StateNotifier<WarehouseState> {
     getWarehouseItems();
   }
 
-  updateSupplier(
+  updateWarehouse(
       {required CreateUpdateWarehouseModel warehouseInfo,
       required int warehouseId}) async {
     state = state.copyWith(loading: true);
@@ -91,5 +140,24 @@ class WarehouseNotifier extends StateNotifier<WarehouseState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getWarehouseItems();
+    getTrashWarehouses();
+  }
+
+  restoreWarehouse(int warehouseId) async {
+    state = state.copyWith(loading: true);
+    final data = await warehouseRepo.restoreWarehouse(warehouseId: warehouseId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getWarehouseItems();
+    getTrashWarehouses();
+  }
+
+  deleteWarehouse(int warehouseId) async {
+    state = state.copyWith(loading: true);
+    final data = await warehouseRepo.deleteWarehouse(warehouseId: warehouseId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getWarehouseItems();
+    getTrashWarehouses();
   }
 }
