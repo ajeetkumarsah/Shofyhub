@@ -10,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 import 'package:zcart_seller/application/app/form/attribute_list_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -48,19 +49,22 @@ class CreateNewCategoryPage extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
-          CherryToast.info(
-            title: Text('category_added'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'category_added'.tr());
+          // CherryToast.info(
+          //   title: Text('category_added'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

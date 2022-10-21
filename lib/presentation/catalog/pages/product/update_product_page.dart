@@ -14,6 +14,7 @@ import 'package:zcart_seller/application/app/product/detail_product/detail_produ
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';
 import 'package:zcart_seller/application/app/product/product_provider.dart';
 import 'package:zcart_seller/application/app/form/category_list_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
@@ -102,17 +103,19 @@ class UpdateProductPage extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('product_updated'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'product_updated'.tr());
+          // CherryToast.info(
+          //   title: Text('product_updated'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
@@ -366,11 +369,12 @@ class UpdateProductPage extends HookConsumerWidget {
                                   .updateProduct(product);
                               Navigator.of(context).pop();
                             } else {
-                              CherryToast.info(
-                                      title: Text(
-                                          'please_select_atleast_one_category'
-                                              .tr()))
-                                  .show(context);
+                              NotificationHelper.info(message: 'please_select_atleast_one_category'.tr());
+                              // CherryToast.info(
+                              //         title: Text(
+                              //             'please_select_atleast_one_category'
+                              //                 .tr()))
+                              //     .show(context);
                             }
                           },
                           child: loadingUpdate

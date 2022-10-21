@@ -14,6 +14,7 @@ import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_state.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
@@ -48,17 +49,19 @@ class CreateSupplierPage extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('supplier_added'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'supplier_added'.tr());
+          // CherryToast.info(
+          //   title: Text('supplier_added'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
@@ -219,10 +222,11 @@ class CreateSupplierPage extends HookConsumerWidget {
                       TextButton(
                         onPressed: () {
                           if (selectedCountry.value == null) {
-                            CherryToast.info(
-                              title: Text('please_select_a_country'.tr()),
-                              animationType: AnimationType.fromTop,
-                            ).show(context);
+                            NotificationHelper.info(message: 'please_select_a_country'.tr());
+                            // CherryToast.info(
+                            //   title: Text('please_select_a_country'.tr()),
+                            //   animationType: AnimationType.fromTop,
+                            // ).show(context);
                           } else {
                             if (formKey.currentState?.validate() ?? false) {
                               final supplierInfo = CreateSupplierModel(

@@ -135,7 +135,7 @@ class SupplierRepo extends ISupplierRepo {
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'supplier/create?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id =${body.countryId}&contact_person=${body.contactPerson}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&url=${body.url}&zip_code=${body.zipCode}',
+          'supplier/create?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id=${body.countryId}&contact_person=${body.contactPerson}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&url=${body.url}&zip_code=${body.zipCode}',
     );
   }
 
@@ -177,7 +177,7 @@ class SupplierRepo extends ISupplierRepo {
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'supplier/$supplierId/update?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id =${body.countryId}&contact_person=${body.contactPerson}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&url=${body.url}&zip_code=${body.zipCode}',
+          'supplier/$supplierId/update?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id=${body.countryId}&contact_person=${body.contactPerson}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&url=${body.url}&zip_code=${body.zipCode}',
     );
   }
 }

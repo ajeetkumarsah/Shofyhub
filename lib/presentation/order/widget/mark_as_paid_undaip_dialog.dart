@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_state.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
   final int orderId;
@@ -26,20 +27,24 @@ class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           ref.read(orderDetailsProvider(orderId).notifier).getOrderDetails();
-
-          CherryToast.info(
-            title: isPaid
-                ? Text('marked_as_unpaid'.tr())
-                : Text('marked_as_paid'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(
+              message:
+                  isPaid ? 'marked_as_unpaid'.tr() : 'marked_as_paid'.tr());
+          // CherryToast.info(
+          //   title: isPaid
+          //       ? Text('marked_as_unpaid'.tr())
+          //       : Text('marked_as_paid'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
@@ -61,7 +66,9 @@ class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
         TextButton(
           onPressed: () {
             if (isPaid) {
-              ref.read(orderDetailsProvider(orderId).notifier).markAsUnpaid(ref);
+              ref
+                  .read(orderDetailsProvider(orderId).notifier)
+                  .markAsUnpaid(ref);
             } else {
               ref.read(orderDetailsProvider(orderId).notifier).markAsPaid(ref);
             }

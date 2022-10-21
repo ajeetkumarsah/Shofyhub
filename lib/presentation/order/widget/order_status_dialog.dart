@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_state.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/order/order_status_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
 
@@ -37,17 +39,22 @@ class OrderStatusDialog extends HookConsumerWidget {
           ref.read(orderProvider(null).notifier).getOrders();
           ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
           ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
-          CherryToast.info(
-            title: const Text('Order Status Updated'),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+
+          NotificationHelper.success(message: 'order_status_updated'.tr());
+
+          // CherryToast.info(
+          //   title: const Text('Order Status Updated'),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

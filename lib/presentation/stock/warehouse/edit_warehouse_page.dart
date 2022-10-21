@@ -10,6 +10,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:zcart_seller/application/app/form/business_days_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
@@ -22,6 +23,7 @@ import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_details_
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_details_state.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
@@ -101,16 +103,17 @@ class EditWarehousePage extends HookConsumerWidget {
         closingTimeController.text = next.warehouseDetails.closingTime;
         zipCodeController.text = next.warehouseDetails.primaryAddress.zipCode;
         active.value = next.warehouseDetails.active;
-        log('Business Days: ${next.warehouseDetails.businessDays}');
-        selectedBusinessDays = next.warehouseDetails.businessDays;
-        log('selectedBusinessDays : $selectedBusinessDays');
+        ref
+            .read(selectBusinessDaysProvider)
+            .addBusinessDays(next.warehouseDetails.businessDays);
+
+        selectedStaff.value = staffList
+            .where((e) => e.id == next.warehouseDetails.incharge.id)
+            .toList()[0];
 
         selectedCountry.value = countryList
             .where((e) =>
                 e.value == next.warehouseDetails.primaryAddress.country.name)
-            .toList()[0];
-        selectedStaff.value = staffList
-            .where((e) => e.id == next.warehouseDetails.incharge.id)
             .toList()[0];
       }
     });
@@ -119,17 +122,24 @@ class EditWarehousePage extends HookConsumerWidget {
       if (previous != next && !next.loading && buttonPressed.value) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('warehouse_updated'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'warehouse_updated'.tr());
+          // showSimpleNotification(
+          //   Text('warehouse_updated'.tr()),
+          //   background: Colors.green,
+          // );
+          // CherryToast.info(
+          //   title: Text('warehouse_updated'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: 'next.failure.error'.tr());
+
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
@@ -294,7 +304,9 @@ class EditWarehousePage extends HookConsumerWidget {
                                 .map((element) => MultiSelectCard(
                                     value: element.key,
                                     label: element.value,
-                                    selected: selectedBusinessDays
+                                    selected: ref
+                                        .read(selectBusinessDaysProvider)
+                                        .selectedBusinessDays
                                         .contains(element.key)))
                                 .toList(),
                             onChange: (allSelectedItems, selectedItem) {
@@ -387,51 +399,52 @@ class EditWarehousePage extends HookConsumerWidget {
                             TextButton(
                               onPressed: () {
                                 if (selectedCountry.value == null) {
-                                  CherryToast.info(
-                                    title: Text('please_select_a_country'.tr()),
-                                    animationType: AnimationType.fromTop,
-                                  ).show(context);
+                                  NotificationHelper.info(
+                                      message: 'please_select_a_country'.tr());
+                                } else if (ref
+                                    .read(selectBusinessDaysProvider)
+                                    .selectedBusinessDays
+                                    .isEmpty) {
+                                  NotificationHelper.info(
+                                      message:
+                                          'please_select_business_days'.tr());
                                 } else {
                                   if (formKey.currentState?.validate() ??
                                       false) {
-                                    if (formKey.currentState?.validate() ??
-                                        false) {
-                                      final String endPoint = ref
-                                          .read(selectBusinessDaysProvider)
-                                          .selectedBusinessDays
-                                          .map((element) =>
-                                              "business_days[]=$element")
-                                          .join('&');
-                                      final warehouseInfo =
-                                          CreateUpdateWarehouseModel(
-                                        name: nameController.text,
-                                        email: emailController.text,
-                                        phone: phoneController.text,
-                                        description: descriptionController.text,
-                                        addressLine1:
-                                            addressLine1Controller.text,
-                                        addressLine2:
-                                            addressLine2Controller.text,
-                                        openingTime: openingTimeController.text,
-                                        closeTime: closingTimeController.text,
-                                        inchargeId: selectedStaff.value!.id,
-                                        businessDays: endPoint,
-                                        city: cityController.text,
-                                        countryId: selectedCountry.value != null
-                                            ? int.tryParse(
-                                                selectedCountry.value!.key)!
-                                            : 0,
-                                        // stateId: 0,
-                                        active: active.value ? 1 : 0,
-                                        zipCode: zipCodeController.text,
-                                      );
+                                    buttonPressed.value = true;
 
-                                      ref
-                                          .read(warehouseProvider.notifier)
-                                          .updateWarehouse(
-                                              warehouseInfo: warehouseInfo,
-                                              warehouseId: warehouseId);
-                                    }
+                                    final String endPoint = ref
+                                        .read(selectBusinessDaysProvider)
+                                        .selectedBusinessDays
+                                        .map((element) =>
+                                            "business_days[]=$element")
+                                        .join('&');
+                                    final warehouseInfo =
+                                        CreateUpdateWarehouseModel(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      phone: phoneController.text,
+                                      description: descriptionController.text,
+                                      addressLine1: addressLine1Controller.text,
+                                      addressLine2: addressLine2Controller.text,
+                                      openingTime: openingTimeController.text,
+                                      closeTime: closingTimeController.text,
+                                      inchargeId: selectedStaff.value!.id,
+                                      businessDays: endPoint,
+                                      city: cityController.text,
+                                      countryId: selectedCountry.value != null
+                                          ? int.tryParse(
+                                              selectedCountry.value!.key)!
+                                          : 0,
+                                      // stateId: 0,
+                                      active: active.value ? 1 : 0,
+                                      zipCode: zipCodeController.text,
+                                    );
+                                    ref
+                                        .read(warehouseProvider.notifier)
+                                        .updateWarehouse(
+                                            warehouseInfo: warehouseInfo,
+                                            warehouseId: warehouseId);
                                   }
                                 }
                               },

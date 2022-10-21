@@ -12,6 +12,7 @@ import 'package:zcart_seller/application/app/stocks/inventories/inventories_prov
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_state.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventory_details_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventory_details_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/update_inventory_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -99,17 +100,20 @@ class UpdateInventoryPage extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('inventory_updated'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'inventory_updated'.tr());
+
+          // CherryToast.info(
+          //   title: Text('inventory_updated'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

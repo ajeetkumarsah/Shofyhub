@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_provider.dart';
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -39,27 +40,33 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
 
     final loading = ref.watch(
         attributeValuesProvider(attributeId).select((value) => value.loading));
-        
+
     ref.listen<AttributeValuesState>(attributeValuesProvider(attributeId),
         (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           Navigator.of(context).pop();
-          CherryToast.info(
-            title: attributeValues != null
-                ? Text('attribute_value_updated'.tr())
-                : Text('attribute_value_added'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(
+            message: attributeValues != null
+                ? 'attribute_value_updated'.tr()
+                : 'attribute_value_added'.tr(),
+          );
+          // CherryToast.info(
+          //   title: attributeValues != null
+          //       ? Text('attribute_value_updated'.tr())
+          //       : Text('attribute_value_added'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

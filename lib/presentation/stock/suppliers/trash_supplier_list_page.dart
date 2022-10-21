@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,28 +51,30 @@ class TrashSupplierPage extends HookConsumerWidget {
                             .read(supplierProvider.notifier)
                             .getTrashSuppliers();
                       },
-                      child: ListView.separated(
-                        controller: scrollController,
-                        itemCount: supplierList.length,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          if ((index == supplierList.length - 1) &&
-                              supplierList.length <
-                                  supplierPaginationModel.meta.total!) {
-                            return const SizedBox(
-                              height: 100,
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          }
-                          return TrashSupplierListTile(
-                            supplierItem: supplierList[index],
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 3.h),
-                      ),
+                      child: supplierList.isEmpty
+                          ? Center(child: Text('no_item_found'.tr()))
+                          : ListView.separated(
+                              controller: scrollController,
+                              itemCount: supplierList.length,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                if ((index == supplierList.length - 1) &&
+                                    supplierList.length <
+                                        supplierPaginationModel.meta.total!) {
+                                  return const SizedBox(
+                                    height: 100,
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+                                return TrashSupplierListTile(
+                                  supplierItem: supplierList[index],
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(height: 3.h),
+                            ),
                     ),
                   ),
                 ],

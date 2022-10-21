@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.d
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class DeleteWarehouseDialog extends HookConsumerWidget {
   final int warehouseId;
@@ -20,17 +21,20 @@ class DeleteWarehouseDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('item_deleted'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'item_deleted'.tr());
+          // CherryToast.info(
+          //   title: Text('item_deleted'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

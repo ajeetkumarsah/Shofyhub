@@ -13,6 +13,7 @@ import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/settings/payment_method_model.dart';
 import 'package:zcart_seller/domain/app/settings/update_advance_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
@@ -211,17 +212,19 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
       if (previous != next && !next.loading && buttonPressed.value) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('advance_shop_settings_updated'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'advance_shop_settings_updated'.tr());
+          // CherryToast.info(
+          //   title: Text('advance_shop_settings_updated'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/subcroption_plan_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -25,7 +26,8 @@ class SignInPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final passwordController = useTextEditingController(text: '123456');
-    final emailController = useTextEditingController(text: 'merchant2@demo.com');
+    final emailController =
+        useTextEditingController(text: 'merchant2@demo.com');
     final showPassword = useState(false);
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
@@ -45,12 +47,13 @@ class SignInPage extends HookConsumerWidget {
             ),
           );
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
           // next.failure.showDialogue(context);
         }
       }

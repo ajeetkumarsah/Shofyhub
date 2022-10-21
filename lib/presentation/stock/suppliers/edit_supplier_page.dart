@@ -1,5 +1,4 @@
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
+
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -12,6 +11,7 @@ import 'package:zcart_seller/application/app/stocks/supplier/supplier_details_pr
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_details_state.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -88,17 +88,13 @@ class EditSupplierPage extends HookConsumerWidget {
       if (previous != next && !next.loading && buttonPressed.value) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('supplier_updated'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'supplier_updated'.tr());
+          // CherryToast.info(
+          //   title: Text('supplier_updated'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
         }
       }
     });
@@ -265,10 +261,11 @@ class EditSupplierPage extends HookConsumerWidget {
                             TextButton(
                               onPressed: () {
                                 if (selectedCountry.value == null) {
-                                  CherryToast.info(
-                                    title: Text('please_select_a_country'.tr()),
-                                    animationType: AnimationType.fromTop,
-                                  ).show(context);
+                                  NotificationHelper.info(message: 'please_select_a_country'.tr());
+                                  // CherryToast.info(
+                                  //   title: Text('please_select_a_country'.tr()),
+                                  //   animationType: AnimationType.fromTop,
+                                  // ).show(context);
                                 } else {
                                   if (formKey.currentState?.validate() ??
                                       false) {

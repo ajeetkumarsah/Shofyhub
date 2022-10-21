@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class TrashShopUser extends HookConsumerWidget {
   final int userId;
@@ -18,15 +19,18 @@ class TrashShopUser extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('item_moved_trash'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'item_moved_trash'.tr());
+          // CherryToast.info(
+          //   title: Text('item_moved_trash'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.info(
-            title: const Text('Something went wrong'),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.error(message: 'something_went_wrong'.tr());
+
+          // CherryToast.info(
+          //   title: const Text('Something went wrong'),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
           next.failure.showDialogue(context);
         }
       }
@@ -97,7 +101,7 @@ class TrashShopUser extends HookConsumerWidget {
                           color: Theme.of(context).shadowColor.withOpacity(.5),
                         ),
                       ),
-                      child:  Center(
+                      child: Center(
                         child: Text('cancel'.tr()),
                       ),
                     ),

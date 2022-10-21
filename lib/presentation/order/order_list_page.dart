@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,51 +48,54 @@ class OrderListPage extends HookConsumerWidget {
               onRefresh: () {
                 return ref.read(orderProvider(filter).notifier).getOrders();
               },
-              child: ListView.separated(
-                padding: const EdgeInsets.only(
-                  top: 15,
-                  left: 15,
-                  right: 15,
-                ).r,
-                controller: scrollController,
-                itemCount: orderList.length,
-                physics: const BouncingScrollPhysics(),
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(
-                  height: 20,
-                  color: Color(0xffEFEFEF),
-                ),
-                itemBuilder: (context, index) {
-                  if ((index == orderList.length - 1) &&
-                      orderList.length < orderPaginationModel.meta.total!) {
-                    return const SizedBox(
-                      height: 100,
-                      child: Center(
-                        child: CircularProgressIndicator(),
+              child: orderList.isEmpty
+                  ? Center(child: Text('no_item_found'.tr()))
+                  : ListView.separated(
+                      padding: const EdgeInsets.only(
+                        top: 15,
+                        left: 15,
+                        right: 15,
+                      ).r,
+                      controller: scrollController,
+                      itemCount: orderList.length,
+                      physics: const BouncingScrollPhysics(),
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(
+                        height: 20,
+                        color: Color(0xffEFEFEF),
                       ),
-                    );
-                  }
-                  final order = orderList[index];
-                  return Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => OrderDetailsScreen(
-                                        id: order.id,
-                                      )));
-                        },
-                        child: OrderTile(
-                          order: order,
-                          filter: filter,
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                      itemBuilder: (context, index) {
+                        if ((index == orderList.length - 1) &&
+                            orderList.length <
+                                orderPaginationModel.meta.total!) {
+                          return const SizedBox(
+                            height: 100,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        final order = orderList[index];
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => OrderDetailsScreen(
+                                              id: order.id,
+                                            )));
+                              },
+                              child: OrderTile(
+                                order: order,
+                                filter: filter,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
             ),
     );
   }

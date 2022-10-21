@@ -57,33 +57,35 @@ class SupplierListPage extends HookConsumerWidget {
               onRefresh: () {
                 return ref.read(supplierProvider.notifier).getAllSuppliers();
               },
-              child: ListView.separated(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                itemCount: supplierList.length,
-                itemBuilder: (context, index) {
-                  if ((index == supplierList.length - 1) &&
-                      supplierList.length <
-                          supplierPaginationModel.meta.total!) {
-                    return const SizedBox(
-                      height: 100,
-                      child: Center(
-                        child: CircularProgressIndicator(),
+              child: supplierList.isEmpty
+                  ? Center(child: Text('no_item_found'.tr()))
+                  : ListView.separated(
+                      controller: scrollController,
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      itemCount: supplierList.length,
+                      itemBuilder: (context, index) {
+                        if ((index == supplierList.length - 1) &&
+                            supplierList.length <
+                                supplierPaginationModel.meta.total!) {
+                          return const SizedBox(
+                            height: 100,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        return InkWell(
+                          child: SupplierListTile(
+                            supplierItem: supplierList[index],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: 3.h,
                       ),
-                    );
-                  }
-                  return InkWell(
-                    child: SupplierListTile(
-                      supplierItem: supplierList[index],
                     ),
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(
-                  height: 3.h,
-                ),
-              ),
             ),
     );
   }

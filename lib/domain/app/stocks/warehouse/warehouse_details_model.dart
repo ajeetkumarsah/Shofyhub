@@ -8,7 +8,7 @@ class WarehouseDetailsModel extends Equatable {
   final int id;
   final String name;
   final String email;
-  final InchargeModel incharge;
+  final ShopUsersModel incharge;
   final String description;
   final String openingTime;
   final dynamic closingTime;
@@ -37,7 +37,7 @@ class WarehouseDetailsModel extends Equatable {
     int? id,
     String? name,
     String? email,
-    InchargeModel? incharge,
+    ShopUsersModel? incharge,
     String? description,
     String? openingTime,
     dynamic closingTime,
@@ -68,7 +68,7 @@ class WarehouseDetailsModel extends Equatable {
         id: map["id"]?.toInt() ?? 0,
         name: map["name"] ?? '',
         email: map["email"] ?? '',
-        incharge: InchargeModel.fromMap(map["incharge"]),
+        incharge: ShopUsersModel.fromMap(map["incharge"]),
         description: map["description"] ?? '',
         openingTime: map["opening_time"] ?? '',
         closingTime: map["closing_time"] ?? '',
@@ -85,7 +85,7 @@ class WarehouseDetailsModel extends Equatable {
         id: 0,
         name: '',
         email: '',
-        incharge: InchargeModel.init(),
+        incharge: ShopUsersModel.init(),
         description: '',
         openingTime: '',
         closingTime: '',

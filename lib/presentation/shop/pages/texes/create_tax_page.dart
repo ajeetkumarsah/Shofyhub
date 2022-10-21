@@ -10,6 +10,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -34,17 +35,19 @@ class CreateTaxPage extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('tax_added'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'tax_added'.tr());
+          // CherryToast.info(
+          //   title: Text('tax_added'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
@@ -150,10 +153,11 @@ class CreateTaxPage extends HookConsumerWidget {
                       TextButton(
                         onPressed: () {
                           if (selectedCountry.value == null) {
-                            CherryToast.info(
-                              title: Text('please_select_a_country'.tr()),
-                              animationType: AnimationType.fromTop,
-                            ).show(context);
+                            NotificationHelper.info(message: 'please_select_a_country'.tr());
+                            // CherryToast.info(
+                            //   title: Text('please_select_a_country'.tr()),
+                            //   animationType: AnimationType.fromTop,
+                            // ).show(context);
                           } else {
                             if (formKey.currentState?.validate() ?? false) {
                               final taxInfo = CreateTaxModel(

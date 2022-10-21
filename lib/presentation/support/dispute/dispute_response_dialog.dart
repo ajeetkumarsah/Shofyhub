@@ -10,6 +10,7 @@ import 'package:zcart_seller/application/app/order%20management/dispute/dispute_
 import 'package:zcart_seller/application/app/order%20management/dispute/dispute_state.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_status_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -39,17 +40,19 @@ class DisputeResponseDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: const Text('Response Added'),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'response_added'.tr());
+          // CherryToast.info(
+          //   title: const Text('Response Added'),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_provider.dart';
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class TrashAttributeValuesDialog extends HookConsumerWidget {
   final int attributeId;
@@ -22,17 +23,19 @@ class TrashAttributeValuesDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('item_moved_trash'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'item_moved_trash'.tr());
+          // CherryToast.info(
+          //   title: Text('item_moved_trash'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

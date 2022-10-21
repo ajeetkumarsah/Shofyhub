@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class MarkAsDeliveredDialog extends HookConsumerWidget {
   final int orderId;
@@ -23,18 +24,19 @@ class MarkAsDeliveredDialog extends HookConsumerWidget {
         if (next.failure == CleanFailure.none()) {
           ref.read(orderProvider(null).notifier).getOrders();
           ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
-
-          CherryToast.info(
-            title: Text('marked_as_delivered'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'marked_as_delivered'.tr());
+          // CherryToast.info(
+          //   title: Text('marked_as_delivered'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

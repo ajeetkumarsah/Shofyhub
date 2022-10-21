@@ -76,7 +76,7 @@ class WarehouseRepo extends IWarehouseRepo {
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'warehouse/create?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id =${body.countryId}&${body.businessDays}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&opening_time=${body.openingTime}&close_time=${body.closeTime}&zip_code=${body.zipCode}&incharge=${body.inchargeId}',
+          'warehouse/create?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id=${body.countryId}&${body.businessDays}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&opening_time=${body.openingTime}&close_time=${body.closeTime}&zip_code=${body.zipCode}&incharge=${body.inchargeId}',
     );
   }
 
@@ -118,7 +118,7 @@ class WarehouseRepo extends IWarehouseRepo {
       fromData: (json) => unit,
       body: null,
       endPoint:
-          'warehouse/$warehouseId/update?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id =${body.countryId}&${body.businessDays}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&opening_time=${body.openingTime}&close_time=${body.closeTime}&zip_code=${body.zipCode}&incharge=${body.inchargeId}',
+          'warehouse/$warehouseId/update?active=${body.active}&address_line_1=${body.addressLine1}&address_line_2=${body.addressLine2}&country_id=${body.countryId}&${body.businessDays}&city=${body.city}&description=${body.description}&email=${body.email}&name=${body.name}&phone=${body.phone}&opening_time=${body.openingTime}&close_time=${body.closeTime}&zip_code=${body.zipCode}&incharge=${body.inchargeId}',
     );
   }
 

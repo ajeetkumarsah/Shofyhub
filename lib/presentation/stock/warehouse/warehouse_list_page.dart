@@ -66,33 +66,35 @@ class WarehouseListPage extends HookConsumerWidget {
                         .read(warehouseProvider.notifier)
                         .getWarehouseItems();
                   },
-                  child: ListView.separated(
-                    controller: scrollController,
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    itemCount: warehouseList.length,
-                    itemBuilder: (context, index) {
-                      if ((index == warehouseList.length - 1) &&
-                          warehouseList.length <
-                              warehousePaginationModel.meta.total!) {
-                        return const SizedBox(
-                          height: 100,
-                          child: Center(
-                            child: CircularProgressIndicator(),
+                  child: warehouseList.isEmpty
+                      ? Center(child: Text('no_item_found'.tr()))
+                      : ListView.separated(
+                          controller: scrollController,
+                          physics: const BouncingScrollPhysics(),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          itemCount: warehouseList.length,
+                          itemBuilder: (context, index) {
+                            if ((index == warehouseList.length - 1) &&
+                                warehouseList.length <
+                                    warehousePaginationModel.meta.total!) {
+                              return const SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            return InkWell(
+                              child: WarehouseListTile(
+                                warehouseItem: warehouseList[index],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 3.h,
                           ),
-                        );
-                      }
-                      return InkWell(
-                        child: WarehouseListTile(
-                          warehouseItem: warehouseList[index],
                         ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 3.h,
-                    ),
-                  ),
                 ),
     );
   }

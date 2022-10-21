@@ -1,11 +1,13 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
@@ -21,17 +23,19 @@ class LogoutDialog extends HookConsumerWidget {
             next.user == UserModel.init()) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const SignInPage()));
-          CherryToast.info(
-            title: const Text('Successfully Logged out'),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'successfully_logged_out'.tr());
+          // CherryToast.info(
+          //   title: const Text('Successfully Logged out'),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: const Text(
-              'Something went wrond',
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: 'something_went_wrong'.tr());
+          // CherryToast.error(
+          //   title: const Text(
+          //     'Something went wrond',
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

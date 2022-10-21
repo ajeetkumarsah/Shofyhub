@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
@@ -31,19 +32,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      builder: (context, child) {
-        return MaterialApp(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: ThemeData(primaryColor: Constants.appbarColor),
-          debugShowCheckedModeBanner: false,
-          title: 'Multivendor App',
-          home: const SignInPage(),
-        );
-      },
+    return OverlaySupport.global(
+      child: ScreenUtilInit(
+        designSize: const Size(360, 690),
+        builder: (context, child) {
+          return MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            theme: ThemeData(primaryColor: Constants.appbarColor),
+            debugShowCheckedModeBanner: false,
+            title: 'Multivendor App',
+            home: const SignInPage(),
+          );
+        },
+      ),
     );
   }
 }

@@ -415,5 +415,21 @@
   "warehouse_added": "Warehouse Added",
   "warehouse_updated": "Warehouse Updated",
   "update_warehouse": "Update Warehouse",
-  "business_days": "Business Days"
+  "business_days": "Business Days",
+  "please_select_business_days": "Please Select Business Days",
+  "successfully_logged_out": "Successfully Logged out",
+  "password_didnt_matched": "Password didn't matched",
+  "item_added": "Item Added",
+  "item_updated": "Item Updated",
+  "item_trashed": "Item Trashed",
+  "successfully_unarchived": "Successfully Unarchived",
+  "note_added": "Note Added",
+  "successfully_archived": "Successfully Archived",
+  "delivery_boy_assigned": "Delivery boy assigned",
+  "order_status_updated": "Order Status Updated",
+  "user_added": "User Added",
+  "user_updated": "User updated",
+  "cancellation_approved": "Cancellation Approved",
+  "cancellation_declined": "Cancellation Declined",
+  "response_added":"Response Added"
 }

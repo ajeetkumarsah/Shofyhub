@@ -11,6 +11,7 @@ import 'package:zcart_seller/application/app/catalog/atributes/atributes_provide
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/get_atributes_provider.dart';
 import 'package:zcart_seller/application/app/form/category_list_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
@@ -60,17 +61,19 @@ class EditAttributesDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('attribute_updated'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'attribute_updated'.tr());
+          // CherryToast.info(
+          //   title: Text('attribute_updated'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

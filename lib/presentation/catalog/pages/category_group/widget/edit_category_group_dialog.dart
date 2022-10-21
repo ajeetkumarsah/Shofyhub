@@ -10,6 +10,7 @@ import 'package:zcart_seller/application/app/category/caegory%20group/category_g
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_family_state.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class EditCategoryGroupDialog extends HookConsumerWidget {
@@ -62,19 +63,21 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
         if (next.failure == CleanFailure.none()) {
           if (buttonPressed.value) {
             Navigator.of(context).pop();
-            CherryToast.info(
-              title: const Text('Category group edited'),
-              animationType: AnimationType.fromTop,
-            ).show(context);
+            NotificationHelper.success(message: 'item_updated'.tr());
+            // CherryToast.info(
+            //   title: const Text('Category group edited'),
+            //   animationType: AnimationType.fromTop,
+            // ).show(context);
             buttonPressed.value = false;
           }
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

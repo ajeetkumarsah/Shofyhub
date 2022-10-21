@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
-import 'package:zcart_seller/application/app/stocks/inventories/inventories_state.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class RestoreSupplierDialog extends HookConsumerWidget {
   final int supplierId;
@@ -21,17 +21,19 @@ class RestoreSupplierDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('item_restored'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'item_restored'.tr());
+          // CherryToast.info(
+          //   title: Text('item_restored'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

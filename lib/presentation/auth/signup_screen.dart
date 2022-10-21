@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/subcroption_plan_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/auth/registration_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
@@ -42,12 +44,13 @@ class SignupScreen extends HookConsumerWidget {
             ),
           );
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
@@ -256,12 +259,13 @@ class SignupScreen extends HookConsumerWidget {
                             .read(authProvider.notifier)
                             .registration(body: body);
                       } else {
-                        CherryToast.error(
-                          title: const Text(
-                            "Password didn't matched",
-                          ),
-                          toastPosition: Position.bottom,
-                        ).show(context);
+                        NotificationHelper.error(message: 'password_didnt_matched'.tr());
+                        // CherryToast.error(
+                        //   title: const Text(
+                        //     "Password didn't matched",
+                        //   ),
+                        //   toastPosition: Position.bottom,
+                        // ).show(context);
                       }
                     }
                   },

@@ -1,6 +1,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_state.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/shop/user/create_shop_user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -38,15 +40,18 @@ class AddShopUserPage extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: const Text('User Added'),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'user_added'.tr());
+
+          // CherryToast.info(
+          //   title: const Text('User Added'),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.info(
-            title: const Text('Something went wrong'),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.error(message: 'something_went_wrong'.tr());
+          // CherryToast.info(
+          //   title: const Text('Something went wrong'),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
           next.failure.showDialogue(context);
         }
       }
@@ -193,10 +198,11 @@ class AddShopUserPage extends HookConsumerWidget {
                             .read(shopUserProvider.notifier)
                             .createShopUser(createShopUser: user);
                       } else {
-                        CherryToast.info(
-                          title: const Text('Fillup all field'),
-                          animationType: AnimationType.fromTop,
-                        ).show(context);
+                        NotificationHelper.info(message: 'please_fill_all_fields'.tr());
+                        // CherryToast.info(
+                        //   title: const Text('Fillup all field'),
+                        //   animationType: AnimationType.fromTop,
+                        // ).show(context);
                       }
                     },
                     child: loading

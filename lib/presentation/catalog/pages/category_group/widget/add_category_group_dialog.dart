@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -32,19 +33,21 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
-          CherryToast.info(
-            title: const Text('category_group_added').tr(),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'category_group_added'.tr());
+          // CherryToast.info(
+          //   title: const Text('category_group_added').tr(),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });

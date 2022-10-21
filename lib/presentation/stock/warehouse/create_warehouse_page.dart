@@ -18,6 +18,7 @@ import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart
 import 'package:zcart_seller/application/app/stocks/warehouse/select_business_day_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_state.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/create_update_warehouse_model.dart';
@@ -70,17 +71,20 @@ class CreateWarehousePage extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('warehouse_added'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'warehouse_added'.tr());
+
+          // CherryToast.info(
+          //   title: Text('warehouse_added'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
@@ -323,10 +327,11 @@ class CreateWarehousePage extends HookConsumerWidget {
                       TextButton(
                         onPressed: () {
                           if (selectedCountry.value == null) {
-                            CherryToast.info(
-                              title: Text('please_select_a_country'.tr()),
-                              animationType: AnimationType.fromTop,
-                            ).show(context);
+                            NotificationHelper.info(message: 'please_select_a_country'.tr());
+                            // CherryToast.info(
+                            //   title: Text('please_select_a_country'.tr()),
+                            //   animationType: AnimationType.fromTop,
+                            // ).show(context);
                           } else {
                             if (formKey.currentState?.validate() ?? false) {
                               final String endPoint = ref

@@ -12,6 +12,7 @@ import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_d
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_state.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -68,17 +69,20 @@ class EditManufactuererPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         buttonPressed.value = false;
         if (next.failure == CleanFailure.none()) {
-          CherryToast.info(
-            title: Text('manufacturer_updated'.tr()),
-            animationType: AnimationType.fromTop,
-          ).show(context);
+          NotificationHelper.success(message: 'manufacturer_updated'.tr());
+
+          // CherryToast.info(
+          //   title: Text('manufacturer_updated'.tr()),
+          //   animationType: AnimationType.fromTop,
+          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          CherryToast.error(
-            title: Text(
-              next.failure.error,
-            ),
-            toastPosition: Position.bottom,
-          ).show(context);
+          NotificationHelper.error(message: next.failure.error);
+          // CherryToast.error(
+          //   title: Text(
+          //     next.failure.error,
+          //   ),
+          //   toastPosition: Position.bottom,
+          // ).show(context);
         }
       }
     });
