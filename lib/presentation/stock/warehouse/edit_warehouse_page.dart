@@ -204,7 +204,7 @@ class EditWarehousePage extends HookConsumerWidget {
                           height: 10.h,
                         ),
                         SizedBox(
-                          height: 50.h,
+                          // height: 50.h,
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField<KeyValueData?>(
                               decoration: InputDecoration(
@@ -242,7 +242,7 @@ class EditWarehousePage extends HookConsumerWidget {
                           height: 10.h,
                         ),
                         SizedBox(
-                          height: 50.h,
+                          // height: 50.h,
                           child: DropdownButtonHideUnderline(
                             child: DropdownButtonFormField<ShopUsersModel>(
                               decoration: InputDecoration(

@@ -271,7 +271,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                           ? const Text(
                               'No supplier found. Please add a Supplier')
                           : SizedBox(
-                              height: 50.h,
+                              // height: 50.h,
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButtonFormField(
                                   decoration: InputDecoration(
@@ -311,7 +311,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                           ? const Text(
                               'No warehouse item found. Please add warehouse')
                           : SizedBox(
-                              height: 50.h,
+                              // height: 50.h,
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButtonFormField(
                                   decoration: InputDecoration(
@@ -367,7 +367,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       ),
                       SizedBox(height: 10.h),
                       SizedBox(
-                        height: 50.h,
+                        // height: 50.h,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButtonFormField(
                             decoration: InputDecoration(
@@ -405,7 +405,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       taxList.isEmpty
                           ? const Text('No tax found. Please add a Tax')
                           : SizedBox(
-                              height: 50.h,
+                              // height: 50.h,
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButtonFormField(
                                   decoration: InputDecoration(
@@ -465,7 +465,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       agentList.isEmpty
                           ? const Text('No agent found. Please add an User')
                           : SizedBox(
-                              height: 50.h,
+                              // height: 50.h,
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButtonFormField(
                                   decoration: InputDecoration(

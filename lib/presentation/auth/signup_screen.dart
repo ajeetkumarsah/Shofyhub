@@ -133,7 +133,7 @@ class SignupScreen extends HookConsumerWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: SizedBox(
-                  height: 50.h,
+                  // height: 50.h,
                   child: DropdownButtonHideUnderline(
                     child: DropdownButtonFormField(
                       decoration: InputDecoration(

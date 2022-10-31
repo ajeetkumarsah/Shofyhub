@@ -431,5 +431,8 @@
   "user_updated": "User updated",
   "cancellation_approved": "Cancellation Approved",
   "cancellation_declined": "Cancellation Declined",
-  "response_added":"Response Added"
+  "response_added": "Response Added",
+  "upload_images": "Upload Images",
+  "failed_to_pick_image": "Failed to pick Image",
+  "select_images": "Select Images"
 }

@@ -79,7 +79,7 @@ class _SendNotificationState extends State<SendNotification> {
                 icone: Icons.text_fields_rounded, hintText: 'Title'),
             SizedBox(height: 15.h),
             Container(
-              height: 50.h,
+              // height: 50.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.h),
                 border: Border.all(

@@ -55,7 +55,7 @@ class _EditProductState extends State<EditProduct> {
               ),
               SizedBox(height: 15.h),
               SizedBox(
-                height: 50.h,
+                // height: 50.h,
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Select catagory',
@@ -94,7 +94,7 @@ class _EditProductState extends State<EditProduct> {
               ),
               SizedBox(height: 15.h),
               SizedBox(
-                height: 50.h,
+                // height: 50.h,
                 child: InputDecorator(
                   decoration: InputDecoration(
                     labelText: 'Select a sub-catagory',

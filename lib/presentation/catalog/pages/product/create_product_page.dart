@@ -8,6 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:search_choices/search_choices.dart';
+import 'package:zcart_seller/application/app/Product/product_image_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/product/product_provider.dart';
 import 'package:zcart_seller/application/app/form/category_list_provider.dart';
@@ -29,11 +30,12 @@ class AddProductPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final productImagePicker = ref.watch(productImagePickerProvider);
+
     final ValueNotifier<IList<int>> selectedTags =
         useState(const IListConst([]));
 
-    final loading =
-        ref.watch(productProvider.select((value) => value.loading));
+    final loading = ref.watch(productProvider.select((value) => value.loading));
 
     final gtinList =
         ref.watch(productProvider.select((value) => value.gtinTypes));
@@ -150,7 +152,7 @@ class AddProductPage extends HookConsumerWidget {
                 //   height: 10.h,
                 // ),
                 SizedBox(
-                  height: 50.h,
+                  // height: 50.h,
                   child: DropdownButtonHideUnderline(
                     child: DropdownButtonFormField(
                       decoration: InputDecoration(
@@ -248,7 +250,7 @@ class AddProductPage extends HookConsumerWidget {
                 ),
 
                 SizedBox(
-                  height: 50.h,
+                  // height: 50.h,
                   child: DropdownButtonHideUnderline(
                     child: DropdownButtonFormField(
                       decoration: InputDecoration(
@@ -314,11 +316,48 @@ class AddProductPage extends HookConsumerWidget {
                 ),
                 SizedBox(height: 10.h),
                 MultipleKeyValueSelector(
-                    title: "${'select_Categories'.tr()} *",
+                    title: "${'select_categories'.tr()} *",
                     allData: allCategories,
                     onSelect: (list) {
                       selectedCategories.value = list;
                     }),
+                SizedBox(height: 20.h),
+                Text(
+                  "upload_images".tr(),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 10.h),
+                InkWell(
+                  borderRadius: BorderRadius.circular(10),
+                  onTap: () {
+                    productImagePicker.pickProductImages();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: productImagePicker.productImages.isNotEmpty
+                        ? Center(
+                            child: ProductImageList(
+                                productImagePicker: productImagePicker),
+                          )
+                        : Center(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Column(
+                              children: [
+                                const Icon(
+                                  Icons.image,
+                                  size: 42,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(height: 5.h),
+                                Text('upload_images'.tr()),
+                              ],
+                          ),
+                            )),
+                  ),
+                ),
                 SizedBox(height: 10.h),
                 SwitchListTile(
                   value: active.value,
@@ -381,7 +420,8 @@ class AddProductPage extends HookConsumerWidget {
                                 .createProduct(product);
                             buttonPressed.value = true;
                           } else {
-                            NotificationHelper.error(message: 'category_group_is_required'.tr());
+                            NotificationHelper.error(
+                                message: 'category_group_is_required'.tr());
                             // CherryToast.error(
                             //   title: Text(
                             //     'category_group_is_required'.tr(),
@@ -403,6 +443,61 @@ class AddProductPage extends HookConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ProductImageList extends StatelessWidget {
+  const ProductImageList({
+    Key? key,
+    required this.productImagePicker,
+  }) : super(key: key);
+
+  final ProductImagePickerNotifier productImagePicker;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(10),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 1,
+      ),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: productImagePicker.productImages.length,
+      itemBuilder: (context, index) {
+        return Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+              ),
+              child: Image.file(
+                productImagePicker.productImages[index],
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              right: -10,
+              top: -10,
+              child: IconButton(
+                onPressed: () {
+                  productImagePicker.removeImage(index);
+                },
+                icon: const Icon(
+                  Icons.remove_circle,
+                  color: Colors.redAccent,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
