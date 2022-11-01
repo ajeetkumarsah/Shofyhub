@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:search_choices/search_choices.dart';
 import 'package:zcart_seller/application/app/Product/product_image_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
@@ -67,6 +71,7 @@ class AddProductPage extends HookConsumerWidget {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(categoryListProvider.notifier).loadData();
+        productImagePicker.clearAllImages();
       });
       return null;
     }, []);
@@ -343,8 +348,8 @@ class AddProductPage extends HookConsumerWidget {
                           )
                         : Center(
                             child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 20),
-                              child: Column(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Column(
                               children: [
                                 const Icon(
                                   Icons.image,
@@ -354,8 +359,70 @@ class AddProductPage extends HookConsumerWidget {
                                 SizedBox(height: 5.h),
                                 Text('upload_images'.tr()),
                               ],
-                          ),
-                            )),
+                            ),
+                          )),
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Text(
+                  "upload_featured_image".tr(),
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(height: 10.h),
+                InkWell(
+                  borderRadius: BorderRadius.circular(10),
+                  onTap: () {
+                    productImagePicker.pickFeaturedImage();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: productImagePicker.featuredImage != null
+                        ? Stack(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: Image.file(
+                                  productImagePicker.featuredImage!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                right: -10,
+                                top: -10,
+                                child: IconButton(
+                                  onPressed: () {
+                                    productImagePicker.removeFeaturedImage();
+                                  },
+                                  icon: const Icon(
+                                    Icons.remove_circle,
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Center(
+                            child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 40),
+                            child: Column(
+                              children: [
+                                const Icon(
+                                  Icons.image,
+                                  size: 42,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(height: 5.h),
+                                Text('upload_featured_image'.tr()),
+                              ],
+                            ),
+                          )),
                   ),
                 ),
                 SizedBox(height: 10.h),
@@ -384,40 +451,89 @@ class AddProductPage extends HookConsumerWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Logger.i(selectedCategories.value);
                         if (formKey.currentState?.validate() ?? false) {
                           if (selectedCategories.value.isNotEmpty) {
-                            final product = CreateProductModel(
-                              manufacturerId: selectedMenufectur.value != null
-                                  ? int.parse(selectedMenufectur.value!.id)
-                                  : 0,
-                              brand: brand.text,
-                              name: nameController.text,
-                              modeNumber: modelNumer.text,
-                              mpn: mpn.text,
-                              gtin: gtin.text,
-                              gtinType: selectedGtin.value != null
+                            FormData formData = FormData.fromMap({
+                              'manufacturer_id':
+                                  selectedMenufectur.value != null
+                                      ? int.parse(selectedMenufectur.value!.id)
+                                      : 0,
+                              'brand': brand.text,
+                              'name': nameController.text,
+                              'mode_number': modelNumer.text,
+                              'mpn': mpn.text,
+                              'gtin': gtin.text,
+                              'gtin_type': selectedGtin.value != null
                                   ? selectedGtin.value!.value
                                   : '',
-                              description: description.text,
-                              originCountry: selectedCountry.value != null
+                              'description': description.text,
+                              'origin_country': selectedCountry.value != null
                                   ? selectedCountry.value!.key
                                   : '',
-                              slug: nameController.text
+                              'slug': nameController.text
                                   .toLowerCase()
                                   .replaceAll(RegExp(r' '), '-'),
-                              categoryList: selectedCategories.value
+                              'category_list': selectedCategories.value
                                   .map((element) =>
                                       int.tryParse(element.key) ?? 0)
                                   .toList(),
-                              tagList: selectedTags.value.unlock,
-                              active: active.value,
-                              requireShipping: shipping.value,
-                            );
+                              'tag_list': selectedTags.value.unlock,
+                              'active': active.value,
+                              'require_shipping': shipping.value,
+                              // 'image': await MultipartFile.fromFile(
+                              //     productImagePicker.productImages[0].path,
+                              //     filename: productImagePicker
+                              //         .productImages[0].path
+                              //         .split('/')
+                              //         .last),
+                            });
+
+                            for (File file
+                                in productImagePicker.productImages) {
+                              formData.files.addAll([
+                                MapEntry(
+                                  'image',
+                                  await MultipartFile.fromFile(
+                                    file.path,
+                                    filename: file.path.split('/').last,
+                                    contentType: MediaType("image", "png"),
+                                  ),
+                                ),
+                              ]);
+                            }
+                            // final product = CreateProductModel(
+                            //   manufacturerId: selectedMenufectur.value != null
+                            //       ? int.parse(selectedMenufectur.value!.id)
+                            //       : 0,
+                            //   brand: brand.text,
+                            //   name: nameController.text,
+                            //   modeNumber: modelNumer.text,
+                            //   mpn: mpn.text,
+                            //   gtin: gtin.text,
+                            //   gtinType: selectedGtin.value != null
+                            //       ? selectedGtin.value!.value
+                            //       : '',
+                            //   description: description.text,
+                            //   originCountry: selectedCountry.value != null
+                            //       ? selectedCountry.value!.key
+                            //       : '',
+                            //   slug: nameController.text
+                            //       .toLowerCase()
+                            //       .replaceAll(RegExp(r' '), '-'),
+                            //   categoryList: selectedCategories.value
+                            //       .map((element) =>
+                            //           int.tryParse(element.key) ?? 0)
+                            //       .toList(),
+                            //   tagList: selectedTags.value.unlock,
+                            //   active: active.value,
+                            //   requireShipping: shipping.value,
+                            //   images: productImagePicker.productImages,
+                            // );
                             ref
                                 .read(productProvider.notifier)
-                                .createProduct(product);
+                                .createProduct(formData);
                             buttonPressed.value = true;
                           } else {
                             NotificationHelper.error(

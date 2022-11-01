@@ -87,9 +87,9 @@ class ProductNotifier extends StateNotifier<ProductState> {
     getProducts();
   }
 
-  createProduct(CreateProductModel createProduct) async {
+  createProduct(formData) async {
     state = state.copyWith(loading: true);
-    final data = await productRepo.createProduct(createProduct);
+    final data = await productRepo.createProduct(formData);
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),
       (r) => state.copyWith(

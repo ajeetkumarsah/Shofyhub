@@ -434,5 +434,6 @@
   "response_added": "Response Added",
   "upload_images": "Upload Images",
   "failed_to_pick_image": "Failed to pick Image",
-  "select_images": "Select Images"
+  "select_images": "Select Images",
+  "upload_featured_image": "Upload Featured Image"
 }

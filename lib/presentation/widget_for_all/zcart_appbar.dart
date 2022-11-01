@@ -39,11 +39,18 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
                     title,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize: 25.sp,
+                        fontSize: 20.sp,
                         fontWeight: FontWeight.bold),
                   ),
                 )),
-            const Expanded(child: SizedBox())
+            Expanded(
+                child: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
+            ))
           ],
         ),
       ),

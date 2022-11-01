@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 
@@ -11,15 +11,13 @@ class CreateProductModel extends Equatable {
   final String gtin;
   final String gtinType;
   final String description;
-
   final String originCountry;
-
   final String slug;
-
   final List<int> categoryList;
   final List<int> tagList;
   final bool active;
   final bool requireShipping;
+  final List<File> images;
   const CreateProductModel({
     required this.manufacturerId,
     required this.brand,
@@ -35,13 +33,14 @@ class CreateProductModel extends Equatable {
     required this.tagList,
     required this.active,
     required this.requireShipping,
+    required this.images,
   });
 
   String get tagsEndPoint => tagList.map((id) => "tag_list[]=$id").join('&');
   String get categoriesEndPoint =>
       categoryList.map((id) => "category_list[]=$id").join('&');
   String get endPoint =>
-      'product/create?name=$name&active=$active&mpn=$mpn&gtin=$gtin&gtin_type=$gtinType&description=$description&$tagsEndPoint&requires_shipping=$requireShipping&manufacturer_id=$manufacturerId&brand=$brand&model_number=$modeNumber&origin_country=$originCountry&slug=$slug&$categoriesEndPoint';
+      'product/create?name=$name&active=$active&mpn=$mpn&gtin=$gtin&gtin_type=$gtinType&description=$description&$tagsEndPoint&requires_shipping=$requireShipping&manufacturer_id=$manufacturerId&brand=$brand&model_number=$modeNumber&origin_country=$originCountry&slug=$slug&$categoriesEndPoint&images=$images';
 
   @override
   bool get stringify => true;
@@ -63,6 +62,7 @@ class CreateProductModel extends Equatable {
       tagList,
       active,
       requireShipping,
+      images,
     ];
   }
 
@@ -81,6 +81,7 @@ class CreateProductModel extends Equatable {
     List<int>? tagList,
     bool? active,
     bool? requireShipping,
+    List<File>? images,
   }) {
     return CreateProductModel(
       manufacturerId: manufacturerId ?? this.manufacturerId,
@@ -97,6 +98,7 @@ class CreateProductModel extends Equatable {
       tagList: tagList ?? this.tagList,
       active: active ?? this.active,
       requireShipping: requireShipping ?? this.requireShipping,
+      images: images ?? this.images,
     );
   }
 }

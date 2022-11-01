@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/form/business_days_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
+import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
@@ -37,6 +38,7 @@ class DashboardPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
+        ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
         ref.read(shopUserProvider.notifier).getShopUser();
         ref.read(orderProvider(null).notifier).getOrders();
         ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
@@ -55,11 +57,18 @@ class DashboardPage extends HookConsumerWidget {
       });
       return null;
     }, []);
+
     final totalOrders = ref
         .watch(orderProvider(null).select((value) => value.orderList.length));
 
     final statistics =
         ref.watch(dashboardProvider.select((value) => value.statistics));
+
+    final shopData = ref
+        .watch(shopSettingsProvider.select((value) => value.basicShopSettings));
+
+    // final shopDataLoading =
+    //     ref.watch(shopSettingsProvider.select((value) => value.loading));
 
     return Scaffold(
       backgroundColor: const Color(0xFFEFEFEF),
@@ -73,8 +82,8 @@ class DashboardPage extends HookConsumerWidget {
           'Logout',
         ),
       ),
-      appBar: const ZcartAppBar(
-        title: 'Dashboard',
+      appBar: ZcartAppBar(
+        title: shopData.name,
       ),
       body: RefreshIndicator(
         onRefresh: () {
