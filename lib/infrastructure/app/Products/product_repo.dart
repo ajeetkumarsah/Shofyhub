@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:clean_api/clean_api.dart';
-import 'package:dio/dio.dart';
 import 'package:zcart_seller/application/core/dio_client.dart';
 import 'package:zcart_seller/domain/app/Product/product_pagination_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
@@ -15,7 +12,7 @@ class ProductRepo extends IProductRepo {
 
   @override
   Future<Either<CleanFailure, ProductPaginationModel>> getProducts(
-      {required int page}) {
+      {required String productFilter, required int page}) {
     return cleanApi.get(
         failureHandler:
             <ProductModel>(int statusCode, Map<String, dynamic> responseBody) {
@@ -41,11 +38,11 @@ class ProductRepo extends IProductRepo {
           }
         },
         fromData: ((json) => ProductPaginationModel.fromMap(json)),
-        endPoint: 'products?page=$page');
+        endPoint: 'products?filter=$productFilter&page=$page');
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> deleteProduct(int productId) {
+  Future<Either<CleanFailure, Unit>> trashProduct(int productId) {
     return cleanApi.delete(
         failureHandler:
             <Unit>(int statusCode, Map<String, dynamic> responseBody) {
@@ -117,33 +114,6 @@ class ProductRepo extends IProductRepo {
     } catch (e) {
       return left(CleanFailure(tag: 'product', error: e.toString()));
     }
-    // return await cleanApi.post(
-    //     failureHandler:
-    //         <Unit>(int statusCode, Map<String, dynamic> responseBody) {
-    //       if (responseBody['errors'] != null) {
-    //         final errors = Map<String, dynamic>.from(responseBody['errors'])
-    //             .values
-    //             .toList();
-    //         final error = List.from(errors.first);
-    //         return left(CleanFailure(tag: 'product', error: error.first));
-    //       } else if (responseBody['message'] != null) {
-    //         return left(CleanFailure(
-    //             tag: 'product',
-    //             error: responseBody['message'],
-    //             statusCode: statusCode));
-    //       } else if (responseBody['error'] != null) {
-    //         return left(CleanFailure(
-    //             tag: 'product',
-    //             error: responseBody['error'],
-    //             statusCode: statusCode));
-    //       } else {
-    //         return left(
-    //             CleanFailure(tag: 'product', error: responseBody.toString()));
-    //       }
-    //     },
-    //     fromData: (data) => unit,
-    //     body: null,
-    //     endPoint: body.endPoint);
   }
 
   @override
@@ -174,6 +144,67 @@ class ProductRepo extends IProductRepo {
                 MapEntry(key, ManufacturerId(id: key, value: value)))
             .values),
         endPoint: 'data/manufacturers');
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> restoreProduct({required productId}) {
+    return cleanApi.put(
+      failureHandler:
+          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        if (responseBody['errors'] != null) {
+          final errors =
+              Map<String, dynamic>.from(responseBody['errors']).values.toList();
+          final error = List.from(errors.first);
+          return left(CleanFailure(tag: 'product', error: error.first));
+        } else if (responseBody['message'] != null) {
+          return left(CleanFailure(
+              tag: 'product',
+              error: responseBody['message'],
+              statusCode: statusCode));
+        } else if (responseBody['error'] != null) {
+          return left(CleanFailure(
+              tag: 'product',
+              error: responseBody['error'],
+              statusCode: statusCode));
+        } else {
+          return left(
+              CleanFailure(tag: 'product', error: responseBody.toString()));
+        }
+      },
+      fromData: (json) => unit,
+      body: null,
+      endPoint: 'product/$productId/restore',
+    );
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> deleteProduct({required productId}) {
+    return cleanApi.delete(
+      failureHandler:
+          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        if (responseBody['errors'] != null) {
+          final errors =
+              Map<String, dynamic>.from(responseBody['errors']).values.toList();
+          final error = List.from(errors.first);
+          return left(CleanFailure(tag: 'product', error: error.first));
+        } else if (responseBody['message'] != null) {
+          return left(CleanFailure(
+              tag: 'product',
+              error: responseBody['message'],
+              statusCode: statusCode));
+        } else if (responseBody['error'] != null) {
+          return left(CleanFailure(
+              tag: 'product',
+              error: responseBody['error'],
+              statusCode: statusCode));
+        } else {
+          return left(
+              CleanFailure(tag: 'product', error: responseBody.toString()));
+        }
+      },
+      fromData: (json) => unit,
+      endPoint: 'product/$productId/delete',
+    );
   }
 }
 

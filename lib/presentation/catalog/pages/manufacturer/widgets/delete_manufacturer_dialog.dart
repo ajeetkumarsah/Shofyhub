@@ -3,17 +3,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
+import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 
-class DeleteSupplierDialog extends HookConsumerWidget {
-  final int supplierId;
-  const DeleteSupplierDialog(this.supplierId, {Key? key}) : super(key: key);
+class DeleteManufacturerDialog extends HookConsumerWidget {
+  final int manufacturerId;
+  const DeleteManufacturerDialog(this.manufacturerId, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<SupplierState>(supplierProvider, (previous, next) {
+    ref.listen<ManufacturerState>(manufacturerProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
@@ -25,7 +26,7 @@ class DeleteSupplierDialog extends HookConsumerWidget {
     });
 
     final loading =
-        ref.watch(supplierProvider.select((value) => value.loading));
+        ref.watch(manufacturerProvider.select((value) => value.loading));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -113,8 +114,8 @@ class DeleteSupplierDialog extends HookConsumerWidget {
                       ),
                       onPressed: () {
                         ref
-                            .read(supplierProvider.notifier)
-                            .deleteSupplier(supplierId);
+                            .read(manufacturerProvider.notifier)
+                            .deleteManufacturer(manufacturerId: manufacturerId);
                         Navigator.of(context).pop();
                       },
                       child: loading

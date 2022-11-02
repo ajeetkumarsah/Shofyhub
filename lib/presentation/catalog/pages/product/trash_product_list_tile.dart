@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/product/product_model.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/delete_product_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/product/trash_product_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/product/restore_product_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/update_product_page.dart';
 
-class ProductTile extends StatelessWidget {
+class TrashProductTile extends StatelessWidget {
   final ProductModel product;
-  const ProductTile({Key? key, required this.product}) : super(key: key);
+  const TrashProductTile({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +32,29 @@ class ProductTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
             if (index == 1) {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => UpdateProductPage(productId: product.id)));
+              showDialog(
+                  context: context,
+                  builder: (context) => RestoreProductDialog(
+                        productId: product.id,
+                      ));
             }
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => TrashProductDialog(product.id));
+                  builder: (context) => DeleteProductDialog(
+                        productId: product.id,
+                      ));
             }
           },
           itemBuilder: (context) => [
             PopupMenuItem(
               value: 1,
-              child: Text("edit".tr()),
+              child: Text("restore".tr()),
             ),
             PopupMenuItem(
               value: 2,
               child: Text(
-                "trash".tr(),
+                "delete".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

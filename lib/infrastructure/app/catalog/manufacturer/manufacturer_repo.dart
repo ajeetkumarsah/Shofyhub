@@ -2,13 +2,13 @@ import 'package:clean_api/clean_api.dart';
 
 import 'package:zcart_seller/domain/app/catalog/manufacturer/i_manufacturer_repo.dart';
 import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_details_model.dart';
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_model.dart';
+import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_pagination_model.dart';
 
 class ManufacturerRepo extends IManufacturerRepo {
   final cleanApi = CleanApi.instance;
   @override
-  Future<Either<CleanFailure, List<ManufacturerModel>>>
-      getManufacturerList() async {
+  Future<Either<CleanFailure, ManufacturerPaginationModel>> getManufacturerList(
+      {required String filter, required int page}) async {
     return cleanApi.get(
         failureHandler: <ManufacturerModel>(int statusCode,
             Map<String, dynamic> responseBody) {
@@ -33,9 +33,8 @@ class ManufacturerRepo extends IManufacturerRepo {
                 tag: 'Manufacturer', error: responseBody.toString()));
           }
         },
-        fromData: ((json) => List<ManufacturerModel>.from(
-            json['data'].map((e) => ManufacturerModel.fromMap(e)))),
-        endPoint: 'manufacturers');
+        fromData: ((json) => ManufacturerPaginationModel.fromMap(json)),
+        endPoint: 'manufacturers?filter=$filter&page=$page');
   }
 
   @override

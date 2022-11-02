@@ -12,6 +12,7 @@ class ProductState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<ProductModel> productList;
+  final List<ProductModel> trashProductList;
   final List<GtinTypes> gtinTypes;
   final List<TagListModel> tagList;
   final List<ManufacturerId> manufacturerId;
@@ -20,6 +21,7 @@ class ProductState extends Equatable {
     required this.loading,
     required this.failure,
     required this.productList,
+    required this.trashProductList,
     required this.gtinTypes,
     required this.tagList,
     required this.manufacturerId,
@@ -29,6 +31,7 @@ class ProductState extends Equatable {
     bool? loading,
     CleanFailure? failure,
     List<ProductModel>? productList,
+    List<ProductModel>? trashProductList,
     List<GtinTypes>? gtinTypes,
     List<TagListModel>? tagList,
     List<ManufacturerId>? manufacturerId,
@@ -37,6 +40,7 @@ class ProductState extends Equatable {
       loading: loading ?? this.loading,
       failure: failure ?? this.failure,
       productList: productList ?? this.productList,
+      trashProductList: trashProductList ?? this.trashProductList,
       gtinTypes: gtinTypes ?? this.gtinTypes,
       tagList: tagList ?? this.tagList,
       manufacturerId: manufacturerId ?? this.manufacturerId,
@@ -45,7 +49,7 @@ class ProductState extends Equatable {
 
   @override
   String toString() =>
-      'ProductState(loading: $loading, failure: $failure, productList: $productList)';
+      'ProductState(loading: $loading, failure: $failure, productList: $productList, trashProductList: $trashProductList)';
 
   @override
   List<Object> get props {
@@ -53,6 +57,7 @@ class ProductState extends Equatable {
       loading,
       failure,
       productList,
+      trashProductList,
       gtinTypes,
       tagList,
       manufacturerId,
@@ -63,6 +68,7 @@ class ProductState extends Equatable {
         loading: false,
         failure: CleanFailure.none(),
         productList: const [],
+        trashProductList: const [],
         gtinTypes: const [],
         tagList: const [],
         manufacturerId: const [],

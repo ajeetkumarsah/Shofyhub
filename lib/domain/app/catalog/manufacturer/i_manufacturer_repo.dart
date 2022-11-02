@@ -1,9 +1,10 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_details_model.dart';
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_model.dart';
+import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_pagination_model.dart';
 
 abstract class IManufacturerRepo {
-  Future<Either<CleanFailure, List<ManufacturerModel>>> getManufacturerList();
+  Future<Either<CleanFailure, ManufacturerPaginationModel>> getManufacturerList(
+      {required String filter, required int page});
   Future<Either<CleanFailure, ManufacturerDetailsModel>> getManufacturerDetails(
       {required int manufacturerId});
   Future<Either<CleanFailure, Unit>> createManufacturer(

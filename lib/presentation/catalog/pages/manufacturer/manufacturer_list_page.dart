@@ -7,6 +7,7 @@ import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_p
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/create_manufactuerer_page.dart';
+import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/manufacturer_list_tile.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/trash_manufacturer_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/edit_manufactuer_page.dart';
 
@@ -15,7 +16,17 @@ class ManufacturerListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final scrollController = useScrollController();
+
     useEffect(() {
+      scrollController.addListener(
+        () {
+          if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent) {
+            ref.read(manufacturerProvider.notifier).getMoreManufacturerList();
+          }
+        },
+      );
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(manufacturerProvider.notifier).getManufacturerList();
         ref.read(countryProvider.notifier).loadData();
@@ -26,6 +37,9 @@ class ManufacturerListPage extends HookConsumerWidget {
         ref.watch(manufacturerProvider.select((value) => value.loading));
     final manufacturerList = ref
         .watch(manufacturerProvider.select((value) => value.manufacturerList));
+
+    final manufacturerPaginationModel =
+        ref.watch(manufacturerProvider.notifier).manufacturerPaginationModel;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
@@ -52,65 +66,25 @@ class ManufacturerListPage extends HookConsumerWidget {
                           .getManufacturerList();
                     },
                     child: ListView.separated(
+                      controller: scrollController,
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
                       physics: const BouncingScrollPhysics(),
                       itemCount: manufacturerList.length,
-                      itemBuilder: (context, index) => Card(
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(manufacturerList[index].image),
-                          ),
-                          isThreeLine: true,
-                          title: Text(
-                            manufacturerList[index].name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18.sp),
-                          ),
-                          subtitle: Text(
-                              'available: ${manufacturerList[index].availableFrom}'),
-                          trailing: PopupMenuButton(
-                            tooltip: '',
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.sp)),
-                            icon: const Icon(Icons.more_horiz),
-                            onSelected: (index2) {
-                              if (index2 == 1) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditManufactuererPage(
-                                                manufacturerId:
-                                                    manufacturerList[index]
-                                                        .id)));
-                              }
-                              if (index2 == 2) {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        TrashManufactuerDialog(
-                                            manufactuerId:
-                                                manufacturerList[index].id));
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                value: 1,
-                                child: Text("edit".tr()),
-                              ),
-                              PopupMenuItem(
-                                value: 2,
-                                child: Text(
-                                  "trash".tr(),
-                                  style: const TextStyle(color: Colors.red),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                      itemBuilder: (context, index) {
+                        if ((index == manufacturerList.length - 1) &&
+                            manufacturerList.length <
+                                manufacturerPaginationModel.meta.total!) {
+                          return const SizedBox(
+                            height: 100,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        return ManufacturerListTile(
+                          manufacturer: manufacturerList[index],
+                        );
+                      },
                       separatorBuilder: (context, index) => SizedBox(
                         height: 5.h,
                       ),

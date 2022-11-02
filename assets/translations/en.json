@@ -435,5 +435,7 @@
   "upload_images": "Upload Images",
   "failed_to_pick_image": "Failed to pick Image",
   "select_images": "Select Images",
-  "upload_featured_image": "Upload Featured Image"
+  "upload_featured_image": "Upload Featured Image",
+  "products": "Products",
+  "manufacturers": "Manufactuerers"
 }

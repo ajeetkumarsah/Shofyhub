@@ -22,12 +22,16 @@ class ProductNotifier extends StateNotifier<ProductState> {
   List<ProductModel> products = [];
   int pageNumber = 1;
 
+  List<ProductModel> trashProducts = [];
+  int trashPageNumber = 1;
+
   getProducts() async {
     pageNumber = 1;
     products = [];
 
     state = state.copyWith(loading: true);
-    final data = await productRepo.getProducts(page: pageNumber);
+    final data =
+        await productRepo.getProducts(productFilter: 'null', page: pageNumber);
 
     //increase the page no
     pageNumber++;
@@ -47,7 +51,8 @@ class ProductNotifier extends StateNotifier<ProductState> {
   getMoreProducts() async {
     if (pageNumber == 1 ||
         pageNumber <= productPaginationModel.meta.lastPage!) {
-      final data = await productRepo.getProducts(page: pageNumber);
+      final data = await productRepo.getProducts(
+          productFilter: 'null', page: pageNumber);
 
       //increase the page no
       pageNumber++;
@@ -65,9 +70,54 @@ class ProductNotifier extends StateNotifier<ProductState> {
     }
   }
 
-  deleteProduct(int productId) async {
+  getTrashProducts() async {
+    trashPageNumber = 1;
+    trashProducts = [];
+
     state = state.copyWith(loading: true);
-    await productRepo.deleteProduct(productId);
+
+    //increase the page no
+    trashPageNumber++;
+    final suppliersData =
+        await productRepo.getProducts(productFilter: 'trash', page: 1);
+
+    state = suppliersData
+        .fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      productPaginationModel = r;
+      trashProducts.addAll(productPaginationModel.data);
+
+      return state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+        trashProductList: trashProducts,
+      );
+    });
+  }
+
+  getMoreTrashProducts() async {
+    if (trashPageNumber == 1 ||
+        trashPageNumber <= productPaginationModel.meta.lastPage!) {
+      final data = await productRepo.getProducts(
+          productFilter: 'trash', page: trashPageNumber);
+
+      //increase the page no
+      trashPageNumber++;
+
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        productPaginationModel = r;
+        trashProducts.addAll(productPaginationModel.data);
+
+        return state.copyWith(
+            loading: false,
+            failure: CleanFailure.none(),
+            trashProductList: trashProducts);
+      });
+    }
+  }
+
+  trashProduct(int productId) async {
+    state = state.copyWith(loading: true);
+    await productRepo.trashProduct(productId);
     state = state.copyWith(loading: false);
     getProducts();
   }
@@ -98,6 +148,32 @@ class ProductNotifier extends StateNotifier<ProductState> {
       ),
     );
     getProducts();
+  }
+
+  restoreProduct(int productId) async {
+    state = state.copyWith(loading: true);
+    final quickUpdateData =
+        await productRepo.restoreProduct(productId: productId);
+
+    state = quickUpdateData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
+    );
+    getProducts();
+    getTrashProducts();
+  }
+
+  deleteProduct(int productId) async {
+    state = state.copyWith(loading: true);
+    final quickUpdateData =
+        await productRepo.deleteProduct(productId: productId);
+
+    state = quickUpdateData.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(loading: false, failure: CleanFailure.none()),
+    );
+    getProducts();
+    getTrashProducts();
   }
 
   gtinType() async {

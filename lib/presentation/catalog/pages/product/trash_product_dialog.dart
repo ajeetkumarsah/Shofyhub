@@ -3,29 +3,28 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:zcart_seller/application/app/product/product_provider.dart';
+import 'package:zcart_seller/application/app/product/product_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 
-class DeleteSupplierDialog extends HookConsumerWidget {
-  final int supplierId;
-  const DeleteSupplierDialog(this.supplierId, {Key? key}) : super(key: key);
+class TrashProductDialog extends HookConsumerWidget {
+  final int productId;
+  const TrashProductDialog(this.productId, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<SupplierState>(supplierProvider, (previous, next) {
+    ref.listen<ProductState>(productProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          NotificationHelper.success(message: 'item_deleted'.tr());
+          NotificationHelper.success(message: 'moved_to_trash'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
       }
     });
 
-    final loading =
-        ref.watch(supplierProvider.select((value) => value.loading));
+    final loading = ref.watch(productProvider.select((value) => value.loading));
 
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
@@ -37,7 +36,7 @@ class DeleteSupplierDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'delete'.tr(),
+                  'trash'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -62,7 +61,7 @@ class DeleteSupplierDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('are_you_sure_delete_this_item'.tr()),
+        child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -113,8 +112,8 @@ class DeleteSupplierDialog extends HookConsumerWidget {
                       ),
                       onPressed: () {
                         ref
-                            .read(supplierProvider.notifier)
-                            .deleteSupplier(supplierId);
+                            .read(productProvider.notifier)
+                            .trashProduct(productId);
                         Navigator.of(context).pop();
                       },
                       child: loading
@@ -127,7 +126,7 @@ class DeleteSupplierDialog extends HookConsumerWidget {
                                   )),
                             )
                           : Text(
-                              "delete".tr(),
+                              "trash".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,
