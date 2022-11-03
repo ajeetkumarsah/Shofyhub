@@ -54,7 +54,7 @@ class DisputePaginationModel extends Equatable {
   @override
   bool get stringify => true;
 
-  factory DisputePaginationModel.init() => DisputePaginationModel(
+  factory DisputePaginationModel.init() => const DisputePaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),

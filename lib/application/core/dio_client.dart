@@ -25,14 +25,14 @@ class DioClient {
   }
 
   static Future<dynamic> get({url}) async {
-    var _dio = Dio(await getBasseOptions());
-    var response = await _dio.get(url);
+    var dio = Dio(await getBasseOptions());
+    var response = await dio.get(url);
     return response;
   }
 
   static Future<dynamic> post({url, payload}) async {
-    var _dio = Dio(await getBasseOptions());
-    var response = await _dio.post(url, data: payload);
+    var dio = Dio(await getBasseOptions());
+    var response = await dio.post(url, data: payload);
     return response;
   }
 }

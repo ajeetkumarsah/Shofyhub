@@ -20,8 +20,7 @@ class TopSellingProducts extends HookConsumerWidget {
     }, []);
     final topSellingItems =
         ref.watch(dashboardProvider.select((value) => value.topSellingItems));
-    final loading =
-        ref.watch(dashboardProvider.select((value) => value.loading));
+    
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

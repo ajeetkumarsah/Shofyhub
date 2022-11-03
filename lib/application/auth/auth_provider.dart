@@ -36,6 +36,24 @@ class AuthNotifier extends StateNotifier<AuthState> {
     Logger.i(state.user);
   }
 
+  otpLogin({required String phone}) async {
+    state = state.copyWith(loading: true);
+    final data = await authRepo.otpLogin(phoneNumber: phone);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    Logger.i(state.user);
+  }
+
+  otpVerify({required String phone, required String code}) async {
+    state = state.copyWith(loading: true);
+    final data = await authRepo.otpVerify(phoneNumber: phone, code: code);
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false, failure: CleanFailure.none(), user: r));
+    Logger.i(state.user);
+  }
+
   forgetPassword({required String email}) async {
     state = state.copyWith(loading: true);
     final data = await authRepo.forgetPassword(email: email);

@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 class RegistrationBody extends Equatable {
   final String shopName;
   final String email;
+  final String phone;
   final String planId;
   final String password;
   final String confirmPassword;
@@ -12,6 +13,7 @@ class RegistrationBody extends Equatable {
   const RegistrationBody({
     required this.shopName,
     required this.email,
+    required this.phone,
     required this.planId,
     required this.password,
     required this.confirmPassword,
@@ -21,6 +23,7 @@ class RegistrationBody extends Equatable {
   RegistrationBody copyWith({
     String? shopName,
     String? email,
+    String? phone,
     String? planId,
     String? password,
     String? confirmPassword,
@@ -29,6 +32,7 @@ class RegistrationBody extends Equatable {
     return RegistrationBody(
       shopName: shopName ?? this.shopName,
       email: email ?? this.email,
+      phone: phone ?? this.phone,
       planId: planId ?? this.planId,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
@@ -40,6 +44,7 @@ class RegistrationBody extends Equatable {
     return {
       'shop_name': shopName,
       'email': email,
+      'phone': phone,
       'plan_id': planId,
       'password': password,
       'confirm_password': confirmPassword,
@@ -51,6 +56,7 @@ class RegistrationBody extends Equatable {
     return RegistrationBody(
       shopName: map['shop_name'] ?? '',
       email: map['email'] ?? '',
+      phone: map['phone'] ?? '',
       planId: map['plan_id'] ?? '',
       password: map['password'] ?? '',
       confirmPassword: map['confirm_password'] ?? '',
@@ -83,6 +89,7 @@ class RegistrationBody extends Equatable {
   factory RegistrationBody.init() => const RegistrationBody(
       shopName: '',
       email: '',
+      phone: '',
       planId: '',
       password: '',
       confirmPassword: '',

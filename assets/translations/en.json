@@ -437,5 +437,17 @@
   "select_images": "Select Images",
   "upload_featured_image": "Upload Featured Image",
   "products": "Products",
-  "manufacturers": "Manufactuerers"
+  "manufacturers": "Manufactuerers",
+  "email_login": "Email Login",
+  "phone_login": "Phone Login",
+  "invalid_phone": "Invalid Phone",
+  "otp_verification_successful": "Otp verification Successful",
+  "verify_your_phone": "Verify Your Phone",
+  "sent_you_a_code": "We’ve sent a code to:",
+  "your_phone": "Phone Number",
+  "resend_code": "Resend Code",
+  "didnt_get_a_code": "Didn’t get a code?",
+  "verify": "Verify",
+  "login_with_email": "Email Login",
+  "login_with_phone": "login_with_phone"
 }

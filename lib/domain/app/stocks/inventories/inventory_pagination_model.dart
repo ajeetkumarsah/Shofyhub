@@ -54,7 +54,7 @@ class InventoryPaginationModel extends Equatable {
   @override
   bool get stringify => true;
 
-  factory InventoryPaginationModel.init() => InventoryPaginationModel(
+  factory InventoryPaginationModel.init() => const InventoryPaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),

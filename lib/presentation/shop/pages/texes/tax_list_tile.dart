@@ -2,10 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
 import 'package:zcart_seller/presentation/shop/pages/texes/trash_tax_dialog.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/update_tax_page.dart';
-import 'package:zcart_seller/presentation/stock/warehouse/widgets/trash_warehouse_dialog.dart';
 
 class TaxListTile extends StatelessWidget {
   final TaxModel taxItem;

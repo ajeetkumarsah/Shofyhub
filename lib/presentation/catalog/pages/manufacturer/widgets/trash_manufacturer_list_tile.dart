@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_model.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/delete_manufacturer_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/edit_manufactuer_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/restore_manufacturer_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/trash_manufacturer_dialog.dart';
 
 class TrashManufacturerListTile extends StatelessWidget {
   const TrashManufacturerListTile({Key? key, required this.manufacturer})

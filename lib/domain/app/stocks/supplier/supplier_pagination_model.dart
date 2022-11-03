@@ -54,7 +54,7 @@ class SupplierPaginationModel extends Equatable {
   @override
   bool get stringify => true;
 
-  factory SupplierPaginationModel.init() => SupplierPaginationModel(
+  factory SupplierPaginationModel.init() => const SupplierPaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),

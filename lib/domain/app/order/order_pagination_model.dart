@@ -53,7 +53,7 @@ class OrderPaginationModel extends Equatable {
   @override
   bool get stringify => true;
 
-  factory OrderPaginationModel.init() => OrderPaginationModel(
+  factory OrderPaginationModel.init() => const OrderPaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),

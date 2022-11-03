@@ -1,7 +1,5 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_pagination_model.dart';
-import 'package:fpdart/src/either.dart';
-import 'package:clean_api/models/clean_failure.dart';
 import 'package:zcart_seller/domain/app/order%20management/dispute/i_dispute_repo.dart';
 
 class DisputeRepo extends IDisputeRepo {

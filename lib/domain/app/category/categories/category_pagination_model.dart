@@ -56,7 +56,7 @@ class CategoryPaginationModel extends Equatable {
   bool get stringify => true;
 
 
-  factory CategoryPaginationModel.init() => CategoryPaginationModel(
+  factory CategoryPaginationModel.init() => const CategoryPaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),

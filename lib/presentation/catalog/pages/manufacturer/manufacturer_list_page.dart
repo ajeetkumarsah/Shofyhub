@@ -8,8 +8,6 @@ import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/create_manufactuerer_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/manufacturer_list_tile.dart';
-import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/trash_manufacturer_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/edit_manufactuer_page.dart';
 
 class ManufacturerListPage extends HookConsumerWidget {
   const ManufacturerListPage({Key? key}) : super(key: key);

@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/product/product_model.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/delete_product_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/restore_product_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/product/update_product_page.dart';
 
 class TrashProductTile extends StatelessWidget {
   final ProductModel product;

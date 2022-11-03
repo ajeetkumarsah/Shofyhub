@@ -2,7 +2,6 @@ import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/product/product_state.dart';
 import 'package:zcart_seller/domain/app/Product/product_pagination_model.dart';
-import 'package:zcart_seller/domain/app/product/create_product/create_product_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
 import 'package:zcart_seller/domain/app/product/product_model.dart';
 import 'package:zcart_seller/infrastructure/app/Products/product_repo.dart';

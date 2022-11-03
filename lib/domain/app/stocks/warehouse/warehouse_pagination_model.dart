@@ -54,7 +54,7 @@ class WarehousePaginationModel extends Equatable {
   @override
   bool get stringify => true;
 
-  factory WarehousePaginationModel.init() => WarehousePaginationModel(
+  factory WarehousePaginationModel.init() => const WarehousePaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),

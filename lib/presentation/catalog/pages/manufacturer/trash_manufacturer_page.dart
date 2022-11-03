@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/trash_manufacturer_list_tile.dart';
-import 'package:zcart_seller/presentation/catalog/pages/product/trash_product_list_tile.dart';
 
 class TrashManufacturerPage extends HookConsumerWidget {
   const TrashManufacturerPage({Key? key}) : super(key: key);

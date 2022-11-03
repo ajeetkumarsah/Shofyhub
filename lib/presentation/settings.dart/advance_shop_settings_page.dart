@@ -1,5 +1,4 @@
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
+ 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +15,10 @@ import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/settings/payment_method_model.dart';
 import 'package:zcart_seller/domain/app/settings/update_advance_shop_settings_model.dart';
-import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
-import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';

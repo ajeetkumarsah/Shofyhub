@@ -136,4 +136,68 @@ class AuthRepo extends IAuthRepo {
         body: null,
         endPoint: 'auth/forgot?email=$email');
   }
+
+  @override
+  Future<Either<CleanFailure, Unit>> otpLogin({required String phoneNumber}) {
+    return cleanApi.post(
+        failureHandler:
+            <unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'Otp Login', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'Otp Login',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'Otp Login',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'Otp Login', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => unit,
+        body: null,
+        endPoint: 'auth/login?phone=$phoneNumber');
+  }
+
+  @override
+  Future<Either<CleanFailure, UserModel>> otpVerify(
+      {required String phoneNumber, required String code}) {
+    return cleanApi.post(
+        failureHandler:
+            <unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'Otp Verify', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'Otp Verify',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'Otp Verify',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'Otp Verify', error: responseBody.toString()));
+          }
+        },
+        fromData: (json) => UserModel.fromMap(json["data"]),
+        body: null,
+        endPoint:
+            'auth/user/phone/verify?phone_number=$phoneNumber&verification_code=$code');
+  }
 }

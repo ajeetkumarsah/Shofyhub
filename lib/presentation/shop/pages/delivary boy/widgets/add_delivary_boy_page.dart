@@ -1,14 +1,11 @@
-import 'dart:developer';
+  
 
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:zcart_seller/application/app/shop/delivary%20boy/delivary_boy_provider.dart';
 import 'package:zcart_seller/application/app/shop/delivary%20boy/delivary_boy_state.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
@@ -60,7 +57,7 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
           NotificationHelper.success(
               message:
                   delivaryBoyDetails != null ? 'item_updated' : 'item_added');
-          
+
           // CherryToast.info(
           //   title: delivaryBoyDetails != null
           //       ? const Text('Delivary Boy Updated')
@@ -68,7 +65,6 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
           //   animationType: AnimationType.fromTop,
           // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
-          
           NotificationHelper.error(message: 'something_went_wrong'.tr());
           // CherryToast.info(
           //   title: const Text('Something went wrong'),
@@ -232,13 +228,10 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                           ref
                               .read(delivaryBoyProvider.notifier)
                               .createDelivaryBoy(delivaryBoy: delivaryBoy);
-                          log('Add delivery bod: $delivaryBoy');
                         }
                       } else {
-                        CherryToast.info(
-                          title: const Text('Fillup all field'),
-                          animationType: AnimationType.fromTop,
-                        ).show(context);
+                        NotificationHelper.info(
+                            message: 'please_fill_all_fields'.tr());
                       }
                     },
                     child: loading

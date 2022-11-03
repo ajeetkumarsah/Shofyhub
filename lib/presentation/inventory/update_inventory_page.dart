@@ -1,25 +1,19 @@
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
+ 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/form/inventory_provider.dart';
-import 'package:zcart_seller/application/app/product/product_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_state.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventory_details_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventory_details_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/update_inventory_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
-
-import '../../../../application/app/product/product_state.dart';
 
 class UpdateInventoryPage extends HookConsumerWidget {
   final int inventoryId;

@@ -1,7 +1,3 @@
-import 'dart:developer';
-
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -13,8 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/business_days_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/select_business_day_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_state.dart';
@@ -243,10 +237,6 @@ class CreateWarehousePage extends HookConsumerWidget {
                         ref
                             .read(selectBusinessDaysProvider)
                             .addBusinessDays(allSelectedItems);
-                        log(ref
-                            .read(selectBusinessDaysProvider)
-                            .selectedBusinessDays
-                            .toString());
                       }),
                   SizedBox(height: 20.h),
                   KTextField(
@@ -327,7 +317,8 @@ class CreateWarehousePage extends HookConsumerWidget {
                       TextButton(
                         onPressed: () {
                           if (selectedCountry.value == null) {
-                            NotificationHelper.info(message: 'please_select_a_country'.tr());
+                            NotificationHelper.info(
+                                message: 'please_select_a_country'.tr());
                             // CherryToast.info(
                             //   title: Text('please_select_a_country'.tr()),
                             //   animationType: AnimationType.fromTop,

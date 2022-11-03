@@ -1,14 +1,16 @@
-import 'package:cherry_toast/cherry_toast.dart';
-import 'package:cherry_toast/resources/arrays.dart';
 import 'package:clean_api/clean_api.dart';
+import 'package:country_calling_code_picker/picker.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/subcroption_plan_provider.dart';
+import 'package:zcart_seller/application/app/plugin/plugin_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
+import 'package:zcart_seller/application/auth/country_code_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/auth/registration_body.dart';
@@ -16,6 +18,7 @@ import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
+import 'package:zcart_seller/presentation/auth/widgets/country_widget.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -29,6 +32,7 @@ class SignupScreen extends HookConsumerWidget {
         ref.watch(subscriptionplanProvider.select((value) => value.dataList));
     final showPassword = useState(true);
     final passwordController = useTextEditingController();
+    final phoneController = useTextEditingController();
     final confirmPasswordController = useTextEditingController();
     final emailController = useTextEditingController();
     final shopNameController = useTextEditingController();
@@ -45,12 +49,6 @@ class SignupScreen extends HookConsumerWidget {
           );
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -86,7 +84,7 @@ class SignupScreen extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 10.h, bottom: 10.w, left: 10.w),
+                padding: EdgeInsets.all(20.h),
                 child: Text(
                   "Create Account",
                   style: TextStyle(
@@ -95,7 +93,7 @@ class SignupScreen extends HookConsumerWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 10.h),
+              // SizedBox(height: 10.h),
               // Center(
               //   child: Padding(
               //     padding: const EdgeInsets.only(top: 5, bottom: 10),
@@ -130,6 +128,35 @@ class SignupScreen extends HookConsumerWidget {
                 ),
               ),
               SizedBox(height: 15.h),
+              Consumer(builder: (context, watch, child) {
+                final otpLoginPluginCheck =
+                    ref.watch(checkOtpLoginPluginProvider);
+
+                return otpLoginPluginCheck.when(
+                    data: (data) {
+                      return data == false
+                          ? Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                  child: KTextField(
+                                    validator: (text) =>
+                                        ValidatorLogic.requiredField(text),
+                                    controller: phoneController,
+                                    lebelText: "phone".tr(),
+                                    keyboardType: TextInputType.phone,
+                                    prefixIcon: const CountryWidget(),
+                                  ),
+                                ),
+                                SizedBox(height: 15.h),
+                              ],
+                            )
+                          : const SizedBox();
+                    },
+                    loading: () => const SizedBox(),
+                    error: (_, __) => const SizedBox());
+              }),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w),
                 child: SizedBox(
@@ -242,33 +269,35 @@ class SignupScreen extends HookConsumerWidget {
               Padding(
                 padding: EdgeInsets.all(10.sp),
                 child: KButton(
-                  onPressed: () {
-                    if (formKey.currentState?.validate() ?? false) {
-                      if (passwordController.text ==
-                          confirmPasswordController.text) {
-                        final body = RegistrationBody(
-                          shopName: shopNameController.text,
-                          email: emailController.text,
-                          planId: selectedPlan.value.value,
-                          password: passwordController.text,
-                          confirmPassword: confirmPasswordController.text,
-                          agree: true,
-                        );
+                  onPressed: loading
+                      ? null
+                      : () {
+                          String phone = ref
+                                  .read(countryCodeProvider)
+                                  .getSelectedCountry() +
+                              phoneController.text;
+                          if (formKey.currentState?.validate() ?? false) {
+                            if (passwordController.text ==
+                                confirmPasswordController.text) {
+                              final body = RegistrationBody(
+                                shopName: shopNameController.text,
+                                email: emailController.text,
+                                phone: phone,
+                                planId: selectedPlan.value.value,
+                                password: passwordController.text,
+                                confirmPassword: confirmPasswordController.text,
+                                agree: true,
+                              );
 
-                        ref
-                            .read(authProvider.notifier)
-                            .registration(body: body);
-                      } else {
-                        NotificationHelper.error(message: 'password_didnt_matched'.tr());
-                        // CherryToast.error(
-                        //   title: const Text(
-                        //     "Password didn't matched",
-                        //   ),
-                        //   toastPosition: Position.bottom,
-                        // ).show(context);
-                      }
-                    }
-                  },
+                              ref
+                                  .read(authProvider.notifier)
+                                  .registration(body: body);
+                            } else {
+                              NotificationHelper.error(
+                                  message: 'password_didnt_matched'.tr());
+                            }
+                          }
+                        },
                   child: loading
                       ? const Center(
                           child: CircularProgressIndicator(

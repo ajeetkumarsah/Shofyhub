@@ -54,6 +54,9 @@ dependencies:
   overlay_support: ^2.0.1
   dio: ^4.0.6
   http_parser: ^4.0.0
+  country_calling_code_picker: ^2.0.1
+  argon_buttons_flutter_fix: ^1.1.3
+  pin_code_fields: ^7.4.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

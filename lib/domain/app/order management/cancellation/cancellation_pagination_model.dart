@@ -54,7 +54,7 @@ class CancellationPaginationModel extends Equatable {
   @override
   bool get stringify => true;
 
-  factory CancellationPaginationModel.init() => CancellationPaginationModel(
+  factory CancellationPaginationModel.init() => const CancellationPaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),
