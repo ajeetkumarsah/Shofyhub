@@ -449,5 +449,6 @@
   "didnt_get_a_code": "Didn’t get a code?",
   "verify": "Verify",
   "login_with_email": "Email Login",
-  "login_with_phone": "login_with_phone"
+  "login_with_phone": "login_with_phone",
+  "wellcome": "Wellcome"
 }

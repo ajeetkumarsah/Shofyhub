@@ -1,1 +1,1 @@
-String apiEndpoint = "https://test.incevio.cloud/api/vendor/";
+String apiEndpoint = "https://test.incevio.cloud/api/vendor";

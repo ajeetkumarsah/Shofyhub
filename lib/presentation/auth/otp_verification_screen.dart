@@ -27,11 +27,11 @@ class OTPVerificationScreen extends HookConsumerWidget {
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.user != UserModel.init()) {
-          Navigator.push(
-            context,
+          Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
               builder: (context) => const DashboardPage(),
             ),
+            (Route<dynamic> route) => false,
           );
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

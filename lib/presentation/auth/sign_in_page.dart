@@ -64,12 +64,10 @@ class SignInPage extends HookConsumerWidget {
           } else {
             // if email login redirect to dashboard page
             if (next.user != UserModel.init()) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const DashboardPage(),
-                ),
-              );
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                      builder: (context) => const DashboardPage()),
+                  (Route<dynamic> route) => false);
             } else if (next.failure != CleanFailure.none()) {
               NotificationHelper.error(message: next.failure.error);
             }
@@ -142,7 +140,7 @@ class SignInPage extends HookConsumerWidget {
 
                   return otpLoginPluginCheck.when(
                       data: (data) {
-                        return data == false
+                        return data == true
                             ? TabBar(
                                 tabs: [
                                   Padding(
@@ -180,13 +178,13 @@ class SignInPage extends HookConsumerWidget {
                 }),
                 SizedBox(height: 20.h),
                 Consumer(builder: (context, watch, child) {
-                  var  otpLoginPluginCheck =
+                  var otpLoginPluginCheck =
                       ref.watch(checkOtpLoginPluginProvider);
 
                   return otpLoginPluginCheck.when(
                       data: (data) {
                         log('plugin: $data');
-                        return data == false
+                        return data == true
                             ? //check if plugin is activated
                             SizedBox(
                                 height:

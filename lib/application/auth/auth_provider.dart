@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +41,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   otpLogin({required String phone}) async {
     state = state.copyWith(loading: true);
     final data = await authRepo.otpLogin(phoneNumber: phone);
+    log('otplogin provider: $data');
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(state.user);

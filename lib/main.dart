@@ -17,7 +17,7 @@ void main() async {
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
-  CleanApi.instance.setup(baseUrl: apiEndpoint, showLogs: true);
+  CleanApi.instance.setup(baseUrl: '$apiEndpoint/', showLogs: true);
   runApp(ProviderScope(
       child: EasyLocalization(
           path: 'assets/translations',
@@ -40,7 +40,11 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            theme: ThemeData(primaryColor: Constants.appbarColor),
+            theme: ThemeData(
+                primaryColor: Constants.appbarColor,
+                appBarTheme: const AppBarTheme(
+                  backgroundColor: Constants.appbarColor,
+                )),
             debugShowCheckedModeBanner: false,
             title: 'Multivendor App',
             home: const SignInPage(),

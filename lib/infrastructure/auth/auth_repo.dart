@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:clean_api/clean_api.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zcart_seller/domain/auth/i_auth_repo.dart';
@@ -90,7 +92,7 @@ class AuthRepo extends IAuthRepo {
         fromData: (json) => UserModel.fromMap(json["data"]),
         body: null,
         endPoint:
-            "auth/register?email=${body.email}&shop_name=${body.shopName}&plan=${body.planId}&password=${body.password}&password_confirmation=${body.confirmPassword}&agree=${body.agree}");
+            "auth/register?email=${body.email}&phone=${body.phone}&shop_name=${body.shopName}&plan=${body.planId}&password=${body.password}&password_confirmation=${body.confirmPassword}&agree=${body.agree}");
     return data.fold((l) => left(l), (r) async {
       // await FirebaseFirestore.instance
       //     .collection('setting')
