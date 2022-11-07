@@ -41,7 +41,18 @@ class MyApp extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             theme: ThemeData(
-                primaryColor: Constants.appbarColor,
+                textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(
+                      foregroundColor: Constants.primaryColor),
+                ),
+                primaryColor: Constants.primaryColor,
+                tabBarTheme: const TabBarTheme(
+                  // indicatorSize: TabBarIndicatorSize.tab,
+                  indicator: UnderlineTabIndicator(
+                    borderSide:
+                        BorderSide(color: Constants.primaryColor, width: 3),
+                  ),
+                ),
                 appBarTheme: const AppBarTheme(
                   backgroundColor: Constants.appbarColor,
                 )),

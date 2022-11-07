@@ -7,6 +7,7 @@ import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
+import 'package:zcart_seller/presentation/app/dashboard/dashboard_home.dart';
 import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
 import 'package:zcart_seller/presentation/auth/signup_screen.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
@@ -38,7 +39,7 @@ class SignInPage extends HookConsumerWidget {
             context,
             MaterialPageRoute(
               // builder: (context) => const DashBoardScreen(),
-              builder: (context) => const DashboardPage(),
+              builder: (context) => const DashboardHome(),
             ),
           );
         } else if (next.failure != CleanFailure.none()) {

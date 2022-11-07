@@ -35,7 +35,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
         },
         fromData: ((json) => List<CategoryGroupModel>.from(
             json['data'].map((e) => CategoryGroupModel.fromMap(e)))),
-        endPoint: 'category-groups');
+        endPoint: 'category-groups?filter=null');
   }
 
   @override
@@ -268,5 +268,38 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
         },
         fromData: (json) => CategoryGroupDetailsModel.fromMap(json["data"]),
         endPoint: 'category-group/$categoryGroupId');
+  }
+
+  @override
+  Future<Either<CleanFailure, List<CategoryGroupModel>>>
+      getTrashCategoryGroup() async {
+    return cleanApi.get(
+        failureHandler: <CategoryGroupModel>(int statusCode,
+            Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(
+                CleanFailure(tag: 'trash category group', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'trash category group',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'trash category group',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(CleanFailure(
+                tag: 'trash category group', error: responseBody.toString()));
+          }
+        },
+        fromData: ((json) => List<CategoryGroupModel>.from(
+            json['data'].map((e) => CategoryGroupModel.fromMap(e)))),
+        endPoint: 'category-groups?filter=trash');
   }
 }

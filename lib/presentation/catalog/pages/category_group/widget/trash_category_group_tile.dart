@@ -2,16 +2,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/trash_category_group_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/edit_category_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/delete_category_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/restore_category_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/category_sub_group_page.dart';
 
-class CategoryGroupTile extends StatelessWidget {
+class TrashCategoryGroupTile extends StatelessWidget {
   final CategoryGroupModel categoryGroup;
 
-  const CategoryGroupTile({
+  const TrashCategoryGroupTile({
     Key? key,
     required this.categoryGroup,
   }) : super(key: key);
@@ -53,7 +52,7 @@ class CategoryGroupTile extends StatelessWidget {
         // ),
         subtitle: !categoryGroup.active
             ? Text(
-                'Inactive',
+                'inactive'.tr(),
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: Colors.red.shade800,
@@ -73,25 +72,25 @@ class CategoryGroupTile extends StatelessWidget {
             if (index == 1) {
               showDialog(
                   context: context,
-                  builder: (context) => EditCategoryGroupDialog(
+                  builder: (context) => RestoreCategoryGroupDialog(
                       categoryGroupId: categoryGroup.id));
             }
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => TrashCategoryGroupDialog(
-                      categoryGroupId: categoryGroup.id));
+                  builder: (context) =>
+                      DeleteCategoryGroupDialog(categoryGroup.id));
             }
           },
           itemBuilder: (context) => [
             PopupMenuItem(
               value: 1,
-              child: const Text("edit").tr(),
+              child: const Text("restore").tr(),
             ),
             PopupMenuItem(
               value: 2,
               child: const Text(
-                "trash",
+                "delete",
                 style: TextStyle(color: Colors.red),
               ).tr(),
             )

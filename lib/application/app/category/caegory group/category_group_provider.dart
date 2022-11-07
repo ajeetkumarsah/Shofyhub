@@ -26,6 +26,17 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
             allCategoryGroups: r));
   }
 
+  getTrashCategoryGroup() async {
+    state = state.copyWith(loading: true);
+    final data = await categoryGroupRepo.getTrashCategoryGroup();
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false,
+            failure: CleanFailure.none(),
+            trashCategoryGroups: r));
+  }
+
   createCategoryGroup(CreateCategoryGroupModel categoryGroupModel) async {
     state = state.copyWith(loading: true);
     final data = await categoryGroupRepo.createCategoryGroup(
@@ -89,6 +100,7 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getAllCategoryGroup();
+    getTrashCategoryGroup();
   }
 
   restoreCategoryGroup({required int categoryGroupId}) async {
@@ -99,6 +111,7 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getAllCategoryGroup();
+    getTrashCategoryGroup();
   }
 
   deleteCategoryGroup({required int categoryGroupId}) async {
@@ -109,5 +122,6 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getAllCategoryGroup();
+    getTrashCategoryGroup();
   }
 }

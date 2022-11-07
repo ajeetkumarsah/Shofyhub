@@ -1,13 +1,11 @@
 import 'dart:developer';
 
 import 'package:clean_api/clean_api.dart';
-import 'package:country_calling_code_picker/picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/form/subcroption_plan_provider.dart';
 import 'package:zcart_seller/application/app/plugin/plugin_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
@@ -17,6 +15,7 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/app/dashboard/dashboard_home.dart';
 import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
 import 'package:zcart_seller/presentation/auth/forget_password_dialog.dart';
 import 'package:zcart_seller/presentation/auth/otp_verification_screen.dart';
@@ -66,7 +65,7 @@ class SignInPage extends HookConsumerWidget {
             if (next.user != UserModel.init()) {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                      builder: (context) => const DashboardPage()),
+                      builder: (context) => const DashboardHome()),
                   (Route<dynamic> route) => false);
             } else if (next.failure != CleanFailure.none()) {
               NotificationHelper.error(message: next.failure.error);
@@ -125,7 +124,7 @@ class SignInPage extends HookConsumerWidget {
                 ),
                 SizedBox(height: 5.h),
                 Text(
-                  'Signin and manage your orders',
+                  'signin_and_mange_order'.tr(),
                   style: TextStyle(
                     color: Colors.grey.shade500,
                     fontSize: 15.sp,
@@ -183,7 +182,6 @@ class SignInPage extends HookConsumerWidget {
 
                   return otpLoginPluginCheck.when(
                       data: (data) {
-                        log('plugin: $data');
                         return data == true
                             ? //check if plugin is activated
                             SizedBox(
@@ -232,7 +230,7 @@ class SignInPage extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Or, create a new Account?',
+                          'or_create_a_new_account'.tr(),
                           style: TextStyle(
                             color: Colors.grey.shade500,
                             fontSize: 13.sp,
@@ -244,7 +242,7 @@ class SignInPage extends HookConsumerWidget {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => const SignupScreen()));
                           },
-                          child: Text('Sign Up',
+                          child: Text('sign_up'.tr(),
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.bold,
@@ -256,7 +254,7 @@ class SignInPage extends HookConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Or, Forgot your Password?',
+                          'or_forgot_password'.tr(),
                           style: TextStyle(
                             color: Colors.grey.shade500,
                             fontSize: 13.sp,

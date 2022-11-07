@@ -6,6 +6,8 @@ import 'package:zcart_seller/presentation/catalog/pages/category_group/category_
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/manufacturer_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/product_page.dart';
 
+import 'pages/category_group/category_froup_home.dart';
+
 class CatalogueScreen extends StatelessWidget {
   const CatalogueScreen({Key? key}) : super(key: key);
 
@@ -46,7 +48,7 @@ class CatalogueScreen extends StatelessWidget {
               ]),
         ),
         body: const TabBarView(children: [
-          CategoryGroupPage(),
+          CategoryGroupHome(),
           AttributePage(),
           ProductPage(),
           ManufacrurerPage(),

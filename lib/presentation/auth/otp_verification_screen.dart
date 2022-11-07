@@ -4,12 +4,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
-import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
+import 'package:zcart_seller/presentation/app/dashboard/dashboard_home.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
 
 class OTPVerificationScreen extends HookConsumerWidget {
@@ -29,7 +28,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
         if (next.user != UserModel.init()) {
           Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(
-              builder: (context) => const DashboardPage(),
+              builder: (context) => const DashboardHome(),
             ),
             (Route<dynamic> route) => false,
           );

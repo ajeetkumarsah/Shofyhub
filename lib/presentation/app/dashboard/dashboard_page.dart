@@ -72,16 +72,6 @@ class DashboardPage extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFEFEFEF),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Constants.buttonColor,
-        onPressed: () {
-          showDialog(
-              context: context, builder: (context) => const LogoutDialog());
-        },
-        label: const Text(
-          'Logout',
-        ),
-      ),
       appBar: ZcartAppBar(
         title: shopData.name,
       ),
@@ -97,6 +87,7 @@ class DashboardPage extends HookConsumerWidget {
                 .read(stockeInventoryProvider.notifier)
                 .getAllInventories(inventoryFilter: 'active');
             ref.read(categoryGroupProvider.notifier).getAllCategoryGroup();
+            ref.read(categoryGroupProvider.notifier).getTrashCategoryGroup();
             ref.read(refundProvider.notifier).getOpenRefunds();
             ref.read(dashboardProvider.notifier).getStatistics();
           });

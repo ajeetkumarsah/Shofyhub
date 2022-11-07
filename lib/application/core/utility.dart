@@ -8,8 +8,15 @@ class SupplierUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
 
-
 class ProductUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
+class CategoryGroup {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
+class DashboardUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
 

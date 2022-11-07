@@ -6,6 +6,7 @@ import 'create_category_group_model.dart';
 
 abstract class ICategoryGroupRepo {
   Future<Either<CleanFailure, List<CategoryGroupModel>>> getAllCategoryGroup();
+  Future<Either<CleanFailure, List<CategoryGroupModel>>> getTrashCategoryGroup();
 
   Future<Either<CleanFailure, Unit>> createCategoryGroup(
       {required CreateCategoryGroupModel categoryGroupModel});

@@ -9,12 +9,14 @@ class CategoryGroupState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<CategoryGroupModel> allCategoryGroups;
+  final List<CategoryGroupModel> trashCategoryGroups;
   final CategoryGroupModel categoryGroupId;
   final CategoryGroupDetailsModel categoryDetails;
   const CategoryGroupState({
     required this.loading,
     required this.failure,
     required this.allCategoryGroups,
+    required this.trashCategoryGroups,
     required this.categoryGroupId,
     required this.categoryDetails,
   });
@@ -23,6 +25,7 @@ class CategoryGroupState extends Equatable {
     bool? loading,
     CleanFailure? failure,
     List<CategoryGroupModel>? allCategoryGroups,
+    List<CategoryGroupModel>? trashCategoryGroups,
     CategoryGroupModel? categoryGroupId,
     CategoryGroupDetailsModel? categoryDetails,
   }) {
@@ -30,6 +33,7 @@ class CategoryGroupState extends Equatable {
       loading: loading ?? this.loading,
       failure: failure ?? this.failure,
       allCategoryGroups: allCategoryGroups ?? this.allCategoryGroups,
+      trashCategoryGroups: trashCategoryGroups ?? this.trashCategoryGroups,
       categoryGroupId: categoryGroupId ?? this.categoryGroupId,
       categoryDetails: categoryDetails ?? this.categoryDetails,
     );
@@ -37,7 +41,7 @@ class CategoryGroupState extends Equatable {
 
   @override
   String toString() =>
-      'CategoryGroupState(loading: $loading, failure: $failure, allCategoryGroups: $allCategoryGroups)';
+      'CategoryGroupState(loading: $loading, failure: $failure, allCategoryGroups: $allCategoryGroups, trashCategoryGroups: $trashCategoryGroups)';
 
   @override
   List<Object> get props {
@@ -45,6 +49,7 @@ class CategoryGroupState extends Equatable {
       loading,
       failure,
       allCategoryGroups,
+      trashCategoryGroups,
       categoryGroupId,
       categoryDetails,
     ];
@@ -54,6 +59,7 @@ class CategoryGroupState extends Equatable {
         loading: false,
         failure: CleanFailure.none(),
         allCategoryGroups: const [],
+        trashCategoryGroups: const [],
         categoryGroupId: CategoryGroupModel.init(),
         categoryDetails: CategoryGroupDetailsModel.init(),
       );

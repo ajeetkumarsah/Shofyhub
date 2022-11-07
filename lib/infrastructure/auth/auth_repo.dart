@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:clean_api/clean_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zcart_seller/domain/auth/i_auth_repo.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/registration_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo extends IAuthRepo {
   final cleanApi = CleanApi.instance;

@@ -15,6 +15,7 @@ class UserModel extends Equatable {
   final String description;
   final bool active;
   final String email;
+  final String phone;
   final String member_since;
   final String avatar;
   final String api_token;
@@ -29,6 +30,7 @@ class UserModel extends Equatable {
     required this.description,
     required this.active,
     required this.email,
+    required this.phone,
     required this.member_since,
     required this.avatar,
     required this.api_token,
@@ -45,6 +47,7 @@ class UserModel extends Equatable {
     String? description,
     bool? active,
     String? email,
+    String? phone,
     String? member_since,
     String? avatar,
     String? api_token,
@@ -60,6 +63,7 @@ class UserModel extends Equatable {
       description: description ?? this.description,
       active: active ?? this.active,
       email: email ?? this.email,
+      phone: phone ?? this.phone,
       member_since: member_since ?? this.member_since,
       avatar: avatar ?? this.avatar,
       api_token: api_token ?? this.api_token,
@@ -78,6 +82,7 @@ class UserModel extends Equatable {
       'description': description,
       'active': active,
       'email': email,
+      'phone': phone,
       'member_since': member_since,
       'avatar': avatar,
       'api_token': api_token,
@@ -96,6 +101,7 @@ class UserModel extends Equatable {
       description: map['description'] ?? '',
       active: map['active'] ?? false,
       email: map['email'] ?? '',
+      phone: map['phone'] ?? '',
       member_since: map['member_since'] ?? '',
       avatar: map['avatar'] ?? '',
       api_token: map['api_token'] ?? '',
@@ -123,6 +129,7 @@ class UserModel extends Equatable {
       description,
       active,
       email,
+      phone,
       member_since,
       avatar,
       api_token,
@@ -140,12 +147,13 @@ class UserModel extends Equatable {
       description: '',
       active: false,
       email: '',
+      phone: '',
       member_since: '',
       avatar: '',
       api_token: '');
 
   @override
   String toString() {
-    return 'UserModel(id: $id, shop_id: $shop_id, role_id: $role_id, name: $name, nice_name: $nice_name, dob: $dob, sex: $sex, description: $description, active: $active, email: $email, member_since: $member_since, avatar: $avatar, api_token: $api_token)';
+    return 'UserModel(id: $id, shop_id: $shop_id, role_id: $role_id, name: $name, nice_name: $nice_name, dob: $dob, sex: $sex, description: $description, active: $active, email: $email, phone: $phone, member_since: $member_since, avatar: $avatar, api_token: $api_token)';
   }
 }

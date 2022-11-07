@@ -1,7 +1,7 @@
 import 'package:country_calling_code_picker/country.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/domain/auth/i_country_repo.dart';
 import 'package:zcart_seller/infrastructure/auth/country_repo.dart';
 
