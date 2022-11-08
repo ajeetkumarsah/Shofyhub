@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784335135121",
+    "project_id": "zcart-vendor-7364c",
+    "storage_bucket": "zcart-vendor-7364c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784335135121:android:ea4ee30cac808f96db3a30",
+        "android_client_info": {
+          "package_name": "com.incevio.zcart_seller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784335135121-g4rivc9mihvj66tee2div5ov0uerpo86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-lU4KOrH5qAm77_yAvz4OWordRtzJEKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784335135121-g4rivc9mihvj66tee2div5ov0uerpo86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
