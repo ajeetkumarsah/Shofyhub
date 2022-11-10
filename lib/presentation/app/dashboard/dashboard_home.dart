@@ -6,6 +6,7 @@ import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 import 'package:zcart_seller/presentation/settings.dart/settings_home.dart';
+import 'package:zcart_seller/presentation/support/live_chat/chat_home.dart';
 
 class DashboardHome extends HookConsumerWidget {
   const DashboardHome({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class DashboardHome extends HookConsumerWidget {
     const screens = [
       DashboardPage(),
       OrderMainPage(index: 0),
+      ChatHome(),
       SettingsHome(),
     ];
 
@@ -43,6 +45,8 @@ class DashboardHome extends HookConsumerWidget {
                   BottomNavigationBarItem(
                       icon: const Icon(Icons.list_alt_sharp),
                       label: 'orders'.tr()),
+                  BottomNavigationBarItem(
+                      icon: const Icon(Icons.message), label: 'messages'.tr()),
                   BottomNavigationBarItem(
                       icon: const Icon(Icons.settings), label: 'settings'.tr()),
                 ]),

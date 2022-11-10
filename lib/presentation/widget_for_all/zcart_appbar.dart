@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/notification/notification_page.dart';
+import 'package:zcart_seller/presentation/notification_page.dart';
 
 class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -45,7 +47,11 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )),
             Expanded(
                 child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const NotificationPage()),
+                );
+              },
               icon: const Icon(
                 Icons.notifications,
                 color: Colors.white,

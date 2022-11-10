@@ -3,7 +3,7 @@ import 'package:zcart_seller/domain/app/order/order_details/customer.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/support/live_chat/reply_model.dart';
 
-class ConversessionModel extends Equatable {
+class ConversessionDetailsModel extends Equatable {
   final int id;
   final int shopId;
   final Customer customer;
@@ -14,9 +14,9 @@ class ConversessionModel extends Equatable {
   final int status;
   final dynamic label;
   final List<dynamic> attachments;
-  // final List<ReplyModel> replies;
+  final List<ReplyModel> replies;
 
-  const ConversessionModel({
+  const ConversessionDetailsModel({
     required this.id,
     required this.shopId,
     required this.customer,
@@ -27,10 +27,10 @@ class ConversessionModel extends Equatable {
     required this.status,
     required this.label,
     required this.attachments,
-    // required this.replies,
+    required this.replies,
   });
 
-  ConversessionModel copyWith({
+  ConversessionDetailsModel copyWith({
     int? id,
     int? shopId,
     Customer? customer,
@@ -41,9 +41,9 @@ class ConversessionModel extends Equatable {
     int? status,
     dynamic label,
     List<dynamic>? attachments,
-    // List<ReplyModel>? replies,
+    List<ReplyModel>? replies,
   }) {
-    return ConversessionModel(
+    return ConversessionDetailsModel(
       id: id ?? this.id,
       shopId: shopId ?? this.shopId,
       customer: customer ?? this.customer,
@@ -54,12 +54,12 @@ class ConversessionModel extends Equatable {
       status: status ?? this.status,
       label: label ?? this.label,
       attachments: attachments ?? this.attachments,
-      // replies: replies ?? this.replies,
+      replies: replies ?? this.replies,
     );
   }
 
-  factory ConversessionModel.fromMap(Map<String, dynamic> map) =>
-      ConversessionModel(
+  factory ConversessionDetailsModel.fromMap(Map<String, dynamic> map) =>
+      ConversessionDetailsModel(
         id: map["id"].toInt() ?? 0,
         shopId: map["shop_id"].toInt() ?? 0,
         customer: Customer.fromMap(map["customer"]),
@@ -70,8 +70,8 @@ class ConversessionModel extends Equatable {
         status: map["status"] ?? 0,
         label: map["label"] ?? '',
         attachments: List<dynamic>.from(map["attachments"].map((x) => x)),
-        // replies: List<ReplyModel>.from(
-        //     map["replies"].map((x) => ReplyModel.fromJson(x))),
+        replies: List<ReplyModel>.from(
+            map["replies"].map((x) => ReplyModel.fromMap(x))),
       );
 
   @override
@@ -86,10 +86,10 @@ class ConversessionModel extends Equatable {
         status,
         label,
         attachments,
-        // replies,
+        replies,
       ];
 
-  factory ConversessionModel.init() => ConversessionModel(
+  factory ConversessionDetailsModel.init() => ConversessionDetailsModel(
         id: 0,
         shopId: 0,
         customer: Customer.init(),
@@ -100,6 +100,6 @@ class ConversessionModel extends Equatable {
         status: 0,
         label: '',
         attachments: const [],
-        // replies: const [],
+        replies: const [],
       );
 }

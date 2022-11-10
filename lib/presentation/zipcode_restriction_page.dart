@@ -5,6 +5,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/my_account_page.dart';
+import 'package:zcart_seller/presentation/notification/notification_page.dart';
 import 'package:zcart_seller/presentation/notification_page.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 

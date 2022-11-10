@@ -8,7 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:zcart_seller/application/core/config.dart';
+import 'package:zcart_seller/application/core/shared_prefs.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/infrastructure/app/notification/notification_model.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
 Future<void> _firebaseMessegingBackgroundHandler(RemoteMessage message) async {
@@ -76,6 +78,13 @@ class _MyAppState extends State<MyApp> {
           priority: Priority.high,
           playSound: true,
         );
+
+        // Save notifications to shared prefs
+        SharedPref.saveNotifications(
+            messages: NotificationModel(
+          title: message.notification!.title ?? '',
+          description: message.notification!.body ?? '',
+        ));
 
         NotificationDetails platformChannelSpecifics =
             NotificationDetails(android: androidPlatformChannelSpecifics);

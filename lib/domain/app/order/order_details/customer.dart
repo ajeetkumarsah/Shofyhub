@@ -51,12 +51,12 @@ class Customer extends Equatable {
 
   factory Customer.fromMap(Map<String, dynamic> map) {
     return Customer(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      email: map['email'] as String,
-      phone_number: map['phone_number'] as String,
-      active: map['active'] as bool,
-      avatar: map['avatar'] as String,
+      id: map['id'].toInt() ?? 0,
+      name: map['name'] ?? '',
+      email: map['email'] ?? '',
+      phone_number: map['phone_number'] ?? '',
+      active: map['active'] ?? false,
+      avatar: map['avatar'] ?? '',
     );
   }
 

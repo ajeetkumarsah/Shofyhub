@@ -1,12 +1,13 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:zcart_seller/domain/app/support/live_chat/conversation_model.dart';
+import 'package:zcart_seller/domain/app/support/live_chat/conversession_details_model.dart';
 
 class ConversessionState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<ConversessionModel> conversessionList;
-  final ConversessionModel conversessionDetails;
+  final ConversessionDetailsModel conversessionDetails;
   const ConversessionState({
     required this.loading,
     required this.failure,
@@ -18,7 +19,7 @@ class ConversessionState extends Equatable {
     bool? loading,
     CleanFailure? failure,
     List<ConversessionModel>? conversessionList,
-    ConversessionModel? conversessionDetails,
+    ConversessionDetailsModel? conversessionDetails,
   }) {
     return ConversessionState(
       loading: loading ?? this.loading,
@@ -41,6 +42,6 @@ class ConversessionState extends Equatable {
         loading: false,
         failure: CleanFailure.none(),
         conversessionList: const [],
-        conversessionDetails: ConversessionModel.init(),
+        conversessionDetails: ConversessionDetailsModel.init(),
       );
 }

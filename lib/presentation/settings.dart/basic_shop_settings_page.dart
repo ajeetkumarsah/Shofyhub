@@ -1,6 +1,3 @@
-  
-
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +56,8 @@ class ShopSettingsPage extends HookConsumerWidget {
       if (previous != next && !next.loading && buttonPressed.value) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          NotificationHelper.success(message: 'basic_shop_settings_updated'.tr());
+          NotificationHelper.success(
+              message: 'basic_shop_settings_updated'.tr());
           // CherryToast.info(
           //   title: Text('basic_shop_settings_updated'.tr()),
           //   animationType: AnimationType.fromTop,
@@ -88,15 +86,15 @@ class ShopSettingsPage extends HookConsumerWidget {
         ),
         elevation: 0,
         title: Text('basic_shop_settings'.tr()),
-        actions: [
-          ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.red),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => const AdvanceShopSettingsPage()));
-              },
-              child: Text('advance_settings'.tr()))
-        ],
+        // actions: [
+        //   ElevatedButton(
+        //       style: ElevatedButton.styleFrom(primary: Colors.red),
+        //       onPressed: () {
+        //         Navigator.of(context).push(MaterialPageRoute(
+        //             builder: (_) => const AdvanceShopSettingsPage()));
+        //       },
+        //       child: Text('advance_settings'.tr()))
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

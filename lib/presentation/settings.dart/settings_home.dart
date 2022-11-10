@@ -1,9 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
+import 'package:zcart_seller/presentation/settings.dart/advance_shop_settings_page.dart';
 import 'package:zcart_seller/presentation/settings.dart/basic_shop_settings_page.dart';
 import 'package:zcart_seller/presentation/widget_for_all/zcart_appbar.dart';
 
@@ -44,7 +43,7 @@ class SettingsHome extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const ShopSettingsPage()),
+                MaterialPageRoute(builder: (_) => const AdvanceShopSettingsPage()),
               );
             },
             leading: const Icon(Icons.settings_applications_outlined),

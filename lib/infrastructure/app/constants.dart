@@ -7,4 +7,8 @@ class Constants {
   static const Color appbarColor = Colors.deepOrange;
   static Color iconColor = Colors.deepOrange;
   static Color buttonColor = Colors.deepOrange;
+  static Color kDarkCardBgColor = Colors.grey;
+  static Color kPrimaryLightTextColor = Colors.grey;
+  static Color kGreenColor = Colors.green;
+  
 }

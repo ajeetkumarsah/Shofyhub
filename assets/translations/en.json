@@ -456,5 +456,7 @@
   "or_forgot_password": "Or, Forgot your Password?",
   "logout": "Logout",
   "category_groups": "Category Gropus",
-  "inactive": "Inactive"
+  "inactive": "Inactive",
+  "dashboard": "Dashboard",
+  "notification" : "Notification"
 }
