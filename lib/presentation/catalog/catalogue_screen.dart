@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attributes/attributes_page.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_group/category_group_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/manufacturer_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/product_page.dart';
 

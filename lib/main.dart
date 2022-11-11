@@ -9,8 +9,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/application/core/shared_prefs.dart';
+import 'package:zcart_seller/domain/app/notification/notification_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/infrastructure/app/notification/notification_model.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
 Future<void> _firebaseMessegingBackgroundHandler(RemoteMessage message) async {
@@ -80,10 +80,12 @@ class _MyAppState extends State<MyApp> {
         );
 
         // Save notifications to shared prefs
+
         SharedPref.saveNotifications(
             messages: NotificationModel(
           title: message.notification!.title ?? '',
           description: message.notification!.body ?? '',
+          dateTime: DateTime.now(),
         ));
 
         NotificationDetails platformChannelSpecifics =
@@ -125,9 +127,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getToken() async {
-    await FirebaseMessaging.instance
-        .getToken()
-        .then((value) => Logger.i(value));
+    await FirebaseMessaging.instance.getToken().then((value) async {
+      Logger.i(value);
+      await SharedPref.saveFcmToken(value.toString());
+    });
   }
 
   void initInfo() {

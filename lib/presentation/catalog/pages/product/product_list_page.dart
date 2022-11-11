@@ -1,5 +1,3 @@
-  
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -62,40 +60,25 @@ class ProductListPage extends HookConsumerWidget {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: [
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () {
-                      return ref
-                          .refresh(productProvider.notifier)
-                          .getProducts();
-                    },
-                    child: ListView.separated(
-                      controller: scrollController,
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: products.length,
-                      itemBuilder: (context, index) {
-                        if ((index == products.length - 1) &&
-                            products.length <
-                                productPaginationModel.meta.total!) {
-                          return const SizedBox(
-                            height: 100,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        }
-                        return ProductTile(product: products[index]);
-                      },
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 3.h,
-                      ),
+          : ListView.separated(
+              controller: scrollController,
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                if ((index == products.length - 1) &&
+                    products.length < productPaginationModel.meta.total!) {
+                  return const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: CircularProgressIndicator(),
                     ),
-                  ),
-                ),
-              ],
+                  );
+                }
+                return ProductTile(product: products[index]);
+              },
+              separatorBuilder: (context, index) => SizedBox(
+                height: 3.h,
+              ),
             ),
     );
   }

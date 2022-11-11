@@ -1,8 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_seller/application/app/notification/notification_provider.dart';
+import 'package:zcart_seller/application/core/shared_prefs.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/infrastructure/app/notification/notification_repo.dart';
 import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 import 'package:zcart_seller/presentation/settings.dart/settings_home.dart';
@@ -13,6 +17,18 @@ class DashboardHome extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () async {
+        // Post FCM token
+        final fcmToken = await SharedPref.getFcmToken();
+        NotificationRepo().postFcmToken(token: fcmToken);
+
+        final notificatiornFromPrefs = await SharedPref.getNotifications();
+        ref.read(notificationProvider).saveNotification(notificatiornFromPrefs);
+      });
+      return null;
+    }, []);
+
     const screens = [
       DashboardPage(),
       OrderMainPage(index: 0),

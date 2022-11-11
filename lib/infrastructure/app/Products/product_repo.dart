@@ -2,7 +2,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/application/core/dio_client.dart';
 import 'package:zcart_seller/domain/app/Product/product_pagination_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
-import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
+
 import '../../../domain/app/product/create_product/gtin_types_model.dart';
 import '../../../domain/app/product/create_product/tag_list.dart';
 import '../../../domain/app/product/i_product_repo.dart';
@@ -73,36 +73,15 @@ class ProductRepo extends IProductRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> updateProduct({
-    required UpdateProductModel updateDetails,
-  }) async {
-    return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
-          if (responseBody['errors'] != null) {
-            final errors = Map<String, dynamic>.from(responseBody['errors'])
-                .values
-                .toList();
-            final error = List.from(errors.first);
-            return left(CleanFailure(tag: 'product', error: error.first));
-          } else if (responseBody['message'] != null) {
-            return left(CleanFailure(
-                tag: 'product',
-                error: responseBody['message'],
-                statusCode: statusCode));
-          } else if (responseBody['error'] != null) {
-            return left(CleanFailure(
-                tag: 'product',
-                error: responseBody['error'],
-                statusCode: statusCode));
-          } else {
-            return left(
-                CleanFailure(tag: 'product', error: responseBody.toString()));
-          }
-        },
-        fromData: (json) => unit,
-        body: null,
-        endPoint: updateDetails.endPoint);
+  Future<Either<CleanFailure, String>> updateProduct(
+      {required int id, required formData}) async {
+    try {
+      final response =
+          await DioClient.post(url: 'product/$id/update', payload: formData);
+      return right(response.data['message']);
+    } catch (e) {
+      return left(CleanFailure(tag: 'product', error: e.toString()));
+    }
   }
 
   @override

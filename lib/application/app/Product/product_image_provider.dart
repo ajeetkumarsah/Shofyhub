@@ -16,6 +16,13 @@ class ProductImagePickerNotifier extends ChangeNotifier {
   File? _featuredImage;
 
   File? get featuredImage => _featuredImage;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 
   void pickProductImages() async {
     try {
@@ -45,6 +52,11 @@ class ProductImagePickerNotifier extends ChangeNotifier {
     } catch (e) {
       Fluttertoast.showToast(msg: "failed_to_pick_image".tr());
     }
+    notifyListeners();
+  }
+
+  void addImage(File image) {
+    productImages.add(image);
     notifyListeners();
   }
 

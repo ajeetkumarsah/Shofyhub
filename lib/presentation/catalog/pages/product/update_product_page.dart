@@ -1,24 +1,27 @@
-  
+import 'dart:io';
 
- 
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:zcart_seller/application/app/Product/product_image_provider.dart';
+import 'package:zcart_seller/application/app/form/category_list_provider.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_provider.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';
 import 'package:zcart_seller/application/app/product/product_provider.dart';
-import 'package:zcart_seller/application/app/form/category_list_provider.dart';
+import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
-import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/catalog/pages/product/create_product_page.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 
@@ -43,10 +46,13 @@ class UpdateProductPage extends HookConsumerWidget {
     final manufacturerIdList =
         ref.watch(productProvider.select((value) => value.manufacturerId));
 
+    final productImagePicker = ref.watch(productImagePickerProvider);
+
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(categoryListProvider.notifier).loadData();
         ref.read(detailProcuctProvider(productId).notifier).getDetailProduct();
+        productImagePicker.clearAllImages();
       });
       return null;
     }, []);
@@ -80,7 +86,7 @@ class UpdateProductPage extends HookConsumerWidget {
     final shipping = useState(true);
 
     ref.listen<DetailProductState>(detailProcuctProvider(productId),
-        (previous, next) {
+        (previous, next) async {
       if (previous != next && !next.loading) {
         nameController.text = next.detailProduct.name;
         brandController.text = next.detailProduct.brand;
@@ -96,25 +102,23 @@ class UpdateProductPage extends HookConsumerWidget {
         selectedCountry.value = countryList
             .where((element) => element.value == next.detailProduct.origin)
             .toList()[0];
+        productImagePicker.setLoading(true);
+        for (var i = 0; i < next.detailProduct.images.length; i++) {
+          File file = await ImageConverter.getImage(
+              url: next.detailProduct.images[i].path);
+          productImagePicker.addImage(file);
+        }
+        productImagePicker.setLoading(false);
       }
     });
+
     ref.listen<ProductState>(productProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'product_updated'.tr());
-          // CherryToast.info(
-          //   title: Text('product_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -311,6 +315,49 @@ class UpdateProductPage extends HookConsumerWidget {
                           selectedCategories.value = list;
                         }),
                     SizedBox(height: 10.h),
+                    Text(
+                      "upload_images".tr(),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(height: 10.h),
+                    productImagePicker.isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : InkWell(
+                            borderRadius: BorderRadius.circular(10),
+                            onTap: () {
+                              productImagePicker.pickProductImages();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: productImagePicker.productImages.isNotEmpty
+                                  ? Center(
+                                      child: ProductImageList(
+                                          productImagePicker:
+                                              productImagePicker),
+                                    )
+                                  : Center(
+                                      child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Column(
+                                        children: [
+                                          const Icon(
+                                            Icons.image,
+                                            size: 42,
+                                            color: Colors.grey,
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          Text('upload_images'.tr()),
+                                        ],
+                                      ),
+                                    )),
+                            ),
+                          ),
+                    SizedBox(height: 10.h),
                     SwitchListTile(
                       value: active.value,
                       onChanged: (value) => active.value = value,
@@ -336,44 +383,56 @@ class UpdateProductPage extends HookConsumerWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (selectedCategories.value.isNotEmpty) {
                               Logger.i(nameController.text
                                   .toLowerCase()
                                   .replaceAll(RegExp(r' '), '-'));
-                              final product = UpdateProductModel(
-                                id: productId,
-                                slug: nameController.text
+
+                              FormData formData = FormData.fromMap({
+                                'id': productId,
+                                'slug': nameController.text
                                     .toLowerCase()
                                     .replaceAll(RegExp(r' '), '-'),
-                                manufacturerId:
+                                'manufacturer_id':
                                     int.parse(selectedMenufectur.value.id),
-                                brand: brandController.text,
-                                name: nameController.text,
-                                modeNumber: modelNumer.text,
-                                mpn: mpn.text,
-                                gtin: gtin.text,
-                                gtinType: selectedGtin.value.value,
-                                description: description.text,
-                                originCountry: originCountry.text,
-                                active: active.value ? 1 : 0,
-                                requireShipping: shipping.value ? 1 : 0,
-                                categoryList: selectedCategories.value
+                                'brand': brandController.text,
+                                'name': nameController.text,
+                                'mode_number': modelNumer.text,
+                                'mpn': mpn.text,
+                                'gtin': gtin.text,
+                                'gtin_type': selectedGtin.value.value,
+                                'description': description.text,
+                                'origin_country': originCountry.text,
+                                'active': active.value ? 1 : 0,
+                                'require_shipping': shipping.value ? 1 : 0,
+                                'category_list': selectedCategories.value
                                     .map((element) =>
                                         int.tryParse(element.key) ?? 0)
                                     .toList(),
-                              );
+                              });
+
+                              for (File file
+                                  in productImagePicker.productImages) {
+                                formData.files.addAll([
+                                  MapEntry(
+                                    'image',
+                                    await MultipartFile.fromFile(
+                                      file.path,
+                                      filename: file.path.split('/').last,
+                                      contentType: MediaType("image", "png"),
+                                    ),
+                                  ),
+                                ]);
+                              }
+
                               ref
                                   .read(productProvider.notifier)
-                                  .updateProduct(product);
-                              Navigator.of(context).pop();
+                                  .updateProduct(productId, formData);
                             } else {
-                              NotificationHelper.info(message: 'please_select_atleast_one_category'.tr());
-                              // CherryToast.info(
-                              //         title: Text(
-                              //             'please_select_atleast_one_category'
-                              //                 .tr()))
-                              //     .show(context);
+                              NotificationHelper.info(
+                                  message: 'please_select_atleast_one_category'
+                                      .tr());
                             }
                           },
                           child: loadingUpdate

@@ -15,8 +15,8 @@ import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
+import 'package:zcart_seller/application/core/shared_prefs.dart';
+import 'package:zcart_seller/infrastructure/app/notification/notification_repo.dart';
 import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';
 import 'package:zcart_seller/presentation/order/latest_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
@@ -38,6 +38,10 @@ class DashboardPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
+        // Post FCM token
+        final fcmToken = await SharedPref.getFcmToken();
+        NotificationRepo().postFcmToken(token: fcmToken);
+
         ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
         ref.read(shopUserProvider.notifier).getShopUser();
         ref.read(orderProvider(null).notifier).getOrders();

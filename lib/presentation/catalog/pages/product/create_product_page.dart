@@ -79,20 +79,9 @@ class AddProductPage extends HookConsumerWidget {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'product_added'.tr());
 
-          // CherryToast.info(
-          //   title: Text('product_added'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
-
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -325,7 +314,7 @@ class AddProductPage extends HookConsumerWidget {
                 SizedBox(height: 20.h),
                 Text(
                   "upload_images".tr(),
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 SizedBox(height: 10.h),
                 InkWell(
@@ -360,68 +349,68 @@ class AddProductPage extends HookConsumerWidget {
                   ),
                 ),
                 SizedBox(height: 10.h),
-                Text(
-                  "upload_featured_image".tr(),
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(height: 10.h),
-                InkWell(
-                  borderRadius: BorderRadius.circular(10),
-                  onTap: () {
-                    productImagePicker.pickFeaturedImage();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: productImagePicker.featuredImage != null
-                        ? Stack(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.2,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                ),
-                                child: Image.file(
-                                  productImagePicker.featuredImage!,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Positioned(
-                                right: -10,
-                                top: -10,
-                                child: IconButton(
-                                  onPressed: () {
-                                    productImagePicker.removeFeaturedImage();
-                                  },
-                                  icon: const Icon(
-                                    Icons.remove_circle,
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Center(
-                            child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 40),
-                            child: Column(
-                              children: [
-                                const Icon(
-                                  Icons.image,
-                                  size: 42,
-                                  color: Colors.grey,
-                                ),
-                                SizedBox(height: 5.h),
-                                Text('upload_featured_image'.tr()),
-                              ],
-                            ),
-                          )),
-                  ),
-                ),
-                SizedBox(height: 10.h),
+                // Text(
+                //   "upload_featured_image".tr(),
+                //   style: Theme.of(context).textTheme.headline6,
+                // ),
+                // SizedBox(height: 10.h),
+                // InkWell(
+                //   borderRadius: BorderRadius.circular(10),
+                //   onTap: () {
+                //     productImagePicker.pickFeaturedImage();
+                //   },
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //         border: Border.all(color: Colors.grey),
+                //         borderRadius: BorderRadius.circular(10)),
+                //     child: productImagePicker.featuredImage != null
+                //         ? Stack(
+                //             children: [
+                //               Container(
+                //                 width: MediaQuery.of(context).size.width,
+                //                 height:
+                //                     MediaQuery.of(context).size.height * 0.2,
+                //                 decoration: BoxDecoration(
+                //                   border: Border.all(color: Colors.grey),
+                //                 ),
+                //                 child: Image.file(
+                //                   productImagePicker.featuredImage!,
+                //                   fit: BoxFit.cover,
+                //                 ),
+                //               ),
+                //               Positioned(
+                //                 right: -10,
+                //                 top: -10,
+                //                 child: IconButton(
+                //                   onPressed: () {
+                //                     productImagePicker.removeFeaturedImage();
+                //                   },
+                //                   icon: const Icon(
+                //                     Icons.remove_circle,
+                //                     color: Colors.redAccent,
+                //                   ),
+                //                 ),
+                //               ),
+                //             ],
+                //           )
+                //         : Center(
+                //             child: Container(
+                //             padding: const EdgeInsets.symmetric(vertical: 40),
+                //             child: Column(
+                //               children: [
+                //                 const Icon(
+                //                   Icons.image,
+                //                   size: 42,
+                //                   color: Colors.grey,
+                //                 ),
+                //                 SizedBox(height: 5.h),
+                //                 Text('upload_featured_image'.tr()),
+                //               ],
+                //             ),
+                //           )),
+                //   ),
+                // ),
+                // SizedBox(height: 10.h),
                 SwitchListTile(
                   value: active.value,
                   onChanged: (value) => active.value = value,
@@ -534,12 +523,6 @@ class AddProductPage extends HookConsumerWidget {
                           } else {
                             NotificationHelper.error(
                                 message: 'category_group_is_required'.tr());
-                            // CherryToast.error(
-                            //   title: Text(
-                            //     'category_group_is_required'.tr(),
-                            //   ),
-                            //   toastPosition: Position.bottom,
-                            // ).show(context);
                           }
                         }
                       },

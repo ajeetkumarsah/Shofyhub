@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:zcart_seller/domain/app/Product/detail_product/product_category_model.dart';
+import 'package:zcart_seller/domain/app/Product/detail_product/product_image_model.dart';
 
 import 'manufacturer_model.dart';
 
@@ -22,7 +23,7 @@ class DetailProductModel extends Equatable {
   final String listingCount;
   final String description;
   final String availableFrom;
-  final String image;
+  final List<ProductImageModel> images;
   const DetailProductModel({
     required this.id,
     required this.slug,
@@ -40,7 +41,7 @@ class DetailProductModel extends Equatable {
     required this.listingCount,
     required this.description,
     required this.availableFrom,
-    required this.image,
+    required this.images,
   });
 
   DetailProductModel copyWith({
@@ -60,7 +61,7 @@ class DetailProductModel extends Equatable {
     String? listingCount,
     String? description,
     String? availableFrom,
-    String? image,
+    List<ProductImageModel>? images,
   }) {
     return DetailProductModel(
       id: id ?? this.id,
@@ -79,7 +80,7 @@ class DetailProductModel extends Equatable {
       listingCount: listingCount ?? this.listingCount,
       description: description ?? this.description,
       availableFrom: availableFrom ?? this.availableFrom,
-      image: image ?? this.image,
+      images: images ?? this.images,
     );
   }
 
@@ -101,7 +102,7 @@ class DetailProductModel extends Equatable {
       'listing_count': listingCount,
       'description': description,
       'available_from': availableFrom,
-      'image': image,
+      'images': images.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -124,7 +125,8 @@ class DetailProductModel extends Equatable {
       listingCount: map['listing_count'] ?? '',
       description: map['description'] ?? '',
       availableFrom: map['available_from'] ?? '',
-      image: map['image'] ?? '',
+      images: List<ProductImageModel>.from(
+          map['images']?.map((x) => ProductImageModel.fromMap(x)) ?? const []),
     );
   }
 
@@ -155,7 +157,7 @@ class DetailProductModel extends Equatable {
       listingCount,
       description,
       availableFrom,
-      image,
+      images,
     ];
   }
 
@@ -176,11 +178,11 @@ class DetailProductModel extends Equatable {
         listingCount: '',
         description: '',
         availableFrom: '',
-        image: '',
+        images: const [],
       );
 
   @override
   String toString() {
-    return 'DetailProductModel(id: $id, slug: $slug, name: $name, modelNumber: $modelNumber, status: $status gtin: $gtin, gtinType: $gtinType, mpn: $mpn, brand: $brand, manufacturer: $manufacturer, requirementShipping: $requirementShipping, categories: $categories, origin: $origin, listingCount: $listingCount, description: $description, availableFrom: $availableFrom, image: $image)';
+    return 'DetailProductModel(id: $id, slug: $slug, name: $name, modelNumber: $modelNumber, status: $status gtin: $gtin, gtinType: $gtinType, mpn: $mpn, brand: $brand, manufacturer: $manufacturer, requirementShipping: $requirementShipping, categories: $categories, origin: $origin, listingCount: $listingCount, description: $description, availableFrom: $availableFrom, images: $images)';
   }
 }

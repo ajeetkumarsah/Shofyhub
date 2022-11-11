@@ -53,7 +53,7 @@ class ReplyModel extends Equatable {
         customer: Customer.init(),
         read: '',
         updatedAt: '',
-        attachments: [],
+        attachments: const [],
       );
 
   @override

@@ -1,5 +1,3 @@
-  
-
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/product/detail_product/detail_product_state.dart';
@@ -19,11 +17,12 @@ class DetailProductNotifier extends StateNotifier<DetailProductState> {
   getDetailProduct() async {
     state = state.copyWith(loading: true);
     final data = await repo.getDetailProduct(productId: productId);
-    state = state.copyWith(loading: true);
-    state = data.fold(
-      (l) => state.copyWith(loading: false, failure: l),
-      (r) => state.copyWith(
-          loading: false, detailProduct: r, failure: CleanFailure.none()),
-    );
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      return state.copyWith(
+        loading: false,
+        detailProduct: r,
+        failure: CleanFailure.none(),
+      );
+    });
   }
 }

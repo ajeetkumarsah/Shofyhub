@@ -2,7 +2,6 @@ import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/product/product_state.dart';
 import 'package:zcart_seller/domain/app/Product/product_pagination_model.dart';
-import 'package:zcart_seller/domain/app/product/create_product/update_product_model.dart';
 import 'package:zcart_seller/domain/app/product/product_model.dart';
 import 'package:zcart_seller/infrastructure/app/Products/product_repo.dart';
 
@@ -121,10 +120,11 @@ class ProductNotifier extends StateNotifier<ProductState> {
     getProducts();
   }
 
-  updateProduct(UpdateProductModel updateDetails) async {
+  updateProduct(id, formData) async {
     state = state.copyWith(loading: true);
     final data = await productRepo.updateProduct(
-      updateDetails: updateDetails,
+      id: id,
+      formData: formData,
     );
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),
