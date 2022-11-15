@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
-         NotificationHelper.error(message: next.failure.error);
+          NotificationHelper.error(message: next.failure.error);
 
           // CherryToast.error(
           //   title: Text(
@@ -139,8 +138,8 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
         ),
         TextButton(
           onPressed: () {
-            final double priceValue =
-                double.parse(priceController.text.replaceAll('\$', ''));
+            final double priceValue = double.parse(priceController.text
+                .replaceAll(RegExp(r'\p{Sc}', unicode: true), ''));
             buttonPressed.value = true;
             final quickUpdateModel = QuickUpdateModel(
                 title: titleController.text,

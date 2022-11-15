@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,43 +42,47 @@ class CancellationListPage extends HookConsumerWidget {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: [
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () {
-                      return ref
-                          .read(cancellationProvider.notifier)
-                          .getCancellations();
-                    },
-                    child: ListView.separated(
-                      controller: scrollController,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      itemCount: cancellationList.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        if ((index == cancellationList.length - 1) &&
-                            cancellationList.length <
-                                cancellationPaginationModel.meta.total!) {
-                          return const SizedBox(
-                            height: 100,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        }
-                        return CancellationListTile(
-                            cancellation: cancellationList[index]);
-                      },
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 3.h,
+          : cancellationList.isEmpty
+              ? Center(
+                  child: Text('no_item_found'.tr()),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          return ref
+                              .read(cancellationProvider.notifier)
+                              .getCancellations();
+                        },
+                        child: ListView.separated(
+                          controller: scrollController,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          itemCount: cancellationList.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            if ((index == cancellationList.length - 1) &&
+                                cancellationList.length <
+                                    cancellationPaginationModel.meta.total!) {
+                              return const SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            return CancellationListTile(
+                                cancellation: cancellationList[index]);
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 3.h,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
     );
   }
 }

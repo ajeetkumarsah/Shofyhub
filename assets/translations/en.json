@@ -458,5 +458,6 @@
   "category_groups": "Category Gropus",
   "inactive": "Inactive",
   "dashboard": "Dashboard",
-  "notification" : "Notification"
+  "notification" : "Notification",
+  "stock" : "Stock"
 }

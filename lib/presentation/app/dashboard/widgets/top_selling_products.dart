@@ -20,85 +20,92 @@ class TopSellingProducts extends HookConsumerWidget {
     }, []);
     final topSellingItems =
         ref.watch(dashboardProvider.select((value) => value.topSellingItems));
-    
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Top Selling Items:',
+          'Top Selling Items',
           style: TextStyle(
             color: const Color(0xFF484848),
             fontSize: 16.sp,
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 20.h),
-        topSellingItems.isEmpty
-            ? Center(child: Text('no_item_found'.tr()))
-            : ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: topSellingItems.length,
-                itemBuilder: (context, index) => Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+        SizedBox(height: 10.h),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+            child: topSellingItems.isEmpty
+                ? Center(child: Text('no_item_found'.tr()))
+                : ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: topSellingItems.length,
+                    itemBuilder: (context, index) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: 64.h,
-                          width: 64.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            image: DecorationImage(
-                              image: NetworkImage(topSellingItems[index].image),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 7.w),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.75,
-                              child: Text(
-                                topSellingItems[index].title,
-                                style: TextStyle(
+                            Container(
+                              height: 64.h,
+                              width: 64.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                      topSellingItems[index].image),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10.w),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
+                                  child: Text(
+                                    topSellingItems[index].title,
+                                    style: TextStyle(
+                                        color: const Color(0xFF484848),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w600,
+                                        overflow: TextOverflow.fade),
+                                  ),
+                                ),
+                                SizedBox(height: 2.w),
+                                Text(
+                                  topSellingItems[index].sku,
+                                  style: TextStyle(
                                     color: const Color(0xFF484848),
-                                    fontSize: 14.sp,
+                                    fontSize: 13.sp,
                                     fontWeight: FontWeight.w600,
-                                    overflow: TextOverflow.fade),
-                              ),
-                            ),
-                            SizedBox(height: 2.w),
-                            Text(
-                              topSellingItems[index].sku,
-                              style: TextStyle(
-                                color: const Color(0xFF484848),
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 2.w),
-                            Text(
-                              topSellingItems[index].price,
-                              style: TextStyle(
-                                color: const Color(0xFF484848),
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                                  ),
+                                ),
+                                SizedBox(height: 2.w),
+                                Text(
+                                  topSellingItems[index].price,
+                                  style: TextStyle(
+                                    color: const Color(0xFF484848),
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-                separatorBuilder: (context, index) => SizedBox(
-                  height: 12.h,
-                ),
-              ),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 12.h,
+                      child: const Divider(),
+                    ),
+                  ),
+          ),
+        ),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,40 +41,46 @@ class DisputeListPage extends HookConsumerWidget {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: [
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () {
-                      return ref.read(disputeProvider.notifier).getDisputes();
-                    },
-                    child: ListView.separated(
-                      controller: scrollController,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      itemCount: disputeList.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        if ((index == disputeList.length - 1) &&
-                            disputeList.length <
-                                disputePaginationModel.meta.total!) {
-                          return const SizedBox(
-                            height: 100,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        }
-                        return DisputeListTile(dispute: disputeList[index]);
-                      },
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 3.h,
+          : disputeList.isEmpty
+              ? Center(
+                  child: Text('no_item_found'.tr()),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          return ref
+                              .read(disputeProvider.notifier)
+                              .getDisputes();
+                        },
+                        child: ListView.separated(
+                          controller: scrollController,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          itemCount: disputeList.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            if ((index == disputeList.length - 1) &&
+                                disputeList.length <
+                                    disputePaginationModel.meta.total!) {
+                              return const SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            return DisputeListTile(dispute: disputeList[index]);
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 3.h,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
     );
   }
 }

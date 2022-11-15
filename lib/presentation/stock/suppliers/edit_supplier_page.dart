@@ -1,4 +1,3 @@
-
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -89,10 +88,6 @@ class EditSupplierPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'supplier_updated'.tr());
-          // CherryToast.info(
-          //   title: Text('supplier_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -261,11 +256,8 @@ class EditSupplierPage extends HookConsumerWidget {
                             TextButton(
                               onPressed: () {
                                 if (selectedCountry.value == null) {
-                                  NotificationHelper.info(message: 'please_select_a_country'.tr());
-                                  // CherryToast.info(
-                                  //   title: Text('please_select_a_country'.tr()),
-                                  //   animationType: AnimationType.fromTop,
-                                  // ).show(context);
+                                  NotificationHelper.info(
+                                      message: 'please_select_a_country'.tr());
                                 } else {
                                   if (formKey.currentState?.validate() ??
                                       false) {

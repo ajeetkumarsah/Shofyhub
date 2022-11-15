@@ -96,8 +96,8 @@ class SignInPage extends HookConsumerWidget {
         ),
         centerTitle: true,
         title: Container(
-            height: 150,
-            width: 300,
+            height: 100,
+            width: 200,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadiusDirectional.circular(10)),
@@ -342,7 +342,6 @@ class SignInPage extends HookConsumerWidget {
                       Logger.i(body);
                       ref.read(authProvider.notifier).login(body: body);
                     }
-                    log('IsPhoen: $isPhoneLogin');
                   },
             child: loading
                 ? const Center(
@@ -423,7 +422,6 @@ class SignInPage extends HookConsumerWidget {
                       Logger.i(body);
                       ref.read(authProvider.notifier).login(body: body);
                     }
-                    log('IsPhoen: $isPhoneLogin');
                   },
             child: loading
                 ? const Center(

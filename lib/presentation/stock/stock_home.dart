@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -22,7 +23,7 @@ class StockHome extends StatelessWidget {
               bottom: Radius.circular(22.r),
             ),
           ),
-          title: const Text('Catalog'),
+          title: Text('stock'.tr()),
           elevation: 0,
           bottom: TabBar(
             indicatorWeight: 4,

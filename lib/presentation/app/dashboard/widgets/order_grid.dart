@@ -8,6 +8,7 @@ import 'package:zcart_seller/domain/app/dashboard/statistic_model.dart';
 import 'package:zcart_seller/presentation/app/dashboard/out_of_stock_page.dart';
 import 'package:zcart_seller/presentation/order/archived_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
+import 'package:zcart_seller/presentation/stock/stock_home.dart';
 import 'package:zcart_seller/presentation/support/refund/refund_home.dart';
 
 import 'store_report_item.dart';
@@ -30,7 +31,7 @@ class OrderGrid extends HookConsumerWidget {
     final totalRefunds =
         ref.watch(refundProvider.select((value) => value.openRefunds.length));
     return Container(
-      padding: EdgeInsets.only(top: 10.h),
+      padding: EdgeInsets.symmetric(vertical: 15.h),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
@@ -77,10 +78,16 @@ class OrderGrid extends HookConsumerWidget {
               itemName: 'STOCK OUTS',
             ),
           ),
-          StoreReportItems(
-            icon: FontAwesomeIcons.person,
-            itemValues: statistics.stockCount.toString(),
-            itemName: 'TOTAL STOCK',
+          InkWell(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => const StockHome()));
+            },
+            child: StoreReportItems(
+              icon: FontAwesomeIcons.person,
+              itemValues: statistics.stockCount.toString(),
+              itemName: 'TOTAL STOCK',
+            ),
           ),
           StoreReportItems(
             onTap: () {

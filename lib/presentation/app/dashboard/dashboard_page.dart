@@ -180,12 +180,13 @@ class DashboardPage extends HookConsumerWidget {
               ),
             ),
             SizedBox(height: 8.h),
+            // Store Reports Icon Data
             OrderGrid(
               statistics: statistics,
             ),
             SizedBox(height: 25.h),
             Text(
-              'More Option:',
+              'More Option',
               style: TextStyle(
                 color: const Color(0xFF484848),
                 fontSize: 16.sp,
@@ -194,8 +195,8 @@ class DashboardPage extends HookConsumerWidget {
             ),
             SizedBox(height: 8.h),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-              height: 230.h,
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
+              height: 240.h,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,

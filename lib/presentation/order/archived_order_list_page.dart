@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +32,6 @@ class ArchivedOrderListPage extends HookConsumerWidget {
             next.orderList != previous?.orderList &&
             buttonPressed.value) {
           NotificationHelper.success(message: 'successfully_unarchived'.tr());
-          // CherryToast.info(
-          //   title: const Text('Successfully Unarcived'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
@@ -49,30 +44,35 @@ class ArchivedOrderListPage extends HookConsumerWidget {
     return Scaffold(
       appBar: const ZcartAppBar(title: 'Archived orders'),
       backgroundColor: const Color(0xffEFEFEF),
-      body: ListView.separated(
-        padding: const EdgeInsets.only(
-          top: 30,
-          left: 15,
-          right: 15,
-        ).r,
-        itemCount: orderList.length,
-        separatorBuilder: (BuildContext context, int index) => const Divider(
-          height: 20,
-          color: Color(0xffEFEFEF),
-        ),
-        itemBuilder: (context, index) {
-          final order = orderList[index];
-          return ArchivedOrderTile(
-            order: order,
-            unArchive: () {
-              ref
-                  .read(orderProvider(OrderFilter.archived).notifier)
-                  .unarchiveOrder(orderList[index].id);
-              buttonPressed.value = true;
-            },
-          );
-        },
-      ),
+      body: orderList.isEmpty
+          ? Center(
+              child: Text('no_item_found'.tr()),
+            )
+          : ListView.separated(
+              padding: const EdgeInsets.only(
+                top: 30,
+                left: 15,
+                right: 15,
+              ).r,
+              itemCount: orderList.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(
+                height: 20,
+                color: Color(0xffEFEFEF),
+              ),
+              itemBuilder: (context, index) {
+                final order = orderList[index];
+                return ArchivedOrderTile(
+                  order: order,
+                  unArchive: () {
+                    ref
+                        .read(orderProvider(OrderFilter.archived).notifier)
+                        .unarchiveOrder(orderList[index].id);
+                    buttonPressed.value = true;
+                  },
+                );
+              },
+            ),
     );
   }
 }
