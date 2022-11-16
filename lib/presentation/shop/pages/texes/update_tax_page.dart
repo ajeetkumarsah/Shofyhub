@@ -33,7 +33,7 @@ class UpdateTaxPage extends HookConsumerWidget {
     final IList<KeyValueData> countryList =
         ref.watch(countryProvider.select((value) => value.dataList));
 
-    final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
+  final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final nameController = useTextEditingController();

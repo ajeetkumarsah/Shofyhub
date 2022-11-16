@@ -46,23 +46,26 @@ class CategoryGroupTile extends StatelessWidget {
             fontSize: 16.sp,
           ),
         ),
-
-        // trailing: IconButton(
-        //   onPressed: onPressed,
-        //   icon: const Icon(Icons.create),
-        // ),
-        subtitle: !categoryGroup.active
-            ? Text(
-                'Inactive',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: Colors.red.shade800,
-                  fontWeight: FontWeight.w500,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              )
-            : null,
+        subtitle: Row(
+          children: [
+            // const Text('Total Sub-Category-Group: 5'),
+            // const SizedBox(
+            //   width: 10,
+            // ),
+            !categoryGroup.active
+                ? Text(
+                    'Inactive',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.red.shade800,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  )
+                : const SizedBox(),
+          ],
+        ),
         trailing: PopupMenuButton(
           tooltip: '',
           padding: EdgeInsets.zero,

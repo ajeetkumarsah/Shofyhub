@@ -26,13 +26,18 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
   List<CategoryModel> categories = [];
   int pageNumber = 1;
 
+  CategoryPaginationModel trashCategoryPaginationModel =
+      CategoryPaginationModel.init();
+  List<CategoryModel> trashCategories = [];
+  int trashPageNumber = 1;
+
   getAllCategories() async {
     state = state.copyWith(loading: true);
     pageNumber = 1;
     categories = [];
 
     final data = await categoryRepo.getAllCatetories(
-        id: categorySubGroupId, page: pageNumber);
+        id: categorySubGroupId, page: pageNumber, filter: 'null');
 
     //increase the page no
     pageNumber++;
@@ -54,11 +59,11 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
     if (pageNumber == 1 ||
         pageNumber <= categoryPaginationModel.meta.lastPage!) {
       final data = await categoryRepo.getAllCatetories(
-          id: categorySubGroupId, page: pageNumber);
+          id: categorySubGroupId, page: pageNumber, filter: 'null');
 
       pageNumber++;
 
-    state = data.fold(
+      state = data.fold(
           (l) => state.copyWith(paginationLoading: false, failure: l), (r) {
         categories.addAll(r.data);
 
@@ -66,6 +71,52 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
           loading: false,
           failure: CleanFailure.none(),
           allCategoris: categories,
+        );
+      });
+      state = state;
+    }
+  }
+
+  getTrashCategories() async {
+    state = state.copyWith(loading: true);
+    trashPageNumber = 1;
+    trashCategories = [];
+
+    final data = await categoryRepo.getAllCatetories(
+        id: categorySubGroupId, page: trashPageNumber, filter: 'trash');
+
+    //increase the page no
+    trashPageNumber++;
+
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      trashCategoryPaginationModel = r;
+      trashCategories.addAll(r.data);
+
+      return state.copyWith(
+        loading: false,
+        failure: CleanFailure.none(),
+        trashCategoris: trashCategories,
+      );
+    });
+  }
+
+  getMoreTrashCategories() async {
+    state = state.copyWith(paginationLoading: true);
+    if (trashPageNumber == 1 ||
+        trashPageNumber <= trashCategoryPaginationModel.meta.lastPage!) {
+      final data = await categoryRepo.getAllCatetories(
+          id: categorySubGroupId, page: trashPageNumber, filter: 'trash');
+
+      trashPageNumber++;
+
+      state = data.fold(
+          (l) => state.copyWith(paginationLoading: false, failure: l), (r) {
+        categories.addAll(r.data);
+
+        return state.copyWith(
+          loading: false,
+          failure: CleanFailure.none(),
+          trashCategoris: categories,
         );
       });
       state = state;
@@ -84,6 +135,14 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
   deleteCategory(int categoryId) async {
     state = state.copyWith(loading: true);
     final data = await categoryRepo.deleteCategory(categoryId: categoryId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllCategories();
+  }
+
+  restoreCategory(int categoryId) async {
+    state = state.copyWith(loading: true);
+    final data = await categoryRepo.restoreCategory(categoryId: categoryId);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllCategories();

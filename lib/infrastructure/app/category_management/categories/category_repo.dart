@@ -12,10 +12,10 @@ class CategoryRepo extends ICategoryRepo {
 
   @override
   Future<Either<CleanFailure, CategoryPaginationModel>> getAllCatetories(
-      {required int id, required int page}) async {
+      {required int id, required int page, required String filter}) async {
     return cleanApi.get(
         fromData: ((json) => CategoryPaginationModel.fromMap(json)),
-        endPoint: 'categories?page=$page&sub_group_id=$id');
+        endPoint: 'categories?page=$page&sub_group_id=$id&filter=$filter');
   }
 
   @override
@@ -122,8 +122,8 @@ class CategoryRepo extends ICategoryRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> restoreCatetory(
-      {required CategoryModel categoryId}) async {
+  Future<Either<CleanFailure, Unit>> restoreCategory(
+      {required int categoryId}) async {
     return cleanApi.put(
         failureHandler:
             <Unit>(int statusCode, Map<String, dynamic> responseBody) {

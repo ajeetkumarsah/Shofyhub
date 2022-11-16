@@ -1,32 +1,30 @@
-import 'package:clean_api/models/clean_failure.dart';
+import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/product/product_provider.dart';
-import 'package:zcart_seller/application/app/product/product_state.dart';
+import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
+import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 
-class DeleteProductDialog extends HookConsumerWidget {
-  final int productId;
-  const DeleteProductDialog({
-    Key? key,
-    required this.productId,
-  }) : super(key: key);
+class RestoreCategoryDialog extends HookConsumerWidget {
+  final int id;
+  const RestoreCategoryDialog({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<ProductState>(productProvider, (previous, next) {
+    ref.listen<CategoryState>(categoryProvider(id), (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          NotificationHelper.success(message: 'item_deleted'.tr());
+          NotificationHelper.success(message: 'item_restored'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
       }
     });
-    final loading = ref.watch(productProvider.select((value) => value.loading));
+    final loading =
+        ref.watch(categoryProvider(id).select((value) => value.loading));
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -37,7 +35,7 @@ class DeleteProductDialog extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'delete_product'.tr(),
+                  'restore'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
@@ -62,7 +60,7 @@ class DeleteProductDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('are_you_sure_delete_product'.tr()),
+        child: Text('are_you_sure_restore_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -111,10 +109,10 @@ class DeleteProductDialog extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
-                      onPressed: () async {
-                        await ref
-                            .read(productProvider.notifier)
-                            .deleteProduct(productId);
+                      onPressed: () {
+                        ref
+                            .read(categoryProvider(id).notifier)
+                            .restoreCategory(id);
                       },
                       child: loading
                           ? const Center(
@@ -126,7 +124,7 @@ class DeleteProductDialog extends HookConsumerWidget {
                                   )),
                             )
                           : Text(
-                              "delete".tr(),
+                              "restore".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,

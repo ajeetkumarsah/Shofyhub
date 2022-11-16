@@ -10,7 +10,9 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
   @override
   Future<Either<CleanFailure, CategorySubGropuPaginationModel>>
       getCategorySubGroup(
-          {required int categoryGroupId, required int page}) async {
+          {required int categoryGroupId,
+          required int page,
+          required String filter}) async {
     return cleanApi.get(
         failureHandler: <CategorySubGroupModel>(int statusCode,
             Map<String, dynamic> responseBody) {
@@ -36,7 +38,7 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
           }
         },
         fromData: ((json) => CategorySubGropuPaginationModel.fromMap(json)),
-        endPoint: "category-sub-groups?group_id=$categoryGroupId&page=$page");
+        endPoint: "category-sub-groups?group_id=$categoryGroupId&page=$page&filter=$filter");
   }
 
   @override

@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -152,7 +151,8 @@ class CreateTaxPage extends HookConsumerWidget {
                       TextButton(
                         onPressed: () {
                           if (selectedCountry.value == null) {
-                            NotificationHelper.info(message: 'please_select_a_country'.tr());
+                            NotificationHelper.info(
+                                message: 'please_select_a_country'.tr());
                             // CherryToast.info(
                             //   title: Text('please_select_a_country'.tr()),
                             //   animationType: AnimationType.fromTop,

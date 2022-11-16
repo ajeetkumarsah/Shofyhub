@@ -6,8 +6,6 @@ import 'package:zcart_seller/application/app/category/caegory%20group/category_g
 import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/trash_category_group_tile.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/category_sub_group_page.dart';
 
-import 'widget/category_group_tile.dart';
-
 class TrashCategoryGroupPage extends HookConsumerWidget {
   const TrashCategoryGroupPage({
     Key? key,

@@ -24,13 +24,18 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
   List<CategorySubGroupModel> items = [];
   int pageNumber = 1;
 
+  CategorySubGropuPaginationModel trashCategorySubGropuPaginationModel =
+      CategorySubGropuPaginationModel.init();
+  List<CategorySubGroupModel> trashItems = [];
+  int trashPageNumber = 1;
+
   getCategorySubGroup() async {
     pageNumber = 1;
     items = [];
 
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.getCategorySubGroup(
-        categoryGroupId: id, page: pageNumber);
+        categoryGroupId: id, page: pageNumber, filter: 'null');
 
     //increase the page no
     pageNumber++;
@@ -52,7 +57,10 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
     if (pageNumber == 1 ||
         pageNumber <= categorySubGropuPaginationModel.meta.lastPage!) {
       final data = await subGroupRepo.getCategorySubGroup(
-          categoryGroupId: id, page: pageNumber);
+        categoryGroupId: id,
+        page: pageNumber,
+        filter: 'null',
+      );
 
       //increase the page no
       pageNumber++;
@@ -104,6 +112,56 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getCategorySubGroup();
+  }
+
+  getTrashCategorySubGroup() async {
+    trashPageNumber = 1;
+    trashItems = [];
+
+    state = state.copyWith(loading: true);
+    final data = await subGroupRepo.getCategorySubGroup(
+        categoryGroupId: id, page: trashPageNumber, filter: 'trash');
+
+    //increase the page no
+    trashPageNumber++;
+
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      trashCategorySubGropuPaginationModel = r;
+      trashItems.addAll(trashCategorySubGropuPaginationModel.data);
+
+      return state.copyWith(
+        loading: false,
+        categorySubGroupTrash: trashItems,
+        failure: CleanFailure.none(),
+      );
+    });
+    Logger.i(data);
+  }
+
+  getMoreTrashCategorySubGroup() async {
+    if (trashPageNumber == 1 ||
+        trashPageNumber <= categorySubGropuPaginationModel.meta.lastPage!) {
+      final data = await subGroupRepo.getCategorySubGroup(
+        categoryGroupId: id,
+        page: trashPageNumber,
+        filter: 'trash',
+      );
+
+      //increase the page no
+      trashPageNumber++;
+
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        trashCategorySubGropuPaginationModel = r;
+        trashItems.addAll(trashCategorySubGropuPaginationModel.data);
+
+        return state.copyWith(
+          loading: false,
+          categorySubGroupTrash: trashItems,
+          failure: CleanFailure.none(),
+        );
+      });
+      Logger.i(data);
+    }
   }
 
   trashCategorySubGroup({required int categorySubGroupId}) async {

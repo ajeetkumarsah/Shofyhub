@@ -16,6 +16,14 @@ class CategoryGroup {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
 
+class CategorySubGroupUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
+class CategoryUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
 class DashboardUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }

@@ -452,12 +452,15 @@
   "login_with_phone": "login_with_phone",
   "wellcome": "Wellcome",
   "signin_and_mange_order": "Signin and manage your orders",
-  "or_create_a_new_account":"Or, create a new Account?",
+  "or_create_a_new_account": "Or, create a new Account?",
   "or_forgot_password": "Or, Forgot your Password?",
   "logout": "Logout",
   "category_groups": "Category Gropus",
   "inactive": "Inactive",
   "dashboard": "Dashboard",
-  "notification" : "Notification",
-  "stock" : "Stock"
+  "notification": "Notification",
+  "stock": "Stock",
+  "category_sub_group": "Category Sub Group",
+  "trash_category_sub_group": "Trash Category Sub Group",
+  "category": "Category"
 }

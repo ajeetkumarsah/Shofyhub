@@ -9,21 +9,26 @@ class CategorySubGroupState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<CategorySubGroupModel> categorySubGroup;
+  final List<CategorySubGroupModel> categorySubGroupTrash;
   const CategorySubGroupState({
     required this.loading,
     required this.failure,
     required this.categorySubGroup,
+    required this.categorySubGroupTrash,
   });
 
   CategorySubGroupState copyWith({
     bool? loading,
     CleanFailure? failure,
     List<CategorySubGroupModel>? categorySubGroup,
+    List<CategorySubGroupModel>? categorySubGroupTrash,
   }) {
     return CategorySubGroupState(
       loading: loading ?? this.loading,
       failure: failure ?? this.failure,
       categorySubGroup: categorySubGroup ?? this.categorySubGroup,
+      categorySubGroupTrash:
+          categorySubGroupTrash ?? this.categorySubGroupTrash,
     );
   }
 
@@ -31,7 +36,17 @@ class CategorySubGroupState extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [loading, failure, categorySubGroup];
+  List<Object> get props => [
+        loading,
+        failure,
+        categorySubGroup,
+        categorySubGroupTrash,
+      ];
+
   factory CategorySubGroupState.init() => CategorySubGroupState(
-      loading: false, failure: CleanFailure.none(), categorySubGroup: const []);
+        loading: false,
+        failure: CleanFailure.none(),
+        categorySubGroup: const [],
+        categorySubGroupTrash: const [],
+      );
 }

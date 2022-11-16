@@ -4,13 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_list_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_page.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/restore_category_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/delete_category_sub_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/restore_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/trash_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/edit_category_sub_group_dialog.dart';
 
-class CategorySubgroupListTile extends StatelessWidget {
+class TrashCategorySubgroupListTile extends StatelessWidget {
   final CategorySubGroupModel categorySubGroup;
   final int categoryGroupId;
-  const CategorySubgroupListTile({
+  const TrashCategorySubgroupListTile({
     Key? key,
     required this.categoryGroupId,
     required this.categorySubGroup,
@@ -22,14 +25,10 @@ class CategorySubgroupListTile extends StatelessWidget {
       color: Colors.white,
       child: ListTile(
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => CategoryPage(
-                categorySubGroupId: categorySubGroup.id,
-                subGroupName: categorySubGroup.name,
-              ),
-            ),
-          );
+                  categorySubGroupId: categorySubGroup.id,
+                  subGroupName: categorySubGroup.name)));
         },
         title: Text(
           categorySubGroup.name,
@@ -49,28 +48,27 @@ class CategorySubgroupListTile extends StatelessWidget {
             if (index == 1) {
               showDialog(
                   context: context,
-                  builder: (context) => EditCategorySubGroupDialog(
-                      categoryGroupId: categoryGroupId,
-                      categorySubGroupId: categorySubGroup.id));
+                  builder: (context) => RestoreCategorySubGroupDialog(
+                        id: categoryGroupId,
+                      ));
             }
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => TrashCategorySubGroupDialog(
-                        categoryGroupId: categoryGroupId,
-                        categorySubGroupId: categorySubGroup.id,
+                  builder: (context) => DeleteCategorySubGroupDialog(
+                        id: categoryGroupId,
                       ));
             }
           },
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 1,
-              child: Text("Edit"),
+              child: Text("restore".tr()),
             ),
             PopupMenuItem(
               value: 2,
               child: Text(
-                "trash".tr(),
+                "delete".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

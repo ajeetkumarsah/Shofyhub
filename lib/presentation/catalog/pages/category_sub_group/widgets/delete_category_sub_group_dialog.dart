@@ -3,20 +3,21 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/product/product_provider.dart';
-import 'package:zcart_seller/application/app/product/product_state.dart';
+import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
+import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 
-class DeleteProductDialog extends HookConsumerWidget {
-  final int productId;
-  const DeleteProductDialog({
+class DeleteCategorySubGroupDialog extends HookConsumerWidget {
+  final int id;
+  const DeleteCategorySubGroupDialog({
     Key? key,
-    required this.productId,
+    required this.id,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<ProductState>(productProvider, (previous, next) {
+    ref.listen<CategorySubGroupState>(categorySubGroupProvider(id),
+        (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
@@ -26,7 +27,8 @@ class DeleteProductDialog extends HookConsumerWidget {
         }
       }
     });
-    final loading = ref.watch(productProvider.select((value) => value.loading));
+    final loading = ref
+        .watch(categorySubGroupProvider(id).select((value) => value.loading));
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
@@ -62,7 +64,7 @@ class DeleteProductDialog extends HookConsumerWidget {
       contentPadding: EdgeInsets.zero,
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text('are_you_sure_delete_product'.tr()),
+        child: Text('are_you_sure_delete_this_item'.tr()),
       ),
       actions: [
         const Divider(
@@ -113,8 +115,8 @@ class DeleteProductDialog extends HookConsumerWidget {
                       ),
                       onPressed: () async {
                         await ref
-                            .read(productProvider.notifier)
-                            .deleteProduct(productId);
+                            .read(categorySubGroupProvider(id).notifier)
+                            .deleteSubCategoryGroup(categorySubGroupId: id);
                       },
                       child: loading
                           ? const Center(

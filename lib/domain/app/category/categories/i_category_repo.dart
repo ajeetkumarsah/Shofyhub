@@ -9,7 +9,7 @@ import 'category_model.dart';
 
 abstract class ICategoryRepo {
   Future<Either<CleanFailure, CategoryPaginationModel>> getAllCatetories(
-      {required int id, required int page});
+      {required int id, required int page, required String filter});
   Future<Either<CleanFailure, CategoryModel>> showCatetory(
       {required CategoryModel categoryId});
 
@@ -20,8 +20,8 @@ abstract class ICategoryRepo {
   //     {required int id});
 
   Future<Either<CleanFailure, Unit>> trashCategory({required int categoryId});
-  Future<Either<CleanFailure, Unit>> restoreCatetory(
-      {required CategoryModel categoryId});
+  Future<Either<CleanFailure, Unit>> restoreCategory(
+      {required int categoryId});
   Future<Either<CleanFailure, CategoryDetailsModel>> detailsCategory(
       {required int categoryId});
   Future<Either<CleanFailure, Unit>> deleteCategory({required int categoryId});

@@ -8,7 +8,7 @@ abstract class ICategorySubGroupRepo {
       getCategorySubGroupDetails({required int categorySubGroupId});
 
   Future<Either<CleanFailure, CategorySubGropuPaginationModel>>
-      getCategorySubGroup({required int categoryGroupId, required int page});
+      getCategorySubGroup({required int categoryGroupId, required int page, required String filter});
 
   Future<Either<CleanFailure, Unit>> createCategorySubgroup(
       {required CreateCategorySubGroupModel createCategorySubGroupModel});
