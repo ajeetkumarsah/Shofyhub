@@ -5,7 +5,8 @@ import 'package:zcart_seller/domain/app/catalog/atributes/categories_model.dart'
 import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.dart/get_atributes_model.dart';
 
 abstract class IAtributesRepo {
-  Future<Either<CleanFailure, List<AtributesModel>>> getAtributes();
+  Future<Either<CleanFailure, List<AtributesModel>>> getAtributes(
+      {required String filter});
 
   Future<Either<CleanFailure, GetAtributesModel>> getAlAtributes(
       {required int attributeId});

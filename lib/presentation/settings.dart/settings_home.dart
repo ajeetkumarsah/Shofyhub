@@ -7,14 +7,20 @@ import 'package:zcart_seller/presentation/settings.dart/basic_shop_settings_page
 import 'package:zcart_seller/presentation/widget_for_all/zcart_appbar.dart';
 
 class SettingsHome extends StatelessWidget {
-  const SettingsHome({Key? key}) : super(key: key);
+  const SettingsHome({Key? key, this.hasBackButton = false}) : super(key: key);
+
+  final bool hasBackButton;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ZcartAppBar(
-        title: 'settings'.tr(),
-      ),
+      appBar: hasBackButton
+          ? AppBar(
+              title: Text('settings'.tr()),
+            )
+          : ZcartAppBar(
+              title: 'settings'.tr(),
+            ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
         onPressed: () {
@@ -43,7 +49,8 @@ class SettingsHome extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const AdvanceShopSettingsPage()),
+                MaterialPageRoute(
+                    builder: (_) => const AdvanceShopSettingsPage()),
               );
             },
             leading: const Icon(Icons.settings_applications_outlined),

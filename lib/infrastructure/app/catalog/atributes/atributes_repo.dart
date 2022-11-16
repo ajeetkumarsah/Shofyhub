@@ -9,14 +9,14 @@ class AtributesRepo extends IAtributesRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<AtributesModel>>> getAtributes() async {
+  Future<Either<CleanFailure, List<AtributesModel>>> getAtributes({required String filter}) async {
     return cleanApi.get(
       fromData: ((json) => List<AtributesModel>.from(
             json['data'].map(
               (e) => AtributesModel.fromMap(e),
             ),
           )),
-      endPoint: 'attributes',
+      endPoint: 'attributes?filter=$filter',
     );
   }
 

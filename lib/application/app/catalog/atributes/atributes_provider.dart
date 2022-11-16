@@ -14,11 +14,20 @@ class AtributesNotifier extends StateNotifier<AtributesState> {
   AtributesNotifier(this.atributesRepo) : super(AtributesState.init());
   getAtributes() async {
     state = state.copyWith(loading: true);
-    final data = await atributesRepo.getAtributes();
+    final data = await atributesRepo.getAtributes(filter: 'null');
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
             loading: false, failure: CleanFailure.none(), atributes: r));
+  }
+
+  getTrashAtributes() async {
+    state = state.copyWith(loading: true);
+    final data = await atributesRepo.getAtributes(filter: 'trash');
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false, failure: CleanFailure.none(), trashAtributes: r));
   }
 
   createAtributes(
@@ -64,6 +73,7 @@ class AtributesNotifier extends StateNotifier<AtributesState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getAtributes();
+    getTrashAtributes();
   }
 
   restoreAttributes({required int attributeId}) async {
@@ -74,6 +84,7 @@ class AtributesNotifier extends StateNotifier<AtributesState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getAtributes();
+    getTrashAtributes();
   }
 
   deleteAttributes({required int attributeId}) async {
@@ -83,5 +94,6 @@ class AtributesNotifier extends StateNotifier<AtributesState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getAtributes();
+    getTrashAtributes();
   }
 }

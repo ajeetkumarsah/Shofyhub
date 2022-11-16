@@ -24,6 +24,10 @@ class CategoryUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
 
+class AttributeUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
 class DashboardUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }

@@ -462,5 +462,6 @@
   "stock": "Stock",
   "category_sub_group": "Category Sub Group",
   "trash_category_sub_group": "Trash Category Sub Group",
-  "category": "Category"
+  "category": "Category",
+  "attributes": "Attributes"
 }

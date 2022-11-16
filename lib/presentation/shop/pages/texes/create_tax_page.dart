@@ -34,18 +34,8 @@ class CreateTaxPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'tax_added'.tr());
-          // CherryToast.info(
-          //   title: Text('tax_added'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -153,16 +143,12 @@ class CreateTaxPage extends HookConsumerWidget {
                           if (selectedCountry.value == null) {
                             NotificationHelper.info(
                                 message: 'please_select_a_country'.tr());
-                            // CherryToast.info(
-                            //   title: Text('please_select_a_country'.tr()),
-                            //   animationType: AnimationType.fromTop,
-                            // ).show(context);
                           } else {
                             if (formKey.currentState?.validate() ?? false) {
                               final taxInfo = CreateTaxModel(
                                   name: nameController.text,
                                   taxrate:
-                                      double.tryParse(taxRateController.text)!,
+                                      double.tryParse(taxRateController.text) ?? 0,
                                   countryId: selectedCountry.value != null
                                       ? selectedCountry.value!.key
                                       : '',

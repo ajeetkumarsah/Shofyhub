@@ -172,6 +172,7 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getCategorySubGroup();
+    getTrashCategorySubGroup();
   }
 
   deleteSubCategoryGroup({required int categorySubGroupId}) async {
@@ -182,6 +183,7 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getCategorySubGroup();
+    getTrashCategorySubGroup();
   }
 
   restoreCategorySubGroup({required int categorySubGroupId}) async {
@@ -192,5 +194,6 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getCategorySubGroup();
+    getTrashCategorySubGroup();
   }
 }
