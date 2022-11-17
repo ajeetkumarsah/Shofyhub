@@ -2,10 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/delete_attribute_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/restore_attribute_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/trash_attribute_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/edit_attributes_dialog.dart';
 
 class TrashAttributeTile extends StatelessWidget {
   final AtributesModel attribute;
@@ -16,7 +15,7 @@ class TrashAttributeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: Constants.trashColor,
       child: ListTile(
         title: Text(
           attribute.name,

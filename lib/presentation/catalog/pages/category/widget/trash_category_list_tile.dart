@@ -2,11 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/widget/delete_category_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/widget/restore_category_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category/widget/trash_category_dialog.dart';
-
-import 'widget/edit_category_dialog.dart';
 
 class TrashCategoryListTile extends StatelessWidget {
   final CategoryModel category;
@@ -18,8 +16,9 @@ class TrashCategoryListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Constants.trashColor,
       child: ListTile(
-        tileColor: Colors.white,
+        // tileColor: Colors.white,
         leading: Container(
           padding: const EdgeInsets.all(10),
           height: 80.h,

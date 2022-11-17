@@ -17,7 +17,19 @@ class AttributeValuesNotifier extends StateNotifier<AttributeValuesState> {
 
   getAttributeValues() async {
     state = state.copyWith(loading: true);
-    final data = await attributeValuesRepo.getAttributeValues(attributeId: id);
+    final data = await attributeValuesRepo.getAttributeValues(
+        attributeId: id, filter: 'null');
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false, failure: CleanFailure.none(), attributeValues: r));
+    Logger.i(data);
+  }
+
+  getTrashAttributeValues() async {
+    state = state.copyWith(loading: true);
+    final data = await attributeValuesRepo.getAttributeValues(
+        attributeId: id, filter: 'trash');
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(

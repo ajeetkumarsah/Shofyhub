@@ -463,5 +463,9 @@
   "category_sub_group": "Category Sub Group",
   "trash_category_sub_group": "Trash Category Sub Group",
   "category": "Category",
-  "attributes": "Attributes"
+  "attributes": "Attributes",
+  "shop_user": "Shop User",
+  "delivery_boy": "Delivery Boy",
+  "user_roles": "User Roles",
+  "Attribute Values": "attribute_values"
 }

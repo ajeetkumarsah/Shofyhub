@@ -3,7 +3,7 @@ import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
 
 abstract class ITaxRepo {
-  Future<Either<CleanFailure, List<TaxModel>>> getAllTax();
+  Future<Either<CleanFailure, List<TaxModel>>> getAllTax({required String filter});
   Future<Either<CleanFailure, TaxModel>> getTaxDetails({required int taxId});
   Future<Either<CleanFailure, Unit>> createNewTax(
       {required CreateTaxModel taxInfo});

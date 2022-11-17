@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/product/product_model.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/delete_product_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/restore_product_dialog.dart';
 
@@ -12,6 +13,7 @@ class TrashProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Constants.trashColor,
       child: ListTile(
         contentPadding: const EdgeInsets.all(10),
         leading: Image(image: NetworkImage(product.image)),

@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -19,17 +18,9 @@ class TrashShopUser extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_moved_trash'.tr());
-          // CherryToast.info(
-          //   title: Text('item_moved_trash'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'something_went_wrong'.tr());
 
-          // CherryToast.info(
-          //   title: const Text('Something went wrong'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
           next.failure.showDialogue(context);
         }
       }

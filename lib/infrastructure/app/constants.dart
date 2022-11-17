@@ -10,5 +10,7 @@ class Constants {
   static Color kDarkCardBgColor = Colors.grey;
   static Color kPrimaryLightTextColor = Colors.grey;
   static Color kGreenColor = Colors.green;
+  static Color kRedColor = Colors.red;
+  static Color trashColor = Colors.red.shade50;
   
 }

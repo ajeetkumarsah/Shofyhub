@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/roles/roles_state.dart';
 import 'package:zcart_seller/domain/app/shop/roles/create_update_role_model.dart';
 import 'package:zcart_seller/domain/app/shop/roles/i_roles_repo.dart';
-import 'package:zcart_seller/infrastructure/app/shop/role/role_repo.dart';
+import 'package:zcart_seller/infrastructure/app/shop/role/roles_repo.dart';
 
 final roleProvider = StateNotifierProvider<RoleNotifier, RolesState>(
     (ref) => RoleNotifier(RoleRepo()));
@@ -14,11 +14,20 @@ class RoleNotifier extends StateNotifier<RolesState> {
 
   getRoles() async {
     state = state.copyWith(loading: true);
-    final data = await rolesRepo.getRoles();
+    final data = await rolesRepo.getRoles(filter: 'null');
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
             loading: false, failure: CleanFailure.none(), roleList: r));
+  }
+
+  getTrashRoles() async {
+    state = state.copyWith(loading: true);
+    final data = await rolesRepo.getRoles(filter: 'trash');
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false, failure: CleanFailure.none(), trashRoleList: r));
   }
 
   getPermissions() async {
@@ -64,19 +73,24 @@ class RoleNotifier extends StateNotifier<RolesState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getRoles();
+    getTrashRoles();
   }
 
-  // restoreTax({required int taxId}) async {
-  //   state = state.copyWith(loading: true);
-  //   final data = await rolesRepo.restoreTax(taxId: taxId);
-  //   state = data.fold((l) => state.copyWith(loading: false, failure: l),
-  //       (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
-  // }
+  restoreRole({required int roleId}) async {
+    state = state.copyWith(loading: true);
+    final data = await rolesRepo.restoreRole(roleId: roleId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getRoles();
+    getTrashRoles();
+  }
 
-  // deleteTax({required int taxId}) async {
-  //   state = state.copyWith(loading: true);
-  //   final data = await rolesRepo.deleteTax(taxId: taxId);
-  //   state = data.fold((l) => state.copyWith(loading: false, failure: l),
-  //       (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
-  // }
+  deleteRole({required int roleId}) async {
+    state = state.copyWith(loading: true);
+    final data = await rolesRepo.deleteRole(roleId: roleId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getRoles();
+    getTrashRoles();
+  }
 }

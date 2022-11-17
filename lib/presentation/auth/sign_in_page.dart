@@ -16,7 +16,6 @@ import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/app/dashboard/dashboard_home.dart';
-import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
 import 'package:zcart_seller/presentation/auth/forget_password_dialog.dart';
 import 'package:zcart_seller/presentation/auth/otp_verification_screen.dart';
 import 'package:zcart_seller/presentation/auth/signup_screen.dart';

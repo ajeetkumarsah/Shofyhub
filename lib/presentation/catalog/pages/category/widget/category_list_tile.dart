@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/widget/trash_category_dialog.dart';
 
-import 'widget/edit_category_dialog.dart';
+import 'edit_category_dialog.dart';
 
 class CategoryListTile extends StatelessWidget {
   final CategoryModel category;

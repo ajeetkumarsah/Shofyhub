@@ -17,11 +17,21 @@ class ShopUserNotifier extends StateNotifier<ShopUserState> {
 
   getShopUser() async {
     state = state.copyWith(loading: true);
-    final data = await shopUserRepo.getShopUser();
+    final data = await shopUserRepo.getShopUser(filter: 'null');
     state = data.fold(
       (l) => state.copyWith(loading: false, failure: l),
       (r) => state.copyWith(
           loading: false, failure: CleanFailure.none(), getShopUser: r),
+    );
+  }
+
+  getTrashShopUser() async {
+    state = state.copyWith(loading: true);
+    final data = await shopUserRepo.getShopUser(filter: 'trash');
+    state = data.fold(
+      (l) => state.copyWith(loading: false, failure: l),
+      (r) => state.copyWith(
+          loading: false, failure: CleanFailure.none(), getTrashShopUser: r),
     );
   }
 
@@ -83,5 +93,24 @@ class ShopUserNotifier extends StateNotifier<ShopUserState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getShopUser();
+    getTrashShopUser();
+  }
+
+  restoreShopUser({required int userId}) async {
+    state = state.copyWith(loading: true);
+    final data = await shopUserRepo.restoreShopUser(userId: userId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getShopUser();
+    getTrashShopUser();
+  }
+
+  deleteShopUser({required int userId}) async {
+    state = state.copyWith(loading: true);
+    final data = await shopUserRepo.deleteShopUser(userId: userId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getShopUser();
+    getTrashShopUser();
   }
 }

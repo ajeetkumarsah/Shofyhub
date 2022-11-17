@@ -16,11 +16,22 @@ class DelivaryBoyNotifier extends StateNotifier<DelivaryBoyState> {
 
   getAllDelivaryBoy() async {
     state = state.copyWith(loading: true);
-    final data = await delivaryBoyRepo.getAllDelivaryBoy();
+    final data = await delivaryBoyRepo.getAllDelivaryBoy(filter: 'null');
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
             loading: false, failure: CleanFailure.none(), delivaryBoyList: r));
+  }
+
+  getTrashDelivaryBoy() async {
+    state = state.copyWith(loading: true);
+    final data = await delivaryBoyRepo.getAllDelivaryBoy(filter: 'trash');
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false,
+            failure: CleanFailure.none(),
+            trashDelivaryBoyList: r));
   }
 
   createDelivaryBoy({required CreateDelivaryBoyModel delivaryBoy}) async {

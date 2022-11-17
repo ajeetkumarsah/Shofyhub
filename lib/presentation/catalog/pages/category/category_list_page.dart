@@ -5,8 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category/category_list_tile.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category/widget/category_list_tile.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/widget/create_new_category_page.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class CategoryListPage extends HookConsumerWidget {
   final String subGroupName;
@@ -83,13 +84,7 @@ class CategoryListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : categoryList.isEmpty
-              ? Center(
-                  child: Text(
-                    'no_item_available'.tr(),
-                    style:
-                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                  ),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref

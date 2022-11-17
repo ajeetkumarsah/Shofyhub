@@ -9,11 +9,11 @@ class DelivaryBoyRepo extends IDelivaryBoyRepo {
 
   @override
   Future<Either<CleanFailure, List<DelivaryBoyModel>>>
-      getAllDelivaryBoy() async {
+      getAllDelivaryBoy({required String filter}) async {
     return cleanApi.get(
         fromData: ((json) => List<DelivaryBoyModel>.from(
             json['data'].map((e) => DelivaryBoyModel.fromMap(e)))),
-        endPoint: 'delivery-boys');
+        endPoint: 'delivery-boys?filter=$filter');
   }
 
   @override

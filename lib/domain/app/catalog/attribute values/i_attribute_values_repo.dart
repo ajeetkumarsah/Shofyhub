@@ -4,7 +4,7 @@ import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_val
 
 abstract class IAttributeValuesRepo {
   Future<Either<CleanFailure, List<AttributeValuesModel>>> getAttributeValues(
-      {required int attributeId});
+      {required int attributeId, required String filter});
 
   Future<Either<CleanFailure, AttributeValueDetailsModel>>
       getAttributeValueDetails({required int attributeValueId});

@@ -7,7 +7,7 @@ import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/shop/pages/texes/create_tax_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/tax_list_tile.dart';
+import 'package:zcart_seller/presentation/shop/pages/texes/widgets/tax_list_tile.dart';
 
 class TaxListPage extends HookConsumerWidget {
   const TaxListPage({Key? key}) : super(key: key);
@@ -59,10 +59,8 @@ class TaxListPage extends HookConsumerWidget {
                         horizontal: 10, vertical: 10),
                     itemCount: taxList.length,
                     itemBuilder: (context, index) {
-                      return InkWell(
-                        child: TaxListTile(
-                          taxItem: taxList[index],
-                        ),
+                      return TaxListTile(
+                        taxItem: taxList[index],
                       );
                     },
                     separatorBuilder: (context, index) => SizedBox(

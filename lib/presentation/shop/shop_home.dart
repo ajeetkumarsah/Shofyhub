@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivary_boy_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/roles_list_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/tax_list_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/roles/roles_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/texes/tax_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/user/user_page.dart';
 
 class ShopHome extends StatelessWidget {
@@ -26,31 +27,31 @@ class ShopHome extends StatelessWidget {
           title: const Text('Shop'),
           elevation: 0,
           bottom: TabBar(
-            isScrollable: true,
+              isScrollable: true,
               indicatorWeight: 4,
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.white10),
-              tabs: const [
+              tabs: [
                 Tab(
-                  text: 'Shop User',
+                  text: 'shop_user'.tr(),
                 ),
                 Tab(
-                  text: 'Delivery Boy',
+                  text: 'delivery_boy'.tr(),
                 ),
                 Tab(
-                  text: 'User Roles',
+                  text: 'user_roles'.tr(),
                 ),
                 Tab(
-                  text: 'Taxes',
+                  text: 'taxes'.tr(),
                 ),
               ]),
         ),
         body: const TabBarView(children: [
           UserPage(),
-          DelivaryBoyPage(),
-          RolesListPage(),
-          TaxListPage(),
+          DeliveryBoyPage(),
+          RolesPage(),
+          TaxPage(),
         ]),
       ),
     );

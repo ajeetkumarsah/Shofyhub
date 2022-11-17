@@ -8,6 +8,7 @@ import 'package:zcart_seller/application/app/product/product_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/create_product_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/product_tile.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 import '../../../../application/app/catalog/atributes/get_atributes_provider.dart';
 
@@ -60,26 +61,28 @@ class ProductListPage extends HookConsumerWidget {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.separated(
-              controller: scrollController,
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                if ((index == products.length - 1) &&
-                    products.length < productPaginationModel.meta.total!) {
-                  return const SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
-                return ProductTile(product: products[index]);
-              },
-              separatorBuilder: (context, index) => SizedBox(
-                height: 3.h,
-              ),
-            ),
+          : products.isEmpty
+              ? const NoItemFound()
+              : ListView.separated(
+                  controller: scrollController,
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    if ((index == products.length - 1) &&
+                        products.length < productPaginationModel.meta.total!) {
+                      return const SizedBox(
+                        height: 100,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return ProductTile(product: products[index]);
+                  },
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 3.h,
+                  ),
+                ),
     );
   }
 }

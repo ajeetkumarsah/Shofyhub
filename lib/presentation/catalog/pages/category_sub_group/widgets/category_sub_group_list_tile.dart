@@ -2,10 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category/category_list_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_page.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/trash_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/edit_category_sub_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/trash_category_sub_group_dialog.dart';
 
 class CategorySubgroupListTile extends StatelessWidget {
   final CategorySubGroupModel categorySubGroup;

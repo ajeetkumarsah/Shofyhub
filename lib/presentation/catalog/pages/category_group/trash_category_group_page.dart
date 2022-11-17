@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/trash_category_group_tile.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/category_sub_group_page.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class TrashCategoryGroupPage extends HookConsumerWidget {
   const TrashCategoryGroupPage({
@@ -33,34 +34,37 @@ class TrashCategoryGroupPage extends HookConsumerWidget {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Column(
-                children: [
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-                      itemCount: categoryGroupList.trashCategoryGroups.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CategorySubgroupPage(
-                                  groupName: categoryGroupList
-                                      .trashCategoryGroups[index].name,
-                                  id: categoryGroupList
-                                      .trashCategoryGroups[index].id)));
-                        },
-                        child: TrashCategoryGroupTile(
-                          categoryGroup:
-                              categoryGroupList.trashCategoryGroups[index],
+            : categoryGroupList.trashCategoryGroups.isEmpty
+                ? const NoItemFound()
+                : Column(
+                    children: [
+                      Expanded(
+                        child: ListView.separated(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+                          itemCount:
+                              categoryGroupList.trashCategoryGroups.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => CategorySubgroupPage(
+                                      groupName: categoryGroupList
+                                          .trashCategoryGroups[index].name,
+                                      id: categoryGroupList
+                                          .trashCategoryGroups[index].id)));
+                            },
+                            child: TrashCategoryGroupTile(
+                              categoryGroup:
+                                  categoryGroupList.trashCategoryGroups[index],
+                            ),
+                          ),
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 3.h,
+                          ),
                         ),
                       ),
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 3.h,
-                      ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
       ),
     );
   }

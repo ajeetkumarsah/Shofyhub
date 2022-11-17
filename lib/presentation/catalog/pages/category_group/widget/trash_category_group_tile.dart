@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/delete_category_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/restore_category_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/category_sub_group_page.dart';
@@ -18,7 +19,7 @@ class TrashCategoryGroupTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: Constants.trashColor,
       child: ListTile(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(

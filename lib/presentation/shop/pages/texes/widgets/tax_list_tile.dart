@@ -2,7 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/trash_tax_dialog.dart';
+import 'package:zcart_seller/presentation/shop/pages/texes/update_tax_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/texes/widgets/trash_tax_dialog.dart';
 
 class TaxListTile extends StatelessWidget {
   final TaxModel taxItem;
@@ -65,13 +66,13 @@ class TaxListTile extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.sp)),
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
-            // if (index == 1) {
-            //   showDialog(
-            //       context: context,
-            //       builder: (context) => UpdateTaxPage(
-            //             taxId: taxItem.id,
-            //           ));
-            // }
+            if (index == 1) {
+              showDialog(
+                  context: context,
+                  builder: (context) => UpdateTaxPage(
+                        taxId: taxItem.id,
+                      ));
+            }
             if (index == 2) {
               showDialog(
                   context: context,
@@ -79,10 +80,10 @@ class TaxListTile extends StatelessWidget {
             }
           },
           itemBuilder: (context) => [
-            // PopupMenuItem(
-            //   value: 1,
-            //   child: Text("edit".tr()),
-            // ),
+            PopupMenuItem(
+              value: 1,
+              child: Text("edit".tr()),
+            ),
             PopupMenuItem(
               value: 2,
               child: Text(

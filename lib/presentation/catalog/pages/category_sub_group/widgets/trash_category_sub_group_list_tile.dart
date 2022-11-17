@@ -2,13 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category/category_list_page.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_page.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_group/widget/restore_category_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/delete_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/restore_category_sub_group_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/trash_category_sub_group_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/edit_category_sub_group_dialog.dart';
 
 class TrashCategorySubgroupListTile extends StatelessWidget {
   final CategorySubGroupModel categorySubGroup;
@@ -22,7 +19,7 @@ class TrashCategorySubgroupListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: Constants.trashColor,
       child: ListTile(
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(

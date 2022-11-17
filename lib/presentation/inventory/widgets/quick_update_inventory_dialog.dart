@@ -28,21 +28,9 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'item_updated'.tr());
           Navigator.of(context).pop();
-          // CherryToast.info(
-          //   title: const Text('Inventory Updated'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
-
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });

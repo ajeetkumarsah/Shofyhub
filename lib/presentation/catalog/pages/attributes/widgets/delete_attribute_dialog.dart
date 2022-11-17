@@ -5,8 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_provider.dart';
 import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.dart';
-import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
-import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class DeleteAttributeDialog extends HookConsumerWidget {

@@ -2,7 +2,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_state.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
-import 'package:zcart_seller/domain/app/shop/taxes/i_tex_repo.dart';
+import 'package:zcart_seller/domain/app/shop/taxes/i_tax_repo.dart';
 import 'package:zcart_seller/infrastructure/app/shop/tax/tax_repo.dart';
 
 final taxProvider = StateNotifierProvider<TaxNotifier, TaxState>((ref) {
@@ -15,11 +15,20 @@ class TaxNotifier extends StateNotifier<TaxState> {
 
   getAllTax() async {
     state = state.copyWith(loading: true);
-    final data = await taxRepo.getAllTax();
+    final data = await taxRepo.getAllTax(filter: 'null');
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
             loading: false, failure: CleanFailure.none(), taxList: r));
+  }
+
+  getTrashTax() async {
+    state = state.copyWith(loading: true);
+    final data = await taxRepo.getAllTax(filter: 'trash');
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+            loading: false, failure: CleanFailure.none(), trashTaxList: r));
   }
 
   getTaxDetails({required int taxId}) async {
@@ -53,6 +62,7 @@ class TaxNotifier extends StateNotifier<TaxState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllTax();
+    getTrashTax();
   }
 
   restoreTax({required int taxId}) async {
@@ -61,6 +71,7 @@ class TaxNotifier extends StateNotifier<TaxState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllTax();
+    getTrashTax();
   }
 
   deleteTax({required int taxId}) async {
@@ -69,5 +80,6 @@ class TaxNotifier extends StateNotifier<TaxState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllTax();
+    getTrashTax();
   }
 }

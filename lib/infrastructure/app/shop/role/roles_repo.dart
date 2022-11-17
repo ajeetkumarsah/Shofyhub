@@ -9,7 +9,8 @@ class RoleRepo extends IRolesRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<RoleModel>>> getRoles() {
+  Future<Either<CleanFailure, List<RoleModel>>> getRoles(
+      {required String filter}) {
     return cleanApi.get(
       failureHandler:
           <RoleModel>(int statusCode, Map<String, dynamic> responseBody) {
@@ -35,7 +36,7 @@ class RoleRepo extends IRolesRepo {
       },
       fromData: (json) =>
           List<RoleModel>.from(json.map((e) => RoleModel.fromMap(e))),
-      endPoint: 'data/roles',
+      endPoint: 'data/roles?filter=$filter',
     );
   }
 
@@ -197,5 +198,67 @@ class RoleRepo extends IRolesRepo {
         },
         fromData: (json) => RoleDetailsModel.fromMap(json['data']),
         endPoint: 'role/$id');
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> deleteRole({required int roleId}) {
+    return cleanApi.delete(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'role', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'role',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'role',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'role', error: responseBody.toString()));
+          }
+        },
+        body: null,
+        fromData: (json) => unit,
+        endPoint: 'role/$roleId/delete');
+  }
+
+  @override
+  Future<Either<CleanFailure, Unit>> restoreRole({required int roleId}) {
+    return cleanApi.put(
+        failureHandler:
+            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'role', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'role',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'role',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'role', error: responseBody.toString()));
+          }
+        },
+        body: null,
+        fromData: (json) => unit,
+        endPoint: 'role/$roleId/restore');
   }
 }

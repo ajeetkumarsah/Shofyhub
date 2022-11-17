@@ -3,7 +3,7 @@ import 'package:zcart_seller/domain/app/shop/delivery%20boy/create_delivary_boy_
 import 'package:zcart_seller/domain/app/shop/delivery%20boy/delivary_boy_model.dart';
 
 abstract class IDelivaryBoyRepo {
-  Future<Either<CleanFailure, List<DelivaryBoyModel>>> getAllDelivaryBoy();
+  Future<Either<CleanFailure, List<DelivaryBoyModel>>> getAllDelivaryBoy({required String filter});
   Future<Either<CleanFailure, Unit>> createDelivaryBoy(
       {required CreateDelivaryBoyModel delivaryBoy});
   Future<Either<CleanFailure, Unit>> updateDelivaryBoy(

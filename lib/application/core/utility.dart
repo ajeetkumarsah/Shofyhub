@@ -12,6 +12,22 @@ class ProductUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
 
+class ShopUserUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
+class DeliveryBoyUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
+class RolesUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
+class TaxUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
 class CategoryGroup {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
@@ -25,6 +41,11 @@ class CategoryUtility {
 }
 
 class AttributeUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
+
+class AttributeValueUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
 
