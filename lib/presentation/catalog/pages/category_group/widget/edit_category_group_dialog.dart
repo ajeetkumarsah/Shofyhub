@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -63,27 +62,18 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
           if (buttonPressed.value) {
             Navigator.of(context).pop();
             NotificationHelper.success(message: 'item_updated'.tr());
-            // CherryToast.info(
-            //   title: const Text('Category group edited'),
-            //   animationType: AnimationType.fromTop,
-            // ).show(context);
+
             buttonPressed.value = false;
           }
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
 
     return AlertDialog(
       insetPadding: EdgeInsets.zero,
-      title: const Text('edit_category_group').tr(),
+      title: Text('edit_category_group'.tr()),
       content: SingleChildScrollView(
         child: dataLoading
             ? const Center(
@@ -156,8 +146,9 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                   active: active.value == true ? 1 : 0,
                 );
           },
-          child:
-              loading ? const CircularProgressIndicator() : const Text('save').tr(),
+          child: loading
+              ? const CircularProgressIndicator()
+              : const Text('save').tr(),
         ),
       ],
     );

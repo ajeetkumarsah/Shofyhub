@@ -467,5 +467,13 @@
   "shop_user": "Shop User",
   "delivery_boy": "Delivery Boy",
   "user_roles": "User Roles",
-  "Attribute Values": "attribute_values"
+  "Attribute Values": "attribute_values",
+  "edit_category_sub_group": "Edit Category Sub Group",
+  "role": "Role",
+  "role_level": "Role Level",
+  "modules": "Modules",
+  "permissions": "Permissions",
+  "member_since": "Member Since",
+  "date_of_birth": "Date of Birth",
+  "gender": "Gender"
 }

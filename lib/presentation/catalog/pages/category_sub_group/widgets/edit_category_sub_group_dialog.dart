@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -65,28 +64,17 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
             Navigator.of(context).pop();
             NotificationHelper.success(message: 'item_updated'.tr());
 
-            // CherryToast.info(
-            //   title: Text('category_subgroup_edited'.tr()),
-            //   animationType: AnimationType.fromTop,
-            // ).show(context);
             buttonPressed.value = false;
           }
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
 
     return AlertDialog(
       insetPadding: EdgeInsets.zero,
-      title: Text('edit_Category_group'.tr()),
+      title: Text('edit_category_sub_group'.tr()),
       content: SingleChildScrollView(
         child: dataLoading
             ? const Center(

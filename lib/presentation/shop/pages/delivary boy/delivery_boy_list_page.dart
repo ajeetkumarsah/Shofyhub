@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/delivary%20boy/delivary_boy_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
+import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivery_boy_details_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/add_delivary_boy_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivary_dialog.dart';
 
@@ -51,6 +52,16 @@ class DelivaryBoyListPage extends HookConsumerWidget {
                         itemCount: delivaryBoyList.length,
                         itemBuilder: (context, index) => Card(
                           child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DeliveryBoyDetailsPage(
+                                    deliveryBoyData: delivaryBoyList[index],
+                                  ),
+                                ),
+                              );
+                            },
                             leading: CircleAvatar(
                               backgroundImage:
                                   NetworkImage(delivaryBoyList[index].avatar),

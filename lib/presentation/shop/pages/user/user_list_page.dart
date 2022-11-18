@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/shop/pages/user/user_details_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/user/widget/add_shop_user.dart';
 import 'package:zcart_seller/presentation/shop/pages/user/widget/edit_shop_user.dart';
 
@@ -50,6 +51,13 @@ class UserListPage extends HookConsumerWidget {
                     itemCount: userList.length,
                     itemBuilder: (context, index) => Card(
                       child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => UserDetailsPage(
+                                      userData: userList[index])));
+                        },
                         tileColor: Colors.white,
                         title: Text(
                           userList[index].name,

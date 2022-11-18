@@ -1,6 +1,3 @@
-  
-
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -59,19 +56,10 @@ class UpdateRolePage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'role_updated'.tr());
-          // CherryToast.info(
-          //   title: Text('role_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });

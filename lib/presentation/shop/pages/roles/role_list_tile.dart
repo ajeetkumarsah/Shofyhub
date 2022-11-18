@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/shop/roles/role_model.dart';
+import 'package:zcart_seller/presentation/shop/pages/roles/role_details_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/trash_role_dialog.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/update_role_page.dart';
 
@@ -14,6 +15,10 @@ class RoleListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => RoleDetailsPage(roleId: role.id)));
+        },
         contentPadding: const EdgeInsets.all(10),
         tileColor: Colors.white,
         title: Text(
@@ -24,18 +29,6 @@ class RoleListTile extends StatelessWidget {
             fontSize: 16.sp,
           ),
         ),
-        // subtitle: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     Text(
-        //       role.description,
-        //     ),
-        //     SizedBox(height: 5.h),
-        //     Text(
-        //       role.level.toString(),
-        //     ),
-        //   ],
-        // ),
         trailing: PopupMenuButton(
           tooltip: '',
           padding: EdgeInsets.zero,
