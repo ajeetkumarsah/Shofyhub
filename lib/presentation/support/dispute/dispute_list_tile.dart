@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_mode.dart';
+import 'package:zcart_seller/presentation/support/dispute/dispute_details_page.dart';
 import 'package:zcart_seller/presentation/support/dispute/dispute_response_dialog.dart';
 
 class DisputeListTile extends StatelessWidget {
@@ -12,6 +13,10 @@ class DisputeListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => DisputeDetailsPage(disputeId: dispute.id)));
+        },
         contentPadding: const EdgeInsets.all(10),
         tileColor: Colors.white,
         title: Text(

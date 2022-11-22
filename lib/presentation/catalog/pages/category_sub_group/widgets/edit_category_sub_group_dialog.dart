@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,11 @@ import 'package:zcart_seller/application/app/category/category%20sub%20group/cat
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_details_state.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
+import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
+import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
+import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class EditCategorySubGroupDialog extends HookConsumerWidget {
@@ -45,11 +51,20 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
             .select((value) => value.loading));
 
     ref.listen<CategorySubGroupDetalsState>(
-        categorySubGroupDetalsProvider(categorySubGroupId), (previous, next) {
+        categorySubGroupDetalsProvider(categorySubGroupId),
+        (previous, next) async {
       if (previous != next && !next.loading) {
         nameController.text = next.categorySubGroupDetails.name;
         descController.text = next.categorySubGroupDetails.description;
         active.value = next.categorySubGroupDetails.active;
+        if (next.categorySubGroupDetails.coverImage != null ||
+            next.categorySubGroupDetails.coverImage.isNotEmpty) {
+          //Convert Network Image to File Image
+          ref.watch(singleImagePickerProvider).setLoading(true);
+          File file = await ImageConverter.getImage(
+              url: next.categorySubGroupDetails.coverImage);
+          ref.read(singleImagePickerProvider).setCategoryGroupImage(file);
+        }
       }
     });
 
@@ -92,6 +107,21 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
                   KTextField(
                       controller: descController,
                       lebelText: 'description'.tr()),
+                  SizedBox(height: 10.h),
+                  ref.watch(singleImagePickerProvider).isLoading
+                      ? const LoadingWidget()
+                      : SingleImageUpload(
+                          title: 'cover_image'.tr(),
+                          image: ref
+                              .watch(singleImagePickerProvider)
+                              .categorySubGroupImage,
+                          clearFunction: ref
+                              .watch(singleImagePickerProvider)
+                              .clearCategorySubGroupImage,
+                          picFunction: ref
+                              .watch(singleImagePickerProvider)
+                              .pickCategorySubGroupImage,
+                        ),
                   SizedBox(height: 10.h),
                   Row(
                     children: [

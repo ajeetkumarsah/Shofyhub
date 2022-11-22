@@ -27,13 +27,13 @@ class KMultiLineTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      style: const TextStyle(fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 16),
       validator: validator,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         labelText: lebelText,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         suffixIcon: suffixIcon,
       ),

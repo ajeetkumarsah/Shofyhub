@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
 import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_pagination_model.dart';
 import 'package:zcart_seller/domain/app/order%20management/dispute/i_dispute_repo.dart';
 
@@ -69,5 +70,36 @@ class DisputeRepo extends IDisputeRepo {
         body: null,
         endPoint:
             'dispute/$disputeId/response?status_id=$statusId&reply=$reply');
+  }
+
+  @override
+  Future<Either<CleanFailure, DisputeDetailsModel>> getDisputeDetails(
+      {required int dispiteId}) {
+    return cleanApi.get(
+        failureHandler:
+            <DisputeDetailsModel>(int statusCode, Map<String, dynamic> responseBody) {
+          if (responseBody['errors'] != null) {
+            final errors = Map<String, dynamic>.from(responseBody['errors'])
+                .values
+                .toList();
+            final error = List.from(errors.first);
+            return left(CleanFailure(tag: 'dispute', error: error.first));
+          } else if (responseBody['message'] != null) {
+            return left(CleanFailure(
+                tag: 'dispute',
+                error: responseBody['message'],
+                statusCode: statusCode));
+          } else if (responseBody['error'] != null) {
+            return left(CleanFailure(
+                tag: 'dispute',
+                error: responseBody['error'],
+                statusCode: statusCode));
+          } else {
+            return left(
+                CleanFailure(tag: 'dispute', error: responseBody.toString()));
+          }
+        },
+        fromData: ((json) => DisputeDetailsModel.fromMap(json['data'])),
+        endPoint: 'dispute/$dispiteId');
   }
 }

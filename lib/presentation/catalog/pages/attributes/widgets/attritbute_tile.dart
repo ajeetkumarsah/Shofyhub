@@ -38,15 +38,12 @@ class AttributeTile extends StatelessWidget {
         //   onPressed: onPressed,
         //   icon: const Icon(Icons.create),
         // ),
-        subtitle: Text(
-          'Type : ${attribute.attributeType}',
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: Colors.grey.shade800,
-            fontWeight: FontWeight.w500,
-          ),
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
+        subtitle: Row(
+          children: [
+            Text('Total Entities: ${attribute.entitiesCount.toString()}'),
+            SizedBox(width: 10.h),
+            Text('Type : ${attribute.attributeType}'),
+          ],
         ),
         trailing: PopupMenuButton(
           tooltip: '',

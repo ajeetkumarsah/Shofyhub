@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_order_details_model.dart';
 import 'package:zcart_seller/domain/app/order/order_details/order_details_model.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 
-class DisputeModel extends Equatable {
+class DisputeDetailsModel extends Equatable {
   final int id;
   final String reason;
-  final int progress;
+  final double progress;
   final bool closed;
   final String description;
   final bool goodsReceived;
@@ -17,11 +16,11 @@ class DisputeModel extends Equatable {
   final String refundAmountRaw;
   final String updatedAt;
   final UserModel customer;
-  final DisputeOrderDetailsModel orderDetails;
+  final OrderDetailsModel orderDetails;
   final List<dynamic> attachments;
   final List<dynamic> replies;
 
-  const DisputeModel({
+  const DisputeDetailsModel({
     required this.id,
     required this.reason,
     required this.progress,
@@ -39,10 +38,10 @@ class DisputeModel extends Equatable {
     required this.replies,
   });
 
-  DisputeModel copyWith({
+  DisputeDetailsModel copyWith({
     int? id,
     String? reason,
-    int? progress,
+    double? progress,
     bool? closed,
     String? description,
     bool? goodsReceived,
@@ -52,11 +51,11 @@ class DisputeModel extends Equatable {
     String? refundAmountRaw,
     String? updatedAt,
     UserModel? customer,
-    DisputeOrderDetailsModel? orderDetails,
+    // OrderDetailsModel? orderDetails,
     List<dynamic>? attachments,
     List<dynamic>? replies,
   }) {
-    return DisputeModel(
+    return DisputeDetailsModel(
       id: id ?? this.id,
       reason: reason ?? this.reason,
       progress: progress ?? this.progress,
@@ -95,11 +94,11 @@ class DisputeModel extends Equatable {
     };
   }
 
-  factory DisputeModel.fromMap(Map<String, dynamic> map) {
-    return DisputeModel(
+  factory DisputeDetailsModel.fromMap(Map<String, dynamic> map) {
+    return DisputeDetailsModel(
       id: map['id']?.toInt() ?? 0,
       reason: map['reason'] ?? '',
-      progress: map['progress'] ?? '',
+      progress: map['progress'] ?? 0,
       closed: map['closed'] ?? '',
       description: map['description'] ?? '',
       goodsReceived: map['goods_received'] ?? '',
@@ -109,7 +108,7 @@ class DisputeModel extends Equatable {
       refundAmountRaw: map['refund_amount_raw'] ?? '',
       updatedAt: map['updated_at'] ?? '',
       customer: UserModel.fromMap(map['customer']),
-      orderDetails: DisputeOrderDetailsModel.fromMap(map['order_details']),
+      orderDetails: OrderDetailsModel.fromMap(map['order_details']),
       attachments: map['attachments'] ?? '',
       replies: map['replies'] ?? '',
     );
@@ -117,10 +116,10 @@ class DisputeModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory DisputeModel.fromJson(String source) =>
-      DisputeModel.fromMap(json.decode(source));
+  factory DisputeDetailsModel.fromJson(String source) =>
+      DisputeDetailsModel.fromMap(json.decode(source));
 
-  factory DisputeModel.init() => DisputeModel(
+  factory DisputeDetailsModel.init() => DisputeDetailsModel(
         id: 0,
         reason: '',
         progress: 0,
@@ -133,9 +132,9 @@ class DisputeModel extends Equatable {
         refundAmountRaw: '',
         updatedAt: '',
         customer: UserModel.init(),
-        orderDetails: DisputeOrderDetailsModel.init(),
+        orderDetails: OrderDetailsModel.init(),
         attachments: const [],
-        replies:const  [],
+        replies: const [],
       );
 
   @override

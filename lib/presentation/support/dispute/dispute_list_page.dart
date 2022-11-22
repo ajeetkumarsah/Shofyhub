@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order%20management/dispute/dispute_provider.dart';
+import 'package:zcart_seller/presentation/support/dispute/dispute_details_page.dart';
 import 'package:zcart_seller/presentation/support/dispute/dispute_list_tile.dart';
 
 class DisputeListPage extends HookConsumerWidget {
@@ -42,8 +43,15 @@ class DisputeListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : disputeList.isEmpty
-              ? Center(
-                  child: Text('no_item_found'.tr()),
+              ? InkWell(
+                  onTap: () {
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (_) =>
+                    //         DisputeDetailsPage(disputeId: 1)));
+                  },
+                  child: Center(
+                    child: Text('no_item_found'.tr()),
+                  ),
                 )
               : Column(
                   children: [

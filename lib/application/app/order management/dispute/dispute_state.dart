@@ -1,12 +1,13 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
+import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
 import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_mode.dart';
 
 class DisputeState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<DisputeModel> allDisputes;
-  final DisputeModel disputeDetails;
+  final DisputeDetailsModel disputeDetails;
   const DisputeState({
     required this.loading,
     required this.failure,
@@ -18,7 +19,7 @@ class DisputeState extends Equatable {
     bool? loading,
     CleanFailure? failure,
     List<DisputeModel>? allDisputes,
-    DisputeModel? disputeDetails,
+    DisputeDetailsModel? disputeDetails,
   }) {
     return DisputeState(
       loading: loading ?? this.loading,
@@ -42,5 +43,5 @@ class DisputeState extends Equatable {
       loading: false,
       failure: CleanFailure.none(),
       allDisputes: const [],
-      disputeDetails: DisputeModel.init());
+      disputeDetails: DisputeDetailsModel.init());
 }

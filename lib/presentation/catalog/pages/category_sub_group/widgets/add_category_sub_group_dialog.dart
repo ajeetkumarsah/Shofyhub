@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/create_category_sub_group_model.dart';
+import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -34,21 +35,10 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'item_added'.tr());
-          // CherryToast.info(
-          //   title: const Text('Category sub group added'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -88,6 +78,18 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
               KTextField(
                   controller: metaTitleController, lebelText: 'Meta title'),
               SizedBox(height: 10.h),
+              SingleImageUpload(
+                title: 'cover_image'.tr(),
+                image:
+                    ref.watch(singleImagePickerProvider).categorySubGroupImage,
+                clearFunction: ref
+                    .watch(singleImagePickerProvider)
+                    .clearCategorySubGroupImage,
+                picFunction: ref
+                    .watch(singleImagePickerProvider)
+                    .pickCategorySubGroupImage,
+              ),
+              SizedBox(height: 10.h),
               KTextField(
                   controller: metaDescController,
                   lebelText: 'Meta description'),
@@ -97,6 +99,9 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                 lebelText: 'Order',
                 numberFormatters: true,
               ),
+              SizedBox(height: 10.h),
+              Text('* Required fields.',
+                  style: TextStyle(color: Theme.of(context).hintColor)),
               SizedBox(height: 10.h),
               Row(
                 children: [
@@ -134,7 +139,7 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                 description: descController.text,
                 metaTitle: metaTitleController.text,
                 metaDescription: metaDescController.text,
-                active: active.value ? 1 :0,
+                active: active.value ? 1 : 0,
                 order: orderController.text.isNotEmpty
                     ? int.parse(orderController.text)
                     : 0,

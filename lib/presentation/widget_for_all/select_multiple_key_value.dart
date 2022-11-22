@@ -36,12 +36,12 @@ class MultipleKeyValueSelector extends HookWidget {
     }, []);
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.5),
-        borderRadius: BorderRadius.circular(15.r),
+        border: Border.all(color: Colors.grey, width: 1),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: SearchChoices<KeyValueData>.multiple(
         underline: const SizedBox.shrink(),
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
         items: List<DropdownMenuItem<KeyValueData>>.from(
             allData.map<DropdownMenuItem<KeyValueData>>(
                 (e) => DropdownMenuItem<KeyValueData>(
@@ -54,7 +54,6 @@ class MultipleKeyValueSelector extends HookWidget {
         selectedItems: selectedItems.value,
         hint: Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         searchHint: title,
         onChanged: (List<int> value) {

@@ -135,12 +135,7 @@ class AddProductPage extends HookConsumerWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                // const Text(
-                //   "GTIn Types:",
-                // ),
-                // SizedBox(
-                //   height: 10.h,
-                // ),
+
                 SizedBox(
                   // height: 50.h,
                   child: DropdownButtonHideUnderline(
@@ -148,7 +143,7 @@ class AddProductPage extends HookConsumerWidget {
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide: BorderSide(width: 1.w),
-                          borderRadius: BorderRadius.circular(10.r),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
                       style: TextStyle(color: Colors.grey.shade800),
@@ -200,7 +195,7 @@ class AddProductPage extends HookConsumerWidget {
                             horizontal: 10, vertical: 15),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(width: 1.w),
-                          borderRadius: BorderRadius.circular(10.r),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
                       hint: Text('select_manufacturer'.tr()),
@@ -246,7 +241,7 @@ class AddProductPage extends HookConsumerWidget {
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide: BorderSide(width: 1.w),
-                          borderRadius: BorderRadius.circular(10.r),
+                          borderRadius: BorderRadius.circular(8.r),
                         ),
                       ),
                       hint: Text('select_origin_country'.tr()),
@@ -275,34 +270,39 @@ class AddProductPage extends HookConsumerWidget {
                 SizedBox(
                   height: 10.h,
                 ),
-                SearchChoices<TagListModel>.multiple(
-                  items: List<DropdownMenuItem<TagListModel>>.from(
-                      tagList.map<DropdownMenuItem<TagListModel>>(
-                          (e) => DropdownMenuItem<TagListModel>(
-                                value: e,
-                                child: Text(
-                                  e.value,
-                                  // textDirection: TextDirection.RTL,
-                                ),
-                              ))),
-                  selectedItems: selectedTags.value.unlock,
-                  hint: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text("select_tags".tr()),
-                  ),
-                  searchHint: "select_tags".tr(),
-                  onChanged: (List<int> value) {
-                    selectedTags.value = value.lock;
-                    Logger.i(selectedTags.value);
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8)),
+                  child: SearchChoices<TagListModel>.multiple(
+                    items: List<DropdownMenuItem<TagListModel>>.from(
+                        tagList.map<DropdownMenuItem<TagListModel>>(
+                            (e) => DropdownMenuItem<TagListModel>(
+                                  value: e,
+                                  child: Text(
+                                    e.value,
+                                    // textDirection: TextDirection.RTL,
+                                  ),
+                                ))),
+                    selectedItems: selectedTags.value.unlock,
+                    hint: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: Text("select_tags".tr()),
+                    ),
+                    searchHint: "select_tags".tr(),
+                    onChanged: (List<int> value) {
+                      selectedTags.value = value.lock;
+                      Logger.i(selectedTags.value);
 
-                    //  selectedCategories.value = value;
-                  },
-                  closeButton: (selectedItems) {
-                    return (selectedItems.isNotEmpty
-                        ? "Save ${selectedItems.length == 1 ? '"${tagList[selectedItems.first].value}"' : '(${selectedItems.length})'}"
-                        : "Save without selection");
-                  },
-                  isExpanded: true,
+                      //  selectedCategories.value = value;
+                    },
+                    closeButton: (selectedItems) {
+                      return (selectedItems.isNotEmpty
+                          ? "Save ${selectedItems.length == 1 ? '"${tagList[selectedItems.first].value}"' : '(${selectedItems.length})'}"
+                          : "Save without selection");
+                    },
+                    isExpanded: true,
+                  ),
                 ),
                 SizedBox(height: 10.h),
                 MultipleKeyValueSelector(
@@ -522,7 +522,7 @@ class AddProductPage extends HookConsumerWidget {
                             buttonPressed.value = true;
                           } else {
                             NotificationHelper.error(
-                                message: 'category_group_is_required'.tr());
+                                message: 'please_select_atleast_one_category'.tr());
                           }
                         }
                       },

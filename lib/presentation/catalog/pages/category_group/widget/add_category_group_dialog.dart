@@ -6,8 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
+import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
+import 'package:zcart_seller/application/app/settings/image_picker_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
+import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -16,6 +19,13 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        ref.read(singleImagePickerProvider).clearCategoryGroupImage();
+      });
+      return null;
+    }, []);
+
     final nameController = useTextEditingController();
     final descController = useTextEditingController();
     final metaTitleController = useTextEditingController();
@@ -30,20 +40,10 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'category_group_added'.tr());
-          // CherryToast.info(
-          //   title: const Text('category_group_added').tr(),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -74,6 +74,16 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                 width: 300.w,
               ),
               KTextField(controller: descController, lebelText: 'Description'),
+              SizedBox(height: 10.h),
+              SingleImageUpload(
+                title: 'upload_image'.tr(),
+                image: ref.watch(singleImagePickerProvider).categoryGroupImage,
+                picFunction:
+                    ref.watch(singleImagePickerProvider).pickCategoryGroupImage,
+                clearFunction: ref
+                    .watch(singleImagePickerProvider)
+                    .clearCategoryGroupImage,
+              ),
               SizedBox(height: 10.h),
               KTextField(
                   controller: metaTitleController, lebelText: 'Meta title'),
@@ -124,7 +134,7 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                 order: orderController.text == ''
                     ? 0
                     : int.parse(orderController.text),
-                active: active.value ? 1 : 0 ,
+                active: active.value ? 1 : 0,
               );
               buttonPressed.value = true;
               ref
@@ -132,8 +142,9 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                   .createCategoryGroup(categoryGroupModel);
             }
           },
-          child:
-              loading ? const CircularProgressIndicator() : const Text('add').tr(),
+          child: loading
+              ? const CircularProgressIndicator()
+              : const Text('add').tr(),
         ),
       ],
     );

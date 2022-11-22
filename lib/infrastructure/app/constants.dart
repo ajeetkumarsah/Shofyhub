@@ -12,5 +12,5 @@ class Constants {
   static Color kGreenColor = Colors.green;
   static Color kRedColor = Colors.red;
   static Color trashColor = Colors.red.shade50;
-  
+  static Color kBorderColor = Colors.grey;
 }

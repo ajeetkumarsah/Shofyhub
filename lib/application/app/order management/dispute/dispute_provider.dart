@@ -64,6 +64,21 @@ class DisputeNotifier extends StateNotifier<DisputeState> {
     }
   }
 
+  getDisputeDetails({required int dispiteId}) async {
+    state = state.copyWith(loading: true);
+
+    final data = await disputeRepo.getDisputeDetails(dispiteId: dispiteId);
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      return state.copyWith(
+        loading: false,
+        disputeDetails: r,
+        failure: CleanFailure.none(),
+      );
+    });
+
+    Logger.i(state.disputeDetails);
+  }
+
   responseDispute(int disputeId, int statusId, String reply) async {
     state = state.copyWith(loading: true);
     await disputeRepo.responseDisputes(

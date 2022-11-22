@@ -12,6 +12,7 @@ class KTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool readOnly;
   final String? hintText;
+  final TextInputAction? inputAction;
 
   const KTextField(
       {Key? key,
@@ -25,6 +26,7 @@ class KTextField extends StatelessWidget {
       this.numberFormatters = false,
       this.obscureText = false,
       this.hintText,
+      this.inputAction,
       this.readOnly = false})
       : super(key: key);
   final bool obscureText, numberFormatters;
@@ -33,20 +35,21 @@ class KTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      style: const TextStyle(fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 16),
       validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: prefixIcon,
         labelText: lebelText,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         suffixIcon: suffixIcon,
       ),
       readOnly: readOnly,
       onTap: onTap,
       obscureText: obscureText,
+      textInputAction: inputAction,
       keyboardType: keyboardType,
       inputFormatters: [
         if (numberFormatters)

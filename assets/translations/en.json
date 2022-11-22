@@ -475,5 +475,10 @@
   "permissions": "Permissions",
   "member_since": "Member Since",
   "date_of_birth": "Date of Birth",
-  "gender": "Gender"
+  "gender": "Gender",
+  "attribute_values": "Attribute Values",
+  "upload_image": "Upload Image",
+  "upload": "Upload",
+  "clear_image": "Clear Image",
+  "cover_image": "Cover Image"
 }

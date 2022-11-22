@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -69,19 +68,8 @@ class EditManufactuererPage extends HookConsumerWidget {
         buttonPressed.value = false;
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'manufacturer_updated'.tr());
-
-          // CherryToast.info(
-          //   title: Text('manufacturer_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -113,33 +101,39 @@ class EditManufactuererPage extends HookConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 10.h),
-                        Text('* Required fields.',
-                            style:
-                                TextStyle(color: Theme.of(context).hintColor)),
-                        SizedBox(height: 10.h),
                         KTextField(
                           controller: nameController,
                           lebelText: 'Name *',
+                          inputAction: TextInputAction.next,
                           validator: (text) => ValidatorLogic.requiredField(
                               text,
                               fieldName: 'Name'),
                         ),
                         SizedBox(height: 10.h),
                         KTextField(
-                            controller: descController,
-                            lebelText: 'Description'),
+                          controller: descController,
+                          inputAction: TextInputAction.next,
+                          lebelText: 'Description',
+                        ),
                         SizedBox(height: 10.h),
                         KTextField(
-                            controller: emailController, lebelText: 'Email'),
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          inputAction: TextInputAction.next,
+                          lebelText: 'Email',
+                        ),
                         SizedBox(height: 10.h),
                         KTextField(
                           controller: phoneController,
                           lebelText: 'Phone',
+                          inputAction: TextInputAction.next,
+                          keyboardType: const TextInputType.numberWithOptions(),
                           numberFormatters: true,
                         ),
                         SizedBox(height: 10.h),
                         KTextField(
                             controller: urlController,
+                            inputAction: TextInputAction.next,
                             lebelText: 'Official Website'),
                         SizedBox(
                           height: 10.h,
@@ -182,9 +176,11 @@ class EditManufactuererPage extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 30.h,
-                        ),
+                        SizedBox(height: 10.h),
+                        Text('* Required fields.',
+                            style:
+                                TextStyle(color: Theme.of(context).hintColor)),
+                        SizedBox(height: 30.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

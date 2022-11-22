@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -52,17 +51,9 @@ class EditShopUser extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'user_updated'.tr());
-          // CherryToast.info(
-          //   title: const Text('User updated'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'something_went_wrong'.tr());
-          
-          // CherryToast.info(
-          //   title: const Text('Something went wrong'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+
           next.failure.showDialogue(context);
         }
       }
@@ -193,7 +184,8 @@ class EditShopUser extends HookConsumerWidget {
                             // sex: sex,
                             description: descController.text);
                       } else {
-                        NotificationHelper.info(message: 'please_fill_all_fields'.tr());
+                        NotificationHelper.info(
+                            message: 'please_fill_all_fields'.tr());
 
                         // CherryToast.info(
                         //   title: const Text('Fillup all field'),

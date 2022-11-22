@@ -65,32 +65,41 @@ class CreateManufactuererPage extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 10.h),
-                  Text('* Required fields.',
-                      style: TextStyle(color: Theme.of(context).hintColor)),
-                  SizedBox(height: 10.h),
                   KTextField(
                     controller: nameController,
                     lebelText: 'Name *',
+                    inputAction: TextInputAction.next,
                     validator: (text) =>
                         ValidatorLogic.requiredField(text, fieldName: 'Name'),
                   ),
                   SizedBox(height: 10.h),
                   KTextField(
-                      controller: descController, lebelText: 'Description'),
+                    controller: descController,
+                    lebelText: 'Description',
+                    inputAction: TextInputAction.next,
+                  ),
                   SizedBox(height: 10.h),
-                  KTextField(controller: emailController, lebelText: 'Email'),
+                  KTextField(
+                    controller: emailController,
+                    lebelText: 'Email',
+                    keyboardType: TextInputType.emailAddress,
+                    inputAction: TextInputAction.next,
+                  ),
                   SizedBox(height: 10.h),
                   KTextField(
                     controller: phoneController,
                     lebelText: 'Phone',
                     numberFormatters: true,
+                    keyboardType: const TextInputType.numberWithOptions(),
+                    inputAction: TextInputAction.next,
                   ),
                   SizedBox(height: 10.h),
                   KTextField(
-                      controller: urlController, lebelText: 'Official Website'),
-                  SizedBox(
-                    height: 10.h,
+                    controller: urlController,
+                    lebelText: 'Official Website',
+                    inputAction: TextInputAction.next,
                   ),
+                  SizedBox(height: 10.h),
                   SizedBox(
                     // height: 50.h,
                     child: DropdownButtonHideUnderline(
@@ -136,6 +145,9 @@ class CreateManufactuererPage extends HookConsumerWidget {
                       onChanged: (value) {
                         active.value = value!;
                       }),
+                  SizedBox(height: 10.h),
+                  Text('* Required fields.',
+                      style: TextStyle(color: Theme.of(context).hintColor)),
                   SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

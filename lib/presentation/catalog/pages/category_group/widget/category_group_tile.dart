@@ -26,7 +26,7 @@ class CategoryGroupTile extends StatelessWidget {
               builder: (context) => CategorySubgroupPage(
                   groupName: categoryGroup.name, id: categoryGroup.id)));
         },
-        leading: categoryGroup.coverImage.isEmpty
+        leading: categoryGroup.iconImage.isEmpty
             ? null
             : Container(
                 padding: const EdgeInsets.all(10),
