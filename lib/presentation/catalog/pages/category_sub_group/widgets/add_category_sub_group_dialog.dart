@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/category/category%20sub%20group/cat
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/create_category_sub_group_model.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -74,9 +75,19 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                 validator: (text) =>
                     ValidatorLogic.requiredField(text, fieldName: 'Name'),
               ),
-              SizedBox(height: 10.h),
-              KTextField(
-                  controller: metaTitleController, lebelText: 'Meta title'),
+              // SizedBox(height: 10.h),
+              // KTextField(
+              //     controller: metaTitleController, lebelText: 'Meta title'),
+              // SizedBox(height: 10.h),
+              // KTextField(
+              //     controller: metaDescController,
+              //     lebelText: 'Meta description'),
+              // SizedBox(height: 10.h),
+              // KTextField(
+              //   controller: orderController,
+              //   lebelText: 'Order',
+              //   numberFormatters: true,
+              // ),
               SizedBox(height: 10.h),
               SingleImageUpload(
                 title: 'cover_image'.tr(),
@@ -90,29 +101,15 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                     .pickCategorySubGroupImage,
               ),
               SizedBox(height: 10.h),
-              KTextField(
-                  controller: metaDescController,
-                  lebelText: 'Meta description'),
-              SizedBox(height: 10.h),
-              KTextField(
-                controller: orderController,
-                lebelText: 'Order',
-                numberFormatters: true,
+              CheckboxListTile(
+                title: Text('active'.tr()),
+                value: active.value,
+                onChanged: (value) {
+                  active.value = value!;
+                },
               ),
               SizedBox(height: 10.h),
-              Text('* Required fields.',
-                  style: TextStyle(color: Theme.of(context).hintColor)),
-              SizedBox(height: 10.h),
-              Row(
-                children: [
-                  const Text('Active:'),
-                  Checkbox(
-                      value: active.value,
-                      onChanged: (value) {
-                        active.value = value!;
-                      }),
-                ],
-              ),
+              const RequiredFieldText(),
             ],
           ),
         ),
@@ -128,29 +125,33 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
           ),
         ),
         TextButton(
-          onPressed: () {
-            if (formKey.currentState?.validate() ?? false) {
-              final createCategorySubGroupModel = CreateCategorySubGroupModel(
-                categoryGroupId: categoryGroupId,
-                name: nameController.text,
-                slug: nameController.text
-                    .toLowerCase()
-                    .replaceAll(RegExp(r' '), '-'),
-                description: descController.text,
-                metaTitle: metaTitleController.text,
-                metaDescription: metaDescController.text,
-                active: active.value ? 1 : 0,
-                order: orderController.text.isNotEmpty
-                    ? int.parse(orderController.text)
-                    : 0,
-              );
+          onPressed: loading
+              ? null
+              : () {
+                  if (formKey.currentState?.validate() ?? false) {
+                    final createCategorySubGroupModel =
+                        CreateCategorySubGroupModel(
+                      categoryGroupId: categoryGroupId,
+                      name: nameController.text,
+                      slug: nameController.text
+                          .toLowerCase()
+                          .replaceAll(RegExp(r' '), '-'),
+                      description: descController.text,
+                      metaTitle: metaTitleController.text,
+                      metaDescription: metaDescController.text,
+                      active: active.value ? 1 : 0,
+                      order: orderController.text.isNotEmpty
+                          ? int.parse(orderController.text)
+                          : 0,
+                    );
 
-              buttonPressed.value = true;
-              ref
-                  .read(categorySubGroupProvider(categoryGroupId).notifier)
-                  .createCategorySubGroup(createCategorySubGroupModel);
-            }
-          },
+                    buttonPressed.value = true;
+                    ref
+                        .read(
+                            categorySubGroupProvider(categoryGroupId).notifier)
+                        .createCategorySubGroup(createCategorySubGroupModel);
+                  }
+                },
           child: loading ? const CircularProgressIndicator() : Text('add'.tr()),
         ),
       ],

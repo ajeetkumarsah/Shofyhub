@@ -13,6 +13,7 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -49,18 +50,8 @@ class AddAttributesPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'attribute_added'.tr());
-          // CherryToast.info(
-          //   title: Text('attribute_added'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -88,14 +79,11 @@ class AddAttributesPage extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 10.h),
-                Text('* Required fields.',
-                    style: TextStyle(color: Theme.of(context).hintColor)),
-                SizedBox(height: 10.h),
                 KTextField(
                   controller: nameController,
-                  lebelText: 'Name *',
-                  validator: (text) =>
-                      ValidatorLogic.requiredField(text, fieldName: 'Name'),
+                  lebelText: '${'name'.tr()} *',
+                  validator: (text) => ValidatorLogic.requiredField(text,
+                      fieldName: 'name'.tr()),
                 ),
                 SizedBox(height: 10.h),
                 SizedBox(
@@ -185,6 +173,9 @@ class AddAttributesPage extends HookConsumerWidget {
                 //   optionTextStyle: const TextStyle(fontSize: 16),
                 //   selectedOptionIcon: const Icon(Icons.check_circle),
                 // ),
+
+                SizedBox(height: 10.h),
+                const RequiredFieldText(),
                 SizedBox(height: 30.h),
 
                 Row(
@@ -200,22 +191,27 @@ class AddAttributesPage extends HookConsumerWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {
-                        if (formKey.currentState?.validate() ?? false) {
-                          final String endPoint = selectedCategories.value
-                              .map((element) => element.key)
-                              .map((id) => "categories_ids[]=$id")
-                              .join('&');
+                      onPressed: loading
+                          ? null
+                          : () {
+                              if (formKey.currentState?.validate() ?? false) {
+                                final String endPoint = selectedCategories.value
+                                    .map((element) => element.key)
+                                    .map((id) => "categories_ids[]=$id")
+                                    .join('&');
 
-                          Logger.i(endPoint);
-                          ref.read(atributesProvider.notifier).createAtributes(
-                                name: nameController.text,
-                                attributeTypeId: selectedAttributes.value.id,
-                                categoriesIds: endPoint,
-                                order: orderController.text,
-                              );
-                        }
-                      },
+                                Logger.i(endPoint);
+                                ref
+                                    .read(atributesProvider.notifier)
+                                    .createAtributes(
+                                      name: nameController.text,
+                                      attributeTypeId:
+                                          selectedAttributes.value.id,
+                                      categoriesIds: endPoint,
+                                      order: orderController.text,
+                                    );
+                              }
+                            },
                       child: loading
                           ? const CircularProgressIndicator()
                           : Text('add'.tr()),

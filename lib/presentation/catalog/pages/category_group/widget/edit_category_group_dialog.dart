@@ -15,6 +15,7 @@ import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -67,8 +68,8 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
           File file = await ImageConverter.getImage(
               url: next.categoryGroupDetails.coverImage);
           ref.read(singleImagePickerProvider).setCategoryGroupImage(file);
+          ref.watch(singleImagePickerProvider).setLoading(false);
         }
-        ref.watch(singleImagePickerProvider).setLoading(false);
       }
 
       metaTitleController.text = next.categoryGroupDetails.metaTitle;
@@ -105,6 +106,7 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  SizedBox(height: 10.h),
                   KTextField(controller: nameController, lebelText: 'Name'),
                   SizedBox(height: 10.h),
                   KMultiLineTextField(
@@ -140,14 +142,15 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                   SizedBox(height: 10.h),
                   KTextField(controller: orderController, lebelText: 'Order'),
                   SizedBox(height: 10.h),
-                  SwitchListTile(
+                  CheckboxListTile(
+                    title: Text('active'.tr()),
                     value: active.value,
-                    onChanged: (value) => active.value = value,
-                    title: const Text('Active status'),
+                    onChanged: (value) {
+                      active.value = value!;
+                    },
                   ),
                   SizedBox(height: 10.h),
-                  Text('* Required fields.',
-                      style: TextStyle(color: Theme.of(context).hintColor)),
+                  const RequiredFieldText(),
                 ],
               ),
       ),
@@ -162,32 +165,34 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
           ).tr(),
         ),
         TextButton(
-          onPressed: () {
-            buttonPressed.value = true;
-            ref.read(categoryGroupProvider.notifier).updateCategoryGroup(
-                  categoryGroupId: categoryGroupId,
-                  name: nameController.text.isEmpty
-                      ? categoryGroup.name
-                      : nameController.text,
-                  slug: nameController.text.isEmpty
-                      ? categoryGroup.name
-                      : nameController.text,
-                  description: descController.text.isEmpty
-                      ? categoryGroup.description
-                      : descController.text,
-                  metaTitle: metaTitleController.text.isEmpty
-                      ? categoryGroup.metaTitle
-                      : metaTitleController.text,
-                  metaDescription: metaDescController.text.isEmpty
-                      ? categoryGroup.metaDescription
-                      : metaDescController.text,
-                  order: int.parse(orderController.text),
-                  icon: iconController.text.isEmpty
-                      ? categoryGroup.icon
-                      : iconController.text,
-                  active: active.value == true ? 1 : 0,
-                );
-          },
+          onPressed: loading
+              ? null
+              : () {
+                  buttonPressed.value = true;
+                  ref.read(categoryGroupProvider.notifier).updateCategoryGroup(
+                        categoryGroupId: categoryGroupId,
+                        name: nameController.text.isEmpty
+                            ? categoryGroup.name
+                            : nameController.text,
+                        slug: nameController.text.isEmpty
+                            ? categoryGroup.name
+                            : nameController.text,
+                        description: descController.text.isEmpty
+                            ? categoryGroup.description
+                            : descController.text,
+                        metaTitle: metaTitleController.text.isEmpty
+                            ? categoryGroup.metaTitle
+                            : metaTitleController.text,
+                        metaDescription: metaDescController.text.isEmpty
+                            ? categoryGroup.metaDescription
+                            : metaDescController.text,
+                        order: int.parse(orderController.text),
+                        icon: iconController.text.isEmpty
+                            ? categoryGroup.icon
+                            : iconController.text,
+                        active: active.value == true ? 1 : 0,
+                      );
+                },
           child: loading
               ? const CircularProgressIndicator()
               : const Text('save').tr(),

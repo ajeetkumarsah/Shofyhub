@@ -10,6 +10,7 @@ import 'package:zcart_seller/application/core/single_image_picker_provider.dart'
 import 'package:zcart_seller/application/app/settings/image_picker_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -60,8 +61,6 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('* Required fields.',
-                  style: TextStyle(color: Theme.of(context).hintColor)),
               SizedBox(height: 10.h),
               KTextField(
                 controller: nameController,
@@ -100,11 +99,15 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                 numberFormatters: true,
               ),
               SizedBox(height: 10.h),
-              SwitchListTile(
+              CheckboxListTile(
+                title: Text('active'.tr()),
                 value: active.value,
-                onChanged: (value) => active.value = value,
-                title: const Text('Active status'),
+                onChanged: (value) {
+                  active.value = value!;
+                },
               ),
+              SizedBox(height: 10.h),
+              const RequiredFieldText(),
             ],
           ),
         ),
@@ -120,28 +123,30 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
           ).tr(),
         ),
         TextButton(
-          onPressed: () {
-            if (formKey.currentState?.validate() ?? false) {
-              final categoryGroupModel = CreateCategoryGroupModel(
-                name: nameController.text,
-                slug: nameController.text
-                    .toLowerCase()
-                    .replaceAll(RegExp(r' '), '-'),
-                desc: descController.text,
-                metaTitle: metaTitleController.text,
-                meatDesc: metaDescController.text,
-                icon: iconController.text,
-                order: orderController.text == ''
-                    ? 0
-                    : int.parse(orderController.text),
-                active: active.value ? 1 : 0,
-              );
-              buttonPressed.value = true;
-              ref
-                  .read(categoryGroupProvider.notifier)
-                  .createCategoryGroup(categoryGroupModel);
-            }
-          },
+          onPressed: loading
+              ? null
+              : () {
+                  if (formKey.currentState?.validate() ?? false) {
+                    final categoryGroupModel = CreateCategoryGroupModel(
+                      name: nameController.text,
+                      slug: nameController.text
+                          .toLowerCase()
+                          .replaceAll(RegExp(r' '), '-'),
+                      desc: descController.text,
+                      metaTitle: metaTitleController.text,
+                      meatDesc: metaDescController.text,
+                      icon: iconController.text,
+                      order: orderController.text == ''
+                          ? 0
+                          : int.parse(orderController.text),
+                      active: active.value ? 1 : 0,
+                    );
+                    buttonPressed.value = true;
+                    ref
+                        .read(categoryGroupProvider.notifier)
+                        .createCategoryGroup(categoryGroupModel);
+                  }
+                },
           child: loading
               ? const CircularProgressIndicator()
               : const Text('add').tr(),

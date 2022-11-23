@@ -40,9 +40,13 @@ class AttributeTile extends StatelessWidget {
         // ),
         subtitle: Row(
           children: [
-            Text('Total Entities: ${attribute.entitiesCount.toString()}'),
-            SizedBox(width: 10.h),
-            Text('Type : ${attribute.attributeType}'),
+            Row(
+              children: [
+                Text('total_entities'.tr()),
+                SizedBox(width: 10.h),
+                Text(attribute.entitiesCount.toString()),
+              ],
+            ),
           ],
         ),
         trailing: PopupMenuButton(

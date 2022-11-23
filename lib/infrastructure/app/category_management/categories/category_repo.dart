@@ -1,4 +1,6 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:zcart_seller/application/core/dio_client.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_details_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
@@ -19,35 +21,14 @@ class CategoryRepo extends ICategoryRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> createNewCategory(
-      {required CreateCategoryModel categoryModel}) async {
-    return await cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
-          if (responseBody['errors'] != null) {
-            final errors = Map<String, dynamic>.from(responseBody['errors'])
-                .values
-                .toList();
-            final error = List.from(errors.first);
-            return left(CleanFailure(tag: 'category', error: error.first));
-          } else if (responseBody['message'] != null) {
-            return left(CleanFailure(
-                tag: 'category',
-                error: responseBody['message'],
-                statusCode: statusCode));
-          } else if (responseBody['error'] != null) {
-            return left(CleanFailure(
-                tag: 'category',
-                error: responseBody['error'],
-                statusCode: statusCode));
-          } else {
-            return left(
-                CleanFailure(tag: 'category', error: responseBody.toString()));
-          }
-        },
-        fromData: (josn) => unit,
-        body: null,
-        endPoint: categoryModel.endpoint);
+  Future<Either<CleanFailure, String>> createNewCategory(formData) async {
+    try {
+      final response =
+          await DioClient.post(url: 'category/create', payload: formData);
+      return right(response.data['message']);
+    } catch (e) {
+      return left(CleanFailure(tag: 'category', error: e.toString()));
+    }
   }
 
   @override

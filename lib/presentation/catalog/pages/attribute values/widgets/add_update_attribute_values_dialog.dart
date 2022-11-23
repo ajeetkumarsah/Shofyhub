@@ -8,6 +8,7 @@ import 'package:zcart_seller/application/app/catalog/attribute%20values/attribut
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -49,22 +50,10 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
                 ? 'attribute_value_updated'.tr()
                 : 'attribute_value_added'.tr(),
           );
-          // CherryToast.info(
-          //   title: attributeValues != null
-          //       ? Text('attribute_value_updated'.tr())
-          //       : Text('attribute_value_added'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -79,8 +68,6 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('* Required fields.',
-                style: TextStyle(color: Theme.of(context).hintColor)),
             SizedBox(height: 10.h),
             KTextField(
               controller: valueController,
@@ -88,17 +75,17 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
               validator: (text) =>
                   ValidatorLogic.requiredField(text, fieldName: 'Value'),
             ),
-            // SizedBox(height: 10.h),
-            // KTextField(
-            //     controller: attributeIdController, lebelText: 'Attribute id'),
             SizedBox(height: 10.h),
             KTextField(controller: colorController, lebelText: 'Color'),
             SizedBox(height: 10.h),
             KTextField(
               controller: orderController,
               lebelText: 'Order',
+              keyboardType: TextInputType.number,
               numberFormatters: true,
             ),
+            SizedBox(height: 10.h),
+            const RequiredFieldText(),
           ],
         ),
       ),
@@ -113,38 +100,40 @@ class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
           ),
         ),
         TextButton(
-          onPressed: () {
-            if (attributeValues == null) {
-              if (formKey.currentState?.validate() ?? false) {
-                buttonPressed.value = true;
-                ref
-                    .read(attributeValuesProvider(attributeId).notifier)
-                    .createAttributeValue(
-                        valueController.text,
-                        attributeId,
-                        colorController.text,
-                        orderController.text.isEmpty
-                            ? 0
-                            : int.parse(orderController.text));
-              }
-            } else {
-              buttonPressed.value = true;
-              ref
-                  .read(attributeValuesProvider(attributeId).notifier)
-                  .updateAttributeValue(
-                      attributeId: attributeId,
-                      attributeValueId: attributeValues!.id,
-                      color: colorController.text.isEmpty
-                          ? attributeValues!.color
-                          : colorController.text,
-                      order: orderController.text.isEmpty
-                          ? 0
-                          : int.parse(orderController.text),
-                      value: valueController.text.isEmpty
-                          ? attributeValues!.value
-                          : valueController.text);
-            }
-          },
+          onPressed: loading
+              ? null
+              : () {
+                  if (attributeValues == null) {
+                    if (formKey.currentState?.validate() ?? false) {
+                      buttonPressed.value = true;
+                      ref
+                          .read(attributeValuesProvider(attributeId).notifier)
+                          .createAttributeValue(
+                              valueController.text,
+                              attributeId,
+                              colorController.text,
+                              orderController.text.isEmpty
+                                  ? 0
+                                  : int.parse(orderController.text));
+                    }
+                  } else {
+                    buttonPressed.value = true;
+                    ref
+                        .read(attributeValuesProvider(attributeId).notifier)
+                        .updateAttributeValue(
+                            attributeId: attributeId,
+                            attributeValueId: attributeValues!.id,
+                            color: colorController.text.isEmpty
+                                ? attributeValues!.color
+                                : colorController.text,
+                            order: orderController.text.isEmpty
+                                ? 0
+                                : int.parse(orderController.text),
+                            value: valueController.text.isEmpty
+                                ? attributeValues!.value
+                                : valueController.text);
+                  }
+                },
           child: attributeValues != null
               ? loading
                   ? const CircularProgressIndicator()

@@ -480,5 +480,9 @@
   "upload_image": "Upload Image",
   "upload": "Upload",
   "clear_image": "Clear Image",
-  "cover_image": "Cover Image"
+  "cover_image": "Cover Image",
+  "total_sub_category_group": "Total Sub-Category-Group:",
+  "total_entities": "Total Entities:",
+  "brand_logo": "Brand Logo",
+  "featured_image": "Featured Image"
 }

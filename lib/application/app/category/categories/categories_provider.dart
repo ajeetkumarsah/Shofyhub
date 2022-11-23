@@ -123,10 +123,10 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
     }
   }
 
-  createNewCategory(CreateCategoryModel categoryModel) async {
+  createNewCategory(formData) async {
     state = state.copyWith(loading: true);
     final data =
-        await categoryRepo.createNewCategory(categoryModel: categoryModel);
+        await categoryRepo.createNewCategory(formData);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllCategories();

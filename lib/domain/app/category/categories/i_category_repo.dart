@@ -20,14 +20,12 @@ abstract class ICategoryRepo {
   //     {required int id});
 
   Future<Either<CleanFailure, Unit>> trashCategory({required int categoryId});
-  Future<Either<CleanFailure, Unit>> restoreCategory(
-      {required int categoryId});
+  Future<Either<CleanFailure, Unit>> restoreCategory({required int categoryId});
   Future<Either<CleanFailure, CategoryDetailsModel>> detailsCategory(
       {required int categoryId});
   Future<Either<CleanFailure, Unit>> deleteCategory({required int categoryId});
 
-  Future<Either<CleanFailure, Unit>> createNewCategory(
-      {required CreateCategoryModel categoryModel});
+  Future<Either<CleanFailure, String>> createNewCategory(formData);
 
   editCategory(
       {required int categoryGroupId,

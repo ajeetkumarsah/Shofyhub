@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -15,8 +14,10 @@ import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
 import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
+import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
 class EditAttributesDialog extends HookConsumerWidget {
   final AtributesModel attribute;
@@ -107,20 +108,25 @@ class EditAttributesDialog extends HookConsumerWidget {
         title: Text('edit_attributes'.tr()),
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: loading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
+      body: loading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 10.h),
                     KTextField(
-                        controller: nameController, lebelText: 'name'.tr()),
+                      controller: nameController,
+                      lebelText: '${'name'.tr()} *',
+                      validator: (text) => ValidatorLogic.requiredField(text,
+                          fieldName: 'name'.tr()),
+                    ),
                     SizedBox(height: 10.h),
                     SizedBox(
                       // height: 50.h,
@@ -172,7 +178,9 @@ class EditAttributesDialog extends HookConsumerWidget {
                           onSelect: (list) {
                             selectedCategories.value = list;
                           }),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 10.h),
+                    const RequiredFieldText(),
+                    SizedBox(height: 30.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -186,28 +194,31 @@ class EditAttributesDialog extends HookConsumerWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            final String endPoint = selectedCategories.value
-                                .map((category) =>
-                                    "categories_ids[]=${category.key}")
-                                .join('&');
+                          onPressed: loadingUpdate
+                              ? null
+                              : () {
+                                  final String endPoint = selectedCategories
+                                      .value
+                                      .map((category) =>
+                                          "categories_ids[]=${category.key}")
+                                      .join('&');
 
-                            Logger.i(endPoint);
-                            ref
-                                .read(atributesProvider.notifier)
-                                .updateAtributes(
-                                  attributeId: attribute.id,
-                                  name: nameController.text.isEmpty
-                                      ? attribute.name
-                                      : nameController.text,
-                                  attributeTypeId:
-                                      selectedAttributeType.value.id,
-                                  categoriesIds: endPoint,
-                                  order: orderController.text.isEmpty
-                                      ? attribute.order.toString()
-                                      : orderController.text,
-                                );
-                          },
+                                  Logger.i(endPoint);
+                                  ref
+                                      .read(atributesProvider.notifier)
+                                      .updateAtributes(
+                                        attributeId: attribute.id,
+                                        name: nameController.text.isEmpty
+                                            ? attribute.name
+                                            : nameController.text,
+                                        attributeTypeId:
+                                            selectedAttributeType.value.id,
+                                        categoriesIds: endPoint,
+                                        order: orderController.text.isEmpty
+                                            ? attribute.order.toString()
+                                            : orderController.text,
+                                      );
+                                },
                           child: loadingUpdate
                               ? const CircularProgressIndicator()
                               : Text('save'.tr()),
@@ -216,8 +227,8 @@ class EditAttributesDialog extends HookConsumerWidget {
                     ),
                   ],
                 ),
-        ),
-      ),
+              ),
+            ),
     );
   }
 }

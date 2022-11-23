@@ -14,6 +14,7 @@ import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
@@ -40,6 +41,9 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
 
     final nameController = useTextEditingController();
     final descController = useTextEditingController();
+    final metaController = useTextEditingController();
+    final metaDescController = useTextEditingController();
+    final orderDescController = useTextEditingController();
 
     final active = useState(true);
     final buttonPressed = useState(false);
@@ -57,13 +61,13 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
         nameController.text = next.categorySubGroupDetails.name;
         descController.text = next.categorySubGroupDetails.description;
         active.value = next.categorySubGroupDetails.active;
-        if (next.categorySubGroupDetails.coverImage != null ||
-            next.categorySubGroupDetails.coverImage.isNotEmpty) {
+        if (next.categorySubGroupDetails.coverImage.isNotEmpty) {
           //Convert Network Image to File Image
           ref.watch(singleImagePickerProvider).setLoading(true);
           File file = await ImageConverter.getImage(
               url: next.categorySubGroupDetails.coverImage);
-          ref.read(singleImagePickerProvider).setCategoryGroupImage(file);
+          ref.read(singleImagePickerProvider).setCategorySubGroupImage(file);
+          ref.watch(singleImagePickerProvider).setLoading(false);
         }
       }
     });
@@ -96,8 +100,10 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
                 child: CircularProgressIndicator(),
               )
             : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  SizedBox(height: 10.h),
                   KTextField(
                       controller: nameController, lebelText: 'name'.tr()),
                   SizedBox(
@@ -108,6 +114,20 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
                       controller: descController,
                       lebelText: 'description'.tr()),
                   SizedBox(height: 10.h),
+                  // KTextField(
+                  //     controller: metaController, lebelText: 'meta_title'.tr()),
+                  // SizedBox(height: 10.h),
+                  // KTextField(
+                  //     controller: metaDescController,
+                  //     lebelText: 'meta_description'.tr()),
+                  // SizedBox(height: 10.h),
+                  // KTextField(
+                  //   controller: orderDescController,
+                  //   lebelText: 'order'.tr(),
+                  //   keyboardType: TextInputType.number,
+                  //   numberFormatters: true,
+                  // ),
+                  // SizedBox(height: 10.h),
                   ref.watch(singleImagePickerProvider).isLoading
                       ? const LoadingWidget()
                       : SingleImageUpload(
@@ -123,16 +143,16 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
                               .pickCategorySubGroupImage,
                         ),
                   SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      Text('active'.tr()),
-                      Checkbox(
-                          value: active.value,
-                          onChanged: (value) {
-                            active.value = value!;
-                          }),
-                    ],
+                  CheckboxListTile(
+                    title: Text('active'.tr()),
+                    value: active.value,
+                    onChanged: (value) {
+                      active.value = value!;
+                    },
                   ),
+                  SizedBox(height: 10.h),
+                  const RequiredFieldText(),
+                  SizedBox(height: 10.h),
                 ],
               ),
       ),
@@ -147,34 +167,33 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
           ),
         ),
         TextButton(
-          onPressed: () {
-            if (nameController.text.isNotEmpty &&
-                descController.text.isNotEmpty) {
-              buttonPressed.value = true;
-              ref
-                  .read(categorySubGroupProvider(categoryGroupId).notifier)
-                  .updateCategorySubGroup(
-                      categorySubGroupId: categorySubGroupId,
-                      categoryGroupId: categoryGroupId,
-                      name: nameController.text.isEmpty
-                          ? data.name
-                          : nameController.text,
-                      slug: nameController.text.isEmpty
-                          ? data.name
-                          : nameController.text,
-                      description: descController.text.isEmpty
-                          ? data.description
-                          : descController.text,
-                      active: active.value == true ? 1 : 0);
-            } else {
-              NotificationHelper.info(message: 'please_fill_all_fields'.tr());
-
-              // CherryToast.info(
-              //   title: const Text('please_fill_all_fields'),
-              //   animationType: AnimationType.fromTop,
-              // ).show(context);
-            }
-          },
+          onPressed: loading
+              ? null
+              : () {
+                  if (nameController.text.isNotEmpty &&
+                      descController.text.isNotEmpty) {
+                    buttonPressed.value = true;
+                    ref
+                        .read(
+                            categorySubGroupProvider(categoryGroupId).notifier)
+                        .updateCategorySubGroup(
+                            categorySubGroupId: categorySubGroupId,
+                            categoryGroupId: categoryGroupId,
+                            name: nameController.text.isEmpty
+                                ? data.name
+                                : nameController.text,
+                            slug: nameController.text.isEmpty
+                                ? data.name
+                                : nameController.text,
+                            description: descController.text.isEmpty
+                                ? data.description
+                                : descController.text,
+                            active: active.value == true ? 1 : 0);
+                  } else {
+                    NotificationHelper.info(
+                        message: 'please_fill_all_fields'.tr());
+                  }
+                },
           child:
               loading ? const CircularProgressIndicator() : Text('save'.tr()),
         ),

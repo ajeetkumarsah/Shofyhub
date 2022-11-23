@@ -48,10 +48,14 @@ class CategoryGroupTile extends StatelessWidget {
         ),
         subtitle: Row(
           children: [
-            // const Text('Total Sub-Category-Group: 5'),
-            // const SizedBox(
-            //   width: 10,
-            // ),
+            Row(
+              children: [
+                Text('total_sub_category_group'.tr()),
+                SizedBox(width: 5.w),
+                Text(categoryGroup.subGroup.toString()),
+              ],
+            ),
+            SizedBox(width: 10.w),
             !categoryGroup.active
                 ? Text(
                     'Inactive',

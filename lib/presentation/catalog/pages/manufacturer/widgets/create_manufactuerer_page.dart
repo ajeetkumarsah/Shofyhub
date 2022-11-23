@@ -9,8 +9,11 @@ import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_p
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_state.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -73,10 +76,10 @@ class CreateManufactuererPage extends HookConsumerWidget {
                         ValidatorLogic.requiredField(text, fieldName: 'Name'),
                   ),
                   SizedBox(height: 10.h),
-                  KTextField(
+                  KMultiLineTextField(
                     controller: descController,
                     lebelText: 'Description',
-                    inputAction: TextInputAction.next,
+                    maxLines: 3,
                   ),
                   SizedBox(height: 10.h),
                   KTextField(
@@ -98,6 +101,44 @@ class CreateManufactuererPage extends HookConsumerWidget {
                     controller: urlController,
                     lebelText: 'Official Website',
                     inputAction: TextInputAction.next,
+                  ),
+                  // SizedBox(height: 10.h),
+                  // SingleImageUpload(
+                  //   title: 'brand_logo'.tr(),
+                  //   image:
+                  //       ref.watch(singleImagePickerProvider).manufacturerLogo,
+                  //   picFunction: ref
+                  //       .watch(singleImagePickerProvider)
+                  //       .pickManufacturerLogo,
+                  //   clearFunction: ref
+                  //       .watch(singleImagePickerProvider)
+                  //       .clearManufacturerLogo,
+                  // ),
+                  SizedBox(height: 10.h),
+                  SingleImageUpload(
+                    title: 'cover_image'.tr(),
+                    image: ref
+                        .watch(singleImagePickerProvider)
+                        .manufacturerCoverImage,
+                    picFunction: ref
+                        .watch(singleImagePickerProvider)
+                        .pickManufacturerCoverImage,
+                    clearFunction: ref
+                        .watch(singleImagePickerProvider)
+                        .clearManufacturerCoverImage,
+                  ),
+                  SizedBox(height: 10.h),
+                  SingleImageUpload(
+                    title: 'featured_image'.tr(),
+                    image: ref
+                        .watch(singleImagePickerProvider)
+                        .manufacturerFeaturedImage,
+                    picFunction: ref
+                        .watch(singleImagePickerProvider)
+                        .pickManufacturerFeaturedImage,
+                    clearFunction: ref
+                        .watch(singleImagePickerProvider)
+                        .clearManufacturerFeaturedImage,
                   ),
                   SizedBox(height: 10.h),
                   SizedBox(
@@ -162,7 +203,7 @@ class CreateManufactuererPage extends HookConsumerWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
+                        onPressed: loading ? null : () {
                           if (formKey.currentState?.validate() ?? false) {
                             ref
                                 .read(manufacturerProvider.notifier)

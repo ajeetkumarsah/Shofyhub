@@ -13,6 +13,8 @@ class CategoryDetailsModel extends Equatable {
   final int categorySubGroupId;
   final String featureImage;
   final String coverImage;
+  final String metaTitle;
+  final String metaDescription;
   final IList<KeyValueData> attributes;
   final bool active;
 
@@ -24,6 +26,8 @@ class CategoryDetailsModel extends Equatable {
     required this.categorySubGroupId,
     required this.featureImage,
     required this.coverImage,
+    required this.metaTitle,
+    required this.metaDescription,
     required this.attributes,
     required this.active,
   });
@@ -36,6 +40,8 @@ class CategoryDetailsModel extends Equatable {
     int? categorySubGroupId,
     String? featureImage,
     String? coverImage,
+    String? metaTitle,
+    String? metaDescription,
     IList<KeyValueData>? attributes,
     bool? active,
   }) {
@@ -47,6 +53,8 @@ class CategoryDetailsModel extends Equatable {
       categorySubGroupId: categorySubGroupId ?? this.categorySubGroupId,
       featureImage: featureImage ?? this.featureImage,
       coverImage: coverImage ?? this.coverImage,
+      metaTitle: metaTitle ?? this.metaTitle,
+      metaDescription: metaDescription ?? this.metaDescription,
       attributes: attributes ?? this.attributes,
       active: active ?? this.active,
     );
@@ -61,6 +69,8 @@ class CategoryDetailsModel extends Equatable {
       'category_sub_group_id': categorySubGroupId,
       'feature_image': featureImage,
       'cover_image': coverImage,
+      'meta_title': metaTitle,
+      'meta_description': metaDescription,
       'active': active,
     };
   }
@@ -74,6 +84,8 @@ class CategoryDetailsModel extends Equatable {
       categorySubGroupId: map['category_sub_group_id']?.toInt() ?? 0,
       featureImage: map['feature_image'] ?? '',
       coverImage: map['cover_image'] ?? '',
+      metaTitle: map['meta_title'] ?? '',
+      metaDescription: map['meta_description'] ?? '',
       attributes: map['attributes'] != null && map['attributes'].isNotEmpty
           ? KeyValueData.listFromMap(map['attributes'] ?? {})
           : const IListConst([]),
@@ -99,6 +111,8 @@ class CategoryDetailsModel extends Equatable {
       categorySubGroupId,
       featureImage,
       coverImage,
+      metaTitle,
+      metaDescription,
       attributes,
       active,
     ];
@@ -111,6 +125,8 @@ class CategoryDetailsModel extends Equatable {
         categorySubGroupId: 0,
         featureImage: '',
         coverImage: '',
+        metaTitle: '',
+        metaDescription: '',
         description: '',
         attributes: IListConst([]),
         active: false,
@@ -118,6 +134,6 @@ class CategoryDetailsModel extends Equatable {
 
   @override
   String toString() {
-    return 'CategoryDetailsModel(id: $id, name: $name, description: $description, featured: $featured, categorySubGroupId: $categorySubGroupId, featureImage: $featureImage, coverImage: $coverImage, attributes: $attributes, active: $active)';
+    return 'CategoryDetailsModel(id: $id, name: $name, description: $description, featured: $featured, categorySubGroupId: $categorySubGroupId, featureImage: $featureImage, coverImage: $coverImage, metaTitle: $metaTitle, metaDescription: $metaDescription, attributes: $attributes, active: $active)';
   }
 }

@@ -67,34 +67,34 @@ class AttributeValuesTile extends StatelessWidget {
             )
           ],
         ),
-        subtitle: Row(
-          children: [
-            Expanded(
-              child: Text(
-                'Color : ${atrributeValue.color}',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: Colors.grey.shade800,
-                  fontWeight: FontWeight.w500,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                'Order : ${atrributeValue.order}',
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: Colors.grey.shade800,
-                  fontWeight: FontWeight.w500,
-                ),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-            ),
-          ],
-        ),
+        // subtitle: Row(
+        //   children: [
+        //     Expanded(
+        //       child: Text(
+        //         'Color : ${atrributeValue.color}',
+        //         style: TextStyle(
+        //           fontSize: 14.sp,
+        //           color: Colors.grey.shade800,
+        //           fontWeight: FontWeight.w500,
+        //         ),
+        //         overflow: TextOverflow.ellipsis,
+        //         maxLines: 2,
+        //       ),
+        //     ),
+        //     Expanded(
+        //       child: Text(
+        //         'Order : ${atrributeValue.order}',
+        //         style: TextStyle(
+        //           fontSize: 14.sp,
+        //           color: Colors.grey.shade800,
+        //           fontWeight: FontWeight.w500,
+        //         ),
+        //         overflow: TextOverflow.ellipsis,
+        //         maxLines: 2,
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

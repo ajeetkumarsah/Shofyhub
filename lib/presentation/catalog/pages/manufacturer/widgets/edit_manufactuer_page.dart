@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -10,9 +12,15 @@ import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_d
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_state.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
+import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
+import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -43,13 +51,30 @@ class EditManufactuererPage extends HookConsumerWidget {
     final urlController = useTextEditingController();
 
     ref.listen<ManufacturerDetailsState>(
-        manufacturerDetailsProvider(manufacturerId), (previous, next) {
+        manufacturerDetailsProvider(manufacturerId), (previous, next) async {
       if (previous != next && !next.loading) {
         nameController.text = next.manufacturerDetails.name;
         descController.text = next.manufacturerDetails.description;
         emailController.text = next.manufacturerDetails.email;
         phoneController.text = next.manufacturerDetails.phone;
         urlController.text = next.manufacturerDetails.url;
+        if (next.manufacturerDetails.coverImage != null ||
+            next.manufacturerDetails.coverImage.isNotEmpty ||
+            next.manufacturerDetails.image.isNotEmpty) {
+          //Convert Network Image to File Image
+          ref.watch(singleImagePickerProvider).setLoading(true);
+          File coverImageFile = await ImageConverter.getImage(
+              url: next.manufacturerDetails.coverImage);
+          File featuredImageFile = await ImageConverter.getImage(
+              url: next.manufacturerDetails.image);
+          ref
+              .read(singleImagePickerProvider)
+              .setManufacturerCoverImage(coverImageFile);
+          ref
+              .read(singleImagePickerProvider)
+              .setManufacturerFeaturedImage(featuredImageFile);
+          ref.watch(singleImagePickerProvider).setLoading(false);
+        }
         selectedCountry.value = countryList
             .where((e) => e.value == next.manufacturerDetails.origin)
             .toList()[0];
@@ -110,9 +135,9 @@ class EditManufactuererPage extends HookConsumerWidget {
                               fieldName: 'Name'),
                         ),
                         SizedBox(height: 10.h),
-                        KTextField(
+                        KMultiLineTextField(
                           controller: descController,
-                          inputAction: TextInputAction.next,
+                          maxLines: 3,
                           lebelText: 'Description',
                         ),
                         SizedBox(height: 10.h),
@@ -177,9 +202,52 @@ class EditManufactuererPage extends HookConsumerWidget {
                           ),
                         ),
                         SizedBox(height: 10.h),
-                        Text('* Required fields.',
-                            style:
-                                TextStyle(color: Theme.of(context).hintColor)),
+                        ref.watch(singleImagePickerProvider).isLoading
+                            ? const LoadingWidget()
+                            : Column(
+                                children: [
+                                  // SingleImageUpload(
+                                  //   title: 'brand_logo'.tr(),
+                                  //   image: ref
+                                  //       .watch(singleImagePickerProvider)
+                                  //       .manufacturerLogo,
+                                  //   picFunction: ref
+                                  //       .watch(singleImagePickerProvider)
+                                  //       .pickManufacturerLogo,
+                                  //   clearFunction: ref
+                                  //       .watch(singleImagePickerProvider)
+                                  //       .clearManufacturerLogo,
+                                  // ),
+                                  // SizedBox(height: 10.h),
+                                  SingleImageUpload(
+                                    title: 'cover_image'.tr(),
+                                    image: ref
+                                        .watch(singleImagePickerProvider)
+                                        .manufacturerCoverImage,
+                                    picFunction: ref
+                                        .watch(singleImagePickerProvider)
+                                        .pickManufacturerCoverImage,
+                                    clearFunction: ref
+                                        .watch(singleImagePickerProvider)
+                                        .clearManufacturerCoverImage,
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  SingleImageUpload(
+                                    title: 'featured_image'.tr(),
+                                    image: ref
+                                        .watch(singleImagePickerProvider)
+                                        .manufacturerFeaturedImage,
+                                    picFunction: ref
+                                        .watch(singleImagePickerProvider)
+                                        .pickManufacturerFeaturedImage,
+                                    clearFunction: ref
+                                        .watch(singleImagePickerProvider)
+                                        .clearManufacturerFeaturedImage,
+                                  ),
+                                ],
+                              ),
+                        SizedBox(height: 10.h),
+                        const RequiredFieldText(),
                         SizedBox(height: 30.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -194,37 +262,45 @@ class EditManufactuererPage extends HookConsumerWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {
-                                if (formKey.currentState?.validate() ?? false) {
-                                  buttonPressed.value = true;
-                                  ref
-                                      .read(manufacturerProvider.notifier)
-                                      .updateManufacturer(
-                                          manufacturerId: manufacturerId,
-                                          name: nameController.text.isEmpty
-                                              ? manufactuererDetails.name
-                                              : nameController.text,
-                                          slug: manufactuererDetails.slug,
-                                          url: urlController.text.isEmpty
-                                              ? manufactuererDetails.url
-                                              : urlController.text,
-                                          active: false,
-                                          countryId:
-                                              selectedCountry.value != null
-                                                  ? selectedCountry.value!.key
-                                                  : '',
-                                          email: emailController.text.isEmpty
-                                              ? manufactuererDetails.email
-                                              : emailController.text,
-                                          phone: phoneController.text.isEmpty
-                                              ? manufactuererDetails.phone
-                                              : phoneController.text,
-                                          description: descController
-                                                  .text.isEmpty
-                                              ? manufactuererDetails.description
-                                              : descController.text);
-                                }
-                              },
+                              onPressed: loading
+                                  ? null
+                                  : () {
+                                      if (formKey.currentState?.validate() ??
+                                          false) {
+                                        buttonPressed.value = true;
+                                        ref
+                                            .read(manufacturerProvider.notifier)
+                                            .updateManufacturer(
+                                                manufacturerId: manufacturerId,
+                                                name: nameController
+                                                        .text.isEmpty
+                                                    ? manufactuererDetails.name
+                                                    : nameController.text,
+                                                slug: manufactuererDetails.slug,
+                                                url: urlController.text.isEmpty
+                                                    ? manufactuererDetails.url
+                                                    : urlController.text,
+                                                active: false,
+                                                countryId: selectedCountry
+                                                            .value !=
+                                                        null
+                                                    ? selectedCountry.value!.key
+                                                    : '',
+                                                email: emailController
+                                                        .text.isEmpty
+                                                    ? manufactuererDetails.email
+                                                    : emailController.text,
+                                                phone: phoneController
+                                                        .text.isEmpty
+                                                    ? manufactuererDetails.phone
+                                                    : phoneController.text,
+                                                description: descController
+                                                        .text.isEmpty
+                                                    ? manufactuererDetails
+                                                        .description
+                                                    : descController.text);
+                                      }
+                                    },
                               child: loading
                                   ? const CircularProgressIndicator()
                                   : Text('update'.tr()),

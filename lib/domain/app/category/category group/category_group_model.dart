@@ -7,6 +7,7 @@ class CategoryGroupModel extends Equatable {
   final String name;
   final String slug;
   final String description;
+  final int subGroup;
 
   final String icon;
   final String iconImage;
@@ -17,6 +18,7 @@ class CategoryGroupModel extends Equatable {
     required this.name,
     required this.slug,
     required this.description,
+    required this.subGroup,
     required this.icon,
     required this.iconImage,
     required this.coverImage,
@@ -28,6 +30,7 @@ class CategoryGroupModel extends Equatable {
     String? name,
     String? slug,
     String? description,
+    int? subGroup,
     String? icon,
     String? iconImage,
     String? coverImage,
@@ -38,6 +41,7 @@ class CategoryGroupModel extends Equatable {
       name: name ?? this.name,
       slug: slug ?? this.slug,
       description: description ?? this.description,
+      subGroup: subGroup ?? this.subGroup,
       icon: icon ?? this.icon,
       iconImage: iconImage ?? this.iconImage,
       coverImage: coverImage ?? this.coverImage,
@@ -51,6 +55,7 @@ class CategoryGroupModel extends Equatable {
       'name': name,
       'slug': slug,
       'description': description,
+      'sub_groups_count': subGroup,
       'icon': icon,
       'icon_image': iconImage,
       'cover_image': coverImage,
@@ -64,6 +69,7 @@ class CategoryGroupModel extends Equatable {
       name: map['name'] ?? '',
       slug: map['slug'] ?? '',
       description: map['description'] ?? '',
+      subGroup: map['sub_groups_count'] ?? '',
       icon: map['icon'] ?? '',
       iconImage: map['icon_image'] ?? '',
       coverImage: map['cover_image'] ?? '',
@@ -78,12 +84,22 @@ class CategoryGroupModel extends Equatable {
 
   @override
   String toString() {
-    return 'CategoryGroupModel(id: $id, name: $name, slug: $slug, description: $description, icon: $icon, iconImage: $iconImage, coverImage: $coverImage, active: $active)';
+    return 'CategoryGroupModel(id: $id, name: $name, slug: $slug, description: $description, icon: $icon, iconImage: $iconImage, coverImage: $coverImage, subGroup: $subGroup, active: $active)';
   }
 
   @override
   List<Object> get props {
-    return [id, name, slug, description, icon, iconImage, coverImage, active];
+    return [
+      id,
+      name,
+      slug,
+      description,
+      subGroup,
+      icon,
+      iconImage,
+      coverImage,
+      active,
+    ];
   }
 
   factory CategoryGroupModel.init() => const CategoryGroupModel(
@@ -91,6 +107,7 @@ class CategoryGroupModel extends Equatable {
         name: '',
         slug: '',
         description: '',
+        subGroup: 0,
         icon: '',
         iconImage: '',
         coverImage: '',

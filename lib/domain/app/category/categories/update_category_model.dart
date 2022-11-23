@@ -9,6 +9,9 @@ class UpdateCategoryModel extends Equatable {
   final String name;
   final String slug;
   final String description;
+  final String metaTitle;
+  final String metaDescription;
+  final String order;
   final IList<KeyValueData> attributes;
   final int active;
   const UpdateCategoryModel({
@@ -17,7 +20,10 @@ class UpdateCategoryModel extends Equatable {
     required this.name,
     required this.slug,
     required this.description,
+    required this.metaTitle,
+    required this.metaDescription,
     required this.attributes,
+    required this.order,
     required this.active,
   });
 
@@ -27,6 +33,9 @@ class UpdateCategoryModel extends Equatable {
     String? name,
     String? slug,
     String? description,
+    String? metaTitle,
+    String? metaDescription,
+    String? order,
     IList<KeyValueData>? attributes,
     bool? active,
   }) {
@@ -36,6 +45,9 @@ class UpdateCategoryModel extends Equatable {
       name: name ?? this.name,
       slug: slug ?? this.slug,
       description: description ?? this.description,
+      metaTitle: metaTitle ?? this.metaTitle,
+      metaDescription: metaDescription ?? this.metaDescription,
+      order: order ?? this.order,
       attributes: attributes ?? this.attributes,
       active: this.active,
     );
@@ -44,11 +56,11 @@ class UpdateCategoryModel extends Equatable {
   String get attributesEndPoint =>
       attributes.map((data) => "attribute_ids[]=${data.key}").join('&');
   String get endpoint =>
-      'category/$id/update?category_sub_group_id=$categorySubGroupId&name=$name&slug=$slug&description=$description&attribute_ids[]=$attributesEndPoint&active=$active';
+      'category/$id/update?category_sub_group_id=$categorySubGroupId&name=$name&slug=$slug&description=$description&meta_title=$metaTitle&meta_description=$metaDescription&order=$order&attribute_ids[]=$attributesEndPoint&active=$active';
 
   @override
   String toString() {
-    return 'UpdateCategoryModel(id: $id, categorySubGroupId: $categorySubGroupId, name: $name, slug: $slug, description: $description, attributes: $attributes, active: $active)';
+    return 'UpdateCategoryModel(id: $id, categorySubGroupId: $categorySubGroupId, name: $name, slug: $slug, description: $description, attributes: $attributes, metaTitle: $metaTitle, metaDescription: $metaDescription, order: $order,  active: $active)';
   }
 
   @override
@@ -59,6 +71,9 @@ class UpdateCategoryModel extends Equatable {
       name,
       slug,
       description,
+      metaTitle,
+      metaDescription,
+      order,
       attributes,
       active,
     ];
