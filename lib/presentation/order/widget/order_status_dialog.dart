@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -35,25 +34,14 @@ class OrderStatusDialog extends HookConsumerWidget {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          ref.read(orderProvider(null).notifier).getOrders();
-          ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
-          ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
+          ref.read(orderProvider.notifier).getOrders();
+          ref.read(orderProvider.notifier).getFullFilledOrders();
+          ref.read(orderProvider.notifier).getUnFullFilledOrders();
+          ref.read(orderProvider.notifier).getArchivedOrders();
 
           NotificationHelper.success(message: 'order_status_updated'.tr());
-
-          // CherryToast.info(
-          //   title: const Text('Order Status Updated'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });

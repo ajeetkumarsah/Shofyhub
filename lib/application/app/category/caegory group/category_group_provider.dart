@@ -1,4 +1,6 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
@@ -37,10 +39,9 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
             trashCategoryGroups: r));
   }
 
-  createCategoryGroup(CreateCategoryGroupModel categoryGroupModel) async {
+  createCategoryGroup(formData) async {
     state = state.copyWith(loading: true);
-    final data = await categoryGroupRepo.createCategoryGroup(
-        categoryGroupModel: categoryGroupModel);
+    final data = await categoryGroupRepo.createCategoryGroup(formData);
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
@@ -64,27 +65,11 @@ class CategoryGroupNotifier extends StateNotifier<CategoryGroupState> {
     Logger.i(state.categoryDetails);
   }
 
-  updateCategoryGroup(
-      {required int categoryGroupId,
-      required String name,
-      required String slug,
-      required String description,
-      required String metaTitle,
-      required String metaDescription,
-      required int order,
-      required String icon,
-      required int active}) async {
+  updateCategoryGroup({required formData, required int id}) async {
     state = state.copyWith(loading: true);
     final data = await categoryGroupRepo.updateCategoryGroup(
-      categoryGroupId: categoryGroupId,
-      name: name,
-      slug: slug,
-      description: description,
-      metaTitle: metaTitle,
-      metaDescription: metaDescription,
-      order: order,
-      icon: icon,
-      active: active,
+      categoryGroupId: id,
+      formData: formData,
     );
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));

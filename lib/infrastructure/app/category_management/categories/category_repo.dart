@@ -32,35 +32,15 @@ class CategoryRepo extends ICategoryRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> updateCategory(
-      {required UpdateCategoryModel updateCategoryModel}) async {
-    return await cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
-          if (responseBody['errors'] != null) {
-            final errors = Map<String, dynamic>.from(responseBody['errors'])
-                .values
-                .toList();
-            final error = List.from(errors.first);
-            return left(CleanFailure(tag: 'category', error: error.first));
-          } else if (responseBody['message'] != null) {
-            return left(CleanFailure(
-                tag: 'category',
-                error: responseBody['message'],
-                statusCode: statusCode));
-          } else if (responseBody['error'] != null) {
-            return left(CleanFailure(
-                tag: 'category',
-                error: responseBody['error'],
-                statusCode: statusCode));
-          } else {
-            return left(
-                CleanFailure(tag: 'category', error: responseBody.toString()));
-          }
-        },
-        fromData: (josn) => unit,
-        body: null,
-        endPoint: updateCategoryModel.endpoint);
+  Future<Either<CleanFailure, String>> updateCategory(
+      {required formData, required int id}) async {
+    try {
+      final response =
+          await DioClient.post(url: 'category/$id/update', payload: formData);
+      return right(response.data['message']);
+    } catch (e) {
+      return left(CleanFailure(tag: 'category', error: e.toString()));
+    }
   }
 
   @override

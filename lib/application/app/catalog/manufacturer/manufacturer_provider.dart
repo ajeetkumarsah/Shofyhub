@@ -17,6 +17,9 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
 
   ManufacturerPaginationModel manufacturerPaginationModel =
       ManufacturerPaginationModel.init();
+  ManufacturerPaginationModel trashManufacturerPaginationModel =
+      ManufacturerPaginationModel.init();
+
   List<ManufacturerModel> manufactureres = [];
   int pageNumber = 1;
 
@@ -72,7 +75,7 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
 
   getTrashManufacturerList() async {
     pageNumber = 1;
-    manufactureres = [];
+    trashManufactureres = [];
 
     state = state.copyWith(loading: true);
     final data = await manufacturerRepo.getManufacturerList(
@@ -82,12 +85,12 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
     pageNumber++;
 
     state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-      manufacturerPaginationModel = r;
-      manufactureres.addAll(manufacturerPaginationModel.data);
+      trashManufacturerPaginationModel = r;
+      trashManufactureres.addAll(trashManufacturerPaginationModel.data);
 
       return state.copyWith(
         loading: false,
-        manufacturerList: manufactureres,
+        trashManufacturerList: trashManufactureres,
         failure: CleanFailure.none(),
       );
     });
@@ -96,7 +99,7 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
 
   getMoreTrashManufacturerList() async {
     if (pageNumber == 1 ||
-        pageNumber <= manufacturerPaginationModel.meta.lastPage!) {
+        pageNumber <= trashManufacturerPaginationModel.meta.lastPage!) {
       final data = await manufacturerRepo.getManufacturerList(
           filter: 'trash', page: pageNumber);
 
@@ -104,12 +107,12 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
       pageNumber++;
 
       state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-        manufacturerPaginationModel = r;
-        manufactureres.addAll(manufacturerPaginationModel.data);
+        trashManufacturerPaginationModel = r;
+        trashManufactureres.addAll(trashManufacturerPaginationModel.data);
 
         return state.copyWith(
           loading: false,
-          manufacturerList: manufactureres,
+          trashManufacturerList: trashManufactureres,
           failure: CleanFailure.none(),
         );
       });
@@ -117,51 +120,18 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
     }
   }
 
-  createManufacturer(
-      {required String name,
-      required String slug,
-      required String url,
-      required bool active,
-      required String countryId,
-      required String email,
-      required String phone,
-      required String description}) async {
+  createManufacturer(formData) async {
     state = state.copyWith(loading: true);
-    final date = await manufacturerRepo.createManufacturer(
-        name: name,
-        slug: slug,
-        url: url,
-        active: active,
-        countryId: countryId,
-        email: email,
-        phone: phone,
-        description: description);
+    final date = await manufacturerRepo.createManufacturer(formData);
     state = date.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getManufacturerList();
   }
 
-  updateManufacturer(
-      {required int manufacturerId,
-      required String name,
-      required String slug,
-      required String url,
-      required bool active,
-      required String countryId,
-      required String email,
-      required String phone,
-      required String description}) async {
+  updateManufacturer({required int manufacturerId, required formData}) async {
     state = state.copyWith(loading: true);
     final date = await manufacturerRepo.updateManufacturer(
-        manufacturerId: manufacturerId,
-        name: name,
-        slug: slug,
-        url: url,
-        active: active,
-        countryId: countryId,
-        email: email,
-        phone: phone,
-        description: description);
+        manufacturerId: manufacturerId, formData: formData);
     state = date.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getManufacturerList();

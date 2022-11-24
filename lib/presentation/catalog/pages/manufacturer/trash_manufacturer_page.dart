@@ -32,8 +32,9 @@ class TrashManufacturerPage extends HookConsumerWidget {
     final loading =
         ref.watch(manufacturerProvider.select((value) => value.loading));
 
-    final manufacturerPaginationModel =
-        ref.watch(manufacturerProvider.notifier).manufacturerPaginationModel;
+    final manufacturerPaginationModel = ref
+        .watch(manufacturerProvider.notifier)
+        .trashManufacturerPaginationModel;
 
     final manufacturerList =
         ref.watch(manufacturerProvider).trashManufacturerList;

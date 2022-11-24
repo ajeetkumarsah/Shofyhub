@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +17,7 @@ class ArchivedOrderConfirmation extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    ref.listen<OrderState>(orderProvider(OrderFilter.archived),
-        (previous, next) {
+    ref.listen<OrderState>(orderProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
@@ -27,24 +25,12 @@ class ArchivedOrderConfirmation extends HookConsumerWidget {
             Navigator.of(context).pop();
           }
           NotificationHelper.success(message: 'successfully_archived'.tr());
-          // CherryToast.info(
-          //   title: const Text('Successfully Arcived'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
-    final loading = ref.watch(
-        orderProvider(OrderFilter.archived).select((value) => value.loading));
+    final loading = ref.watch(orderProvider.select((value) => value.loading));
     return AlertDialog(
       title: const Text("Archive Order"),
       content: const Text("Are you sure you want to archive this order?"),
@@ -60,19 +46,19 @@ class ArchivedOrderConfirmation extends HookConsumerWidget {
         ),
         TextButton(
           onPressed: () {
-            ref
-                .read(orderProvider(OrderFilter.archived).notifier)
-                .archiveOrder(orderId, reloadList: () {
-              ref.read(orderProvider(filter).notifier).getOrders();
-              ref
-                  .read(orderProvider(OrderFilter.unfullfill).notifier)
-                  .getOrders();
-              ref.read(orderProvider(OrderFilter.unpaid).notifier).getOrders();
+            ref.read(orderProvider.notifier).archiveOrder(orderId,
+                reloadList: () {
+              ref.read(orderProvider.notifier).getOrders();
+              ref.read(orderProvider.notifier).getFullFilledOrders();
+              ref.read(orderProvider.notifier).getUnFullFilledOrders();
             });
             // Navigator.of(context).pop();
           },
           child: loading
-              ? SizedBox(width: 40.w, child: const CircularProgressIndicator())
+              ? SizedBox(
+                  width: 30.w,
+                  height: 30.h,
+                  child: const CircularProgressIndicator())
               : const Text(
                   'Confirm',
                 ),

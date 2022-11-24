@@ -79,11 +79,9 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
     }
   }
 
-  createCategorySubGroup(
-      CreateCategorySubGroupModel createCategorySubGroupModel) async {
+  createCategorySubGroup(formData) async {
     state = state.copyWith(loading: true);
-    final data = await subGroupRepo.createCategorySubgroup(
-        createCategorySubGroupModel: createCategorySubGroupModel);
+    final data = await subGroupRepo.createCategorySubgroup(formData);
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
@@ -94,20 +92,10 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
   }
 
   updateCategorySubGroup(
-      {required int categorySubGroupId,
-      required int categoryGroupId,
-      required String name,
-      required String slug,
-      required String description,
-      required int active}) async {
+      {required int categorySubGroupId, required formData}) async {
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.updateCategorySubGroup(
-        categorySubGroupId: categorySubGroupId,
-        categoryGroupId: categoryGroupId,
-        name: name,
-        slug: slug,
-        description: description,
-        active: active);
+        categorySubGroupId: categorySubGroupId, formData: formData);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);

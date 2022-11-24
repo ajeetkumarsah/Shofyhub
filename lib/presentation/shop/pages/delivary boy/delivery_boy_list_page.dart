@@ -7,7 +7,7 @@ import 'package:zcart_seller/application/app/shop/delivary%20boy/delivary_boy_pr
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivery_boy_details_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/add_delivary_boy_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/add_update_delivary_boy_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivary_dialog.dart';
 
 class DelivaryBoyListPage extends HookConsumerWidget {

@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -32,28 +31,17 @@ class FullfillorderDialog extends HookConsumerWidget {
     final ValueNotifier<CarrierModel> selectedCarrier = useState(carriers[0]);
     final trackingIdController = useTextEditingController(text: tarckingId);
     final sendNotification = useState(true);
-    ref.listen<OrderState>(orderProvider(null), (previous, next) {
+    ref.listen<OrderState>(orderProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_updated'.tr());
-          // CherryToast.info(
-          //   title: const Text('Order Updated'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
-    final loading =
-        ref.watch(orderProvider(null).select((value) => value.loading));
+    final loading = ref.watch(orderProvider.select((value) => value.loading));
 
     return AlertDialog(
       shape: const RoundedRectangleBorder(
@@ -170,7 +158,7 @@ class FullfillorderDialog extends HookConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      ref.read(orderProvider(null).notifier).fulfillOrder(
+                      ref.read(orderProvider.notifier).fulfillOrder(
                           orderId,
                           selectedCarrier.value.id,
                           trackingIdController.text,

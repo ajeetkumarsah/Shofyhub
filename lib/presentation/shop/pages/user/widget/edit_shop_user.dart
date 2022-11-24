@@ -86,10 +86,12 @@ class EditShopUser extends HookConsumerWidget {
 
               KTextField(controller: descController, lebelText: 'Description'),
               SizedBox(height: 10.h),
-              SwitchListTile(
+              CheckboxListTile(
+                title: Text('active'.tr()),
                 value: active.value,
-                onChanged: (value) => active.value = value,
-                title: const Text('Active status'),
+                onChanged: (value) {
+                  active.value = value!;
+                },
               ),
               // SizedBox(height: 10.h),
               // TextField(

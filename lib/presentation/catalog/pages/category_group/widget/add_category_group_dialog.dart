@@ -1,9 +1,11 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
 import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
@@ -65,6 +67,7 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
               KTextField(
                 controller: nameController,
                 lebelText: 'Name *',
+                inputAction: TextInputAction.next,
                 validator: (text) =>
                     ValidatorLogic.requiredField(text, fieldName: 'Name'),
               ),
@@ -72,7 +75,37 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                 height: 10.h,
                 width: 300.w,
               ),
-              KTextField(controller: descController, lebelText: 'Description'),
+              KTextField(
+                controller: descController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Description',
+              ),
+              SizedBox(height: 10.h),
+              KTextField(
+                controller: metaTitleController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Meta title',
+              ),
+              SizedBox(height: 10.h),
+              KTextField(
+                controller: metaDescController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Meta description',
+              ),
+              SizedBox(height: 10.h),
+              KTextField(
+                controller: iconController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Icon',
+              ),
+              SizedBox(height: 10.h),
+              KTextField(
+                controller: orderController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Order',
+                keyboardType: TextInputType.number,
+                numberFormatters: true,
+              ),
               SizedBox(height: 10.h),
               SingleImageUpload(
                 title: 'upload_image'.tr(),
@@ -82,21 +115,6 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                 clearFunction: ref
                     .watch(singleImagePickerProvider)
                     .clearCategoryGroupImage,
-              ),
-              SizedBox(height: 10.h),
-              KTextField(
-                  controller: metaTitleController, lebelText: 'Meta title'),
-              SizedBox(height: 10.h),
-              KTextField(
-                  controller: metaDescController,
-                  lebelText: 'Meta description'),
-              SizedBox(height: 10.h),
-              KTextField(controller: iconController, lebelText: 'Icon'),
-              SizedBox(height: 10.h),
-              KTextField(
-                controller: orderController,
-                lebelText: 'Order',
-                numberFormatters: true,
               ),
               SizedBox(height: 10.h),
               CheckboxListTile(
@@ -125,26 +143,50 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
         TextButton(
           onPressed: loading
               ? null
-              : () {
+              : () async {
                   if (formKey.currentState?.validate() ?? false) {
-                    final categoryGroupModel = CreateCategoryGroupModel(
-                      name: nameController.text,
-                      slug: nameController.text
+                    FormData formData = FormData.fromMap({
+                      'name': nameController.text,
+                      'slug': nameController.text
                           .toLowerCase()
                           .replaceAll(RegExp(r' '), '-'),
-                      desc: descController.text,
-                      metaTitle: metaTitleController.text,
-                      meatDesc: metaDescController.text,
-                      icon: iconController.text,
-                      order: orderController.text == ''
+                      'description': descController.text,
+                      'meta_title': metaDescController.text,
+                      'meta_description': metaDescController.text,
+                      'icon': iconController.text,
+                      'active': active.value ? 1 : 0,
+                      'order': orderController.text == ''
                           ? 0
                           : int.parse(orderController.text),
-                      active: active.value ? 1 : 0,
-                    );
+                      'images': await MultipartFile.fromFile(
+                        ref.read(singleImagePickerProvider).categoryGroupImage!.path,
+                        filename: ref
+                            .read(singleImagePickerProvider)
+                            .categoryGroupImage!
+                            .path
+                            .split('/')
+                            .last,
+                        contentType: MediaType("image", "png"),
+                      ),
+                    });
+                    // final categoryGroupModel = CreateCategoryGroupModel(
+                    //   name: nameController.text,
+                    //   slug: nameController.text
+                    //       .toLowerCase()
+                    //       .replaceAll(RegExp(r' '), '-'),
+                    //   desc: descController.text,
+                    //   metaTitle: metaTitleController.text,
+                    //   meatDesc: metaDescController.text,
+                    //   icon: iconController.text,
+                    //   order: orderController.text == ''
+                    //       ? 0
+                    //       : int.parse(orderController.text),
+                    //   active: active.value ? 1 : 0,
+                    // );
                     buttonPressed.value = true;
                     ref
                         .read(categoryGroupProvider.notifier)
-                        .createCategoryGroup(categoryGroupModel);
+                        .createCategoryGroup(formData);
                   }
                 },
           child: loading

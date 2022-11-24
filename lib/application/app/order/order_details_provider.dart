@@ -33,7 +33,10 @@ class OrderDetailsNotifier extends StateNotifier<OrderDetailsState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getOrderDetails();
-    ref.read(orderProvider(null).notifier).getOrders();
+    // ref.read(orderProvider.notifier).getOrders();
+    ref.read(orderProvider.notifier).getFullFilledOrders();
+    ref.read(orderProvider.notifier).getUnFullFilledOrders();
+    ref.read(orderProvider.notifier).getArchivedOrders();
   }
 
   markAsUnpaid(WidgetRef ref) async {
@@ -43,7 +46,9 @@ class OrderDetailsNotifier extends StateNotifier<OrderDetailsState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getOrderDetails();
-    ref.read(orderProvider(null).notifier).getOrders();
+    ref.read(orderProvider.notifier).getFullFilledOrders();
+    ref.read(orderProvider.notifier).getUnFullFilledOrders();
+    ref.read(orderProvider.notifier).getArchivedOrders();
   }
 
   updateOrderStatus(int orderStatusId, bool notifyCustomer) async {

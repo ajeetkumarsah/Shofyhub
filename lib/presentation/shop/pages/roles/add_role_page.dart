@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -44,19 +43,10 @@ class AddRolePage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'role_added'.tr());
-          // CherryToast.info(
-          //   title: Text('role_added'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -93,9 +83,6 @@ class AddRolePage extends HookConsumerWidget {
                   numberFormatters: true,
                 ),
                 SizedBox(height: 10.h),
-                SizedBox(
-                  height: 10.h,
-                ),
                 KMultiLineTextField(
                   controller: descriptionController,
                   lebelText: 'description'.tr(),

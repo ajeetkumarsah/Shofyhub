@@ -125,8 +125,7 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
 
   createNewCategory(formData) async {
     state = state.copyWith(loading: true);
-    final data =
-        await categoryRepo.createNewCategory(formData);
+    final data = await categoryRepo.createNewCategory(formData);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllCategories();
@@ -148,7 +147,6 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllCategories();
     getTrashCategories();
-
   }
 
   trashcategory(int categoryId) async {
@@ -158,13 +156,11 @@ class CategoryNotifier extends StateNotifier<CategoryState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllCategories();
     getTrashCategories();
-
   }
 
-  updateCategory(UpdateCategoryModel updatecategoryModel) async {
+  updateCategory({required formData, required int id}) async {
     state = state.copyWith(loading: true);
-    final data = await categoryRepo.updateCategory(
-        updateCategoryModel: updatecategoryModel);
+    final data = await categoryRepo.updateCategory(formData: formData, id: id);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllCategories();

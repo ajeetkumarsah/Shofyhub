@@ -312,7 +312,7 @@ class ManageOrderPage extends HookConsumerWidget {
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xffEA2264),
+                          backgroundColor: const Color(0xffEA2264),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10.r),
@@ -342,7 +342,7 @@ class ManageOrderPage extends HookConsumerWidget {
                         OutlinedButton(
                           onPressed: () {
                             ref
-                                .read(orderProvider(null).notifier)
+                                .read(orderProvider.notifier)
                                 .markAsDelivered(orderDetails.id, true);
                             ref
                                 .read(orderDetailsProvider(id).notifier)

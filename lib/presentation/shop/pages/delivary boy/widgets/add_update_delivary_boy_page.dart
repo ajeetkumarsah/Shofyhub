@@ -1,5 +1,3 @@
-  
-
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -118,10 +116,12 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
               KTextField(
                   controller: phoneNoController, lebelText: 'Phone Number'),
               SizedBox(height: 10.h),
-              SwitchListTile(
+              CheckboxListTile(
+                title: Text('active'.tr()),
                 value: status.value,
-                onChanged: (value) => status.value = value,
-                title: const Text('Active status'),
+                onChanged: (value) {
+                  status.value = value!;
+                },
               ),
               SizedBox(height: 10.h),
               TextField(

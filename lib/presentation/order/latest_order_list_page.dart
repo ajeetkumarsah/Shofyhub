@@ -25,8 +25,7 @@ class LatesOrderListPage extends HookConsumerWidget {
       return null;
     }, []);
     final buttonPressed = useState(false);
-    ref.listen<OrderState>(orderProvider(OrderFilter.archived),
-        (previous, next) {
+    ref.listen<OrderState>(orderProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() &&
             next.orderList != previous?.orderList &&

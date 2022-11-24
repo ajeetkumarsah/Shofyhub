@@ -6,7 +6,9 @@ import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/order/order_list_page.dart';
+import 'package:zcart_seller/presentation/order/archived_order_list_page.dart';
+import 'package:zcart_seller/presentation/order/full_filled_order_list_page.dart';
+import 'package:zcart_seller/presentation/order/unfull_filled_order_list_page.dart';
 
 import '../../application/app/delivary_boys/delivary_provider.dart';
 
@@ -48,23 +50,22 @@ class OrderMainPage extends HookConsumerWidget {
                   color: Colors.white10),
               tabs: const [
                 Tab(
-                  text: 'All',
-                ),
-                Tab(
                   text: 'Unfulfilled',
                 ),
                 Tab(
-                  text: 'Unpaid',
+                  text: 'Fulfilled',
+                ),
+                Tab(
+                  text: 'Archived',
                 ),
               ]),
         ),
         body: const TabBarView(children: [
-          OrderListPage(filter: null),
-          OrderListPage(
-            filter: OrderFilter.unfullfill,
+          FullFilledOrderListPage(),
+          UnFullFilledOrderListPage(),
+          ArchivedOrderListPage(
+            showAppBar: false,
           ),
-          OrderListPage(filter: OrderFilter.unpaid),
-          // ArcivedOrder(),
         ]),
       ),
     );

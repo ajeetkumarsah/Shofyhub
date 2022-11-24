@@ -10,8 +10,8 @@ class UnfullfilledOrder extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final orderList = ref.watch(orderProvider(OrderFilter.unfullfill)
-        .select((value) => value.orderList));
+    final orderList =
+        ref.watch(orderProvider.select((value) => value.unFulfillOrderList));
     return Scaffold(
       body: ListView.separated(
         padding: const EdgeInsets.all(15.0),

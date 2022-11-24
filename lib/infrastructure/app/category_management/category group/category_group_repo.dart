@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/application/core/dio_client.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_show_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
@@ -39,36 +40,14 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> createCategoryGroup(
-      {required CreateCategoryGroupModel categoryGroupModel}) async {
-    return cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
-          if (responseBody['errors'] != null) {
-            final errors = Map<String, dynamic>.from(responseBody['errors'])
-                .values
-                .toList();
-            final error = List.from(errors.first);
-            return left(CleanFailure(tag: 'category', error: error.first));
-          } else if (responseBody['message'] != null) {
-            return left(CleanFailure(
-                tag: 'category',
-                error: responseBody['message'],
-                statusCode: statusCode));
-          } else if (responseBody['error'] != null) {
-            return left(CleanFailure(
-                tag: 'category',
-                error: responseBody['error'],
-                statusCode: statusCode));
-          } else {
-            return left(
-                CleanFailure(tag: 'category', error: responseBody.toString()));
-          }
-        },
-        fromData: (json) => unit,
-        body: null,
-        endPoint:
-            'category-group/create?name=${categoryGroupModel.name}&slug=${categoryGroupModel.slug}&description=${categoryGroupModel.desc}&meta_title=${categoryGroupModel.metaTitle}&meta_description=${categoryGroupModel.meatDesc}&order=${categoryGroupModel.order}&icon=${categoryGroupModel.icon}&active=${categoryGroupModel.active}');
+  Future<Either<CleanFailure, String>> createCategoryGroup(formData) async {
+    try {
+      final response =
+          await DioClient.post(url: 'category-group/create', payload: formData);
+      return right(response.data['message']);
+    } catch (e) {
+      return left(CleanFailure(tag: 'category', error: e.toString()));
+    }
   }
 
   @override
@@ -103,44 +82,15 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> updateCategoryGroup(
-      {required int categoryGroupId,
-      required String name,
-      required String slug,
-      required String description,
-      required String metaTitle,
-      required String metaDescription,
-      required int order,
-      required String icon,
-      required int active}) async {
-    return cleanApi.put(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
-        if (responseBody['errors'] != null) {
-          final errors =
-              Map<String, dynamic>.from(responseBody['errors']).values.toList();
-          final error = List.from(errors.first);
-          return left(CleanFailure(tag: 'category', error: error.first));
-        } else if (responseBody['message'] != null) {
-          return left(CleanFailure(
-              tag: 'category',
-              error: responseBody['message'],
-              statusCode: statusCode));
-        } else if (responseBody['error'] != null) {
-          return left(CleanFailure(
-              tag: 'category',
-              error: responseBody['error'],
-              statusCode: statusCode));
-        } else {
-          return left(
-              CleanFailure(tag: 'category', error: responseBody.toString()));
-        }
-      },
-      fromData: (json) => unit,
-      body: null,
-      endPoint:
-          'category-group/$categoryGroupId/update?name=$name&slug=$slug&description=$description&meta_title=$metaTitle&meta_description=$metaDescription&active=$active&order=$order&icon=$icon&active=$active',
-    );
+  Future<Either<CleanFailure, String>> updateCategoryGroup(
+      {required int categoryGroupId, required formData}) async {
+    try {
+      final response = await DioClient.post(
+          url: 'category-group/$categoryGroupId/update', payload: formData);
+      return right(response.data['message']);
+    } catch (e) {
+      return left(CleanFailure(tag: 'category', error: e.toString()));
+    }
   }
 
   @override

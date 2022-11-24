@@ -12,6 +12,7 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -71,9 +72,6 @@ class CreateSupplierPage extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10.h),
-                  Text('* Required fields.',
-                      style: TextStyle(color: Theme.of(context).hintColor)),
                   SizedBox(height: 10.h),
                   KTextField(
                     controller: nameController,
@@ -189,6 +187,8 @@ class CreateSupplierPage extends HookConsumerWidget {
                       onChanged: (value) {
                         active.value = value!;
                       }),
+                  SizedBox(height: 10.h),
+                  const RequiredFieldText(),
                   SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

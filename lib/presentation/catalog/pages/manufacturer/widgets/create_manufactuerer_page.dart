@@ -1,10 +1,12 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_state.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
@@ -12,6 +14,7 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
@@ -22,6 +25,13 @@ class CreateManufactuererPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        ref.read(singleImagePickerProvider).clearManufacturerFeaturedImage();
+      });
+      return null;
+    }, []);
+
     final IList<KeyValueData> countryList =
         ref.watch(countryProvider.select((value) => value.dataList));
 
@@ -114,19 +124,19 @@ class CreateManufactuererPage extends HookConsumerWidget {
                   //       .watch(singleImagePickerProvider)
                   //       .clearManufacturerLogo,
                   // ),
-                  SizedBox(height: 10.h),
-                  SingleImageUpload(
-                    title: 'cover_image'.tr(),
-                    image: ref
-                        .watch(singleImagePickerProvider)
-                        .manufacturerCoverImage,
-                    picFunction: ref
-                        .watch(singleImagePickerProvider)
-                        .pickManufacturerCoverImage,
-                    clearFunction: ref
-                        .watch(singleImagePickerProvider)
-                        .clearManufacturerCoverImage,
-                  ),
+                  // SizedBox(height: 10.h),
+                  // SingleImageUpload(
+                  //   title: 'cover_image'.tr(),
+                  //   image: ref
+                  //       .watch(singleImagePickerProvider)
+                  //       .manufacturerCoverImage,
+                  //   picFunction: ref
+                  //       .watch(singleImagePickerProvider)
+                  //       .pickManufacturerCoverImage,
+                  //   clearFunction: ref
+                  //       .watch(singleImagePickerProvider)
+                  //       .clearManufacturerCoverImage,
+                  // ),
                   SizedBox(height: 10.h),
                   SingleImageUpload(
                     title: 'featured_image'.tr(),
@@ -187,8 +197,7 @@ class CreateManufactuererPage extends HookConsumerWidget {
                         active.value = value!;
                       }),
                   SizedBox(height: 10.h),
-                  Text('* Required fields.',
-                      style: TextStyle(color: Theme.of(context).hintColor)),
+                  const RequiredFieldText(),
                   SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -203,25 +212,42 @@ class CreateManufactuererPage extends HookConsumerWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: loading ? null : () {
-                          if (formKey.currentState?.validate() ?? false) {
-                            ref
-                                .read(manufacturerProvider.notifier)
-                                .createManufacturer(
-                                    name: nameController.text,
-                                    slug: nameController.text
+                        onPressed: loading
+                            ? null
+                            : () async {
+                                if (formKey.currentState?.validate() ?? false) {
+                                  FormData formData = FormData.fromMap({
+                                    'name': nameController.text,
+                                    'slug': nameController.text
                                         .toLowerCase()
                                         .replaceAll(RegExp(r' '), '-'),
-                                    url: urlController.text,
-                                    active: active.value,
-                                    countryId: selectedCountry.value != null
+                                    'url': urlController.text,
+                                    'active': active.value,
+                                    'country_id': selectedCountry.value != null
                                         ? selectedCountry.value!.key
                                         : '',
-                                    email: emailController.text,
-                                    phone: phoneController.text,
-                                    description: descController.text);
-                          }
-                        },
+                                    'email': emailController.text,
+                                    'phone': phoneController.text,
+                                    'description': descController.text,
+                                    'images': await MultipartFile.fromFile(
+                                      ref
+                                          .read(singleImagePickerProvider)
+                                          .manufacturerFeaturedImage!
+                                          .path,
+                                      filename: ref
+                                          .read(singleImagePickerProvider)
+                                          .manufacturerFeaturedImage!
+                                          .path
+                                          .split('/')
+                                          .last,
+                                      contentType: MediaType("image", "png"),
+                                    ),
+                                  });
+                                  ref
+                                      .read(manufacturerProvider.notifier)
+                                      .createManufacturer(formData);
+                                }
+                              },
                         child: loading
                             ? const CircularProgressIndicator()
                             : Text('add'.tr()),

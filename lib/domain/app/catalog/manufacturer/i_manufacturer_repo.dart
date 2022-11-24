@@ -7,25 +7,9 @@ abstract class IManufacturerRepo {
       {required String filter, required int page});
   Future<Either<CleanFailure, ManufacturerDetailsModel>> getManufacturerDetails(
       {required int manufacturerId});
-  Future<Either<CleanFailure, Unit>> createManufacturer(
-      {required String name,
-      required String slug,
-      required String url,
-      required bool active,
-      required String countryId,
-      required String email,
-      required String phone,
-      required String description});
-  Future<Either<CleanFailure, Unit>> updateManufacturer(
-      {required int manufacturerId,
-      required String name,
-      required String slug,
-      required String url,
-      required bool active,
-      required String countryId,
-      required String email,
-      required String phone,
-      required String description});
+  Future<Either<CleanFailure, String>> createManufacturer(formData);
+  Future<Either<CleanFailure, String>> updateManufacturer(
+      {required int manufacturerId, required formData});
   Future<Either<CleanFailure, Unit>> trashManufacturer(
       {required int manufacturerId});
   Future<Either<CleanFailure, Unit>> restoreManufacturer(

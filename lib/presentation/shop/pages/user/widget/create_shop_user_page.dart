@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +13,8 @@ import 'package:zcart_seller/domain/app/shop/user/create_shop_user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
-class AddShopUserPage extends HookConsumerWidget {
-  const AddShopUserPage({Key? key}) : super(key: key);
+class CreateShopUserPage extends HookConsumerWidget {
+  const CreateShopUserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -94,10 +93,12 @@ class AddShopUserPage extends HookConsumerWidget {
               SizedBox(height: 10.h),
               KTextField(controller: descController, lebelText: 'Description'),
               SizedBox(height: 10.h),
-              SwitchListTile(
+              CheckboxListTile(
+                title: Text('active'.tr()),
                 value: active.value,
-                onChanged: (value) => active.value = value,
-                title: const Text('Active status'),
+                onChanged: (value) {
+                  active.value = value!;
+                },
               ),
               SizedBox(height: 10.h),
               TextField(
@@ -197,11 +198,8 @@ class AddShopUserPage extends HookConsumerWidget {
                             .read(shopUserProvider.notifier)
                             .createShopUser(createShopUser: user);
                       } else {
-                        NotificationHelper.info(message: 'please_fill_all_fields'.tr());
-                        // CherryToast.info(
-                        //   title: const Text('Fillup all field'),
-                        //   animationType: AnimationType.fromTop,
-                        // ).show(context);
+                        NotificationHelper.info(
+                            message: 'please_fill_all_fields'.tr());
                       }
                     },
                     child: loading

@@ -14,19 +14,21 @@ import 'widget/archived_order_tile.dart';
 class ArchivedOrderListPage extends HookConsumerWidget {
   const ArchivedOrderListPage({
     Key? key,
+    this.showAppBar = true,
   }) : super(key: key);
+
+  final bool showAppBar;
 
   @override
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(orderProvider(OrderFilter.archived).notifier).getOrders();
+        ref.read(orderProvider.notifier).getArchivedOrders();
       });
       return null;
     }, []);
     final buttonPressed = useState(false);
-    ref.listen<OrderState>(orderProvider(OrderFilter.archived),
-        (previous, next) {
+    ref.listen<OrderState>(orderProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() &&
             next.orderList != previous?.orderList &&
@@ -40,9 +42,9 @@ class ArchivedOrderListPage extends HookConsumerWidget {
       }
     });
 
-    final orderList = ref.watch(orderProvider(OrderFilter.archived)).orderList;
+    final orderList = ref.watch(orderProvider).archivedOrderList;
     return Scaffold(
-      appBar: const ZcartAppBar(title: 'Archived orders'),
+      appBar: showAppBar ? const ZcartAppBar(title: 'Archived orders') : null,
       backgroundColor: const Color(0xffEFEFEF),
       body: orderList.isEmpty
           ? Center(
@@ -66,7 +68,7 @@ class ArchivedOrderListPage extends HookConsumerWidget {
                   order: order,
                   unArchive: () {
                     ref
-                        .read(orderProvider(OrderFilter.archived).notifier)
+                        .read(orderProvider.notifier)
                         .unarchiveOrder(orderList[index].id);
                     buttonPressed.value = true;
                   },

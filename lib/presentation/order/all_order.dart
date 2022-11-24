@@ -13,11 +13,11 @@ class AllOrder extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(orderProvider(null).notifier).getOrders();
+        ref.read(orderProvider.notifier).getOrders();
       });
       return null;
     }, []);
-    final orderList = ref.watch(orderProvider(null)).orderList;
+    final orderList = ref.watch(orderProvider).orderList;
     return Scaffold(
       // appBar: AppBar(
       //   toolbarHeight: 60.h,

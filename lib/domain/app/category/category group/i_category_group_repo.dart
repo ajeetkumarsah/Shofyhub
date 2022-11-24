@@ -6,10 +6,10 @@ import 'create_category_group_model.dart';
 
 abstract class ICategoryGroupRepo {
   Future<Either<CleanFailure, List<CategoryGroupModel>>> getAllCategoryGroup();
-  Future<Either<CleanFailure, List<CategoryGroupModel>>> getTrashCategoryGroup();
+  Future<Either<CleanFailure, List<CategoryGroupModel>>>
+      getTrashCategoryGroup();
 
-  Future<Either<CleanFailure, Unit>> createCategoryGroup(
-      {required CreateCategoryGroupModel categoryGroupModel});
+  Future<Either<CleanFailure, String>> createCategoryGroup(formData);
 
   Future<Either<CleanFailure, CategoryGroupDetailsModel>> getCategoryGroupById(
       {required int id});
@@ -17,17 +17,8 @@ abstract class ICategoryGroupRepo {
   Future<Either<CleanFailure, CategoryGroupDetailsModel>> detailsCategoryGroup(
       {required int categoryGroupId});
 
-  Future<Either<CleanFailure, Unit>> updateCategoryGroup({
-    required int categoryGroupId,
-    required String name,
-    required String slug,
-    required String description,
-    required String metaTitle,
-    required String metaDescription,
-    required int order,
-    required String icon,
-    required int active,
-  });
+  Future<Either<CleanFailure, String>> updateCategoryGroup(
+      {required int categoryGroupId, required formData});
 
   Future<Either<CleanFailure, Unit>> trashCategoryGroup(
       {required int categoryGroupId});

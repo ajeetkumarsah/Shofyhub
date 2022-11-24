@@ -22,6 +22,7 @@ import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/create_product_page.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 
@@ -358,17 +359,22 @@ class UpdateProductPage extends HookConsumerWidget {
                             ),
                           ),
                     SizedBox(height: 10.h),
-                    SwitchListTile(
-                      value: active.value,
-                      onChanged: (value) => active.value = value,
+                    CheckboxListTile(
                       title: Text('active'.tr()),
+                      value: active.value,
+                      onChanged: (value) {
+                        active.value = value!;
+                      },
+                    ),
+                    CheckboxListTile(
+                      title: Text('require_shipping'.tr()),
+                      value: shipping.value,
+                      onChanged: (value) {
+                        shipping.value = value!;
+                      },
                     ),
                     SizedBox(height: 10.h),
-                    SwitchListTile(
-                      value: shipping.value,
-                      onChanged: (value) => shipping.value = value,
-                      title: Text('require_shipping'.tr()),
-                    ),
+                    const RequiredFieldText(),
                     SizedBox(height: 30.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,

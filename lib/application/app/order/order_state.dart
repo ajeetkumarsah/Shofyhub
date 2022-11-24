@@ -9,25 +9,35 @@ class OrderState extends Equatable {
   final bool loading;
   final CleanFailure failure;
   final List<OrderModel> orderList;
+  final List<OrderModel> fullfillOrderList;
+  final List<OrderModel> unFulfillOrderList;
+  final List<OrderModel> archivedOrderList;
 
   const OrderState({
     required this.loading,
     required this.failure,
     required this.orderList,
+    required this.fullfillOrderList,
+    required this.unFulfillOrderList,
+    required this.archivedOrderList,
   });
 
   OrderState copyWith({
     bool? loading,
     CleanFailure? failure,
     List<OrderModel>? orderList,
-    List<OrderModel>? unfullfilledOrderList,
-    List<OrderModel>? arcivedOrderList,
+    List<OrderModel>? fullfillOrderList,
+    List<OrderModel>? unFulfillOrderList,
+    List<OrderModel>? archivedOrderList,
     List<OrderStatusModel>? orderStatus,
   }) {
     return OrderState(
       loading: loading ?? this.loading,
       failure: failure ?? this.failure,
       orderList: orderList ?? this.orderList,
+      fullfillOrderList: fullfillOrderList ?? this.fullfillOrderList,
+      unFulfillOrderList: unFulfillOrderList ?? this.unFulfillOrderList,
+      archivedOrderList: archivedOrderList ?? this.archivedOrderList,
     );
   }
 
@@ -40,6 +50,9 @@ class OrderState extends Equatable {
       loading,
       failure,
       orderList,
+      fullfillOrderList,
+      unFulfillOrderList,
+      archivedOrderList,
     ];
   }
 
@@ -47,10 +60,13 @@ class OrderState extends Equatable {
         loading: false,
         failure: CleanFailure.none(),
         orderList: const [],
+        fullfillOrderList: const [],
+        unFulfillOrderList: const [],
+        archivedOrderList: const [],
       );
 
   @override
   String toString() {
-    return 'OrderState(loading: $loading, failure: $failure, orderList: $orderList)';
+    return 'OrderState(loading: $loading, failure: $failure, orderList: $orderList, fullfillOrderList: $fullfillOrderList, unFulfillOrderList: $unFulfillOrderList, archivedOrderList: $archivedOrderList)';
   }
 }

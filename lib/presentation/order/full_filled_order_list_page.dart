@@ -8,9 +8,8 @@ import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/presentation/order/widget/order_tile.dart';
 import 'package:zcart_seller/presentation/order_details_page/order_details_screen.dart';
 
-class OrderListPage extends HookConsumerWidget {
-  final String? filter;
-  const OrderListPage({Key? key, required this.filter}) : super(key: key);
+class FullFilledOrderListPage extends HookConsumerWidget {
+  const FullFilledOrderListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -21,22 +20,22 @@ class OrderListPage extends HookConsumerWidget {
         () {
           if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent) {
-            ref.read(orderProvider(filter).notifier).getMoreOrders();
+            ref.read(orderProvider.notifier).getMoreFullFilledOrders();
           }
         },
       );
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(orderProvider(filter).notifier).getOrders();
+        ref.read(orderProvider.notifier).getFullFilledOrders();
         ref.read(delivaryProvider.notifier).getDelivaryBoys();
       });
       return null;
     }, []);
 
     final orderPaginationModel =
-        ref.watch(orderProvider(filter).notifier).orderPaginationModel;
+        ref.watch(orderProvider.notifier).fulfilledOrderPaginationModel;
 
-    final orderList = ref.watch(orderProvider(filter)).orderList;
-    final loading = ref.watch(orderProvider(filter)).loading;
+    final orderList = ref.watch(orderProvider).fullfillOrderList;
+    final loading = ref.watch(orderProvider).loading;
 
     return Scaffold(
       backgroundColor: const Color(0xffEFEFEF),
@@ -46,7 +45,7 @@ class OrderListPage extends HookConsumerWidget {
             )
           : RefreshIndicator(
               onRefresh: () {
-                return ref.read(orderProvider(filter).notifier).getOrders();
+                return ref.read(orderProvider.notifier).getFullFilledOrders();
               },
               child: orderList.isEmpty
                   ? Center(child: Text('no_item_found'.tr()))
@@ -89,7 +88,7 @@ class OrderListPage extends HookConsumerWidget {
                               },
                               child: OrderTile(
                                 order: order,
-                                filter: filter,
+                                isFullfilled: true,
                               ),
                             ),
                           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/order/order_model.dart';
 
+import '../../../infrastructure/app/constants.dart';
 import 'order_status_dialog.dart';
 
 class ArchivedOrderTile extends StatelessWidget {
@@ -169,19 +170,19 @@ class ArchivedOrderTile extends StatelessWidget {
                 width: 240.w,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: const Color(0xffE5EFFA),
+                      backgroundColor: Constants.kLightCardBgColor,
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           width: 1.w,
-                          color: const Color(0xff683CB7),
+                          color: Constants.kBorderColor,
                         ),
-                        borderRadius: BorderRadius.circular(20.r),
+                        borderRadius: BorderRadius.circular(8.r),
                       )),
                   onPressed: unArchive,
                   child: const Text(
                     "Unarchive Order",
                     style: TextStyle(
-                      color: Color(0xff683CB7),
+                      color: Constants.primaryColor,
                     ),
                   ),
                 ),

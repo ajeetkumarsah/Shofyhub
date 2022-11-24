@@ -44,9 +44,12 @@ class DashboardPage extends HookConsumerWidget {
 
         ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
         ref.read(shopUserProvider.notifier).getShopUser();
-        ref.read(orderProvider(null).notifier).getOrders();
-        ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
-        ref.read(orderProvider(OrderFilter.archived).notifier).getOrders();
+
+        ref.read(orderProvider.notifier).getOrders();
+        ref.read(orderProvider.notifier).getFullFilledOrders();
+        ref.read(orderProvider.notifier).getUnFullFilledOrders();
+        ref.read(orderProvider.notifier).getArchivedOrders();
+
         ref
             .read(stockeInventoryProvider.notifier)
             .getAllInventories(inventoryFilter: 'active');
@@ -62,8 +65,8 @@ class DashboardPage extends HookConsumerWidget {
       return null;
     }, []);
 
-    final totalOrders = ref
-        .watch(orderProvider(null).select((value) => value.orderList.length));
+    final totalOrders =
+        ref.watch(orderProvider.select((value) => value.orderList.length));
 
     final statistics =
         ref.watch(dashboardProvider.select((value) => value.statistics));
@@ -82,11 +85,11 @@ class DashboardPage extends HookConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () {
           return Future.delayed(const Duration(milliseconds: 100), () async {
-            ref.read(orderProvider(null).notifier).getOrders();
-            ref
-                .read(orderProvider(OrderFilter.unfullfill).notifier)
-                .getOrders();
-            ref.read(orderProvider(OrderFilter.archived).notifier).getOrders();
+            ref.read(orderProvider.notifier).getOrders();
+            ref.read(orderProvider.notifier).getFullFilledOrders();
+            ref.read(orderProvider.notifier).getUnFullFilledOrders();
+            ref.read(orderProvider.notifier).getArchivedOrders();
+
             ref
                 .read(stockeInventoryProvider.notifier)
                 .getAllInventories(inventoryFilter: 'active');
@@ -258,7 +261,9 @@ class DashboardPage extends HookConsumerWidget {
                       MoreOptionItems(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const SettingsHome(hasBackButton: true,)));
+                              builder: (_) => const SettingsHome(
+                                    hasBackButton: true,
+                                  )));
                         },
                         icon: FontAwesomeIcons.gear,
                         title: 'Setting',

@@ -21,6 +21,7 @@ import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
 import 'package:zcart_seller/domain/app/product/create_product/tag_list.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
@@ -106,11 +107,6 @@ class AddProductPage extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10.h),
-                Text(
-                  'required_fields'.tr(),
-                  style: TextStyle(color: Theme.of(context).hintColor),
-                ),
                 SizedBox(height: 10.h),
                 KTextField(
                   controller: nameController,
@@ -411,17 +407,22 @@ class AddProductPage extends HookConsumerWidget {
                 //   ),
                 // ),
                 // SizedBox(height: 10.h),
-                SwitchListTile(
-                  value: active.value,
-                  onChanged: (value) => active.value = value,
+                CheckboxListTile(
                   title: Text('active'.tr()),
+                  value: active.value,
+                  onChanged: (value) {
+                    active.value = value!;
+                  },
+                ),
+                CheckboxListTile(
+                  title: Text('require_shipping'.tr()),
+                  value: shipping.value,
+                  onChanged: (value) {
+                    shipping.value = value!;
+                  },
                 ),
                 SizedBox(height: 10.h),
-                SwitchListTile(
-                  value: shipping.value,
-                  onChanged: (value) => shipping.value = value,
-                  title: Text('require_shipping'.tr()),
-                ),
+                const RequiredFieldText(),
                 SizedBox(height: 30.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -522,7 +523,8 @@ class AddProductPage extends HookConsumerWidget {
                             buttonPressed.value = true;
                           } else {
                             NotificationHelper.error(
-                                message: 'please_select_atleast_one_category'.tr());
+                                message:
+                                    'please_select_atleast_one_category'.tr());
                           }
                         }
                       },

@@ -24,10 +24,11 @@ class OrderGrid extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final totalUnfullfilledOrder = ref.watch(
-        orderProvider(OrderFilter.unfullfill)
-            .select((value) => value.orderList.length));
-    final totalArchivedOrder = ref.watch(orderProvider(OrderFilter.archived)
-        .select((value) => value.orderList.length));
+        orderProvider.select((value) => value.unFulfillOrderList.length));
+    // final totalFullfilledOrder = ref
+    //     .watch(orderProvider.select((value) => value.fullfillOrderList.length));
+    final totalArchivedOrder = ref
+        .watch(orderProvider.select((value) => value.archivedOrderList.length));
     final totalRefunds =
         ref.watch(refundProvider.select((value) => value.openRefunds.length));
     return Container(
@@ -46,7 +47,7 @@ class OrderGrid extends HookConsumerWidget {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => const OrderMainPage(
-                        index: 1,
+                        index: 0,
                       )));
             },
             icon: FontAwesomeIcons.boxesPacking,

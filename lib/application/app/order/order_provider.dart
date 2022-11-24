@@ -9,33 +9,48 @@ import 'package:zcart_seller/infrastructure/app/order/order_repo.dart';
 
 class OrderFilter {
   OrderFilter._();
+  static const String all = 'null';
   static const String unfullfill = 'unfulfilled';
+  static const String fullfill = 'fulfilled';
   static const String unpaid = 'unpaid';
   static const String paid = 'paid';
   static const String archived = 'archived';
 }
 
-final orderProvider =
-    StateNotifierProvider.family<OrderNotifier, OrderState, String?>(
-        (ref, filter) {
-  return OrderNotifier(OrderRepo(), filter);
+final orderProvider = StateNotifierProvider<OrderNotifier, OrderState>((ref) {
+  return OrderNotifier(OrderRepo());
 });
 
 class OrderNotifier extends StateNotifier<OrderState> {
-  final String? filter;
   final IOrderRepo orderRepo;
-  OrderNotifier(this.orderRepo, this.filter) : super(OrderState.init());
+  OrderNotifier(this.orderRepo) : super(OrderState.init());
 
   OrderPaginationModel orderPaginationModel = OrderPaginationModel.init();
   List<OrderModel> orders = [];
   int pageNumber = 1;
+
+  OrderPaginationModel fulfilledOrderPaginationModel =
+      OrderPaginationModel.init();
+  List<OrderModel> fullfilledOrders = [];
+  int fullfilledOrdersPageNumber = 1;
+
+  OrderPaginationModel unFulfilledOrderPaginationModel =
+      OrderPaginationModel.init();
+  List<OrderModel> unFullfilledOrders = [];
+  int unFullfilledOrdersPageNumber = 1;
+
+  OrderPaginationModel archivedOrderPaginationModel =
+      OrderPaginationModel.init();
+  List<OrderModel> archivedOrders = [];
+  int arhivedOrdersPageNumber = 1;
 
   getOrders() async {
     pageNumber = 1;
     orders = [];
 
     state = state.copyWith(loading: true);
-    final data = await orderRepo.getOrders(filter: filter, page: pageNumber);
+    final data =
+        await orderRepo.getOrders(filter: OrderFilter.all, page: pageNumber);
 
     //increase the page no
     pageNumber++;
@@ -55,7 +70,8 @@ class OrderNotifier extends StateNotifier<OrderState> {
 
   getMoreOrders() async {
     if (pageNumber == 1 || pageNumber <= orderPaginationModel.meta.lastPage!) {
-      final data = await orderRepo.getOrders(filter: filter, page: pageNumber);
+      final data =
+          await orderRepo.getOrders(filter: OrderFilter.all, page: pageNumber);
 
       //increase the page no
       pageNumber++;
@@ -74,27 +90,146 @@ class OrderNotifier extends StateNotifier<OrderState> {
     }
   }
 
-  // getUnfullfilledOrder(dynamic filter) async {
-  //   state = state.copyWith(loading: true);
-  //   final data = await orderRepo.getOrders(filter: filter);
-  //   state = data.fold(
-  //       (l) => state.copyWith(loading: false, failure: l),
-  //       (r) => state.copyWith(
-  //           loading: false,
-  //           failure: CleanFailure.none(),
-  //           unfullfilledOrderList: r));
-  //   Logger.i(state.orderList);
-  // }
+  getFullFilledOrders() async {
+    fullfilledOrdersPageNumber = 1;
+    fullfilledOrders = [];
 
-  // getArchivedOrder() async {
-  //   state = state.copyWith(loading: true);
-  //   final data = await orderRepo.getArchivedOrder();
-  //   state = data.fold(
-  //       (l) => state.copyWith(loading: false, failure: l),
-  //       (r) => state.copyWith(
-  //           loading: false, arcivedOrderList: r, failure: CleanFailure.none()));
-  //   Logger.i(state.arcivedOrderList);
-  // }
+    state = state.copyWith(loading: true);
+    final data = await orderRepo.getOrders(
+        filter: OrderFilter.fullfill, page: fullfilledOrdersPageNumber);
+
+    //increase the page no
+    fullfilledOrdersPageNumber++;
+
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      fulfilledOrderPaginationModel = r;
+      fullfilledOrders.addAll(fulfilledOrderPaginationModel.data);
+
+      return state.copyWith(
+        loading: false,
+        fullfillOrderList: fullfilledOrders,
+        failure: CleanFailure.none(),
+      );
+    });
+    Logger.i(state.fullfillOrderList);
+  }
+
+  getMoreFullFilledOrders() async {
+    if (fullfilledOrdersPageNumber == 1 ||
+        fullfilledOrdersPageNumber <= orderPaginationModel.meta.lastPage!) {
+      final data = await orderRepo.getOrders(
+          filter: OrderFilter.fullfill, page: fullfilledOrdersPageNumber);
+
+      //increase the page no
+      fullfilledOrdersPageNumber++;
+
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        fulfilledOrderPaginationModel = r;
+        fullfilledOrders.addAll(fulfilledOrderPaginationModel.data);
+
+        return state.copyWith(
+          loading: false,
+          fullfillOrderList: fullfilledOrders,
+          failure: CleanFailure.none(),
+        );
+      });
+      Logger.i(state.fullfillOrderList);
+    }
+  }
+
+  getUnFullFilledOrders() async {
+    unFullfilledOrdersPageNumber = 1;
+    unFullfilledOrders = [];
+
+    state = state.copyWith(loading: true);
+    final data = await orderRepo.getOrders(
+        filter: OrderFilter.unfullfill, page: unFullfilledOrdersPageNumber);
+
+    //increase the page no
+    unFullfilledOrdersPageNumber++;
+
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      unFulfilledOrderPaginationModel = r;
+      unFullfilledOrders.addAll(unFulfilledOrderPaginationModel.data);
+
+      return state.copyWith(
+        loading: false,
+        unFulfillOrderList: unFullfilledOrders,
+        failure: CleanFailure.none(),
+      );
+    });
+    Logger.i(state.unFulfillOrderList);
+  }
+
+  getMoreUnFullFilledOrders() async {
+    if (unFullfilledOrdersPageNumber == 1 ||
+        unFullfilledOrdersPageNumber <= orderPaginationModel.meta.lastPage!) {
+      final data = await orderRepo.getOrders(
+          filter: OrderFilter.fullfill, page: unFullfilledOrdersPageNumber);
+
+      //increase the page no
+      unFullfilledOrdersPageNumber++;
+
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        unFulfilledOrderPaginationModel = r;
+        unFullfilledOrders.addAll(unFulfilledOrderPaginationModel.data);
+
+        return state.copyWith(
+          loading: false,
+          unFulfillOrderList: unFullfilledOrders,
+          failure: CleanFailure.none(),
+        );
+      });
+      Logger.i(state.unFulfillOrderList);
+    }
+  }
+
+  getArchivedOrders() async {
+    arhivedOrdersPageNumber = 1;
+    archivedOrders = [];
+
+    state = state.copyWith(loading: true);
+    final data = await orderRepo.getOrders(
+        filter: OrderFilter.archived, page: arhivedOrdersPageNumber);
+
+    //increase the page no
+    arhivedOrdersPageNumber++;
+
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      archivedOrderPaginationModel = r;
+      archivedOrders.addAll(archivedOrderPaginationModel.data);
+
+      return state.copyWith(
+        loading: false,
+        archivedOrderList: archivedOrders,
+        failure: CleanFailure.none(),
+      );
+    });
+    Logger.i(state.archivedOrderList);
+  }
+
+  getMoreArchivedOrders() async {
+    if (arhivedOrdersPageNumber == 1 ||
+        arhivedOrdersPageNumber <= orderPaginationModel.meta.lastPage!) {
+      final data = await orderRepo.getOrders(
+          filter: OrderFilter.fullfill, page: arhivedOrdersPageNumber);
+
+      //increase the page no
+      arhivedOrdersPageNumber++;
+
+      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+        archivedOrderPaginationModel = r;
+        archivedOrders.addAll(archivedOrderPaginationModel.data);
+
+        return state.copyWith(
+          loading: false,
+          archivedOrderList: archivedOrders,
+          failure: CleanFailure.none(),
+        );
+      });
+      Logger.i(state.archivedOrderList);
+    }
+  }
 
   assignDelivaryBoy(int orderId, int delivaryBoyId) async {
     state = state.copyWith(loading: true);
@@ -103,6 +238,9 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
+    getArchivedOrders();
+    getFullFilledOrders();
+    getUnFullFilledOrders();
   }
 
   fulfillOrder(int orderId, int carrierId, String trackingId,
@@ -116,7 +254,10 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
-    getOrders();
+    // getOrders();
+    getArchivedOrders();
+    getFullFilledOrders();
+    getUnFullFilledOrders();
   }
 
   markAsDelivered(int orderId, bool notifyCustomer) async {
@@ -126,6 +267,9 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
+    getArchivedOrders();
+    getFullFilledOrders();
+    getUnFullFilledOrders();
   }
 
   cancleOrder(int orderId, bool notifyCustomer) async {
@@ -135,6 +279,9 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
+    getArchivedOrders();
+    getFullFilledOrders();
+    getUnFullFilledOrders();
   }
 
   unarchiveOrder(int orderId) async {
@@ -143,7 +290,8 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
-    getOrders();
+    // getOrders();
+    getArchivedOrders();
   }
 
   archiveOrder(int orderId, {VoidCallback? reloadList}) async {
@@ -152,10 +300,11 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
-    getOrders();
+    // getOrders();
     if (reloadList != null) {
       reloadList();
     }
+    getArchivedOrders();
   }
 
   deleteOrder(int orderId) async {
@@ -164,7 +313,10 @@ class OrderNotifier extends StateNotifier<OrderState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
-    getOrders();
+    // getOrders();
+    getFullFilledOrders();
+    getUnFullFilledOrders();
+    getArchivedOrders();
   }
 
   adminNote(int orderId, String adminNote) async {

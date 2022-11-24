@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 import 'package:zcart_seller/application/app/category/categories/category_family_provider.dart';
@@ -112,7 +114,7 @@ class EditCategoryDialog extends HookConsumerWidget {
                 child: CircularProgressIndicator(),
               )
             : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(height: 10.h),
@@ -194,39 +196,65 @@ class EditCategoryDialog extends HookConsumerWidget {
         TextButton(
           onPressed: categoryLoading
               ? null
-              : () {
+              : () async {
                   buttonPressed.value = true;
-                  final updatecategoryModel = UpdateCategoryModel(
-                    slug: nameController.text.isEmpty
-                        ? category.name
-                            .toLowerCase()
-                            .replaceAll(RegExp(r' '), '-')
-                        : nameController.text
-                            .toLowerCase()
-                            .replaceAll(RegExp(r' '), '-'),
-                    id: category.id,
-                    categorySubGroupId: category.categorySubGroupId,
-                    name: nameController.text.isEmpty
-                        ? category.name
-                        : nameController.text,
-                    description: descController.text.isNotEmpty
-                        ? descController.text
-                        : category.description,
-                    attributes: selectedAttributes.value.isEmpty
-                        ? category.attributes
-                        : selectedAttributes.value,
-                    metaTitle: metaDescController.text,
-                    metaDescription: metaDescController.text,
-                    order: orderDescController.text.isNotEmpty
+                  FormData formData = FormData.fromMap({
+                    'id': category.id,
+                    'category_sub_group_id': category.categorySubGroupId,
+                    'name': nameController.text,
+                    'slug': nameController.text
+                        .toLowerCase()
+                        .replaceAll(RegExp(r' '), '-'),
+                    'description': descController.text,
+                    'meta_title': metaDescController.text,
+                    'meta_description': metaDescController.text,
+                    'attribute': selectedAttributes.value,
+                    'active': active.value ? 1 : 0,
+                    'order': orderDescController.text.isNotEmpty
                         ? orderDescController.text
                         : 0.toString(),
-                    active: active.value == true ? 1 : 0,
-                  );
+                    'images': await MultipartFile.fromFile(
+                      ref.read(singleImagePickerProvider).categoryImage!.path,
+                      filename: ref
+                          .read(singleImagePickerProvider)
+                          .categoryImage!
+                          .path
+                          .split('/')
+                          .last,
+                      contentType: MediaType("image", "png"),
+                    ),
+                  });
+                  // final updatecategoryModel = UpdateCategoryModel(
+                  //   slug: nameController.text.isEmpty
+                  //       ? category.name
+                  //           .toLowerCase()
+                  //           .replaceAll(RegExp(r' '), '-')
+                  //       : nameController.text
+                  //           .toLowerCase()
+                  //           .replaceAll(RegExp(r' '), '-'),
+                  //   id: category.id,
+                  //   categorySubGroupId: category.categorySubGroupId,
+                  //   name: nameController.text.isEmpty
+                  //       ? category.name
+                  //       : nameController.text,
+                  //   description: descController.text.isNotEmpty
+                  //       ? descController.text
+                  //       : category.description,
+                  //   attributes: selectedAttributes.value.isEmpty
+                  //       ? category.attributes
+                  //       : selectedAttributes.value,
+                  //   metaTitle: metaDescController.text,
+                  //   metaDescription: metaDescController.text,
+                  //   order: orderDescController.text.isNotEmpty
+                  //       ? orderDescController.text
+                  //       : 0.toString(),
+                  //   active: active.value == true ? 1 : 0,
+                  // );
 
                   ref
                       .read(categoryProvider(category.categorySubGroupId)
                           .notifier)
-                      .updateCategory(updatecategoryModel);
+                      .updateCategory(formData: formData, id: category.id);
                 },
           child: categoryLoading
               ? const CircularProgressIndicator()

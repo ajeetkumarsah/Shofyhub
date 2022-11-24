@@ -1,8 +1,5 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
-
-import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
 
 import 'category_details_model.dart';
 import 'category_model.dart';
@@ -13,8 +10,8 @@ abstract class ICategoryRepo {
   Future<Either<CleanFailure, CategoryModel>> showCatetory(
       {required CategoryModel categoryId});
 
-  Future<Either<CleanFailure, Unit>> updateCategory(
-      {required UpdateCategoryModel updateCategoryModel});
+  Future<Either<CleanFailure, String>> updateCategory(
+      {required formData, required int id});
 
   // Future<Either<CleanFailure, CategoryModel>> getCategoryById(
   //     {required int id});

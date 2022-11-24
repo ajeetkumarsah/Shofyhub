@@ -8,6 +8,7 @@ class Constants {
   static Color iconColor = Colors.deepOrange;
   static Color buttonColor = Colors.deepOrange;
   static Color kDarkCardBgColor = Colors.grey;
+  static Color kLightCardBgColor = Colors.white;
   static Color kPrimaryLightTextColor = Colors.grey;
   static Color kGreenColor = Colors.green;
   static Color kRedColor = Colors.red;

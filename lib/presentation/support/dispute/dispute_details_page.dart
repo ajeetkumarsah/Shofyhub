@@ -9,7 +9,7 @@ import 'package:zcart_seller/domain/app/shop/delivery%20boy/delivary_boy_model.d
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/info_tile.dart';
 import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
-import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/add_delivary_boy_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/add_update_delivary_boy_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivery_boy_dialog.dart';
 import 'package:zcart_seller/presentation/support/dispute/dispute_response_dialog.dart';
 

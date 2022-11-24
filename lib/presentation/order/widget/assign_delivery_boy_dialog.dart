@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -26,26 +25,13 @@ class AssigenDelivaryBoyScreen extends HookConsumerWidget {
         ref.watch(delivaryProvider.select((value) => value.delivaryBoys));
     final ValueNotifier<DelivaryBoy> selectedDelivaryBoy =
         useState(delivaryBoyList[0]);
-    ref.listen<OrderState>(orderProvider(null), (previous, next) {
+    ref.listen<OrderState>(orderProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
-          ref.read(orderProvider(null).notifier).getOrders();
-          ref.read(orderProvider(OrderFilter.unfullfill).notifier).getOrders();
-          ref.read(orderProvider(OrderFilter.archived).notifier).getOrders();
           NotificationHelper.success(message: 'delivery_boy_assigned'.tr());
-          // CherryToast.info(
-          //   title: const Text('Delivay boy assigned'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -90,7 +76,7 @@ class AssigenDelivaryBoyScreen extends HookConsumerWidget {
       actions: [
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Constants.buttonColor,
+            backgroundColor: Constants.buttonColor,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
@@ -98,7 +84,7 @@ class AssigenDelivaryBoyScreen extends HookConsumerWidget {
             ),
           ),
           onPressed: () {
-            ref.read(orderProvider(null).notifier).assignDelivaryBoy(
+            ref.read(orderProvider.notifier).assignDelivaryBoy(
                 orderId, int.parse(selectedDelivaryBoy.value.id));
           },
           child: const Text("Proceed"),
