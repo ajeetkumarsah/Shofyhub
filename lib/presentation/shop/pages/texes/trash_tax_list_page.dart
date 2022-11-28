@@ -5,8 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/create_tax_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/texes/widgets/trash_tax_list_tile.dart';
 
 class TrashTaxListPage extends HookConsumerWidget {

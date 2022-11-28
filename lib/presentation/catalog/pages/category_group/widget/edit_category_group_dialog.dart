@@ -12,10 +12,9 @@ import 'package:zcart_seller/application/app/category/caegory%20group/category_g
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_family_state.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_provider.dart';
 import 'package:zcart_seller/application/app/category/caegory%20group/category_group_state.dart';
-import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
 import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
@@ -207,7 +206,7 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                     'order': orderController.text == ''
                         ? 0
                         : int.parse(orderController.text),
-                    'images': await MultipartFile.fromFile(
+                    'images[cover]': await MultipartFile.fromFile(
                       ref.read(singleImagePickerProvider).categoryGroupImage!.path,
                       filename: ref
                           .read(singleImagePickerProvider)

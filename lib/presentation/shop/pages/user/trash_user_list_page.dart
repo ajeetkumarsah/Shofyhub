@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
-import 'package:zcart_seller/presentation/shop/pages/user/widget/create_shop_user_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/user/widget/delete_shop_user_dialog.dart';
 import 'package:zcart_seller/presentation/shop/pages/user/widget/restore_shop_user_dialog.dart';
 

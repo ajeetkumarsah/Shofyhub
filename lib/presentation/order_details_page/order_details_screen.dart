@@ -530,7 +530,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                          primary: const Color(0xffFFD0D0),
+                          backgroundColor: const Color(0xffFFD0D0),
                           shape: const StadiumBorder()),
                       child: const Text(
                         'Cancel',
@@ -554,7 +554,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                          primary: const Color(0xff683CB7),
+                          backgroundColor: const Color(0xff683CB7),
                           shape: const StadiumBorder()),
                       child: Text(
                         orderDetails.payment_status == "UNPAID"

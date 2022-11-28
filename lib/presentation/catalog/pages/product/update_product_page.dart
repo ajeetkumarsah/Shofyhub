@@ -51,9 +51,9 @@ class UpdateProductPage extends HookConsumerWidget {
 
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
+        productImagePicker.clearAllImages();
         ref.read(categoryListProvider.notifier).loadData();
         ref.read(detailProcuctProvider(productId).notifier).getDetailProduct();
-        productImagePicker.clearAllImages();
       });
       return null;
     }, []);
@@ -100,9 +100,11 @@ class UpdateProductPage extends HookConsumerWidget {
 
         active.value = next.detailProduct.status;
         shipping.value = next.detailProduct.requirementShipping;
-        selectedCountry.value = countryList
-            .where((element) => element.value == next.detailProduct.origin)
-            .toList()[0];
+        selectedCountry.value = next.detailProduct.origin.isNotEmpty
+            ? countryList
+                .where((element) => element.value == next.detailProduct.origin)
+                .toList()[0]
+            : countryList[0];
         productImagePicker.setLoading(true);
         for (var i = 0; i < next.detailProduct.images.length; i++) {
           File file = await ImageConverter.getImage(
@@ -422,7 +424,7 @@ class UpdateProductPage extends HookConsumerWidget {
                                   in productImagePicker.productImages) {
                                 formData.files.addAll([
                                   MapEntry(
-                                    'image',
+                                    'images[]',
                                     await MultipartFile.fromFile(
                                       file.path,
                                       filename: file.path.split('/').last,

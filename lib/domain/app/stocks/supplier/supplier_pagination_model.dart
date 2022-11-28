@@ -40,8 +40,8 @@ class SupplierPaginationModel extends Equatable {
     return SupplierPaginationModel(
       data: List<SupplierModel>.from(
           map["data"].map((x) => SupplierModel.fromMap(x))),
-      links: Links.fromJson(map["links"]),
-      meta: Meta.fromJson(map["meta"]),
+      links: map["links"] != null ? Links.fromJson(map["links"]) : Links.init(),
+      meta: map["meta"] != null ? Meta.fromJson(map["meta"]) : Meta.init(),
     );
   }
 

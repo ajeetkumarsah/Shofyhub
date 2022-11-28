@@ -57,7 +57,8 @@ class AddProductPage extends HookConsumerWidget {
     // final originCountry = useTextEditingController();
 
     final ValueNotifier<GtinTypes?> selectedGtin = useState(null);
-    final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
+    final ValueNotifier<KeyValueData> selectedCountry =
+        useState(countryList[0]);
     final ValueNotifier<ManufacturerId?> selectedMenufectur = useState(null);
     final allCategories =
         ref.watch(categoryListProvider.select((value) => value.dataList));
@@ -456,7 +457,7 @@ class AddProductPage extends HookConsumerWidget {
                                   : '',
                               'description': description.text,
                               'origin_country': selectedCountry.value != null
-                                  ? selectedCountry.value!.key
+                                  ? selectedCountry.value.key
                                   : '',
                               'slug': nameController.text
                                   .toLowerCase()
@@ -480,7 +481,7 @@ class AddProductPage extends HookConsumerWidget {
                                 in productImagePicker.productImages) {
                               formData.files.addAll([
                                 MapEntry(
-                                  'image',
+                                  'images[]',
                                   await MultipartFile.fromFile(
                                     file.path,
                                     filename: file.path.split('/').last,
@@ -489,6 +490,7 @@ class AddProductPage extends HookConsumerWidget {
                                 ),
                               ]);
                             }
+
                             // final product = CreateProductModel(
                             //   manufacturerId: selectedMenufectur.value != null
                             //       ? int.parse(selectedMenufectur.value!.id)

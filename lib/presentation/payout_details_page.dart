@@ -383,7 +383,7 @@ class _PayoutDetailsState extends State<PayoutDetails> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Constants.appbarColor,
+                  backgroundColor: Constants.appbarColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),

@@ -1,13 +1,9 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:zcart_seller/application/core/dio_client.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_details_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
-
-import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
 
 class CategoryRepo extends ICategoryRepo {
   final cleanApi = CleanApi.instance;
@@ -24,7 +20,7 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, String>> createNewCategory(formData) async {
     try {
       final response =
-          await DioClient.post(url: 'category/create', payload: formData);
+          await DioClient.post(url: '/category/create', payload: formData);
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'category', error: e.toString()));
@@ -36,7 +32,7 @@ class CategoryRepo extends ICategoryRepo {
       {required formData, required int id}) async {
     try {
       final response =
-          await DioClient.post(url: 'category/$id/update', payload: formData);
+          await DioClient.post(url: '/category/$id/update', payload: formData);
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'category', error: e.toString()));

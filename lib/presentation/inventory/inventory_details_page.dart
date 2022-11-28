@@ -5,12 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventory_details_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/description.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/left_side_text.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/listing.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/offer.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/product.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_details/widgets/right_side_text.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/description.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/left_side_text.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/listing.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/offer.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/product.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/right_side_text.dart';
 import 'package:zcart_seller/presentation/inventory/update_inventory_page.dart';
 
 class InventoryDetailsPage extends HookConsumerWidget {
@@ -159,7 +159,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 0
+                      backgroundColor: navigationSelect.value != 0
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(
@@ -193,7 +193,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 1
+                      backgroundColor: navigationSelect.value != 1
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(
@@ -227,7 +227,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 2
+                      backgroundColor: navigationSelect.value != 2
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(
@@ -261,7 +261,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      primary: navigationSelect.value != 3
+                      backgroundColor: navigationSelect.value != 3
                           ? const Color(0xFFFFFFFF)
                           : const Color(0xFF683CB7),
                       side: const BorderSide(

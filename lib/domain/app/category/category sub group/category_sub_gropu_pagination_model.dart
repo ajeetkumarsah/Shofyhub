@@ -39,8 +39,8 @@ class CategorySubGropuPaginationModel extends Equatable {
     return CategorySubGropuPaginationModel(
       data: List<CategorySubGroupModel>.from(
           map["data"].map((x) => CategorySubGroupModel.fromMap(x))),
-      links: Links.fromJson(map["links"]),
-      meta: Meta.fromJson(map["meta"]),
+      links: map["links"] != null ? Links.fromJson(map["links"]) : Links.init(),
+      meta: map["meta"] != null ? Meta.fromJson(map["meta"]) : Meta.init(),
     );
   }
 

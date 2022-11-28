@@ -17,6 +17,9 @@ class ProductNotifier extends StateNotifier<ProductState> {
   ProductNotifier(this.productRepo) : super(ProductState.init());
 
   ProductPaginationModel productPaginationModel = ProductPaginationModel.init();
+  ProductPaginationModel trashProductPaginationModel =
+      ProductPaginationModel.init();
+
   List<ProductModel> products = [];
   int pageNumber = 1;
 
@@ -81,8 +84,8 @@ class ProductNotifier extends StateNotifier<ProductState> {
 
     state = suppliersData
         .fold((l) => state.copyWith(loading: false, failure: l), (r) {
-      productPaginationModel = r;
-      trashProducts.addAll(productPaginationModel.data);
+      trashProductPaginationModel = r;
+      trashProducts.addAll(trashProductPaginationModel.data);
 
       return state.copyWith(
         loading: false,
@@ -92,32 +95,33 @@ class ProductNotifier extends StateNotifier<ProductState> {
     });
   }
 
-  getMoreTrashProducts() async {
-    if (trashPageNumber == 1 ||
-        trashPageNumber <= productPaginationModel.meta.lastPage!) {
-      final data = await productRepo.getProducts(
-          productFilter: 'trash', page: trashPageNumber);
+  // getMoreTrashProducts() async {
+  //   if (trashPageNumber == 1 ||
+  //       trashPageNumber <= productPaginationModel.meta.lastPage!) {
+  //     final data = await productRepo.getProducts(
+  //         productFilter: 'trash', page: trashPageNumber);
 
-      //increase the page no
-      trashPageNumber++;
+  //     //increase the page no
+  //     trashPageNumber++;
 
-      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-        productPaginationModel = r;
-        trashProducts.addAll(productPaginationModel.data);
+  //     state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+  //       productPaginationModel = r;
+  //       trashProducts.addAll(productPaginationModel.data);
 
-        return state.copyWith(
-            loading: false,
-            failure: CleanFailure.none(),
-            trashProductList: trashProducts);
-      });
-    }
-  }
+  //       return state.copyWith(
+  //           loading: false,
+  //           failure: CleanFailure.none(),
+  //           trashProductList: trashProducts);
+  //     });
+  //   }
+  // }
 
   trashProduct(int productId) async {
     state = state.copyWith(loading: true);
     await productRepo.trashProduct(productId);
     state = state.copyWith(loading: false);
     getProducts();
+    getTrashProducts();
   }
 
   updateProduct(id, formData) async {

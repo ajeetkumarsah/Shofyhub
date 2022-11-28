@@ -168,7 +168,7 @@ class InitiateRefundPage extends HookConsumerWidget {
                   SizedBox(height: 30.h),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Constants.buttonColor),
+                        backgroundColor: Constants.buttonColor),
                     onPressed: loading
                         ? null
                         : () {

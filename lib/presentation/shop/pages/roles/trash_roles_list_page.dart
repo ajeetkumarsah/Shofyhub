@@ -6,7 +6,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/roles/role_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/add_role_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/role_list_tile.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/trash_roles_list_tile.dart';
 
 class TrashRolesListPage extends HookConsumerWidget {

@@ -150,7 +150,7 @@ class AddRolePage extends HookConsumerWidget {
                 SizedBox(height: 30.h),
                 ElevatedButton(
                   style:
-                      ElevatedButton.styleFrom(primary: Constants.buttonColor),
+                      ElevatedButton.styleFrom(backgroundColor: Constants.buttonColor),
                   onPressed: loading
                       ? null
                       : () {

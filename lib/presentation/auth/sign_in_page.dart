@@ -32,7 +32,7 @@ class SignInPage extends HookConsumerWidget {
     final phoneController = useTextEditingController();
     final passwordController = useTextEditingController(text: '123456');
     final emailController =
-        useTextEditingController(text: 'merchant2@demo.com');
+        useTextEditingController(text: 'merchant@demo.com');
 
     final isPhoneLogin = useState(false);
 

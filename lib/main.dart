@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -59,6 +60,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    FlutterAppBadger.updateBadgeCount(1);
+
     requestPermission();
     initInfo();
     getToken();
@@ -85,8 +88,10 @@ class _MyAppState extends State<MyApp> {
           playSound: true,
         );
 
-        // Save notifications to shared prefs
+        //Update the badge count
+        FlutterAppBadger.updateBadgeCount(1);
 
+        // Save notifications to shared prefs
         SharedPref.saveNotifications(
             messages: NotificationModel(
           title: message.notification!.title ?? '',

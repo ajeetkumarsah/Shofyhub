@@ -189,7 +189,7 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
                       // 'order': orderController.text.isNotEmpty
                       //     ? int.parse(orderController.text)
                       //     : 0,
-                      'images': await MultipartFile.fromFile(
+                      'images[cover]': await MultipartFile.fromFile(
                         ref
                             .read(singleImagePickerProvider)
                             .categorySubGroupImage!

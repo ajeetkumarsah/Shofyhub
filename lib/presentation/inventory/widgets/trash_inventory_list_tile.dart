@@ -2,12 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/quick_update_inventory_dialog.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/trash_inventory.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/delete_inventory_dialog.dart';
+import 'package:zcart_seller/presentation/inventory/widgets/restore_inventory.dart';
 
-class InventoryItemTile extends StatelessWidget {
+class TrashInventoryItemTile extends StatelessWidget {
   final InventoriesModel inventory;
-  const InventoryItemTile({
+  const TrashInventoryItemTile({
     Key? key,
     required this.inventory,
   }) : super(key: key);
@@ -90,24 +91,24 @@ class InventoryItemTile extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) =>
-                      QuickUpdateInventoryDialog(inventoryInfo: inventory));
+                      RestoreInventory(inventoryId: inventory.id));
             }
             if (index == 2) {
               showDialog(
                   context: context,
                   builder: (context) =>
-                      TrashInventory(inventoryId: inventory.id));
+                      DeleteInventory(inventoryId: inventory.id));
             }
           },
           itemBuilder: (context) => [
             PopupMenuItem(
               value: 1,
-              child: Text("quick_update".tr()),
+              child: Text("restore".tr()),
             ),
             PopupMenuItem(
               value: 2,
               child: Text(
-                "trash".tr(),
+                "delete".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

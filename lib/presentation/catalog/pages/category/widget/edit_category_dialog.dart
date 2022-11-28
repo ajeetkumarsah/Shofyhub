@@ -17,7 +17,6 @@ import 'package:zcart_seller/application/app/form/attribute_list_provider.dart';
 import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
-import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
 import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
@@ -213,7 +212,7 @@ class EditCategoryDialog extends HookConsumerWidget {
                     'order': orderDescController.text.isNotEmpty
                         ? orderDescController.text
                         : 0.toString(),
-                    'images': await MultipartFile.fromFile(
+                    'images[cover]': await MultipartFile.fromFile(
                       ref.read(singleImagePickerProvider).categoryImage!.path,
                       filename: ref
                           .read(singleImagePickerProvider)

@@ -37,12 +37,12 @@ class ProductImageModel extends Equatable {
 
   factory ProductImageModel.fromMap(Map<String, dynamic> map) =>
       ProductImageModel(
-        id: map["id"],
-        path: map["path"],
-        name: map["name"],
-        extension: map["extension"],
-        order: map["order"],
-        featured: map["featured"],
+        id: map["id"] ?? 0,
+        path: map["path"] ?? '',
+        name: map["name"] ?? '',
+        extension: map["extension"] ?? '',
+        order: map["order"] ?? '',
+        featured: map["featured"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {

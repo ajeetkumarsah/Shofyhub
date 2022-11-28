@@ -52,7 +52,7 @@ class ArchivedOrderListPage extends HookConsumerWidget {
             )
           : ListView.separated(
               padding: const EdgeInsets.only(
-                top: 30,
+                top: 10,
                 left: 15,
                 right: 15,
               ).r,

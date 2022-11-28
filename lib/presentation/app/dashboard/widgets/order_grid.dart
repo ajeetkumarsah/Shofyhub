@@ -6,7 +6,6 @@ import 'package:zcart_seller/application/app/order%20management/refunds/refund_p
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/domain/app/dashboard/statistic_model.dart';
 import 'package:zcart_seller/presentation/app/dashboard/out_of_stock_page.dart';
-import 'package:zcart_seller/presentation/order/archived_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 import 'package:zcart_seller/presentation/stock/stock_home.dart';
 import 'package:zcart_seller/presentation/support/refund/refund_home.dart';
@@ -57,7 +56,9 @@ class OrderGrid extends HookConsumerWidget {
           StoreReportItems(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const ArchivedOrderListPage()));
+                  builder: (_) => const OrderMainPage(
+                        index: 2,
+                      )));
             },
             icon: FontAwesomeIcons.cartArrowDown,
             itemValues: '$totalArchivedOrder',

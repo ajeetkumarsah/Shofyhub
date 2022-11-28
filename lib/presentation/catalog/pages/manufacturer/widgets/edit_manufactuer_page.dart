@@ -35,10 +35,11 @@ class EditManufactuererPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () {
+        ref.read(singleImagePickerProvider).clearManufacturerFeaturedImage();
+        ref.read(singleImagePickerProvider).clearManufacturerCoverImage();
         ref
             .read(manufacturerDetailsProvider(manufacturerId).notifier)
             .getManufacturerDetails();
-        ref.read(singleImagePickerProvider).clearManufacturerFeaturedImage();
       });
       return null;
     }, []);
@@ -65,8 +66,7 @@ class EditManufactuererPage extends HookConsumerWidget {
         phoneController.text = next.manufacturerDetails.phone;
         urlController.text = next.manufacturerDetails.url;
         // active.value = next.manufacturerDetails.active;
-        if (next.manufacturerDetails.coverImage != null ||
-            next.manufacturerDetails.coverImage.isNotEmpty ||
+        if (next.manufacturerDetails.coverImage.isNotEmpty ||
             next.manufacturerDetails.image.isNotEmpty) {
           //Convert Network Image to File Image
           ref.watch(singleImagePickerProvider).setLoading(true);
@@ -297,7 +297,22 @@ class EditManufactuererPage extends HookConsumerWidget {
                                           'email': emailController.text,
                                           'phone': phoneController.text,
                                           'description': descController.text,
-                                          'images':
+                                          'images[cover]':
+                                              await MultipartFile.fromFile(
+                                            ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerCoverImage!
+                                                .path,
+                                            filename: ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerCoverImage!
+                                                .path
+                                                .split('/')
+                                                .last,
+                                            contentType:
+                                                MediaType("image", "png"),
+                                          ),
+                                          'images[logo]':
                                               await MultipartFile.fromFile(
                                             ref
                                                 .read(singleImagePickerProvider)

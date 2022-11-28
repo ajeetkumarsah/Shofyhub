@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:clean_api/clean_api.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -14,7 +12,6 @@ import 'package:zcart_seller/application/app/category/categories/categories_stat
 import 'package:zcart_seller/application/app/form/attribute_list_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
-import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
@@ -183,19 +180,25 @@ class CreateNewCategoryPage extends HookConsumerWidget {
                                   'order': orderDescController.text.isNotEmpty
                                       ? orderDescController.text
                                       : 0.toString(),
-                                  'images': await MultipartFile.fromFile(
-                                    ref
-                                        .read(singleImagePickerProvider)
-                                        .categoryImage!
-                                        .path,
-                                    filename: ref
-                                        .read(singleImagePickerProvider)
-                                        .categoryImage!
-                                        .path
-                                        .split('/')
-                                        .last,
-                                    contentType: MediaType("image", "png"),
-                                  ),
+                                  'images[cover]': ref
+                                              .read(singleImagePickerProvider)
+                                              .categoryImage !=
+                                          null
+                                      ? await MultipartFile.fromFile(
+                                          ref
+                                              .read(singleImagePickerProvider)
+                                              .categoryImage!
+                                              .path,
+                                          filename: ref
+                                              .read(singleImagePickerProvider)
+                                              .categoryImage!
+                                              .path
+                                              .split('/')
+                                              .last,
+                                          contentType:
+                                              MediaType("image", "png"),
+                                        )
+                                      : null,
                                 });
 
                                 // final createCategory = CreateCategoryModel(

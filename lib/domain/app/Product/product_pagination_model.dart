@@ -5,7 +5,6 @@ import 'package:zcart_seller/domain/app/product/product_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/links_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/meta_model.dart';
 
-
 class ProductPaginationModel extends Equatable {
   final List<ProductModel> data;
   final Links links;
@@ -41,8 +40,8 @@ class ProductPaginationModel extends Equatable {
     return ProductPaginationModel(
       data: List<ProductModel>.from(
           map["data"].map((x) => ProductModel.fromMap(x))),
-      links: Links.fromJson(map["links"]),
-      meta: Meta.fromJson(map["meta"]),
+      links: map["links"] != null ? Links.fromJson(map["links"]) : Links.init(),
+      meta: map["meta"] != null ? Meta.fromJson(map["meta"]) : Meta.init(),
     );
   }
 
@@ -54,7 +53,6 @@ class ProductPaginationModel extends Equatable {
 
   @override
   bool get stringify => true;
-
 
   factory ProductPaginationModel.init() => const ProductPaginationModel(
         data: [],

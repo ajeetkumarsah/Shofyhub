@@ -35,4 +35,10 @@ class DioClient {
     var response = await dio.post(url, data: payload);
     return response;
   }
+
+  static Future<dynamic> put({url, payload}) async {
+    var dio = Dio(await getBasseOptions());
+    var response = await dio.put(url, data: payload);
+    return response;
+  }
 }

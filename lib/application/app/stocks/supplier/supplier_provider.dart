@@ -19,6 +19,8 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
 
   SupplierPaginationModel supplierPaginationModel =
       SupplierPaginationModel.init();
+  SupplierPaginationModel trashSupplierPaginationModel =
+      SupplierPaginationModel.init();
   List<SupplierModel> suppliers = [];
   int pageNumber = 1;
 
@@ -75,15 +77,16 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
 
     state = state.copyWith(loading: true);
 
+    final suppliersData = await supplierRepo.getSuppliers(
+        supplierFilter: 'trash', page: trashPageNumber);
+
     //increase the page no
     trashPageNumber++;
-    final suppliersData =
-        await supplierRepo.getSuppliers(supplierFilter: 'trash', page: 1);
 
     state = suppliersData
         .fold((l) => state.copyWith(loading: false, failure: l), (r) {
-      supplierPaginationModel = r;
-      trashSuppliers.addAll(supplierPaginationModel.data);
+      trashSupplierPaginationModel = r;
+      trashSuppliers.addAll(trashSupplierPaginationModel.data);
 
       return state.copyWith(
           loading: false,
@@ -102,8 +105,8 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
       trashPageNumber++;
 
       state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-        supplierPaginationModel = r;
-        trashSuppliers.addAll(supplierPaginationModel.data);
+        trashSupplierPaginationModel = r;
+        trashSuppliers.addAll(trashSupplierPaginationModel.data);
 
         return state.copyWith(
             loading: false,
@@ -121,6 +124,7 @@ class SupplierNotifier extends StateNotifier<SupplierState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
 
     getAllSuppliers();
+    getTrashSuppliers();
   }
 
   createNewSupplier({required CreateSupplierModel supplierInfo}) async {

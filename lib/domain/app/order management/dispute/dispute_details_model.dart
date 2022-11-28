@@ -51,7 +51,7 @@ class DisputeDetailsModel extends Equatable {
     String? refundAmountRaw,
     String? updatedAt,
     UserModel? customer,
-    // OrderDetailsModel? orderDetails,
+    OrderDetailsModel? orderDetails,
     List<dynamic>? attachments,
     List<dynamic>? replies,
   }) {

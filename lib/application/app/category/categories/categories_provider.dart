@@ -3,10 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/create_category_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
-
-import 'package:zcart_seller/domain/app/category/categories/update_category_model.dart';
 import 'package:zcart_seller/infrastructure/app/category_management/categories/category_repo.dart';
 
 final categoryProvider =

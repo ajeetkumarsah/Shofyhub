@@ -73,7 +73,7 @@ class ManufacturerRepo extends IManufacturerRepo {
   Future<Either<CleanFailure, String>> createManufacturer(formData) async {
     try {
       final response =
-          await DioClient.post(url: 'manufacturer/create', payload: formData);
+          await DioClient.post(url: '/manufacturer/create', payload: formData);
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'Manufacturer', error: e.toString()));
@@ -85,7 +85,7 @@ class ManufacturerRepo extends IManufacturerRepo {
       {required int manufacturerId, required formData}) async {
     try {
       final response = await DioClient.post(
-          url: 'manufacturer/$manufacturerId/update', payload: formData);
+          url: '/manufacturer/$manufacturerId/update', payload: formData);
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'Manufacturer', error: e.toString()));

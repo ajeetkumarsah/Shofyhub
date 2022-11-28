@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_list_page.dart';
-import 'package:zcart_seller/presentation/inventory/trash%20inventory/trash_inventory_page.dart';
+import 'package:zcart_seller/presentation/inventory/trash_inventory_page.dart';
 
 class InventoryPage extends HookConsumerWidget {
   const InventoryPage({Key? key}) : super(key: key);

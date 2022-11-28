@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/stocks/inventories/inventories_stat
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/quick_update_model.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class QuickUpdateInventoryDialog extends HookConsumerWidget {
@@ -19,7 +20,10 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final titleController = useTextEditingController(text: inventoryInfo.title);
-    final priceController = useTextEditingController(text: inventoryInfo.price);
+    final priceController = useTextEditingController(
+        text: double.parse(inventoryInfo.price
+                .replaceAll(RegExp(r'\p{Sc}', unicode: true), ''))
+            .toString());
     final amount = inventoryInfo.stockQuantity;
     final active = useState(inventoryInfo.active);
     final buttonPressed = useState(false);
@@ -56,9 +60,11 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    quantity.value = quantity.value + 1;
+                    if (quantity.value > 1) {
+                      quantity.value--;
+                    }
                   },
-                  icon: const Icon(Icons.add),
+                  icon: const Icon(Icons.remove),
                 ),
                 SizedBox(
                   width: 10.w,
@@ -72,6 +78,7 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
                       ),
                       child: Text(
                         quantity.value.toString(),
+                        textAlign: TextAlign.center,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       )),
                 ),
@@ -80,11 +87,59 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    if (quantity.value > 1) {
-                      quantity.value--;
-                    }
+                    quantity.value = quantity.value + 1;
                   },
-                  icon: const Icon(Icons.remove),
+                  icon: const Icon(Icons.add),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Constants.kLightCardBgColor),
+                  onPressed: () {
+                    quantity.value += 5;
+                  },
+                  child: const Text(
+                    '+5',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Constants.kLightCardBgColor),
+                  onPressed: () {
+                    quantity.value += 10;
+                  },
+                  child: const Text(
+                    '+10',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Constants.kLightCardBgColor),
+                  onPressed: () {
+                    quantity.value += 100;
+                  },
+                  child: const Text(
+                    '+100',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Constants.kLightCardBgColor),
+                  onPressed: () {
+                    quantity.value = 0;
+                  },
+                  child: const Text(
+                    '0',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ],
             ),
@@ -106,7 +161,7 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
                   width: 15.w,
                 ),
                 Text(
-                  'Active',
+                  'active'.tr(),
                   style: TextStyle(fontSize: 18.sp),
                 ),
               ],
@@ -139,9 +194,8 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
                 .read(stockeInventoryProvider.notifier)
                 .quickUpdate(quickUpdateModel, inventoryInfo.id);
           },
-          child: loading
-              ? const CircularProgressIndicator()
-              : const Text('Update'),
+          child:
+              loading ? const CircularProgressIndicator() : Text('update'.tr()),
         ),
       ],
     );

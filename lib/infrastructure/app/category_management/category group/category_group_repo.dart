@@ -2,7 +2,6 @@ import 'package:clean_api/clean_api.dart';
 import 'package:zcart_seller/application/core/dio_client.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/category_group_show_model.dart';
-import 'package:zcart_seller/domain/app/category/category%20group/create_category_group_model.dart';
 import 'package:zcart_seller/domain/app/category/category%20group/i_category_group_repo.dart';
 
 class CategoryGroupRepo extends ICategoryGroupRepo {
@@ -43,7 +42,8 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, String>> createCategoryGroup(formData) async {
     try {
       final response =
-          await DioClient.post(url: 'category-group/create', payload: formData);
+          await DioClient.post(url: '/category-group/create', payload: formData);
+      Logger.i('Create Cat Group: ${response.data}');
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'category', error: e.toString()));
@@ -86,7 +86,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
       {required int categoryGroupId, required formData}) async {
     try {
       final response = await DioClient.post(
-          url: 'category-group/$categoryGroupId/update', payload: formData);
+          url: '/category-group/$categoryGroupId/update', payload: formData);
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'category', error: e.toString()));

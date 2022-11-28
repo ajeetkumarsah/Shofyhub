@@ -11,17 +11,17 @@ class TrashProductPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final scrollController = useScrollController();
+    // final scrollController = useScrollController();
 
     useEffect(() {
-      scrollController.addListener(
-        () {
-          if (scrollController.position.pixels ==
-              scrollController.position.maxScrollExtent) {
-            ref.read(productProvider.notifier).getMoreTrashProducts();
-          }
-        },
-      );
+      // scrollController.addListener(
+      //   () {
+      //     if (scrollController.position.pixels ==
+      //         scrollController.position.maxScrollExtent) {
+      //       ref.read(productProvider.notifier).getMoreTrashProducts();
+      //     }
+      //   },
+      // );
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(productProvider.notifier).getTrashProducts();
       });
@@ -29,8 +29,8 @@ class TrashProductPage extends HookConsumerWidget {
     }, []);
     final loading = ref.watch(productProvider.select((value) => value.loading));
 
-    final productPaginationModel =
-        ref.watch(productProvider.notifier).productPaginationModel;
+    // final productPaginationModel =
+    //     ref.watch(productProvider.notifier).productPaginationModel;
 
     final productList = ref.watch(productProvider).trashProductList;
 
@@ -53,20 +53,20 @@ class TrashProductPage extends HookConsumerWidget {
                       child: productList.isEmpty
                           ? Center(child: Text('no_item_found'.tr()))
                           : ListView.separated(
-                              controller: scrollController,
+                              // controller: scrollController,
                               itemCount: productList.length,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
-                                if ((index == productList.length - 1) &&
-                                    productList.length <
-                                        productPaginationModel.meta.total!) {
-                                  return const SizedBox(
-                                    height: 100,
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }
+                                // if ((index == productList.length - 1) &&
+                                //     productList.length <
+                                //         productPaginationModel.meta.total!) {
+                                //   return const SizedBox(
+                                //     height: 100,
+                                //     child: Center(
+                                //       child: CircularProgressIndicator(),
+                                //     ),
+                                //   );
+                                // }
                                 return TrashProductTile(
                                   product: productList[index],
                                 );

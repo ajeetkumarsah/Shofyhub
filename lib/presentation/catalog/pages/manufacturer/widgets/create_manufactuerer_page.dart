@@ -28,6 +28,7 @@ class CreateManufactuererPage extends HookConsumerWidget {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () {
         ref.read(singleImagePickerProvider).clearManufacturerFeaturedImage();
+        ref.read(singleImagePickerProvider).clearManufacturerCoverImage();
       });
       return null;
     }, []);
@@ -138,17 +139,47 @@ class CreateManufactuererPage extends HookConsumerWidget {
                   //       .clearManufacturerCoverImage,
                   // ),
                   SizedBox(height: 10.h),
-                  SingleImageUpload(
-                    title: 'featured_image'.tr(),
-                    image: ref
-                        .watch(singleImagePickerProvider)
-                        .manufacturerFeaturedImage,
-                    picFunction: ref
-                        .watch(singleImagePickerProvider)
-                        .pickManufacturerFeaturedImage,
-                    clearFunction: ref
-                        .watch(singleImagePickerProvider)
-                        .clearManufacturerFeaturedImage,
+                  Column(
+                    children: [
+                      // SingleImageUpload(
+                      //   title: 'brand_logo'.tr(),
+                      //   image: ref
+                      //       .watch(singleImagePickerProvider)
+                      //       .manufacturerLogo,
+                      //   picFunction: ref
+                      //       .watch(singleImagePickerProvider)
+                      //       .pickManufacturerLogo,
+                      //   clearFunction: ref
+                      //       .watch(singleImagePickerProvider)
+                      //       .clearManufacturerLogo,
+                      // ),
+                      // SizedBox(height: 10.h),
+                      SingleImageUpload(
+                        title: 'cover_image'.tr(),
+                        image: ref
+                            .watch(singleImagePickerProvider)
+                            .manufacturerCoverImage,
+                        picFunction: ref
+                            .watch(singleImagePickerProvider)
+                            .pickManufacturerCoverImage,
+                        clearFunction: ref
+                            .watch(singleImagePickerProvider)
+                            .clearManufacturerCoverImage,
+                      ),
+                      SizedBox(height: 10.h),
+                      SingleImageUpload(
+                        title: 'featured_image'.tr(),
+                        image: ref
+                            .watch(singleImagePickerProvider)
+                            .manufacturerFeaturedImage,
+                        picFunction: ref
+                            .watch(singleImagePickerProvider)
+                            .pickManufacturerFeaturedImage,
+                        clearFunction: ref
+                            .watch(singleImagePickerProvider)
+                            .clearManufacturerFeaturedImage,
+                      ),
+                    ],
                   ),
                   SizedBox(height: 10.h),
                   SizedBox(
@@ -229,7 +260,22 @@ class CreateManufactuererPage extends HookConsumerWidget {
                                     'email': emailController.text,
                                     'phone': phoneController.text,
                                     'description': descController.text,
-                                    'images': await MultipartFile.fromFile(
+                                    'images[cover]':
+                                        await MultipartFile.fromFile(
+                                      ref
+                                          .read(singleImagePickerProvider)
+                                          .manufacturerCoverImage!
+                                          .path,
+                                      filename: ref
+                                          .read(singleImagePickerProvider)
+                                          .manufacturerCoverImage!
+                                          .path
+                                          .split('/')
+                                          .last,
+                                      contentType: MediaType("image", "png"),
+                                    ),
+                                    'images[logo]':
+                                        await MultipartFile.fromFile(
                                       ref
                                           .read(singleImagePickerProvider)
                                           .manufacturerFeaturedImage!

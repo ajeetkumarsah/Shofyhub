@@ -45,6 +45,8 @@ class Meta extends Equatable {
         "total": total,
       };
 
+  factory Meta.init() => const Meta();
+
   @override
   List<Object?> get props => [
         currentPage,

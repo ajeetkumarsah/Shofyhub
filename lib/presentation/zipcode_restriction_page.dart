@@ -186,7 +186,7 @@ class ZipCodeRestriction extends HookConsumerWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Constants.appbarColor,
+                backgroundColor: Constants.appbarColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.r),
                 ),

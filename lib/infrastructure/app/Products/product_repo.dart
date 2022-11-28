@@ -77,7 +77,8 @@ class ProductRepo extends IProductRepo {
       {required int id, required formData}) async {
     try {
       final response =
-          await DioClient.post(url: 'product/$id/update', payload: formData);
+          await DioClient.post(url: '/product/$id/update', payload: formData);
+      Logger.i('Update Product: ${response.data}');
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'product', error: e.toString()));
@@ -88,7 +89,8 @@ class ProductRepo extends IProductRepo {
   Future<Either<CleanFailure, String>> createProduct(formData) async {
     try {
       final response =
-          await DioClient.post(url: 'product/create', payload: formData);
+          await DioClient.post(url: '/product/create', payload: formData);
+
       return right(response.data['message']);
     } catch (e) {
       return left(CleanFailure(tag: 'product', error: e.toString()));

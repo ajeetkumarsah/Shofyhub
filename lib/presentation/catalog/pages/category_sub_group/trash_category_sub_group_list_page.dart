@@ -69,7 +69,7 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
                 color: Constants.buttonColor,
               ),
             )
-          : state.categorySubGroup.isEmpty
+          : state.categorySubGroupTrash.isEmpty
               ? Center(
                   child: Text('no_item_available'.tr()),
                 )

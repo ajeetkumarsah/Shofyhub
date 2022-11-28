@@ -21,7 +21,10 @@ class ProductTile extends StatelessWidget {
           ));
         },
         contentPadding: const EdgeInsets.all(10),
-        leading: Image(image: NetworkImage(product.image)),
+        leading: CircleAvatar(
+          radius: 25,
+          backgroundImage: NetworkImage(product.image),
+        ),
         title: Text(product.name),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

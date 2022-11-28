@@ -109,7 +109,7 @@ class DelivaryBoyListPage extends HookConsumerWidget {
                                   value: 2,
                                   child: Text(
                                     "trash".tr(),
-                                    style: TextStyle(color: Colors.red),
+                                    style: const TextStyle(color: Colors.red),
                                   ),
                                 )
                               ],

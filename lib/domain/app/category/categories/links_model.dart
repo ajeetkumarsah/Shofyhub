@@ -27,6 +27,8 @@ class Links extends Equatable {
         "next": next,
       };
 
+  factory Links.init() => const Links();
+
   @override
   List<Object?> get props => [
         first,

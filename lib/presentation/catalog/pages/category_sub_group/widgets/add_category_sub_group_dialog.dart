@@ -10,7 +10,6 @@ import 'package:zcart_seller/application/app/category/category%20sub%20group/cat
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/create_category_sub_group_model.dart';
 import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
@@ -145,7 +144,7 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                       'order': orderController.text.isNotEmpty
                           ? int.parse(orderController.text)
                           : 0,
-                      'images': await MultipartFile.fromFile(
+                      'images[cover]': await MultipartFile.fromFile(
                         ref
                             .read(singleImagePickerProvider)
                             .categorySubGroupImage!
