@@ -485,5 +485,9 @@
   "total_entities": "Total Entities:",
   "brand_logo": "Brand Logo",
   "featured_image": "Featured Image",
-  "quick_update": "Quick Update"
+  "quick_update": "Quick Update",
+  "upload_logo": "Upload Logo",
+  "unfulfilled": "Unfulfilled",
+  "fulfilled": "Fulfilled",
+  "archived": "Archived"
 }

@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:zcart_seller/application/core/dio_client.dart';
 import 'package:zcart_seller/domain/app/settings/advance_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/basic_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/i_shop_settings_repo.dart';
 import 'package:zcart_seller/domain/app/settings/update_advance_shop_settings_model.dart';
-import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
 
 class ShopSettingsRepo extends IShopSettingsRepo {
   final cleanApi = CleanApi.instance;
@@ -17,14 +17,16 @@ class ShopSettingsRepo extends IShopSettingsRepo {
 
   @override
   Future<Either<CleanFailure, Unit>> updateBasicShopSettings(
-      {required UpdateBasicShopSettingsModel basicSettingsInfo,
-      required int shopId}) {
-    return cleanApi.put(
-      fromData: (josn) => unit,
-      body: null,
-      endPoint:
-          'basic_shop_setting/$shopId/update?name=${basicSettingsInfo.name}&legal_name=${basicSettingsInfo.legalName}&email=${basicSettingsInfo.email}&slug=${basicSettingsInfo.slug}',
-    );
+      {required formData, required int shopId}) async {
+    try {
+      final response = await DioClient.post(
+          url: '/basic_shop_setting/$shopId/update', payload: formData);
+      Logger.i('Basic Shop Settings: ${response.data}');
+      return right(response.data['message']);
+    } catch (e) {
+      return left(
+          CleanFailure(tag: 'basic shop settings', error: e.toString()));
+    }
   }
 
   @override

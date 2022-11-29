@@ -78,8 +78,7 @@ class EditCategoryDialog extends HookConsumerWidget {
         selectedAttributes.value =
             selectedAttributes.value.addAll(next.categoryDetails.attributes);
         active.value = next.categoryDetails.active;
-        if (next.categoryDetails.coverImage != null ||
-            next.categoryDetails.coverImage.isNotEmpty) {
+        if (next.categoryDetails.coverImage.isNotEmpty) {
           //Convert Network Image to File Image
           ref.watch(singleImagePickerProvider).setLoading(true);
           File file = await ImageConverter.getImage(

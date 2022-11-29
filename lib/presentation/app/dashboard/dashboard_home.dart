@@ -24,7 +24,9 @@ class DashboardHome extends HookConsumerWidget {
         NotificationRepo().postFcmToken(token: fcmToken);
 
         final notificatiornFromPrefs = await SharedPref.getNotifications();
-        ref.read(notificationProvider).saveNotification(notificatiornFromPrefs);
+        ref
+            .read(notificationProvider)
+            .saveAllNotification(notificatiornFromPrefs);
       });
       return null;
     }, []);

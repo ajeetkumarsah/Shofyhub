@@ -18,7 +18,7 @@ class NotificationPage extends HookConsumerWidget {
     }, []);
 
     List<NotificationModel> notificationList =
-        ref.read(notificationProvider).notifications;
+        ref.watch(notificationProvider).notifications;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,47 +39,55 @@ class NotificationPage extends HookConsumerWidget {
               ),
               itemCount: notificationList.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 13),
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 15),
-                    height: 85.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffF5F5F5),
-                      borderRadius: BorderRadius.circular(15.r),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Order #09876543",
-                            style: TextStyle(
-                              color: Colors.black,
+                return GestureDetector(
+                  onLongPress: () {
+                    ref
+                        .read(notificationProvider)
+                        .removeNotification(notificationList[index].dateTime);
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 15, right: 15, top: 13),
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 15),
+                      height: 85.h,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffF5F5F5),
+                        borderRadius: BorderRadius.circular(15.r),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // const Text(
+                            //   "Order #09876543",
+                            //   style: TextStyle(
+                            //     color: Colors.black,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 5.h,
+                            // ),
+                            Text(
+                              notificationList[index].title,
+                              style: const TextStyle(
+                                color: Colors.black54,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          Text(
-                            notificationList[index].title,
-                            style: const TextStyle(
-                              color: Colors.black54,
+                            SizedBox(
+                              height: 5.h,
                             ),
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          Text(
-                            DateFormat('dd MMM yyyy hh:mm a')
-                                .format(notificationList[index].dateTime),
-                            style: const TextStyle(
-                              color: Color(0xffB0B0B0),
+                            Text(
+                              DateFormat('dd MMM yyyy hh:mm a')
+                                  .format(notificationList[index].dateTime),
+                              style: const TextStyle(
+                                color: Color(0xffB0B0B0),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -116,7 +116,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
 
   getMoreFullFilledOrders() async {
     if (fullfilledOrdersPageNumber == 1 ||
-        fullfilledOrdersPageNumber <= orderPaginationModel.meta.lastPage!) {
+        fullfilledOrdersPageNumber <= fulfilledOrderPaginationModel.meta.lastPage!) {
       final data = await orderRepo.getOrders(
           filter: OrderFilter.fullfill, page: fullfilledOrdersPageNumber);
 
@@ -163,7 +163,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
 
   getMoreUnFullFilledOrders() async {
     if (unFullfilledOrdersPageNumber == 1 ||
-        unFullfilledOrdersPageNumber <= orderPaginationModel.meta.lastPage!) {
+        unFullfilledOrdersPageNumber <= unFulfilledOrderPaginationModel.meta.lastPage!) {
       final data = await orderRepo.getOrders(
           filter: OrderFilter.fullfill, page: unFullfilledOrdersPageNumber);
 

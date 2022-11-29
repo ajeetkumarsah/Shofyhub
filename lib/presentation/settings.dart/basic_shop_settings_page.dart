@@ -1,16 +1,23 @@
+import 'dart:io';
+
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
+import 'package:zcart_seller/application/core/image_converter.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/domain/app/settings/update_basic_shop_settings_model.dart';
+import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
+import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -43,12 +50,20 @@ class ShopSettingsPage extends HookConsumerWidget {
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final buttonPressed = useState(false);
 
-    ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
+    ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) async {
       if (previous != next && !next.loading) {
         nameController.text = next.basicShopSettings.name;
         legalNameController.text = next.basicShopSettings.legalName;
         emailController.text = next.basicShopSettings.email;
         descriptionController.text = next.basicShopSettings.description;
+        if (next.basicShopSettings.logo.isNotEmpty) {
+          //Convert Network Image to File Image
+          ref.watch(singleImagePickerProvider).setLoading(true);
+          File file =
+              await ImageConverter.getImage(url: next.basicShopSettings.logo);
+          ref.read(singleImagePickerProvider).setShopLogo(file);
+          ref.watch(singleImagePickerProvider).setLoading(false);
+        }
       }
     });
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
@@ -57,19 +72,8 @@ class ShopSettingsPage extends HookConsumerWidget {
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(
               message: 'basic_shop_settings_updated'.tr());
-          // CherryToast.info(
-          //   title: Text('basic_shop_settings_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          //   autoDismiss: true,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -85,15 +89,6 @@ class ShopSettingsPage extends HookConsumerWidget {
         ),
         elevation: 0,
         title: Text('basic_shop_settings'.tr()),
-        // actions: [
-        //   ElevatedButton(
-        //       style: ElevatedButton.styleFrom(primary: Colors.red),
-        //       onPressed: () {
-        //         Navigator.of(context).push(MaterialPageRoute(
-        //             builder: (_) => const AdvanceShopSettingsPage()));
-        //       },
-        //       child: Text('advance_settings'.tr()))
-        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -134,29 +129,65 @@ class ShopSettingsPage extends HookConsumerWidget {
                         validator: (text) => ValidatorLogic.requiredField(text,
                             fieldName: 'email'.tr()),
                       ),
+                      SizedBox(height: 10.h),
+                      ref.read(singleImagePickerProvider).isLoading
+                          ? const LoadingWidget()
+                          : SingleImageUpload(
+                              title: 'upload_logo'.tr(),
+                              image:
+                                  ref.watch(singleImagePickerProvider).shopLogo,
+                              picFunction: ref
+                                  .watch(singleImagePickerProvider)
+                                  .pickShopLogo,
+                              clearFunction: ref
+                                  .watch(singleImagePickerProvider)
+                                  .clearShopLogo,
+                            ),
                       SizedBox(height: 30.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (formKey.currentState?.validate() ?? false) {
-                                final basicSettings =
-                                    UpdateBasicShopSettingsModel(
-                                  shopId: shopId,
-                                  name: nameController.text,
-                                  slug: nameController.text
+                                FormData formData = FormData.fromMap({
+                                  'shop_id': shopId,
+                                  'name': nameController.text,
+                                  'slug': nameController.text
                                       .toLowerCase()
                                       .replaceAll(RegExp(r' '), '-'),
-                                  legalName: legalNameController.text,
-                                  email: emailController.text,
-                                  description: descriptionController.text,
-                                );
+                                  'legal_name': legalNameController.text,
+                                  'email': emailController.text,
+                                  'description': descriptionController.text,
+                                  'logo': await MultipartFile.fromFile(
+                                    ref
+                                        .read(singleImagePickerProvider)
+                                        .shopLogo!
+                                        .path,
+                                    filename: ref
+                                        .read(singleImagePickerProvider)
+                                        .shopLogo!
+                                        .path
+                                        .split('/')
+                                        .last,
+                                    contentType: MediaType("image", "png"),
+                                  ),
+                                });
+                                // final fo =
+                                //     UpdateBasicShopSettingsModel(
+                                //   shopId: shopId,
+                                //   name: nameController.text,
+                                //   slug: nameController.text
+                                //       .toLowerCase()
+                                //       .replaceAll(RegExp(r' '), '-'),
+                                //   legalName: legalNameController.text,
+                                //   email: emailController.text,
+                                //   description: descriptionController.text,
+                                // );
                                 ref
                                     .read(shopSettingsProvider.notifier)
                                     .updateBasicShopSettings(
-                                        basicSettingsInfo: basicSettings,
-                                        shopId: shopId);
+                                        formData: formData, shopId: shopId);
                                 buttonPressed.value = true;
                               }
                             },

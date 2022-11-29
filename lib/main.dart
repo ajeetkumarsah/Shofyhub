@@ -9,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:zcart_seller/application/app/notification/notification_provider.dart';
 import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/application/core/shared_prefs.dart';
 import 'package:zcart_seller/domain/app/notification/notification_model.dart';
@@ -47,21 +48,19 @@ void main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
-    FlutterAppBadger.updateBadgeCount(1);
-
     requestPermission();
     initInfo();
     getToken();
@@ -91,13 +90,22 @@ class _MyAppState extends State<MyApp> {
         //Update the badge count
         FlutterAppBadger.updateBadgeCount(1);
 
-        // Save notifications to shared prefs
-        SharedPref.saveNotifications(
-            messages: NotificationModel(
-          title: message.notification!.title ?? '',
-          description: message.notification!.body ?? '',
-          dateTime: DateTime.now(),
-        ));
+        // Save notifications
+
+        ref.read(notificationProvider).saveNotification(
+              NotificationModel(
+                title: message.notification!.title ?? '',
+                description: message.notification!.body ?? '',
+                dateTime: DateTime.now(),
+              ),
+            );
+
+        // SharedPref.saveNotifications(
+        //     messages: NotificationModel(
+        //   title: message.notification!.title ?? '',
+        //   description: message.notification!.body ?? '',
+        //   dateTime: DateTime.now(),
+        // ));
 
         NotificationDetails platformChannelSpecifics =
             NotificationDetails(android: androidPlatformChannelSpecifics);

@@ -30,6 +30,9 @@ class ProductImagePickerNotifier extends ChangeNotifier {
   File? _manufacturerFeaturedImage;
   File? get manufacturerFeaturedImage => _manufacturerFeaturedImage;
 
+  File? _shopLogo;
+  File? get shopLogo => _shopLogo;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -196,6 +199,33 @@ class ProductImagePickerNotifier extends ChangeNotifier {
 
   void clearManufacturerFeaturedImage() {
     _manufacturerFeaturedImage = null;
+    notifyListeners();
+  }
+
+  // SHOP LOGO
+  void pickShopLogo() async {
+    try {
+      final image = await _picker.pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 50,
+          maxWidth: 600,
+          maxHeight: 600);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      _shopLogo = imageTemporary;
+    } catch (e) {
+      Fluttertoast.showToast(msg: "failed_to_pick_image".tr());
+    }
+    notifyListeners();
+  }
+
+  void setShopLogo(File? image) {
+    _shopLogo = image;
+    notifyListeners();
+  }
+
+  void clearShopLogo() {
+    _shopLogo = null;
     notifyListeners();
   }
 }

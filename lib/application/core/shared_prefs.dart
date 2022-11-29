@@ -8,6 +8,8 @@ class SharedPref {
   static const notificationKey = 'notification';
   static const fcmTokenKey = 'fcmToken';
 
+  List<NotificationModel> notificationList = [];
+
   static saveFcmToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(fcmTokenKey, jsonEncode(token));
@@ -18,11 +20,10 @@ class SharedPref {
     return prefs.getString(fcmTokenKey) ?? '';
   }
 
-  static saveNotifications({required NotificationModel messages}) async {
-    List<NotificationModel> notificationList = [];
-    notificationList.add(messages);
+  static saveAllNotifications(
+      {required List<NotificationModel> messages}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(notificationKey, jsonEncode(notificationList));
+    prefs.setString(notificationKey, jsonEncode(messages));
   }
 
   static getNotifications() async {
