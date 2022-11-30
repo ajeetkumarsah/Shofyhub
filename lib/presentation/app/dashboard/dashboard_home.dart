@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/notification/notification_provider.dart';
+import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/core/shared_prefs.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -22,11 +22,7 @@ class DashboardHome extends HookConsumerWidget {
         // Post FCM token
         final fcmToken = await SharedPref.getFcmToken();
         NotificationRepo().postFcmToken(token: fcmToken);
-
-        final notificatiornFromPrefs = await SharedPref.getNotifications();
-        ref
-            .read(notificationProvider)
-            .saveAllNotification(notificatiornFromPrefs);
+        ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
       });
       return null;
     }, []);

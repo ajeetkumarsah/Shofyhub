@@ -5,7 +5,7 @@ import 'package:zcart_seller/domain/app/settings/update_advance_shop_settings_mo
 
 abstract class IShopSettingsRepo {
   Future<Either<CleanFailure, BasicShopSettingsModel>> getBasicShopSettings();
-  Future<Either<CleanFailure, Unit>> updateBasicShopSettings(
+  Future<Either<CleanFailure, String>> updateBasicShopSettings(
       {required formData, required int shopId});
   Future<Either<CleanFailure, AdvanceShopSettingsModel>>
       getAdvanceShopSettings();

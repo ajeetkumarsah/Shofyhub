@@ -16,7 +16,7 @@ class ShopSettingsRepo extends IShopSettingsRepo {
   }
 
   @override
-  Future<Either<CleanFailure, Unit>> updateBasicShopSettings(
+  Future<Either<CleanFailure, String>> updateBasicShopSettings(
       {required formData, required int shopId}) async {
     try {
       final response = await DioClient.post(

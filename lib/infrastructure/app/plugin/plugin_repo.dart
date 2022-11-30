@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:clean_api/clean_api.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/domain/app/plugin/i_plugin_repo.dart';

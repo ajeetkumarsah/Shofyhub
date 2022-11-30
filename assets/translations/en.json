@@ -489,5 +489,7 @@
   "upload_logo": "Upload Logo",
   "unfulfilled": "Unfulfilled",
   "fulfilled": "Fulfilled",
-  "archived": "Archived"
+  "archived": "Archived",
+  "are_you_sure_logout": "Are you sure you want to Logout?",
+  "multivendor_app": "Multivendor App"
 }

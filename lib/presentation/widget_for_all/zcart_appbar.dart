@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/notification/notification_page.dart';
 
@@ -20,18 +22,22 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             Expanded(
-              child: Container(
-                  constraints:
-                      const BoxConstraints(maxHeight: 50, maxWidth: 50),
-                  padding: const EdgeInsets.all(5),
-                  margin: const EdgeInsets.only(left: 10, right: 40),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Image.asset(
-                    'assets/zcart_logo/icon.png',
-                    fit: BoxFit.contain,
-                  )),
+              child: Consumer(builder: (context, ref, child) {
+                return Container(
+                    constraints:
+                        const BoxConstraints(maxHeight: 50, maxWidth: 50),
+                    padding: const EdgeInsets.all(5),
+                    margin: const EdgeInsets.only(left: 10, right: 40),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Image.network(
+                      ref.watch(shopSettingsProvider
+                          .select((value) => value.basicShopSettings.logo)),
+                      errorBuilder: (c, e, s) => const Icon(Icons.error),
+                      fit: BoxFit.contain,
+                    ));
+              }),
             ),
             Expanded(
                 flex: 2,

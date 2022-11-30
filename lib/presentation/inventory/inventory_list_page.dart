@@ -1,4 +1,3 @@
-import 'package:clean_api/clean_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,8 +6,6 @@ import 'package:zcart_seller/application/app/stocks/inventories/inventories_prov
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/inventory/inventory_details_page.dart';
 import 'package:zcart_seller/presentation/inventory/widgets/inventory_item_tile.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/quick_update_inventory_dialog.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/trash_inventory.dart';
 
 class InventoryListPage extends HookConsumerWidget {
   const InventoryListPage({Key? key}) : super(key: key);

@@ -1,10 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/dashboard/dashboard_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class OutOfStockItemsPage extends HookConsumerWidget {
   const OutOfStockItemsPage({
@@ -41,9 +41,7 @@ class OutOfStockItemsPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : outOfStockItems.isEmpty
-              ? Center(
-                  child: Text('no_item_found'.tr()),
-                )
+              ? const NoItemFound()
               : ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),

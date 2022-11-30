@@ -75,16 +75,16 @@ class UpdateRolePage extends HookConsumerWidget {
         ),
         title: const Text('Update Role'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Form(
-            key: formkey,
-            child: loading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
+      body: loading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Form(
+                  key: formkey,
+                  child: Column(
                     children: [
                       SizedBox(height: 10.h),
                       KTextField(
@@ -212,9 +212,9 @@ class UpdateRolePage extends HookConsumerWidget {
                       ),
                     ],
                   ),
-          ),
-        ),
-      ),
+                ),
+              ),
+            ),
     );
   }
 }

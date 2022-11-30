@@ -9,10 +9,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:zcart_seller/application/app/notification/notification_provider.dart';
 import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/application/core/shared_prefs.dart';
-import 'package:zcart_seller/domain/app/notification/notification_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
@@ -89,23 +87,6 @@ class _MyAppState extends ConsumerState<MyApp> {
 
         //Update the badge count
         FlutterAppBadger.updateBadgeCount(1);
-
-        // Save notifications
-
-        ref.read(notificationProvider).saveNotification(
-              NotificationModel(
-                title: message.notification!.title ?? '',
-                description: message.notification!.body ?? '',
-                dateTime: DateTime.now(),
-              ),
-            );
-
-        // SharedPref.saveNotifications(
-        //     messages: NotificationModel(
-        //   title: message.notification!.title ?? '',
-        //   description: message.notification!.body ?? '',
-        //   dateTime: DateTime.now(),
-        // ));
 
         NotificationDetails platformChannelSpecifics =
             NotificationDetails(android: androidPlatformChannelSpecifics);
@@ -189,7 +170,7 @@ class _MyAppState extends ConsumerState<MyApp> {
                   backgroundColor: Constants.appbarColor,
                 )),
             debugShowCheckedModeBanner: false,
-            title: 'Multivendor App',
+            title: 'multivendor_app',
             home: const SignInPage(),
           );
         },

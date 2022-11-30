@@ -34,7 +34,7 @@ class SharedPref {
           jsonDecode(notificationsDataFromPrefs) as List<dynamic>;
 
       List<NotificationModel> notificationList = List<NotificationModel>.from(
-          notificationDecoded.map((e) => NotificationModel.fromJson(e)));
+          notificationDecoded.map((e) => NotificationModel.fromMap(e)));
       return notificationList;
     }
   }

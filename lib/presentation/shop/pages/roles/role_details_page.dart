@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/shop/roles/permission_provider.dart';
 import 'package:zcart_seller/application/app/shop/roles/role_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/update_role_page.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/widgets/supplier_info_tile.dart';
 
@@ -53,80 +54,86 @@ class RoleDetailsPage extends HookConsumerWidget {
               icon: const Icon(Icons.edit))
         ],
       ),
-      body: ListView(
-        children: [
-          SizedBox(height: 20.h),
-          InfoTile(title: 'role'.tr(), value: roleDetails.name),
-          SizedBox(height: 20.h),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: loading
+          ? const LoadingWidget()
+          : ListView(
               children: [
-                Text(
-                  'description'.tr(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                SizedBox(height: 20.h),
+                InfoTile(title: 'role'.tr(), value: roleDetails.name),
+                SizedBox(height: 20.h),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'description'.tr(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        roleDetails.description,
+                      ),
+                      SizedBox(width: 20.h),
+                    ],
+                  ),
                 ),
+                SizedBox(height: 20.h),
+                InfoTile(
+                    title: 'role_level'.tr(),
+                    value: roleDetails.level.toString()),
+                SizedBox(height: 20.h),
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'permissions'.tr(),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Constants.kGreenColor),
+                  ),
+                ),
+                const Divider(),
                 SizedBox(height: 10.h),
-                Text(
-                  roleDetails.description,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: permissions
+                        .map((e) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  e.name,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Row(
+                                  children: e.permissions
+                                      .map(
+                                        (p) => Row(
+                                          children: [
+                                            Text(p.name),
+                                            const Checkbox(
+                                              value: true,
+                                              onChanged: null,
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                const Divider(),
+                              ],
+                            ))
+                        .toList(),
+                  ),
                 ),
-                SizedBox(width: 20.h),
               ],
             ),
-          ),
-          SizedBox(height: 20.h),
-          InfoTile(
-              title: 'role_level'.tr(), value: roleDetails.level.toString()),
-          SizedBox(height: 20.h),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'permissions'.tr(),
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Constants.kGreenColor),
-            ),
-          ),
-          const Divider(),
-          SizedBox(height: 10.h),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: permissions
-                  .map((e) => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            e.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                            children: e.permissions
-                                .map(
-                                  (p) => Row(
-                                    children: [
-                                      Text(p.name),
-                                      const Checkbox(
-                                        value: true,
-                                        onChanged: null,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                          const Divider(),
-                        ],
-                      ))
-                  .toList(),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

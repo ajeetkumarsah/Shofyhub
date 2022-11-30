@@ -28,6 +28,7 @@ class ShopSettingsPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final shopId =
         ref.watch(authProvider.select((value) => value.user.shop_id));
+
     final loading =
         ref.watch(shopSettingsProvider.select((value) => value.loading));
 
@@ -38,6 +39,7 @@ class ShopSettingsPage extends HookConsumerWidget {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
         ref.read(shopUserProvider.notifier).getShopUser();
+        ref.read(singleImagePickerProvider).clearShopLogo();
       });
       return null;
     }, []);
@@ -148,49 +150,55 @@ class ShopSettingsPage extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () async {
-                              if (formKey.currentState?.validate() ?? false) {
-                                FormData formData = FormData.fromMap({
-                                  'shop_id': shopId,
-                                  'name': nameController.text,
-                                  'slug': nameController.text
-                                      .toLowerCase()
-                                      .replaceAll(RegExp(r' '), '-'),
-                                  'legal_name': legalNameController.text,
-                                  'email': emailController.text,
-                                  'description': descriptionController.text,
-                                  'logo': await MultipartFile.fromFile(
-                                    ref
-                                        .read(singleImagePickerProvider)
-                                        .shopLogo!
-                                        .path,
-                                    filename: ref
-                                        .read(singleImagePickerProvider)
-                                        .shopLogo!
-                                        .path
-                                        .split('/')
-                                        .last,
-                                    contentType: MediaType("image", "png"),
-                                  ),
-                                });
-                                // final fo =
-                                //     UpdateBasicShopSettingsModel(
-                                //   shopId: shopId,
-                                //   name: nameController.text,
-                                //   slug: nameController.text
-                                //       .toLowerCase()
-                                //       .replaceAll(RegExp(r' '), '-'),
-                                //   legalName: legalNameController.text,
-                                //   email: emailController.text,
-                                //   description: descriptionController.text,
-                                // );
-                                ref
-                                    .read(shopSettingsProvider.notifier)
-                                    .updateBasicShopSettings(
-                                        formData: formData, shopId: shopId);
-                                buttonPressed.value = true;
-                              }
-                            },
+                            onPressed: updateLoading
+                                ? null
+                                : () async {
+                                    if (formKey.currentState?.validate() ??
+                                        false) {
+                                      FormData formData = FormData.fromMap({
+                                        'shop_id': shopId,
+                                        'name': nameController.text,
+                                        'slug': nameController.text
+                                            .toLowerCase()
+                                            .replaceAll(RegExp(r' '), '-'),
+                                        'legal_name': legalNameController.text,
+                                        'email': emailController.text,
+                                        'description':
+                                            descriptionController.text,
+                                        'logo': await MultipartFile.fromFile(
+                                          ref
+                                              .read(singleImagePickerProvider)
+                                              .shopLogo!
+                                              .path,
+                                          filename: ref
+                                              .read(singleImagePickerProvider)
+                                              .shopLogo!
+                                              .path
+                                              .split('/')
+                                              .last,
+                                          contentType:
+                                              MediaType("image", "png"),
+                                        ),
+                                      });
+                                      // final fo =
+                                      //     UpdateBasicShopSettingsModel(
+                                      //   shopId: shopId,
+                                      //   name: nameController.text,
+                                      //   slug: nameController.text
+                                      //       .toLowerCase()
+                                      //       .replaceAll(RegExp(r' '), '-'),
+                                      //   legalName: legalNameController.text,
+                                      //   email: emailController.text,
+                                      //   description: descriptionController.text,
+                                      // );
+                                      ref
+                                          .read(shopSettingsProvider.notifier)
+                                          .updateBasicShopSettings(
+                                              formData: formData,
+                                              shopId: shopId);
+                                      buttonPressed.value = true;
+                                    }
+                                  },
                             child: updateLoading
                                 ? const CircularProgressIndicator()
                                 : Text('update'.tr()),

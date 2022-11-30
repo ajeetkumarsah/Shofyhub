@@ -30,7 +30,7 @@ class ShopSettingsNotifier extends StateNotifier<ShopSettingsState> {
     final data = await shopSettingsRepo.updateBasicShopSettings(
         formData: formData, shopId: shopId);
     state = data.fold(
-        (l) => state.copyWith(loading: false, failure: l),
+        (l) => state.copyWith(loadingUpdate: false, failure: l),
         (r) =>
             state.copyWith(loadingUpdate: false, failure: CleanFailure.none()));
   }

@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order%20management/cancellation/cancellation_provider.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/support/cancellation/cancellation_list_tile.dart';
 
 class CancellationListPage extends HookConsumerWidget {
@@ -43,9 +44,7 @@ class CancellationListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : cancellationList.isEmpty
-              ? Center(
-                  child: Text('no_item_found'.tr()),
-                )
+              ? const NoItemFound()
               : Column(
                   children: [
                     Expanded(

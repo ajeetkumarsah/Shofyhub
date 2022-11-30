@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/order/widget/order_tile.dart';
 
 class UnFullFilledOrderListPage extends HookConsumerWidget {
@@ -56,9 +57,7 @@ class UnFullFilledOrderListPage extends HookConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xffEFEFEF),
       body: orderList.isEmpty
-          ? Center(
-              child: Text('no_item_found'.tr()),
-            )
+          ? const NoItemFound()
           : ListView.separated(
               controller: scrollController,
               padding: const EdgeInsets.only(

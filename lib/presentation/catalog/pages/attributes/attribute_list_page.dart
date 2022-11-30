@@ -8,6 +8,7 @@ import 'package:zcart_seller/application/app/catalog/atributes/get_atributes_pro
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/attribute_values_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/attritbute_tile.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 import 'widgets/add_attributes_page.dart';
 
@@ -50,11 +51,7 @@ class AttributeListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : attributeList.isEmpty
-              ? Center(
-                  child: Text(
-                    'no_item_available'.tr(),
-                  ),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref

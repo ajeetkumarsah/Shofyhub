@@ -22,18 +22,8 @@ class LogoutDialog extends HookConsumerWidget {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const SignInPage()));
           NotificationHelper.success(message: 'successfully_logged_out'.tr());
-          // CherryToast.info(
-          //   title: const Text('Successfully Logged out'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'something_went_wrong'.tr());
-          // CherryToast.error(
-          //   title: const Text(
-          //     'Something went wrond',
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -43,13 +33,13 @@ class LogoutDialog extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Logout',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                Text(
+                  'logout'.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,
@@ -71,9 +61,9 @@ class LogoutDialog extends HookConsumerWidget {
         ],
       ),
       contentPadding: EdgeInsets.zero,
-      content: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text('Are you sure you want to Logout?'),
+      content: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        child: Text('are_you_sure_logout'.tr()),
       ),
       actions: [
         const Divider(
@@ -104,8 +94,8 @@ class LogoutDialog extends HookConsumerWidget {
                           color: Theme.of(context).shadowColor.withOpacity(.5),
                         ),
                       ),
-                      child: const Center(
-                        child: Text('Cancel'),
+                      child: Center(
+                        child: Text('cancel'.tr()),
                       ),
                     ),
                   ),
@@ -128,7 +118,7 @@ class LogoutDialog extends HookConsumerWidget {
                       child: loading
                           ? const CircularProgressIndicator()
                           : Text(
-                              "Logout",
+                              "logout".tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).canvasColor,
