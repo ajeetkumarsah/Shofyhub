@@ -5,6 +5,7 @@ class NotificationHelper {
   static info({required String message}) {
     return showSimpleNotification(
       Text(message),
+      position: NotificationPosition.bottom,
       background: Colors.blue,
     );
   }

@@ -144,19 +144,24 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                       'order': orderController.text.isNotEmpty
                           ? int.parse(orderController.text)
                           : 0,
-                      'images[cover]': await MultipartFile.fromFile(
-                        ref
-                            .read(singleImagePickerProvider)
-                            .categorySubGroupImage!
-                            .path,
-                        filename: ref
-                            .read(singleImagePickerProvider)
-                            .categorySubGroupImage!
-                            .path
-                            .split('/')
-                            .last,
-                        contentType: MediaType("image", "png"),
-                      ),
+                      'images[cover]': ref
+                                  .read(singleImagePickerProvider)
+                                  .categorySubGroupImage !=
+                              null
+                          ? await MultipartFile.fromFile(
+                              ref
+                                  .read(singleImagePickerProvider)
+                                  .categorySubGroupImage!
+                                  .path,
+                              filename: ref
+                                  .read(singleImagePickerProvider)
+                                  .categorySubGroupImage!
+                                  .path
+                                  .split('/')
+                                  .last,
+                              contentType: MediaType("image", "png"),
+                            )
+                          : null,
                     });
                     // final createCategorySubGroupModel =
                     //     CreateCategorySubGroupModel(

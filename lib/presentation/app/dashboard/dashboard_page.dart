@@ -47,8 +47,8 @@ class DashboardPage extends HookConsumerWidget {
 
         ref.read(orderProvider.notifier).getOrders();
         ref.read(orderProvider.notifier).getFullFilledOrders();
-        ref.read(orderProvider.notifier).getUnFullFilledOrders();
-        ref.read(orderProvider.notifier).getArchivedOrders();
+        // ref.read(orderProvider.notifier).getUnFullFilledOrders();
+        // ref.read(orderProvider.notifier).getArchivedOrders();
 
         ref
             .read(stockeInventoryProvider.notifier)
@@ -66,7 +66,7 @@ class DashboardPage extends HookConsumerWidget {
     }, []);
 
     final totalOrders =
-        ref.watch(orderProvider.select((value) => value.orderList.length));
+        ref.watch(orderProvider.select((value) => value.orderModel.meta.total));
 
     final statistics =
         ref.watch(dashboardProvider.select((value) => value.statistics));
@@ -149,8 +149,12 @@ class DashboardPage extends HookConsumerWidget {
                     color: Colors.purple,
                     value: statistics.latestOrderCount.toString(),
                     onTap: () {
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (_) => const LatesOrderListPage()));
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const LatesOrderListPage()));
+                          builder: (_) => const OrderMainPage(
+                                index: 0,
+                              )));
                     },
                   ),
                 ),

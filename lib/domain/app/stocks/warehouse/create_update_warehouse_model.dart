@@ -9,7 +9,7 @@ class CreateUpdateWarehouseModel extends Equatable {
   final String addressLine2;
   final String openingTime;
   final String closeTime;
-  final int inchargeId;
+  final int? inchargeId;
   final String businessDays;
   final String city;
   final int countryId;
@@ -25,7 +25,7 @@ class CreateUpdateWarehouseModel extends Equatable {
     required this.addressLine2,
     required this.openingTime,
     required this.closeTime,
-    required this.inchargeId,
+    this.inchargeId,
     required this.businessDays,
     required this.city,
     required this.countryId,
@@ -80,7 +80,7 @@ class CreateUpdateWarehouseModel extends Equatable {
       addressLine2,
       openingTime,
       closeTime,
-      inchargeId,
+      inchargeId ?? 0,
       businessDays,
       city,
       countryId,

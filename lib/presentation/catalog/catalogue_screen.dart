@@ -5,7 +5,7 @@ import 'package:zcart_seller/presentation/catalog/pages/attributes/attributes_pa
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/manufacturer_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/product/product_page.dart';
 
-import 'pages/category_group/category_froup_home.dart';
+import 'pages/category_group/category_group_home.dart';
 
 class CatalogueScreen extends StatelessWidget {
   const CatalogueScreen({Key? key}) : super(key: key);

@@ -102,85 +102,79 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
   }
 
   getTrashCategorySubGroup() async {
-    trashPageNumber = 1;
-    trashItems = [];
-
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.getCategorySubGroup(
         categoryGroupId: id, page: trashPageNumber, filter: 'trash');
 
-    //increase the page no
-    trashPageNumber++;
-
     state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-      trashCategorySubGropuPaginationModel = r;
-      trashItems.addAll(trashCategorySubGropuPaginationModel.data);
-
       return state.copyWith(
         loading: false,
-        categorySubGroupTrash: trashItems,
+        categorySubGroupTrash: r.data,
         failure: CleanFailure.none(),
       );
     });
     Logger.i(data);
   }
 
-  getMoreTrashCategorySubGroup() async {
-    if (trashPageNumber == 1 ||
-        trashPageNumber <= categorySubGropuPaginationModel.meta.lastPage!) {
-      final data = await subGroupRepo.getCategorySubGroup(
-        categoryGroupId: id,
-        page: trashPageNumber,
-        filter: 'trash',
-      );
+  // getMoreTrashCategorySubGroup() async {
+  //   if (trashPageNumber == 1 ||
+  //       trashPageNumber <= categorySubGropuPaginationModel.meta.lastPage!) {
+  //     final data = await subGroupRepo.getCategorySubGroup(
+  //       categoryGroupId: id,
+  //       page: trashPageNumber,
+  //       filter: 'trash',
+  //     );
 
-      //increase the page no
-      trashPageNumber++;
+  //     //increase the page no
+  //     trashPageNumber++;
 
-      state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-        trashCategorySubGropuPaginationModel = r;
-        trashItems.addAll(trashCategorySubGropuPaginationModel.data);
+  //     state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+  //       trashCategorySubGropuPaginationModel = r;
+  //       trashItems.addAll(trashCategorySubGropuPaginationModel.data);
 
-        return state.copyWith(
-          loading: false,
-          categorySubGroupTrash: trashItems,
-          failure: CleanFailure.none(),
-        );
-      });
-      Logger.i(data);
-    }
-  }
+  //       return state.copyWith(
+  //         loading: false,
+  //         categorySubGroupTrash: trashItems,
+  //         failure: CleanFailure.none(),
+  //       );
+  //     });
+  //     Logger.i(data);
+  //   }
+  // }
 
   trashCategorySubGroup({required int categorySubGroupId}) async {
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.trashCategorySubGroup(
         categorySubGroupId: categorySubGroupId);
-    state = data.fold((l) => state.copyWith(loading: false, failure: l),
-        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      getCategorySubGroup();
+      getTrashCategorySubGroup();
+      return state.copyWith(loading: false, failure: CleanFailure.none());
+    });
     Logger.i(data);
-    getCategorySubGroup();
-    getTrashCategorySubGroup();
   }
 
   deleteSubCategoryGroup({required int categorySubGroupId}) async {
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.deleteCategorySubGroup(
         categorySubGroupId: categorySubGroupId);
-    state = data.fold((l) => state.copyWith(loading: false, failure: l),
-        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      getCategorySubGroup();
+      getTrashCategorySubGroup();
+      return state.copyWith(loading: false, failure: CleanFailure.none());
+    });
     Logger.i(data);
-    getCategorySubGroup();
-    getTrashCategorySubGroup();
   }
 
   restoreCategorySubGroup({required int categorySubGroupId}) async {
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.restoreCategorySubGroup(
         categorySubGroupId: categorySubGroupId);
-    state = data.fold((l) => state.copyWith(loading: false, failure: l),
-        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      getCategorySubGroup();
+      getTrashCategorySubGroup();
+      return state.copyWith(loading: false, failure: CleanFailure.none());
+    });
     Logger.i(data);
-    getCategorySubGroup();
-    getTrashCategorySubGroup();
   }
 }

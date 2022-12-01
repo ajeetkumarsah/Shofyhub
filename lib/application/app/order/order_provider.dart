@@ -62,6 +62,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
       return state.copyWith(
         loading: false,
         orderList: orders,
+        orderModel: r,
         failure: CleanFailure.none(),
       );
     });
@@ -83,6 +84,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
         return state.copyWith(
           loading: false,
           orderList: orders,
+          orderModel: r,
           failure: CleanFailure.none(),
         );
       });
@@ -108,6 +110,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
       return state.copyWith(
         loading: false,
         fullfillOrderList: fullfilledOrders,
+        fulfillOrderModel: r,
         failure: CleanFailure.none(),
       );
     });
@@ -131,6 +134,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
         return state.copyWith(
           loading: false,
           fullfillOrderList: fullfilledOrders,
+          // fulfillOrderModel: r,
           failure: CleanFailure.none(),
         );
       });
@@ -156,6 +160,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
       return state.copyWith(
         loading: false,
         unFulfillOrderList: unFullfilledOrders,
+        unFulfillOrderModel: r,
         failure: CleanFailure.none(),
       );
     });
@@ -167,7 +172,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
         unFullfilledOrdersPageNumber <=
             unFulfilledOrderPaginationModel.meta.lastPage!) {
       final data = await orderRepo.getOrders(
-          filter: OrderFilter.fullfill, page: unFullfilledOrdersPageNumber);
+          filter: OrderFilter.unfullfill, page: unFullfilledOrdersPageNumber);
 
       //increase the page no
       unFullfilledOrdersPageNumber++;
@@ -179,6 +184,7 @@ class OrderNotifier extends StateNotifier<OrderState> {
         return state.copyWith(
           loading: false,
           unFulfillOrderList: unFullfilledOrders,
+          // unFulfillOrderModel: r,
           failure: CleanFailure.none(),
         );
       });
@@ -187,8 +193,8 @@ class OrderNotifier extends StateNotifier<OrderState> {
   }
 
   getArchivedOrders() async {
-    arhivedOrdersPageNumber = 1;
     archivedOrders = [];
+    arhivedOrdersPageNumber = 1;
 
     state = state.copyWith(loading: true);
     final data = await orderRepo.getOrders(

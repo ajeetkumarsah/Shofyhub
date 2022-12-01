@@ -7,6 +7,7 @@ import 'package:zcart_seller/application/app/catalog/atributes/atributes_provide
 import 'package:zcart_seller/application/app/catalog/atributes/get_atributes_provider.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/attribute_values_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/trash_attribute_tile.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class TrashAttributeListPage extends HookConsumerWidget {
   const TrashAttributeListPage({
@@ -33,11 +34,7 @@ class TrashAttributeListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : attributeList.isEmpty
-              ? Center(
-                  child: Text(
-                    'no_item_available'.tr(),
-                  ),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref

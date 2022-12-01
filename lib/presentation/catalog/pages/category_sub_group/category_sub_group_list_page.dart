@@ -7,6 +7,7 @@ import 'package:zcart_seller/application/app/category/category%20sub%20group/cat
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/add_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/category_sub_group_list_tile.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class CategorySubgroupListPage extends HookConsumerWidget {
   final String groupName;
@@ -83,9 +84,7 @@ class CategorySubgroupListPage extends HookConsumerWidget {
               ),
             )
           : state.categorySubGroup.isEmpty
-              ? Center(
-                  child: Text('no_item_available'.tr()),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref

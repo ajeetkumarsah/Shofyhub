@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/widget/trash_category_list_tile.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class TrashCategoryListPage extends HookConsumerWidget {
   final String subGroupName;
@@ -71,13 +72,7 @@ class TrashCategoryListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : trashCategoryList.isEmpty
-              ? Center(
-                  child: Text(
-                    'no_item_available'.tr(),
-                    style:
-                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                  ),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref

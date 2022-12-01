@@ -12,10 +12,10 @@ import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart'
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
-class AddUpdateAttributeValuesDialog extends HookConsumerWidget {
+class CreateUpdateAttributeValuesDialog extends HookConsumerWidget {
   final int attributeId;
   final AttributeValuesModel? attributeValues;
-  const AddUpdateAttributeValuesDialog(
+  const CreateUpdateAttributeValuesDialog(
       {Key? key, required this.attributeId, this.attributeValues})
       : super(key: key);
 

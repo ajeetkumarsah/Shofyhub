@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -11,17 +12,22 @@ class ManufacrurerPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      ManufacturerUtility.index.value = 0;
+      return null;
+    }, []);
+
     const screens = [
       ManufacturerListPage(),
       TrashManufacturerPage(),
     ];
 
     return ValueListenableBuilder(
-        valueListenable: ProductUtility.index,
+        valueListenable: ManufacturerUtility.index,
         builder: (context, value, child) {
           return Scaffold(
             body: IndexedStack(
-              index: ProductUtility.index.value,
+              index: ManufacturerUtility.index.value,
               children: screens,
             ),
             bottomNavigationBar: BottomNavigationBar(
@@ -29,9 +35,9 @@ class ManufacrurerPage extends HookConsumerWidget {
                 selectedItemColor: Constants.appbarColor,
                 unselectedItemColor: Colors.grey,
                 selectedFontSize: 12,
-                currentIndex: ProductUtility.index.value,
+                currentIndex: ManufacturerUtility.index.value,
                 onTap: (value) {
-                  ProductUtility.index.value = value;
+                  ManufacturerUtility.index.value = value;
                 },
                 items: [
                   BottomNavigationBarItem(

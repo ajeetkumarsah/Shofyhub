@@ -23,7 +23,7 @@ class OrderGrid extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final totalUnfullfilledOrder = ref.watch(
-        orderProvider.select((value) => value.unFulfillOrderList.length));
+        orderProvider.select((value) => value.unFulfillOrderModel.meta.total));
     // final totalFullfilledOrder = ref
     //     .watch(orderProvider.select((value) => value.fullfillOrderList.length));
     final totalArchivedOrder = ref

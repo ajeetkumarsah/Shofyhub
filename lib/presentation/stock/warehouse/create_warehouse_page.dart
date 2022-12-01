@@ -99,6 +99,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                   KTextField(
                     controller: nameController,
                     lebelText: '${'name'.tr()} *',
+                    inputAction: TextInputAction.next,
                     validator: (text) => ValidatorLogic.requiredField(text,
                         fieldName: 'name'.tr()),
                   ),
@@ -106,6 +107,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                   KTextField(
                     controller: emailController,
                     lebelText: 'email'.tr(),
+                    inputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: 10.h),
@@ -161,44 +163,49 @@ class CreateWarehousePage extends HookConsumerWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  SizedBox(
-                    // height: 50.h,
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButtonFormField<ShopUsersModel>(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(width: 1.w),
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                        ),
-                        style: TextStyle(color: Colors.grey.shade800),
-                        isExpanded: true,
-                        value: selectedStaff.value,
-                        hint: Text('select_incharge'.tr()),
-                        icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                        items: staffList.map<DropdownMenuItem<ShopUsersModel>>(
-                            (ShopUsersModel? value) {
-                          return DropdownMenuItem<ShopUsersModel>(
-                            value: value,
-                            child: Text(
-                              value!.name.toString(),
-                              style: TextStyle(
-                                  color: Colors.grey.shade700,
-                                  fontWeight: FontWeight.w500),
+                  staffList.isNotEmpty
+                      ? SizedBox(
+                          // height: 50.h,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField<ShopUsersModel>(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(width: 1.w),
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                              ),
+                              style: TextStyle(color: Colors.grey.shade800),
+                              isExpanded: true,
+                              value: selectedStaff.value,
+                              hint: Text('select_incharge'.tr()),
+                              icon:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
+                              items: staffList
+                                  .map<DropdownMenuItem<ShopUsersModel>>(
+                                      (ShopUsersModel? value) {
+                                return DropdownMenuItem<ShopUsersModel>(
+                                  value: value,
+                                  child: Text(
+                                    value!.name.toString(),
+                                    style: TextStyle(
+                                        color: Colors.grey.shade700,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (ShopUsersModel? newValue) {
+                                selectedStaff.value = newValue;
+                              },
                             ),
-                          );
-                        }).toList(),
-                        onChanged: (ShopUsersModel? newValue) {
-                          selectedStaff.value = newValue;
-                        },
-                      ),
-                    ),
-                  ),
+                          ),
+                        )
+                      : const SizedBox(),
                   SizedBox(
                     height: 10.h,
                   ),
                   KTextField(
                     controller: addressLine1Controller,
+                    inputAction: TextInputAction.next,
                     lebelText: 'address_line_1'.tr(),
                   ),
                   SizedBox(
@@ -206,6 +213,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                   ),
                   KTextField(
                     controller: addressLine2Controller,
+                    inputAction: TextInputAction.next,
                     lebelText: 'address_line_2'.tr(),
                   ),
                   SizedBox(height: 20.h),
@@ -228,9 +236,12 @@ class CreateWarehousePage extends HookConsumerWidget {
                   SizedBox(height: 20.h),
                   KTextField(
                     controller: openingTimeController,
-                    lebelText: 'opening_time'.tr(),
+                    lebelText: '${'opening_time'.tr()} *',
+                    inputAction: TextInputAction.next,
                     readOnly: true,
                     suffixIcon: const Icon(Icons.punch_clock),
+                    validator: (text) => ValidatorLogic.requiredField(text,
+                        fieldName: 'opening_time'.tr()),
                     onTap: () async {
                       TimeOfDay? pickedTime = await showTimePicker(
                         context: context,
@@ -247,9 +258,12 @@ class CreateWarehousePage extends HookConsumerWidget {
                   ),
                   KTextField(
                     controller: closingTimeController,
-                    lebelText: 'closing_time'.tr(),
+                    lebelText: '${'closing_time'.tr()} *',
+                    inputAction: TextInputAction.next,
                     readOnly: true,
                     suffixIcon: const Icon(Icons.punch_clock),
+                    validator: (text) => ValidatorLogic.requiredField(text,
+                        fieldName: 'closing_time'.tr()),
                     onTap: () async {
                       TimeOfDay? pickedTime = await showTimePicker(
                         context: context,
@@ -266,6 +280,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                   ),
                   KTextField(
                     controller: cityController,
+                    inputAction: TextInputAction.next,
                     lebelText: 'city'.tr(),
                   ),
                   SizedBox(
@@ -276,6 +291,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                   ),
                   KTextField(
                     controller: zipCodeController,
+                    inputAction: TextInputAction.next,
                     lebelText: 'zip_code'.tr(),
                     keyboardType: TextInputType.number,
                   ),
@@ -304,48 +320,59 @@ class CreateWarehousePage extends HookConsumerWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
-                          if (selectedCountry.value == null) {
-                            NotificationHelper.info(
-                                message: 'please_select_a_country'.tr());
-                            // CherryToast.info(
-                            //   title: Text('please_select_a_country'.tr()),
-                            //   animationType: AnimationType.fromTop,
-                            // ).show(context);
-                          } else {
-                            if (formKey.currentState?.validate() ?? false) {
-                              final String endPoint = ref
-                                  .read(selectBusinessDaysProvider)
-                                  .selectedBusinessDays
-                                  .map((element) => "business_days[]=$element")
-                                  .join('&');
-                              final warehouseInfo = CreateUpdateWarehouseModel(
-                                name: nameController.text,
-                                email: emailController.text,
-                                phone: phoneController.text,
-                                description: descriptionController.text,
-                                addressLine1: addressLine1Controller.text,
-                                addressLine2: addressLine2Controller.text,
-                                openingTime: openingTimeController.text,
-                                closeTime: closingTimeController.text,
-                                inchargeId: selectedStaff.value!.id,
-                                businessDays: endPoint,
-                                city: cityController.text,
-                                countryId: selectedCountry.value != null
-                                    ? int.tryParse(selectedCountry.value!.key)!
-                                    : 0,
-                                // stateId: 0,
-                                active: active.value ? 1 : 0,
-                                zipCode: zipCodeController.text,
-                              );
+                        onPressed: loading
+                            ? null
+                            : () {
+                                if (selectedCountry.value == null) {
+                                  NotificationHelper.info(
+                                      message: 'please_select_a_country'.tr());
+                                } else if (ref
+                                    .read(selectBusinessDaysProvider)
+                                    .selectedBusinessDays
+                                    .isEmpty) {
+                                  NotificationHelper.info(
+                                      message:
+                                          'please_select_business_days'.tr());
+                                } else {
+                                  if (formKey.currentState?.validate() ??
+                                      false) {
+                                    final String endPoint = ref
+                                        .read(selectBusinessDaysProvider)
+                                        .selectedBusinessDays
+                                        .map((element) =>
+                                            "business_days[]=$element")
+                                        .join('&');
+                                    final warehouseInfo =
+                                        CreateUpdateWarehouseModel(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      phone: phoneController.text,
+                                      description: descriptionController.text,
+                                      addressLine1: addressLine1Controller.text,
+                                      addressLine2: addressLine2Controller.text,
+                                      openingTime: openingTimeController.text,
+                                      closeTime: closingTimeController.text,
+                                      inchargeId: selectedStaff.value != null
+                                          ? selectedStaff.value!.id
+                                          : null,
+                                      businessDays: endPoint,
+                                      city: cityController.text,
+                                      countryId: selectedCountry.value != null
+                                          ? int.tryParse(
+                                              selectedCountry.value!.key)!
+                                          : 0,
+                                      // stateId: 0,
+                                      active: active.value ? 1 : 0,
+                                      zipCode: zipCodeController.text,
+                                    );
 
-                              ref
-                                  .read(warehouseProvider.notifier)
-                                  .createWarehouse(
-                                      warehouseInfo: warehouseInfo);
-                            }
-                          }
-                        },
+                                    ref
+                                        .read(warehouseProvider.notifier)
+                                        .createWarehouse(
+                                            warehouseInfo: warehouseInfo);
+                                  }
+                                }
+                              },
                         child: loading
                             ? const CircularProgressIndicator()
                             : Text('add'.tr()),

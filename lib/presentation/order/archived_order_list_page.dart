@@ -51,11 +51,7 @@ class ArchivedOrderListPage extends HookConsumerWidget {
               child: Text('no_item_found'.tr()),
             )
           : ListView.separated(
-              padding: const EdgeInsets.only(
-                top: 10,
-                left: 15,
-                right: 15,
-              ).r,
+              padding: const EdgeInsets.all(15),
               itemCount: orderList.length,
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(

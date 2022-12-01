@@ -43,11 +43,10 @@ class TrashAttributeTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
             if (index == 1) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          RestoreAttributeDialog(id: attribute.id)));
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      RestoreAttributeDialog(id: attribute.id));
             }
             if (index == 2) {
               showDialog(

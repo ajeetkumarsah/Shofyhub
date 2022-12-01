@@ -72,25 +72,43 @@ class CreateShopUserPage extends HookConsumerWidget {
           padding: EdgeInsets.all(20.sp),
           child: Column(
             children: [
-              KTextField(controller: firstNameController, lebelText: 'Name'),
+              KTextField(
+                controller: firstNameController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Name',
+              ),
               SizedBox(height: 10.h),
               KTextField(
-                  controller: nickNameController, lebelText: 'Nick Name'),
+                controller: nickNameController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Nick Name',
+              ),
               SizedBox(height: 10.h),
-              KTextField(controller: emailController, lebelText: 'Email'),
+              KTextField(
+                controller: emailController,
+                inputAction: TextInputAction.next,
+                keyboardType: TextInputType.emailAddress,
+                lebelText: 'Email',
+              ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: passwordController,
+                inputAction: TextInputAction.next,
                 lebelText: 'Password',
                 hintText: 'Password must be 6 characters long',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: confirmPasswordController,
+                inputAction: TextInputAction.next,
                 lebelText: 'Confirm Password',
               ),
               SizedBox(height: 10.h),
-              KTextField(controller: descController, lebelText: 'Description'),
+              KTextField(
+                controller: descController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Description',
+              ),
               SizedBox(height: 10.h),
               CheckboxListTile(
                 title: Text('active'.tr()),
@@ -167,40 +185,43 @@ class CreateShopUserPage extends HookConsumerWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red),
+                    child: Text(
+                      'cancel'.tr(),
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      Logger.i(dobController.text);
-                      if (firstNameController.text.isNotEmpty &&
-                          confirmPasswordController.text.isNotEmpty &&
-                          nickNameController.text.isNotEmpty &&
-                          emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty &&
-                          descController.text.isNotEmpty) {
-                        final user = CreateShopUserModel(
-                            shopId: shopId,
-                            roleId: 4,
-                            name: firstNameController.text,
-                            niceName: nickNameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                            confirmPassword: confirmPasswordController.text,
-                            dob: dobController.text,
-                            sex: selectedGender.value,
-                            description: descController.text,
-                            active: active.value ? 1 : 0);
-                        ref
-                            .read(shopUserProvider.notifier)
-                            .createShopUser(createShopUser: user);
-                      } else {
-                        NotificationHelper.info(
-                            message: 'please_fill_all_fields'.tr());
-                      }
-                    },
+                    onPressed: loading
+                        ? null
+                        : () {
+                            Logger.i(dobController.text);
+                            if (firstNameController.text.isNotEmpty &&
+                                confirmPasswordController.text.isNotEmpty &&
+                                nickNameController.text.isNotEmpty &&
+                                emailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty &&
+                                descController.text.isNotEmpty) {
+                              final user = CreateShopUserModel(
+                                  shopId: shopId,
+                                  roleId: 4,
+                                  name: firstNameController.text,
+                                  niceName: nickNameController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  confirmPassword:
+                                      confirmPasswordController.text,
+                                  dob: dobController.text,
+                                  sex: selectedGender.value,
+                                  description: descController.text,
+                                  active: active.value ? 1 : 0);
+                              ref
+                                  .read(shopUserProvider.notifier)
+                                  .createShopUser(createShopUser: user);
+                            } else {
+                              NotificationHelper.info(
+                                  message: 'please_fill_all_fields'.tr());
+                            }
+                          },
                     child: loading
                         ? const CircularProgressIndicator()
                         : const Text('Add'),

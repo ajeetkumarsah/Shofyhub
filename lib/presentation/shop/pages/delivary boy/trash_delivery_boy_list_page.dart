@@ -16,12 +16,12 @@ class TrashDelivaryBoyListPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(delivaryBoyProvider.notifier).getAllDelivaryBoy();
+        ref.read(delivaryBoyProvider.notifier).getTrashDelivaryBoy();
       });
       return null;
     }, []);
     final delivaryBoyList =
-        ref.watch(delivaryBoyProvider.select((value) => value.delivaryBoyList));
+        ref.watch(delivaryBoyProvider.select((value) => value.trashDelivaryBoyList));
     final loading =
         ref.watch(delivaryBoyProvider.select((value) => value.loading));
 

@@ -17,7 +17,7 @@ class RestoreCategorySubGroupDialog extends HookConsumerWidget {
     ref.listen<CategorySubGroupState>(categorySubGroupProvider(id),
         (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
+          Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_restored'.tr());
         } else if (next.failure != CleanFailure.none()) {

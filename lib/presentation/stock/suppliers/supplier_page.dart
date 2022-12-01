@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -10,6 +11,11 @@ class SupplierPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      SupplierUtility.index.value = 0;
+      return null;
+    }, []);
+
     const screens = [
       SupplierListPage(),
       TrashSupplierPage(),

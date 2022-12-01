@@ -7,7 +7,7 @@ import 'package:zcart_seller/application/app/shop/delivary%20boy/delivary_boy_pr
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivery_boy_details_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/add_update_delivary_boy_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/create_update_delivary_boy_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivary_dialog.dart';
 
 class DelivaryBoyListPage extends HookConsumerWidget {
@@ -32,7 +32,7 @@ class DelivaryBoyListPage extends HookConsumerWidget {
         onPressed: () {
           showDialog(
               context: context,
-              builder: (context) => const AddUpdateDelivaryBoyPage());
+              builder: (context) => const CreateUpdateDelivaryBoyPage());
         },
         label: const Text('Add new'),
         icon: const Icon(Icons.add),
@@ -86,7 +86,7 @@ class DelivaryBoyListPage extends HookConsumerWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              AddUpdateDelivaryBoyPage(
+                                              CreateUpdateDelivaryBoyPage(
                                                 delivaryBoyDetails:
                                                     delivaryBoyList[index],
                                               )));

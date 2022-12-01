@@ -50,10 +50,9 @@ class CreateNewCategoryPage extends HookConsumerWidget {
     ref.listen<CategoryState>(categoryProvider(categorySubgroupId),
         (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'category_added'.tr());
-
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

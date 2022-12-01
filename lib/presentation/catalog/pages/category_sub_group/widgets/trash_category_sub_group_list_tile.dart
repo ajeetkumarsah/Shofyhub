@@ -46,14 +46,14 @@ class TrashCategorySubgroupListTile extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) => RestoreCategorySubGroupDialog(
-                        id: categoryGroupId,
+                        id: categorySubGroup.id,
                       ));
             }
             if (index == 2) {
               showDialog(
                   context: context,
                   builder: (context) => DeleteCategorySubGroupDialog(
-                        id: categoryGroupId,
+                        id: categorySubGroup.id,
                       ));
             }
           },

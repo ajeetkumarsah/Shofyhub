@@ -56,7 +56,7 @@ class OrderPaginationModel extends Equatable {
   factory OrderPaginationModel.init() => const OrderPaginationModel(
         data: [],
         links: Links(),
-        meta: Meta(currentPage: 1, lastPage: 1),
+        meta: Meta(currentPage: 1, lastPage: 1, total: 0),
       );
 
   @override

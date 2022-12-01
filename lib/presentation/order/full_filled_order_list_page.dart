@@ -60,11 +60,8 @@ class FullFilledOrderListPage extends HookConsumerWidget {
           ? const NoItemFound()
           : ListView.separated(
               controller: scrollController,
-              padding: const EdgeInsets.only(
-                top: 10,
-                left: 15,
-                right: 15,
-              ).r,
+                            padding: const EdgeInsets.all(15),
+
               itemCount: orderList.length,
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(

@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/trash_category_sub_group_list_tile.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class TrashCategorySubgroupListPage extends HookConsumerWidget {
   final String groupName;
@@ -16,19 +16,19 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    final scrollController = useScrollController();
+    // final scrollController = useScrollController();
 
     useEffect(() {
-      scrollController.addListener(
-        () {
-          if (scrollController.position.pixels ==
-              scrollController.position.maxScrollExtent) {
-            ref
-                .read(categorySubGroupProvider(id).notifier)
-                .getMoreTrashCategorySubGroup();
-          }
-        },
-      );
+      // scrollController.addListener(
+      //   () {
+      //     if (scrollController.position.pixels ==
+      //         scrollController.position.maxScrollExtent) {
+      //       ref
+      //           .read(categorySubGroupProvider(id).notifier)
+      //           .getMoreTrashCategorySubGroup();
+      //     }
+      //   },
+      // );
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref
             .read(categorySubGroupProvider(id).notifier)
@@ -38,9 +38,9 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
     }, []);
     final state = ref.watch(categorySubGroupProvider(id));
 
-    final trashCategorySubGropuPaginationModel = ref
-        .watch(categorySubGroupProvider(id).notifier)
-        .trashCategorySubGropuPaginationModel;
+    // final trashCategorySubGropuPaginationModel = ref
+    //     .watch(categorySubGroupProvider(id).notifier)
+    //     .trashCategorySubGropuPaginationModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -70,9 +70,7 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
               ),
             )
           : state.categorySubGroupTrash.isEmpty
-              ? Center(
-                  child: Text('no_item_available'.tr()),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref
@@ -80,22 +78,22 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
                         .getTrashCategorySubGroup();
                   },
                   child: ListView.separated(
-                    controller: scrollController,
+                    // controller: scrollController,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-                    itemCount: state.categorySubGroup.length,
+                    itemCount: state.categorySubGroupTrash.length,
                     itemBuilder: (context, index) {
-                      if ((index == state.categorySubGroupTrash.length - 1) &&
-                          state.categorySubGroupTrash.length <
-                              trashCategorySubGropuPaginationModel
-                                  .meta.total!) {
-                        return const SizedBox(
-                          height: 100,
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
+                      // if ((index == state.categorySubGroupTrash.length - 1) &&
+                      //     state.categorySubGroupTrash.length <
+                      //         trashCategorySubGropuPaginationModel
+                      //             .meta.total!) {
+                      //   return const SizedBox(
+                      //     height: 100,
+                      //     child: Center(
+                      //       child: CircularProgressIndicator(),
+                      //     ),
+                      //   );
+                      // }
                       return TrashCategorySubgroupListTile(
                         categoryGroupId: id,
                         categorySubGroup: state.categorySubGroupTrash[index],

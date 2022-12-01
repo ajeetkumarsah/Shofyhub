@@ -39,6 +39,8 @@ class CloseRefundPage extends HookConsumerWidget {
                         itemCount: refundList.length,
                         itemBuilder: (context, index) => Card(
                           child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 15),
                             tileColor: Colors.white,
                             title: Text(
                               "Order Id: ${refundList[index].orderId}",

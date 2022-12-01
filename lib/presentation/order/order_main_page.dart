@@ -52,11 +52,11 @@ class OrderMainPage extends HookConsumerWidget {
               tabs: [
                 Tab(
                   text:
-                      '${'unfulfilled'.tr()} (${ref.watch(orderProvider).unFulfillOrderList.length})',
+                      '${'unfulfilled'.tr()} (${ref.watch(orderProvider.select((value) => value.unFulfillOrderModel.meta.total))})',
                 ),
                 Tab(
                   text:
-                      '${'fulfilled'.tr()} (${ref.watch(orderProvider).fullfillOrderList.length})',
+                      '${'fulfilled'.tr()} (${ref.watch(orderProvider.select((value) => value.fulfillOrderModel.meta.total))})',
                 ),
                 Tab(
                   text:

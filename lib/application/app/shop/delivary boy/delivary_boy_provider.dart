@@ -50,6 +50,7 @@ class DelivaryBoyNotifier extends StateNotifier<DelivaryBoyState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllDelivaryBoy();
+    getTrashDelivaryBoy();
   }
 
   restoreDelivaryBoy({required int delivaryBoyID}) async {
@@ -59,6 +60,7 @@ class DelivaryBoyNotifier extends StateNotifier<DelivaryBoyState> {
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     getAllDelivaryBoy();
+    getTrashDelivaryBoy();
   }
 
   deleteDelivaryBoy({required int delivaryBoyID}) async {
@@ -67,6 +69,8 @@ class DelivaryBoyNotifier extends StateNotifier<DelivaryBoyState> {
         await delivaryBoyRepo.deleteDelivaryBoy(delivaryBoyId: delivaryBoyID);
     state = data.fold((l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getAllDelivaryBoy();
+    getTrashDelivaryBoy();
   }
 
   updateDelivaryBoy(

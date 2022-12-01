@@ -1,17 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/support/refund/close_refund_page.dart';
 import 'package:zcart_seller/presentation/support/refund/open_refund_page.dart';
 
-class RefundHome extends StatelessWidget {
+class RefundHome extends HookConsumerWidget {
   const RefundHome({Key? key, this.hasAppbar = false}) : super(key: key);
   final bool hasAppbar;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    useEffect(() {
+      RefundUtility.index.value = 0;
+      return null;
+    }, []);
+
     const screens = [
       OpenRefundPage(),
       CloseRefundPage(),

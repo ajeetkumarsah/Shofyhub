@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/attribute%20values/attribute_values_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/add_update_attribute_values_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/create_update_attribute_values_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/attribute_values_tile.dart';
 
 class AttributeValuesListPage extends HookConsumerWidget {
@@ -47,7 +47,7 @@ class AttributeValuesListPage extends HookConsumerWidget {
         onPressed: () {
           showDialog(
               context: context,
-              builder: (context) => AddUpdateAttributeValuesDialog(
+              builder: (context) => CreateUpdateAttributeValuesDialog(
                     attributeId: attributeId,
                   ));
         },

@@ -206,16 +206,24 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                     'order': orderController.text == ''
                         ? 0
                         : int.parse(orderController.text),
-                    'images[cover]': await MultipartFile.fromFile(
-                      ref.read(singleImagePickerProvider).categoryGroupImage!.path,
-                      filename: ref
-                          .read(singleImagePickerProvider)
-                          .categoryGroupImage!
-                          .path
-                          .split('/')
-                          .last,
-                      contentType: MediaType("image", "png"),
-                    ),
+                    'images[cover]': ref
+                                .read(singleImagePickerProvider)
+                                .categoryGroupImage !=
+                            null
+                        ? await MultipartFile.fromFile(
+                            ref
+                                .read(singleImagePickerProvider)
+                                .categoryGroupImage!
+                                .path,
+                            filename: ref
+                                .read(singleImagePickerProvider)
+                                .categoryGroupImage!
+                                .path
+                                .split('/')
+                                .last,
+                            contentType: MediaType("image", "png"),
+                          )
+                        : null,
                   });
                   ref.read(categoryGroupProvider.notifier).updateCategoryGroup(
                       formData: formData, id: categoryGroupId);

@@ -46,6 +46,7 @@ class OpenRefundPage extends HookConsumerWidget {
                           physics: const BouncingScrollPhysics(),
                           itemBuilder: (context, index) => Card(
                             child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                               tileColor: Colors.white,
                               title: Text(
                                 "Order Number: ${refundList[index].orderNumber}",

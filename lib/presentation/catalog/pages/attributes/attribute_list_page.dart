@@ -10,7 +10,7 @@ import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/attri
 import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/attritbute_tile.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
-import 'widgets/add_attributes_page.dart';
+import 'widgets/create_attributes_page.dart';
 
 class AttributeListPage extends HookConsumerWidget {
   const AttributeListPage({
@@ -38,7 +38,7 @@ class AttributeListPage extends HookConsumerWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const AddAttributesPage(),
+                builder: (context) => const CreateAttributesPage(),
               ));
         },
         label: Text(

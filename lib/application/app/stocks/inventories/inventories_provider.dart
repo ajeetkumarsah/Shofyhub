@@ -99,15 +99,15 @@ class AllInventoriesNotifier extends StateNotifier<InventoriesState> {
     final quickUpdateData = await inventoryRepo.updateInventory(
         updateinventory: updateInventoryModel);
 
-    state = quickUpdateData.fold(
-      (l) => state.copyWith(loading: false, failure: l),
-      (r) => state.copyWith(
+    state = quickUpdateData
+        .fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      getAllInventories(inventoryFilter: 'active');
+      getTrashInventories();
+      return state.copyWith(
         loading: false,
         failure: CleanFailure.none(),
-      ),
-    );
-    getAllInventories(inventoryFilter: 'active');
-    getTrashInventories();
+      );
+    });
   }
 
   trashInventory(int inventoryId) async {

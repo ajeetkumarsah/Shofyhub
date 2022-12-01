@@ -78,7 +78,7 @@ class ShopUserRepo extends IShopUserRepo {
 
   @override
   Future<Either<CleanFailure, Unit>> restoreShopUser({required int userId}) {
-    return cleanApi.delete(
+    return cleanApi.put(
       fromData: (json) => unit,
       body: null,
       endPoint: 'user/$userId/restore',

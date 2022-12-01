@@ -14,6 +14,7 @@ import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/auth/registration_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/app/dashboard/dashboard_home.dart';
 import 'package:zcart_seller/presentation/auth/otp_verification_screen.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 import 'package:zcart_seller/presentation/auth/widgets/country_widget.dart';
@@ -38,16 +39,25 @@ class SignupScreen extends HookConsumerWidget {
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.user != UserModel.init()) {
-          String phone = ref.read(countryCodeProvider).getSelectedCountry() +
-              phoneController.text;
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => OTPVerificationScreen(
-                phone: phone,
+          if (phoneController.text.length > 5) {
+            String phone = ref.read(countryCodeProvider).getSelectedCountry() +
+                phoneController.text;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => OTPVerificationScreen(
+                  phone: phone,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const DashboardHome(),
+              ),
+            );
+          }
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -112,6 +122,7 @@ class SignupScreen extends HookConsumerWidget {
                       fieldName: 'Shop name'),
                   controller: shopNameController,
                   lebelText: "Shop name",
+                  inputAction: TextInputAction.next,
                   prefixIcon: const Icon(Icons.person),
                 ),
               ),
@@ -126,6 +137,7 @@ class SignupScreen extends HookConsumerWidget {
                   controller: emailController,
                   lebelText: "Email Address",
                   keyboardType: TextInputType.emailAddress,
+                  inputAction: TextInputAction.next,
                   prefixIcon: const Icon(Icons.mail),
                 ),
               ),
@@ -148,6 +160,7 @@ class SignupScreen extends HookConsumerWidget {
                                     controller: phoneController,
                                     lebelText: "phone".tr(),
                                     keyboardType: TextInputType.phone,
+                                    inputAction: TextInputAction.next,
                                     prefixIcon: const CountryWidget(),
                                   ),
                                 ),
@@ -203,6 +216,7 @@ class SignupScreen extends HookConsumerWidget {
                   validator: (text) => ValidatorLogic.requiredPassword(text),
                   controller: passwordController,
                   lebelText: 'Password',
+                  inputAction: TextInputAction.next,
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: InkWell(
                     onTap: () {
@@ -226,6 +240,7 @@ class SignupScreen extends HookConsumerWidget {
                   validator: (text) => ValidatorLogic.requiredPassword(text),
                   controller: confirmPasswordController,
                   lebelText: 'Confirm Password',
+                  inputAction: TextInputAction.done,
                   prefixIcon: const Icon(Icons.lock),
                   suffixIcon: InkWell(
                     onTap: () {

@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:zcart_seller/application/app/stocks/inventories/inventory_detail
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/update_inventory_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -38,6 +38,7 @@ class UpdateInventoryPage extends HookConsumerWidget {
     }, []);
 
     final titleController = useTextEditingController();
+    final slugController = useTextEditingController();
     final brandController = useTextEditingController();
     final conditionNoteController = useTextEditingController();
     final descriptionController = useTextEditingController();
@@ -64,6 +65,7 @@ class UpdateInventoryPage extends HookConsumerWidget {
         (previous, next) {
       if (previous != next && !next.loading) {
         titleController.text = next.inventoryDetails.title;
+        slugController.text = next.inventoryDetails.slug;
         brandController.text = next.inventoryDetails.brand;
         descriptionController.text = next.inventoryDetails.description;
         conditionController.text = next.inventoryDetails.condition;
@@ -92,22 +94,11 @@ class UpdateInventoryPage extends HookConsumerWidget {
     });
     ref.listen<InventoriesState>(stockeInventoryProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'inventory_updated'.tr());
-
-          // CherryToast.info(
-          //   title: Text('inventory_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -145,11 +136,19 @@ class UpdateInventoryPage extends HookConsumerWidget {
                       ),
                       SizedBox(height: 10.h),
                       KTextField(
-                          controller: brandController, lebelText: 'brand'.tr()),
+                        controller: slugController,
+                        lebelText: '${'slug'.tr()} *',
+                        validator: (text) => ValidatorLogic.requiredField(text,
+                            fieldName: 'slug'.tr()),
+                      ),
                       SizedBox(height: 10.h),
                       KTextField(
+                          controller: brandController, lebelText: 'brand'.tr()),
+                      SizedBox(height: 10.h),
+                      KMultiLineTextField(
                         controller: descriptionController,
                         lebelText: '${'description'.tr()} *',
+                        maxLines: 3,
                         validator: (text) => ValidatorLogic.requiredField(text,
                             fieldName: 'description'.tr()),
                       ),
@@ -165,8 +164,9 @@ class UpdateInventoryPage extends HookConsumerWidget {
                       SizedBox(
                         height: 10.h,
                       ),
-                      KTextField(
+                      KMultiLineTextField(
                         controller: conditionNoteController,
+                        maxLines: 2,
                         lebelText: 'condition_note'.tr(),
                       ),
                       SizedBox(
@@ -330,45 +330,50 @@ class UpdateInventoryPage extends HookConsumerWidget {
                             ),
                           ),
                           TextButton(
-                            onPressed: () {
-                              if (formKey.currentState?.validate() ?? false) {
-                                final inventory = UpdateInventoryModel(
-                                  id: inventoryId,
-                                  slug: titleController.text
-                                      .toLowerCase()
-                                      .replaceAll(RegExp(r' '), '-'),
-                                  title: titleController.text,
-                                  brand: brandController.text,
-                                  condition: conditionController.text,
-                                  conditionNote: conditionController.text,
-                                  description: descriptionController.text,
-                                  // expiryDate: DateTime.tryParse(
-                                  //     expirayDateController.text)!,
-                                  keyFeatures: keyFeaturesController.text,
-                                  minOrderQuantity: int.tryParse(
-                                      minOrderQuantiryController.text)!,
-                                  // offerPrice: double.tryParse(
-                                  //     offerPriceController.text) ?? 0,
-                                  // offerStart: offerStartsController.text,
-                                  // offerEnd: offerEndsController.text,
-                                  sku: skuController.text,
-                                  quantity: int.tryParse(
-                                      stockQuantityController.text)!,
-                                  supplierId:
-                                      int.tryParse(supplierIdController.text)!,
-                                  salePrice: double.tryParse(
-                                      salePriceController.text)!,
-                                  shippingWeight: double.tryParse(
-                                      shippingWeightController.text)!,
-                                  active: active.value ? 1 : 0,
-                                  freeShipping: freeShipping.value ? 1 : 0,
-                                );
-                                ref
-                                    .read(stockeInventoryProvider.notifier)
-                                    .updateInventory(inventory);
-                                // Navigator.of(context).pop();
-                              }
-                            },
+                            onPressed: updateLoading
+                                ? null
+                                : () {
+                                    if (formKey.currentState?.validate() ??
+                                        false) {
+                                      final inventory = UpdateInventoryModel(
+                                        id: inventoryId,
+                                        slug: titleController.text
+                                            .toLowerCase()
+                                            .replaceAll(RegExp(r' '), '-'),
+                                        title: titleController.text,
+                                        brand: brandController.text,
+                                        condition: conditionController.text,
+                                        conditionNote: conditionController.text,
+                                        description: descriptionController.text,
+                                        // expiryDate: DateTime.tryParse(
+                                        //     expirayDateController.text)!,
+                                        keyFeatures: keyFeaturesController.text,
+                                        minOrderQuantity: int.tryParse(
+                                            minOrderQuantiryController.text)!,
+                                        // offerPrice: double.tryParse(
+                                        //     offerPriceController.text) ?? 0,
+                                        // offerStart: offerStartsController.text,
+                                        // offerEnd: offerEndsController.text,
+                                        sku: skuController.text,
+                                        quantity: int.tryParse(
+                                            stockQuantityController.text)!,
+                                        supplierId: int.tryParse(
+                                            supplierIdController.text)!,
+                                        salePrice: double.tryParse(
+                                            salePriceController.text)!,
+                                        shippingWeight: double.tryParse(
+                                            shippingWeightController.text)!,
+                                        active: active.value ? 1 : 0,
+                                        freeShipping:
+                                            freeShipping.value ? 1 : 0,
+                                      );
+                                      ref
+                                          .read(
+                                              stockeInventoryProvider.notifier)
+                                          .updateInventory(inventory);
+                                      // Navigator.of(context).pop();
+                                    }
+                                  },
                             child: updateLoading
                                 ? const CircularProgressIndicator()
                                 : Text('update'.tr()),

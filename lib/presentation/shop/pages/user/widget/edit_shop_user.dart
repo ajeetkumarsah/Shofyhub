@@ -76,15 +76,31 @@ class EditShopUser extends HookConsumerWidget {
           padding: EdgeInsets.all(20.sp),
           child: Column(
             children: [
-              KTextField(controller: nameController, lebelText: 'Name'),
+              KTextField(
+                controller: nameController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Name',
+              ),
               SizedBox(height: 10.h),
               KTextField(
-                  controller: nickNameController, lebelText: 'Nick Name'),
+                controller: nickNameController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Nick Name',
+              ),
               SizedBox(height: 10.h),
-              KTextField(controller: emailController, lebelText: 'Email'),
+              KTextField(
+                controller: emailController,
+                inputAction: TextInputAction.next,
+                keyboardType: TextInputType.emailAddress,
+                lebelText: 'Email',
+              ),
               SizedBox(height: 10.h),
 
-              KTextField(controller: descController, lebelText: 'Description'),
+              KTextField(
+                controller: descController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Description',
+              ),
               SizedBox(height: 10.h),
               CheckboxListTile(
                 title: Text('active'.tr()),
@@ -161,40 +177,44 @@ class EditShopUser extends HookConsumerWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red),
+                    child: Text(
+                      'cancel'.tr(),
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      if (nameController.text.isNotEmpty &&
-                          // confirmPasswordController.text.isNotEmpty &&
-                          nickNameController.text.isNotEmpty &&
-                          emailController.text.isNotEmpty &&
-                          // passwordController.text.isNotEmpty &&
-                          descController.text.isNotEmpty) {
-                        ref.read(shopUserProvider.notifier).updateShopUser(
-                            userId: userData.id,
-                            shopId: shopId,
-                            roleId: userData.roleId,
-                            name: nameController.text,
-                            niceName: nickNameController.text,
-                            email: emailController.text,
-                            active: active.value ? 1 : 0,
-                            // dob: dob,
-                            // sex: sex,
-                            description: descController.text);
-                      } else {
-                        NotificationHelper.info(
-                            message: 'please_fill_all_fields'.tr());
+                    onPressed: loading
+                        ? null
+                        : () {
+                            if (nameController.text.isNotEmpty &&
+                                // confirmPasswordController.text.isNotEmpty &&
+                                nickNameController.text.isNotEmpty &&
+                                emailController.text.isNotEmpty &&
+                                // passwordController.text.isNotEmpty &&
+                                descController.text.isNotEmpty) {
+                              ref
+                                  .read(shopUserProvider.notifier)
+                                  .updateShopUser(
+                                      userId: userData.id,
+                                      shopId: shopId,
+                                      roleId: userData.roleId,
+                                      name: nameController.text,
+                                      niceName: nickNameController.text,
+                                      email: emailController.text,
+                                      active: active.value ? 1 : 0,
+                                      // dob: dob,
+                                      // sex: sex,
+                                      description: descController.text);
+                            } else {
+                              NotificationHelper.info(
+                                  message: 'please_fill_all_fields'.tr());
 
-                        // CherryToast.info(
-                        //   title: const Text('Fillup all field'),
-                        //   animationType: AnimationType.fromTop,
-                        // ).show(context);
-                      }
-                    },
+                              // CherryToast.info(
+                              //   title: const Text('Fillup all field'),
+                              //   animationType: AnimationType.fromTop,
+                              // ).show(context);
+                            }
+                          },
                     child: loading
                         ? const CircularProgressIndicator()
                         : const Text('Update'),

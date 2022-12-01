@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 
-import 'add_update_attribute_values_dialog.dart';
+import 'create_update_attribute_values_dialog.dart';
 import 'trash_attribute_value_dialog.dart';
 
 class AttributeValuesTile extends StatelessWidget {
@@ -39,7 +39,7 @@ class AttributeValuesTile extends StatelessWidget {
             if (index == 1) {
               showDialog(
                   context: context,
-                  builder: (context) => AddUpdateAttributeValuesDialog(
+                  builder: (context) => CreateUpdateAttributeValuesDialog(
                         attributeId: attributeId,
                         attributeValues: atrributeValue,
                       ));

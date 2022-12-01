@@ -3,6 +3,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:zcart_seller/domain/app/order/order_model.dart';
+import 'package:zcart_seller/domain/app/order/order_pagination_model.dart';
 import 'package:zcart_seller/domain/app/order/order_status_model.dart';
 
 class OrderState extends Equatable {
@@ -12,6 +13,9 @@ class OrderState extends Equatable {
   final List<OrderModel> fullfillOrderList;
   final List<OrderModel> unFulfillOrderList;
   final List<OrderModel> archivedOrderList;
+  final OrderPaginationModel orderModel;
+  final OrderPaginationModel fulfillOrderModel;
+  final OrderPaginationModel unFulfillOrderModel;
 
   const OrderState({
     required this.loading,
@@ -20,6 +24,9 @@ class OrderState extends Equatable {
     required this.fullfillOrderList,
     required this.unFulfillOrderList,
     required this.archivedOrderList,
+    required this.orderModel,
+    required this.fulfillOrderModel,
+    required this.unFulfillOrderModel,
   });
 
   OrderState copyWith({
@@ -30,6 +37,9 @@ class OrderState extends Equatable {
     List<OrderModel>? unFulfillOrderList,
     List<OrderModel>? archivedOrderList,
     List<OrderStatusModel>? orderStatus,
+    OrderPaginationModel? orderModel,
+    OrderPaginationModel? fulfillOrderModel,
+    OrderPaginationModel? unFulfillOrderModel,
   }) {
     return OrderState(
       loading: loading ?? this.loading,
@@ -38,6 +48,9 @@ class OrderState extends Equatable {
       fullfillOrderList: fullfillOrderList ?? this.fullfillOrderList,
       unFulfillOrderList: unFulfillOrderList ?? this.unFulfillOrderList,
       archivedOrderList: archivedOrderList ?? this.archivedOrderList,
+      orderModel: orderModel ?? this.orderModel,
+      fulfillOrderModel: fulfillOrderModel ?? this.fulfillOrderModel,
+      unFulfillOrderModel: unFulfillOrderModel ?? this.unFulfillOrderModel,
     );
   }
 
@@ -53,6 +66,9 @@ class OrderState extends Equatable {
       fullfillOrderList,
       unFulfillOrderList,
       archivedOrderList,
+      orderModel,
+      fulfillOrderModel,
+      unFulfillOrderModel,
     ];
   }
 
@@ -63,10 +79,13 @@ class OrderState extends Equatable {
         fullfillOrderList: const [],
         unFulfillOrderList: const [],
         archivedOrderList: const [],
+        orderModel: OrderPaginationModel.init(),
+        fulfillOrderModel: OrderPaginationModel.init(),
+        unFulfillOrderModel: OrderPaginationModel.init(),
       );
 
   @override
   String toString() {
-    return 'OrderState(loading: $loading, failure: $failure, orderList: $orderList, fullfillOrderList: $fullfillOrderList, unFulfillOrderList: $unFulfillOrderList, archivedOrderList: $archivedOrderList)';
+    return 'OrderState(loading: $loading, failure: $failure, orderList: $orderList, fullfillOrderList: $fullfillOrderList, unFulfillOrderList: $unFulfillOrderList, archivedOrderList: $archivedOrderList, orderModel: $orderModel,fulfillOrderModel: $fulfillOrderModel, unFulfillOrderModel: $unFulfillOrderModel)';
   }
 }

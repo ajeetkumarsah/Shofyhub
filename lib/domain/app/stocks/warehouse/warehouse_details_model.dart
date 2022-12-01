@@ -13,7 +13,7 @@ class WarehouseDetailsModel extends Equatable {
   final dynamic closingTime;
   final List<String> businessDays;
   final PrimaryAddressModel primaryAddress;
-  final ShopUsersModel manager;
+  // final ShopUsersModel manager;
   final bool active;
   final String image;
 
@@ -27,7 +27,7 @@ class WarehouseDetailsModel extends Equatable {
     required this.closingTime,
     required this.businessDays,
     required this.primaryAddress,
-    required this.manager,
+    // required this.manager,
     required this.active,
     required this.image,
   });
@@ -42,7 +42,7 @@ class WarehouseDetailsModel extends Equatable {
     dynamic closingTime,
     List<String>? businessDays,
     PrimaryAddressModel? primaryAddress,
-    ShopUsersModel? manager,
+    // ShopUsersModel? manager,
     bool? active,
     String? image,
   }) {
@@ -56,7 +56,7 @@ class WarehouseDetailsModel extends Equatable {
       closingTime: closingTime ?? this.closingTime,
       businessDays: businessDays ?? this.businessDays,
       primaryAddress: primaryAddress ?? this.primaryAddress,
-      manager: manager ?? this.manager,
+      // manager: manager ?? this.manager,
       active: active ?? this.active,
       image: image ?? this.image,
     );
@@ -73,9 +73,9 @@ class WarehouseDetailsModel extends Equatable {
         closingTime: map["closing_time"] ?? '',
         businessDays: List<String>.from(map['business_days'].map((x) => x)),
         primaryAddress: PrimaryAddressModel.fromJson(map["primary_address"]),
-        manager: (map['manager'] != null || map['manager'] != [])
-            ? ShopUsersModel.fromMap(map['manager'])
-            : ShopUsersModel.init(),
+        // manager: (map['manager'] != null || map['manager'] != [])
+        //     ? ShopUsersModel.fromMap(map['manager'])
+        //     : ShopUsersModel.init(),
         image: map["image"] ?? '',
         active: map["active"] ?? false,
       );
@@ -89,7 +89,7 @@ class WarehouseDetailsModel extends Equatable {
         openingTime: '',
         closingTime: '',
         businessDays: const [],
-        manager: ShopUsersModel.init(),
+        // manager: ShopUsersModel.init(),
         primaryAddress: PrimaryAddressModel(
           id: 0,
           addressType: '',
@@ -117,7 +117,7 @@ class WarehouseDetailsModel extends Equatable {
         closingTime,
         businessDays,
         primaryAddress,
-        manager,
+        // manager,
         active,
         image,
       ];

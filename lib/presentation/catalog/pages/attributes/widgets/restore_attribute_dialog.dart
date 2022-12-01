@@ -15,8 +15,9 @@ class RestoreAttributeDialog extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     ref.listen<AtributesState>(atributesProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          Navigator.of(context).pop();
+
           NotificationHelper.success(message: 'item_restored'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

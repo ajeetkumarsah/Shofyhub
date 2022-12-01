@@ -2,18 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/widgets/delete_tax_dialog.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/widgets/restore_tax_dialog.dart';
+import 'package:zcart_seller/presentation/shop/pages/taxes/update_tax_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/taxes/widgets/trash_tax_dialog.dart';
 
-class TrashTaxListTile extends StatelessWidget {
+class TaxListTile extends StatelessWidget {
   final TaxModel taxItem;
-  const TrashTaxListTile({Key? key, required this.taxItem}) : super(key: key);
+  const TaxListTile({Key? key, required this.taxItem}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Constants.trashColor,
+      color: Colors.white,
       child: ListTile(
         contentPadding: const EdgeInsets.all(10),
         title: Text(
@@ -48,6 +47,16 @@ class TrashTaxListTile extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
+            // Text(
+            //   !taxItem.active ? 'Inactive' : '',
+            //   style: TextStyle(
+            //     fontSize: 14.sp,
+            //     color: Colors.red.shade800,
+            //     fontWeight: FontWeight.w500,
+            //   ),
+            //   overflow: TextOverflow.ellipsis,
+            //   maxLines: 2,
+            // ),
           ],
         ),
         trailing: PopupMenuButton(
@@ -60,25 +69,25 @@ class TrashTaxListTile extends StatelessWidget {
             if (index == 1) {
               showDialog(
                   context: context,
-                  builder: (context) => RestoreTaxDialog(
-                        id: taxItem.id,
+                  builder: (context) => UpdateTaxPage(
+                        taxId: taxItem.id,
                       ));
             }
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => DeleteTaxDialog(id: taxItem.id));
+                  builder: (context) => TrashTaxDialog(taxItem.id));
             }
           },
           itemBuilder: (context) => [
             PopupMenuItem(
               value: 1,
-              child: Text("restore".tr()),
+              child: Text("edit".tr()),
             ),
             PopupMenuItem(
               value: 2,
               child: Text(
-                "delete".tr(),
+                "trash".tr(),
                 style: const TextStyle(color: Colors.red),
               ),
             )

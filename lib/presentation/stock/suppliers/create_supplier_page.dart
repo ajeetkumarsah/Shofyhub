@@ -41,8 +41,8 @@ class CreateSupplierPage extends HookConsumerWidget {
 
     ref.listen<SupplierState>(supplierProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'supplier_added'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

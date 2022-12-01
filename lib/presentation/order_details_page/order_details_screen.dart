@@ -118,7 +118,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
             : ListView(
                 children: [
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   ListView.separated(
                     shrinkWrap: true,
@@ -141,9 +141,12 @@ class OrderDetailsScreen extends HookConsumerWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 44.h,
+                  SizedBox(height: 10.h),
+                  const Divider(
+                    color: Colors.grey,
+                    thickness: 1,
                   ),
+                  SizedBox(height: 10.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -295,12 +298,12 @@ class OrderDetailsScreen extends HookConsumerWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 23.h),
+                  SizedBox(height: 10.h),
                   const Divider(
                     color: Colors.grey,
                     thickness: 1,
                   ),
-                  SizedBox(height: 41.h),
+                  SizedBox(height: 10.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -452,12 +455,12 @@ class OrderDetailsScreen extends HookConsumerWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 23.h),
+                  SizedBox(height: 10.h),
                   const Divider(
                     color: Colors.grey,
                     thickness: 1,
                   ),
-                  SizedBox(height: 35.h),
+                  SizedBox(height: 10.h),
                   Text(
                     'Shipping Address:',
                     style: TextStyle(
@@ -469,7 +472,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                     height: 5.h,
                   ),
                   SizedBox(
-                    height: 60.h,
+                    // height: 60.h,
                     width: 179.w,
                     child: Text(
                       orderDetails.shipping_address,
@@ -479,7 +482,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                           fontWeight: FontWeight.w400),
                     ),
                   ),
-                  SizedBox(height: 8.h),
+                  SizedBox(height: 20.h),
                   Text(
                     'Billing Address:',
                     style: TextStyle(

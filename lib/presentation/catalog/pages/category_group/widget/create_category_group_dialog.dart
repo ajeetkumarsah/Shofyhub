@@ -15,8 +15,8 @@ import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart'
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
-class AddCategoryGroupDialog extends HookConsumerWidget {
-  const AddCategoryGroupDialog({Key? key}) : super(key: key);
+class CreateCategoryGroupDialog extends HookConsumerWidget {
+  const CreateCategoryGroupDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -171,25 +171,29 @@ class AddCategoryGroupDialog extends HookConsumerWidget {
                       // ),
                     });
 
-                    formData.files.addAll([
-                      MapEntry(
-                        'images[cover]',
-                        await MultipartFile.fromFile(
-                          ref
-                              .read(singleImagePickerProvider)
-                              .categoryGroupImage!
-                              .path,
-                          filename: ref
-                              .read(singleImagePickerProvider)
-                              .categoryGroupImage!
-                              .path
-                              .split('/')
-                              .last,
-                          contentType: MediaType("image", "png"),
+                    if (ref
+                            .read(singleImagePickerProvider)
+                            .categoryGroupImage !=
+                        null) {
+                      formData.files.addAll([
+                        MapEntry(
+                          'images[cover]',
+                          await MultipartFile.fromFile(
+                            ref
+                                .read(singleImagePickerProvider)
+                                .categoryGroupImage!
+                                .path,
+                            filename: ref
+                                .read(singleImagePickerProvider)
+                                .categoryGroupImage!
+                                .path
+                                .split('/')
+                                .last,
+                            contentType: MediaType("image", "png"),
+                          ),
                         ),
-                      ),
-                    ]);
-
+                      ]);
+                    }
                     // final categoryGroupModel = CreateCategoryGroupModel(
                     //   name: nameController.text,
                     //   slug: nameController.text

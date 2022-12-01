@@ -13,9 +13,9 @@ import 'package:zcart_seller/domain/app/shop/delivery%20boy/delivary_boy_model.d
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
-class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
+class CreateUpdateDelivaryBoyPage extends HookConsumerWidget {
   final DelivaryBoyModel? delivaryBoyDetails;
-  const AddUpdateDelivaryBoyPage({Key? key, this.delivaryBoyDetails})
+  const CreateUpdateDelivaryBoyPage({Key? key, this.delivaryBoyDetails})
       : super(key: key);
 
   @override
@@ -55,20 +55,8 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
           NotificationHelper.success(
               message:
                   delivaryBoyDetails != null ? 'item_updated' : 'item_added');
-
-          // CherryToast.info(
-          //   title: delivaryBoyDetails != null
-          //       ? const Text('Delivary Boy Updated')
-          //       : const Text('Delivary Boy Added'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'something_went_wrong'.tr());
-          // CherryToast.info(
-          //   title: const Text('Something went wrong'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
-          // next.failure.showDialogue(context);
         }
       }
     });
@@ -94,27 +82,50 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
           child: Column(
             children: [
               KTextField(
-                  controller: firstNameController, lebelText: 'First Name'),
+                controller: firstNameController,
+                inputAction: TextInputAction.next,
+                lebelText: 'First Name',
+              ),
               SizedBox(height: 10.h),
               KTextField(
-                  controller: lastNameController, lebelText: 'Last Name'),
+                controller: lastNameController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Last Name',
+              ),
               SizedBox(height: 10.h),
               KTextField(
-                  controller: nickNameController, lebelText: 'Nick Name'),
+                controller: nickNameController,
+                inputAction: TextInputAction.next,
+                lebelText: 'Nick Name',
+              ),
               SizedBox(height: 10.h),
-              KTextField(controller: emailController, lebelText: 'Email'),
+              KTextField(
+                controller: emailController,
+                inputAction: TextInputAction.next,
+                keyboardType: TextInputType.emailAddress,
+                lebelText: 'Email',
+              ),
               if (delivaryBoyDetails == null) SizedBox(height: 10.h),
               if (delivaryBoyDetails == null)
                 KTextField(
-                    controller: passwordController, lebelText: 'Password'),
+                  controller: passwordController,
+                  inputAction: TextInputAction.next,
+                  lebelText: 'Password',
+                ),
               if (delivaryBoyDetails == null) SizedBox(height: 10.h),
               if (delivaryBoyDetails == null)
                 KTextField(
-                    controller: confirmPasswordController,
-                    lebelText: 'Confirm Password'),
+                  controller: confirmPasswordController,
+                  inputAction: TextInputAction.next,
+                  lebelText: 'Confirm Password',
+                ),
               SizedBox(height: 10.h),
               KTextField(
-                  controller: phoneNoController, lebelText: 'Phone Number'),
+                controller: phoneNoController,
+                inputAction: TextInputAction.next,
+                keyboardType: const TextInputType.numberWithOptions(),
+                lebelText: 'Phone Number',
+              ),
               SizedBox(height: 10.h),
               CheckboxListTile(
                 title: Text('active'.tr()),
@@ -192,48 +203,51 @@ class AddUpdateDelivaryBoyPage extends HookConsumerWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.red),
+                    child: Text(
+                      'cancel'.tr(),
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      Logger.i(dobController.text);
-                      if (firstNameController.text.isNotEmpty &&
-                          lastNameController.text.isNotEmpty &&
-                          nickNameController.text.isNotEmpty &&
-                          emailController.text.isNotEmpty &&
-                          phoneNoController.text.isNotEmpty) {
-                        final delivaryBoy = CreateDelivaryBoyModel(
-                          shopId: shopId,
-                          firstName: firstNameController.text,
-                          lastName: lastNameController.text,
-                          niceName: nickNameController.text,
-                          phoneNumber: phoneNoController.text,
-                          email: emailController.text,
-                          password: passwordController.text,
-                          confirmPassword: confirmPasswordController.text,
-                          sex: selectedGender.value,
-                          dob: dobController.text,
-                          status: status.value ? 1 : 0,
-                        );
-                        if (delivaryBoyDetails != null) {
-                          ref
-                              .read(delivaryBoyProvider.notifier)
-                              .updateDelivaryBoy(
-                                  delivaryBoy: delivaryBoy,
-                                  delivaryBoyId: delivaryBoyDetails!.id);
-                        } else {
-                          ref
-                              .read(delivaryBoyProvider.notifier)
-                              .createDelivaryBoy(delivaryBoy: delivaryBoy);
-                        }
-                      } else {
-                        NotificationHelper.info(
-                            message: 'please_fill_all_fields'.tr());
-                      }
-                    },
+                    onPressed: loading
+                        ? null
+                        : () {
+                            Logger.i(dobController.text);
+                            if (firstNameController.text.isNotEmpty &&
+                                lastNameController.text.isNotEmpty &&
+                                nickNameController.text.isNotEmpty &&
+                                emailController.text.isNotEmpty &&
+                                phoneNoController.text.isNotEmpty) {
+                              final delivaryBoy = CreateDelivaryBoyModel(
+                                shopId: shopId,
+                                firstName: firstNameController.text,
+                                lastName: lastNameController.text,
+                                niceName: nickNameController.text,
+                                phoneNumber: phoneNoController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                confirmPassword: confirmPasswordController.text,
+                                sex: selectedGender.value,
+                                dob: dobController.text,
+                                status: status.value ? 1 : 0,
+                              );
+                              if (delivaryBoyDetails != null) {
+                                ref
+                                    .read(delivaryBoyProvider.notifier)
+                                    .updateDelivaryBoy(
+                                        delivaryBoy: delivaryBoy,
+                                        delivaryBoyId: delivaryBoyDetails!.id);
+                              } else {
+                                ref
+                                    .read(delivaryBoyProvider.notifier)
+                                    .createDelivaryBoy(
+                                        delivaryBoy: delivaryBoy);
+                              }
+                            } else {
+                              NotificationHelper.info(
+                                  message: 'please_fill_all_fields'.tr());
+                            }
+                          },
                     child: loading
                         ? const CircularProgressIndicator()
                         : const Text('Add'),

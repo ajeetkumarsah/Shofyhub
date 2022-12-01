@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/widgets/trash_warehouse_list_tile.dart';
 
 class TrashWarehousePage extends HookConsumerWidget {
@@ -52,7 +53,7 @@ class TrashWarehousePage extends HookConsumerWidget {
                             .getTrashWarehouses();
                       },
                       child: warehouseList.isEmpty
-                          ? Center(child: Text('no_item_found'.tr()))
+                          ? const NoItemFound()
                           : ListView.separated(
                               controller: scrollController,
                               itemCount: warehouseList.length,

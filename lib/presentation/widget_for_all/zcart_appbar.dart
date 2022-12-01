@@ -35,7 +35,7 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ref.watch(shopSettingsProvider
                           .select((value) => value.basicShopSettings.logo)),
                       errorBuilder: (c, e, s) => const Icon(Icons.error),
-                      fit: BoxFit.contain,
+                      fit: BoxFit.cover,
                     ));
               }),
             ),

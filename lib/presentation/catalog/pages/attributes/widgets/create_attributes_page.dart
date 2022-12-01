@@ -18,8 +18,8 @@ import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
-class AddAttributesPage extends HookConsumerWidget {
-  const AddAttributesPage({Key? key}) : super(key: key);
+class CreateAttributesPage extends HookConsumerWidget {
+  const CreateAttributesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -45,11 +45,14 @@ class AddAttributesPage extends HookConsumerWidget {
     final loading =
         ref.watch(atributesProvider.select((value) => value.loading));
 
+    final buttonPressed = useState(false);
+
     ref.listen<AtributesState>(atributesProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'attribute_added'.tr());
+          buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -194,6 +197,7 @@ class AddAttributesPage extends HookConsumerWidget {
                       onPressed: loading
                           ? null
                           : () {
+                              buttonPressed.value = true;
                               if (formKey.currentState?.validate() ?? false) {
                                 final String endPoint = selectedCategories.value
                                     .map((element) => element.key)

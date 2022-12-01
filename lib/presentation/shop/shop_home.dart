@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivary_boy_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/roles/roles_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/texes/tax_page.dart';
+import 'package:zcart_seller/presentation/shop/pages/taxes/tax_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/user/user_page.dart';
 
 class ShopHome extends StatelessWidget {

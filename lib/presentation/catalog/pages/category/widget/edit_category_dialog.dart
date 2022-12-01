@@ -76,7 +76,8 @@ class EditCategoryDialog extends HookConsumerWidget {
         metaDescController.text = next.categoryDetails.metaDescription;
         descController.text = next.categoryDetails.description;
         selectedAttributes.value =
-            selectedAttributes.value.addAll(next.categoryDetails.attributes);
+            next.categoryDetails.attributes.map((e) => e).toIList();
+
         active.value = next.categoryDetails.active;
         if (next.categoryDetails.coverImage.isNotEmpty) {
           //Convert Network Image to File Image
