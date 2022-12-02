@@ -12,6 +12,7 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -62,9 +63,6 @@ class CreateTaxPage extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 10.h),
-                  Text('* Required fields.',
-                      style: TextStyle(color: Theme.of(context).hintColor)),
-                  SizedBox(height: 10.h),
                   KTextField(
                     controller: nameController,
                     lebelText: 'Name *',
@@ -96,7 +94,7 @@ class CreateTaxPage extends HookConsumerWidget {
                         style: TextStyle(color: Colors.grey.shade800),
                         isExpanded: true,
                         value: selectedCountry.value,
-                        hint: Text('select_country'.tr()),
+                        hint: Text('${'select_country'.tr()} *'),
                         icon: const Icon(Icons.keyboard_arrow_down_rounded),
                         items: countryList.map<DropdownMenuItem<KeyValueData?>>(
                             (KeyValueData? value) {
@@ -116,15 +114,15 @@ class CreateTaxPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
+                  SizedBox(height: 10.h),
                   CheckboxListTile(
                       title: Text('active'.tr()),
                       value: active.value,
                       onChanged: (value) {
                         active.value = value!;
                       }),
+                  SizedBox(height: 10.h),
+                  const RequiredFieldText(),
                   SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -148,7 +146,8 @@ class CreateTaxPage extends HookConsumerWidget {
                               final taxInfo = CreateTaxModel(
                                   name: nameController.text,
                                   taxrate:
-                                      double.tryParse(taxRateController.text) ?? 0,
+                                      double.tryParse(taxRateController.text) ??
+                                          0,
                                   countryId: selectedCountry.value != null
                                       ? selectedCountry.value!.key
                                       : '',

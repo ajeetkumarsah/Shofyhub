@@ -33,6 +33,7 @@ class ShopSettingsNotifier extends StateNotifier<ShopSettingsState> {
         (l) => state.copyWith(loadingUpdate: false, failure: l),
         (r) =>
             state.copyWith(loadingUpdate: false, failure: CleanFailure.none()));
+    getBasicShopSettings();
   }
 
   getAdvanceShopSettings() async {

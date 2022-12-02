@@ -37,9 +37,9 @@ class ShopSettingsPage extends HookConsumerWidget {
 
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
+        ref.read(singleImagePickerProvider).clearShopLogo();
         ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
         ref.read(shopUserProvider.notifier).getShopUser();
-        ref.read(singleImagePickerProvider).clearShopLogo();
       });
       return null;
     }, []);
@@ -113,8 +113,11 @@ class ShopSettingsPage extends HookConsumerWidget {
                       ),
                       SizedBox(height: 10.h),
                       KTextField(
-                          controller: legalNameController,
-                          lebelText: 'legal_name'.tr()),
+                        controller: legalNameController,
+                        lebelText: '${'legal_name'.tr()} *',
+                        validator: (text) => ValidatorLogic.requiredField(text,
+                            fieldName: 'legal_name'.tr()),
+                      ),
                       SizedBox(height: 10.h),
                       KTextField(
                         controller: descriptionController,
@@ -165,20 +168,28 @@ class ShopSettingsPage extends HookConsumerWidget {
                                         'email': emailController.text,
                                         'description':
                                             descriptionController.text,
-                                        'logo': await MultipartFile.fromFile(
-                                          ref
-                                              .read(singleImagePickerProvider)
-                                              .shopLogo!
-                                              .path,
-                                          filename: ref
-                                              .read(singleImagePickerProvider)
-                                              .shopLogo!
-                                              .path
-                                              .split('/')
-                                              .last,
-                                          contentType:
-                                              MediaType("image", "png"),
-                                        ),
+                                        'logo': ref
+                                                    .watch(
+                                                        singleImagePickerProvider)
+                                                    .shopLogo !=
+                                                null
+                                            ? await MultipartFile.fromFile(
+                                                ref
+                                                    .watch(
+                                                        singleImagePickerProvider)
+                                                    .shopLogo!
+                                                    .path,
+                                                filename: ref
+                                                    .watch(
+                                                        singleImagePickerProvider)
+                                                    .shopLogo!
+                                                    .path
+                                                    .split('/')
+                                                    .last,
+                                                contentType:
+                                                    MediaType("image", "png"),
+                                              )
+                                            : null,
                                       });
                                       // final fo =
                                       //     UpdateBasicShopSettingsModel(

@@ -164,9 +164,9 @@ class DashboardPage extends HookConsumerWidget {
                 Expanded(
                   child: TotalInfoWidget(
                     icon: FontAwesomeIcons.boxOpen,
-                    title: 'Latest Refund',
+                    title: 'YESTERDAY\'S TOTAL',
                     color: Colors.pink,
-                    value: statistics.latestRefundAmount,
+                    value: statistics.yesterdaysSaleAmount,
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => const OrderMainPage(

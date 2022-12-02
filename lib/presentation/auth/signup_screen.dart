@@ -30,16 +30,23 @@ class SignupScreen extends HookConsumerWidget {
     final planList =
         ref.watch(subscriptionplanProvider.select((value) => value.dataList));
     final showPassword = useState(true);
+    final isPhoneLogin = useState(false);
     final passwordController = useTextEditingController();
     final phoneController = useTextEditingController();
     final confirmPasswordController = useTextEditingController();
     final emailController = useTextEditingController();
     final shopNameController = useTextEditingController();
     final ValueNotifier<KeyValueData> selectedPlan = useState(planList[0]);
+
+    // useEffect(() {
+    //   isPhoneLogin.value = false;
+    //   return null;
+    // }, []);
+
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.user != UserModel.init()) {
-          if (phoneController.text.length > 5) {
+          if (isPhoneLogin.value) {
             String phone = ref.read(countryCodeProvider).getSelectedCountry() +
                 phoneController.text;
             Navigator.push(
@@ -78,8 +85,8 @@ class SignupScreen extends HookConsumerWidget {
         ),
         centerTitle: true,
         title: Container(
-            height: 150,
-            width: 300,
+            height: 100,
+            width: 200,
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadiusDirectional.circular(10)),
@@ -148,6 +155,7 @@ class SignupScreen extends HookConsumerWidget {
 
                 return otpLoginPluginCheck.when(
                     data: (data) {
+                      // isPhoneLogin.value = true;
                       return data == true
                           ? Column(
                               children: [
@@ -309,6 +317,8 @@ class SignupScreen extends HookConsumerWidget {
                               ref
                                   .read(authProvider.notifier)
                                   .registration(body: body);
+
+                              // Logger.i('Is Phone Login: ${isPhoneLogin.value}');
                             } else {
                               NotificationHelper.error(
                                   message: 'password_didnt_matched'.tr());

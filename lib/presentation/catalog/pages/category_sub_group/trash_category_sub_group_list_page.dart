@@ -36,7 +36,12 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
       });
       return null;
     }, []);
-    final state = ref.watch(categorySubGroupProvider(id));
+
+    final trashCategorySubGroup =
+        ref.watch(categorySubGroupProvider(id)).categorySubGroupTrash;
+
+    final loading = ref
+        .watch(categorySubGroupProvider(id).select((value) => value.loading));
 
     // final trashCategorySubGropuPaginationModel = ref
     //     .watch(categorySubGroupProvider(id).notifier)
@@ -63,13 +68,13 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
         ),
         elevation: 0,
       ),
-      body: state.loading
+      body: loading
           ? Center(
               child: CircularProgressIndicator(
                 color: Constants.buttonColor,
               ),
             )
-          : state.categorySubGroupTrash.isEmpty
+          : trashCategorySubGroup.isEmpty
               ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
@@ -81,10 +86,10 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
                     // controller: scrollController,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-                    itemCount: state.categorySubGroupTrash.length,
+                    itemCount: trashCategorySubGroup.length,
                     itemBuilder: (context, index) {
-                      // if ((index == state.categorySubGroupTrash.length - 1) &&
-                      //     state.categorySubGroupTrash.length <
+                      // if ((index == trashCategorySubGroup.length - 1) &&
+                      //     trashCategorySubGroup.length <
                       //         trashCategorySubGropuPaginationModel
                       //             .meta.total!) {
                       //   return const SizedBox(
@@ -96,7 +101,7 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
                       // }
                       return TrashCategorySubgroupListTile(
                         categoryGroupId: id,
-                        categorySubGroup: state.categorySubGroupTrash[index],
+                        categorySubGroup: trashCategorySubGroup[index],
                       );
                     },
                     separatorBuilder: (context, index) => SizedBox(

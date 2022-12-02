@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/add_category_sub_group_dialog.dart';
+import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/create_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/category_sub_group_list_tile.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
@@ -36,11 +36,14 @@ class CategorySubgroupListPage extends HookConsumerWidget {
       });
       return null;
     }, []);
-    final state = ref.watch(categorySubGroupProvider(id));
+    final categorySubGroup = ref.watch(
+        categorySubGroupProvider(id).select((value) => value.categorySubGroup));
 
     final categorySubGropuPaginationModel = ref
         .watch(categorySubGroupProvider(id).notifier)
         .categorySubGropuPaginationModel;
+    final loading = ref
+        .watch(categorySubGroupProvider(id).select((value) => value.loading));
 
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +71,7 @@ class CategorySubgroupListPage extends HookConsumerWidget {
         onPressed: () {
           showDialog(
               context: context,
-              builder: (context) => AddCategorySubGroupDialog(
+              builder: (context) => CreateCategorySubGroupDialog(
                     categoryGroupId: id,
                   ));
         },
@@ -77,13 +80,13 @@ class CategorySubgroupListPage extends HookConsumerWidget {
         ),
         icon: const Icon(Icons.add),
       ),
-      body: state.loading
+      body: loading
           ? Center(
               child: CircularProgressIndicator(
                 color: Constants.buttonColor,
               ),
             )
-          : state.categorySubGroup.isEmpty
+          : categorySubGroup.isEmpty
               ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
@@ -95,10 +98,10 @@ class CategorySubgroupListPage extends HookConsumerWidget {
                     controller: scrollController,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-                    itemCount: state.categorySubGroup.length,
+                    itemCount: categorySubGroup.length,
                     itemBuilder: (context, index) {
-                      if ((index == state.categorySubGroup.length - 1) &&
-                          state.categorySubGroup.length <
+                      if ((index == categorySubGroup.length - 1) &&
+                          categorySubGroup.length <
                               categorySubGropuPaginationModel.meta.total!) {
                         return const SizedBox(
                           height: 100,
@@ -109,7 +112,7 @@ class CategorySubgroupListPage extends HookConsumerWidget {
                       }
                       return CategorySubgroupListTile(
                         categoryGroupId: id,
-                        categorySubGroup: state.categorySubGroup[index],
+                        categorySubGroup: categorySubGroup[index],
                       );
                     },
                     separatorBuilder: (context, index) => SizedBox(

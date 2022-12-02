@@ -28,7 +28,7 @@ class FullfillorderDialog extends HookConsumerWidget {
     // }, []);
 
     final List<CarrierModel> carriers = ref.watch(carriersProvider).carriers;
-    final ValueNotifier<CarrierModel> selectedCarrier = useState(carriers[0]);
+    final ValueNotifier<CarrierModel?> selectedCarrier = useState(null);
     final trackingIdController = useTextEditingController(text: tarckingId);
     final sendNotification = useState(true);
     ref.listen<OrderState>(orderProvider, (previous, next) {
@@ -160,7 +160,7 @@ class FullfillorderDialog extends HookConsumerWidget {
                     onPressed: () {
                       ref.read(orderProvider.notifier).fulfillOrder(
                           orderId,
-                          selectedCarrier.value.id,
+                          carriers.isNotEmpty ? selectedCarrier.value!.id : 0,
                           trackingIdController.text,
                           sendNotification.value);
                     },

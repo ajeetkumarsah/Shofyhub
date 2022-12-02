@@ -40,8 +40,8 @@ class WarehousePaginationModel extends Equatable {
     return WarehousePaginationModel(
       data: List<WarehouseModel>.from(
           map["data"].map((x) => WarehouseModel.fromMap(x))),
-      links: Links.fromJson(map["links"]),
-      meta: Meta.fromJson(map["meta"]),
+      links: map["links"] != null ? Links.fromJson(map["links"]) : Links.init(),
+      meta: map["meta"] != null ? Meta.fromJson(map["meta"]) : Meta.init(),
     );
   }
 

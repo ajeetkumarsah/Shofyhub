@@ -33,7 +33,9 @@ class AttributeValuesNotifier extends StateNotifier<AttributeValuesState> {
     state = data.fold(
         (l) => state.copyWith(loading: false, failure: l),
         (r) => state.copyWith(
-            loading: false, failure: CleanFailure.none(), attributeValues: r));
+            loading: false,
+            failure: CleanFailure.none(),
+            trashAttributeValues: r));
     Logger.i(data);
   }
 

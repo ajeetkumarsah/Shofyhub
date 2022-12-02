@@ -62,11 +62,14 @@ class CreateWarehousePage extends HookConsumerWidget {
     // final inchargeIdController = useTextEditingController();
     final active = useState(true);
 
+    final buttonPressed = useState(false);
+
     ref.listen<WarehouseState>(warehouseProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'warehouse_added'.tr());
+          buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -140,7 +143,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                         style: TextStyle(color: Colors.grey.shade800),
                         isExpanded: true,
                         value: selectedCountry.value,
-                        hint: Text('select_country'.tr()),
+                        hint: Text('${'select_country'.tr()} *'),
                         icon: const Icon(Icons.keyboard_arrow_down_rounded),
                         items: countryList.map<DropdownMenuItem<KeyValueData?>>(
                             (KeyValueData? value) {
@@ -219,7 +222,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                   SizedBox(height: 20.h),
                   // Business Days
                   Text(
-                    'business_days'.tr(),
+                    '${'business_days'.tr()} *',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const Divider(),
@@ -336,6 +339,7 @@ class CreateWarehousePage extends HookConsumerWidget {
                                 } else {
                                   if (formKey.currentState?.validate() ??
                                       false) {
+                                    buttonPressed.value = true;
                                     final String endPoint = ref
                                         .read(selectBusinessDaysProvider)
                                         .selectedBusinessDays

@@ -155,7 +155,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
               children: [
                 SizedBox(
                   height: 37.h,
-                  width: 70.w,
+                  // width: 70.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -169,8 +169,8 @@ class InventoryDetailsPage extends HookConsumerWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14.r),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 11.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15.w, vertical: 11.h),
                     ),
                     onPressed: () {
                       navigationSelect.value = 0;
@@ -189,7 +189,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                 ),
                 SizedBox(
                   height: 37.h,
-                  width: 70.w,
+                  // width: 70.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -203,8 +203,8 @@ class InventoryDetailsPage extends HookConsumerWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14.r),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 11.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15.w, vertical: 11.h),
                     ),
                     onPressed: () {
                       navigationSelect.value = 1;
@@ -223,7 +223,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                 ),
                 SizedBox(
                   height: 37.h,
-                  width: 70.w,
+                  // width: 70.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -237,8 +237,8 @@ class InventoryDetailsPage extends HookConsumerWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14.r),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 3.w, vertical: 11.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15.w, vertical: 11.h),
                     ),
                     onPressed: () {
                       navigationSelect.value = 2;
@@ -257,7 +257,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                 ),
                 SizedBox(
                   height: 37.h,
-                  width: 70.w,
+                  // width: 70.w,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
@@ -271,8 +271,8 @@ class InventoryDetailsPage extends HookConsumerWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14.r),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 11.h),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 15.w, vertical: 11.h),
                     ),
                     onPressed: () {
                       navigationSelect.value = 3;
@@ -291,6 +291,7 @@ class InventoryDetailsPage extends HookConsumerWidget {
                 ),
               ],
             ),
+            SizedBox(height: 20.h),
             SizedBox(
               // width: double.infinity,
               height: 450.h,
@@ -302,6 +303,8 @@ class InventoryDetailsPage extends HookConsumerWidget {
               ),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Constants.primaryColor),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return UpdateInventoryPage(inventoryId: productDetails.id);

@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:clean_api/clean_api.dart';
 import 'package:dio/dio.dart';
-import 'package:overlay_support/overlay_support.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -30,7 +30,7 @@ class ImageConverter {
 
       return file;
     } catch (e) {
-      toast(e.toString());
+      Logger.i(e.toString());
       return e;
     }
   }

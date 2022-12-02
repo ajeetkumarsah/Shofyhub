@@ -491,5 +491,6 @@
   "fulfilled": "Fulfilled",
   "archived": "Archived",
   "are_you_sure_logout": "Are you sure you want to Logout?",
-  "multivendor_app": "Multivendor App"
+  "multivendor_app": "Multivendor App",
+  "warehouses" : "Warehouses"
 }

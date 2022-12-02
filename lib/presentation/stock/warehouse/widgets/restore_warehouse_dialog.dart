@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -21,20 +20,8 @@ class RestoreWarehouseDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_restored'.tr());
-
-          // CherryToast.info(
-          //   title: Text('item_restored'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -124,11 +111,13 @@ class RestoreWarehouseDialog extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
-                      onPressed: () {
-                        ref
-                            .read(warehouseProvider.notifier)
-                            .restoreWarehouse(warehouseId);
-                      },
+                      onPressed: loading
+                          ? null
+                          : () {
+                              ref
+                                  .read(warehouseProvider.notifier)
+                                  .restoreWarehouse(warehouseId);
+                            },
                       child: loading
                           ? const Center(
                               child: SizedBox(

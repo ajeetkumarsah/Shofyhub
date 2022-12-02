@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -14,6 +15,11 @@ class AttributeValuesPage extends HookConsumerWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context, ref) {
+    useEffect(() {
+      AttributeValueUtility.index.value = 0;
+      return null;
+    }, []);
+
     var screens = [
       AttributeValuesListPage(attributeId: attributeId, groupName: groupName),
       TrashAttributeValuesListPage(

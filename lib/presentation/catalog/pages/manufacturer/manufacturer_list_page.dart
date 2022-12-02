@@ -8,6 +8,7 @@ import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/create_manufactuerer_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/manufacturer_list_tile.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class ManufacturerListPage extends HookConsumerWidget {
   const ManufacturerListPage({Key? key}) : super(key: key);
@@ -54,43 +55,45 @@ class ManufacturerListPage extends HookConsumerWidget {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Column(
-              children: [
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () {
-                      return ref
-                          .refresh(manufacturerProvider.notifier)
-                          .getManufacturerList();
-                    },
-                    child: ListView.separated(
-                      controller: scrollController,
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: manufacturerList.length,
-                      itemBuilder: (context, index) {
-                        if ((index == manufacturerList.length - 1) &&
-                            manufacturerList.length <
-                                manufacturerPaginationModel.meta.total!) {
-                          return const SizedBox(
-                            height: 100,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        }
-                        return ManufacturerListTile(
-                          manufacturer: manufacturerList[index],
-                        );
-                      },
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 5.h,
+          : manufacturerList.isEmpty
+              ? const NoItemFound()
+              : Column(
+                  children: [
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: () {
+                          return ref
+                              .refresh(manufacturerProvider.notifier)
+                              .getManufacturerList();
+                        },
+                        child: ListView.separated(
+                          controller: scrollController,
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 50),
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: manufacturerList.length,
+                          itemBuilder: (context, index) {
+                            if ((index == manufacturerList.length - 1) &&
+                                manufacturerList.length <
+                                    manufacturerPaginationModel.meta.total!) {
+                              return const SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            }
+                            return ManufacturerListTile(
+                              manufacturer: manufacturerList[index],
+                            );
+                          },
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 5.h,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
     );
   }
 }

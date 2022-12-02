@@ -24,8 +24,8 @@ class OrderGrid extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final totalUnfullfilledOrder = ref.watch(
         orderProvider.select((value) => value.unFulfillOrderModel.meta.total));
-    // final totalFullfilledOrder = ref
-    //     .watch(orderProvider.select((value) => value.fullfillOrderList.length));
+    final totalFullfilledOrder = ref.watch(
+        orderProvider.select((value) => value.fulfillOrderModel.meta.total));
     final totalArchivedOrder = ref
         .watch(orderProvider.select((value) => value.archivedOrderList.length));
     final totalRefunds =
@@ -57,6 +57,17 @@ class OrderGrid extends HookConsumerWidget {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => const OrderMainPage(
+                        index: 1,
+                      )));
+            },
+            icon: FontAwesomeIcons.boxesPacking,
+            itemValues: totalFullfilledOrder.toString(),
+            itemName: 'FULFILLED ORDERS',
+          ),
+          StoreReportItems(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const OrderMainPage(
                         index: 2,
                       )));
             },
@@ -64,11 +75,11 @@ class OrderGrid extends HookConsumerWidget {
             itemValues: '$totalArchivedOrder',
             itemName: 'ARCHIVED ORDERS',
           ),
-          StoreReportItems(
-            icon: FontAwesomeIcons.calendarDay,
-            itemValues: statistics.yesterdaysSaleAmount,
-            itemName: 'YESTERDAY\'S TOTAL',
-          ),
+          // StoreReportItems(
+          //   icon: FontAwesomeIcons.calendarDay,
+          //   itemValues: statistics.yesterdaysSaleAmount,
+          //   itemName: 'YESTERDAY\'S TOTAL',
+          // ),
           InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(

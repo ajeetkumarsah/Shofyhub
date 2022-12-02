@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/warehouse_details_page.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/widgets/delete_warehouse_dialog.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/widgets/restore_warehouse_dialog.dart';
@@ -14,7 +15,7 @@ class TrashWarehouseListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.white,
+      color: Constants.trashColor,
       child: ListTile(
         onTap: () {
           Navigator.push(

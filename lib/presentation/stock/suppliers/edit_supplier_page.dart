@@ -86,11 +86,10 @@ class EditSupplierPage extends HookConsumerWidget {
     });
 
     ref.listen<SupplierState>(supplierProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
-        if (next.failure == CleanFailure.none()) {
-          Navigator.of(context).pop();
-
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'supplier_updated'.tr());
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -163,7 +162,7 @@ class EditSupplierPage extends HookConsumerWidget {
                               style: TextStyle(color: Colors.grey.shade800),
                               isExpanded: true,
                               value: selectedCountry.value,
-                              hint: Text('select_country'.tr()),
+                              hint: Text('${'select_country'.tr()} *'),
                               icon:
                                   const Icon(Icons.keyboard_arrow_down_rounded),
                               items: countryList
@@ -253,43 +252,51 @@ class EditSupplierPage extends HookConsumerWidget {
                               ),
                             ),
                             TextButton(
-                              onPressed: () {
-                                if (selectedCountry.value == null) {
-                                  NotificationHelper.info(
-                                      message: 'please_select_a_country'.tr());
-                                } else {
-                                  if (formKey.currentState?.validate() ??
-                                      false) {
-                                    buttonPressed.value = true;
+                              onPressed: loading
+                                  ? null
+                                  : () {
+                                      if (selectedCountry.value == null) {
+                                        NotificationHelper.info(
+                                            message:
+                                                'please_select_a_country'.tr());
+                                      } else {
+                                        if (formKey.currentState?.validate() ??
+                                            false) {
+                                          buttonPressed.value = true;
 
-                                    final supplierInfo = CreateSupplierModel(
-                                      name: nameController.text,
-                                      email: emailController.text,
-                                      phone: phoneController.text,
-                                      addressLine1: addressLine1Controller.text,
-                                      addressLine2: addressLine2Controller.text,
-                                      contactPerson:
-                                          contactPersonController.text,
-                                      city: cityController.text,
-                                      description: descriptionController.text,
-                                      url: urlController.text,
-                                      zipCode: zipCodeController.text,
-                                      countryId: selectedCountry.value != null
-                                          ? int.tryParse(
-                                              selectedCountry.value!.key)!
-                                          : 0,
-                                      // stateId: 0,
-                                      active: active.value ? 1 : 0,
-                                    );
+                                          final supplierInfo =
+                                              CreateSupplierModel(
+                                            name: nameController.text,
+                                            email: emailController.text,
+                                            phone: phoneController.text,
+                                            addressLine1:
+                                                addressLine1Controller.text,
+                                            addressLine2:
+                                                addressLine2Controller.text,
+                                            contactPerson:
+                                                contactPersonController.text,
+                                            city: cityController.text,
+                                            description:
+                                                descriptionController.text,
+                                            url: urlController.text,
+                                            zipCode: zipCodeController.text,
+                                            countryId: selectedCountry.value !=
+                                                    null
+                                                ? int.tryParse(
+                                                    selectedCountry.value!.key)!
+                                                : 0,
+                                            // stateId: 0,
+                                            active: active.value ? 1 : 0,
+                                          );
 
-                                    ref
-                                        .read(supplierProvider.notifier)
-                                        .updateSupplier(
-                                            supplierInfo: supplierInfo,
-                                            supplierId: supplierId);
-                                  }
-                                }
-                              },
+                                          ref
+                                              .read(supplierProvider.notifier)
+                                              .updateSupplier(
+                                                  supplierInfo: supplierInfo,
+                                                  supplierId: supplierId);
+                                        }
+                                      }
+                                    },
                               child: updateLoading
                                   ? const CircularProgressIndicator()
                                   : Text('update'.tr()),

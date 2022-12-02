@@ -8,7 +8,7 @@ import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivery_boy_details_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/create_update_delivary_boy_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivary_dialog.dart';
+import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/trash_delivary_dialog.dart';
 
 class DelivaryBoyListPage extends HookConsumerWidget {
   const DelivaryBoyListPage({Key? key}) : super(key: key);

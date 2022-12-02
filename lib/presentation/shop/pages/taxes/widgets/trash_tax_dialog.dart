@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -121,10 +120,14 @@ class TrashTaxDialog extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
-                      onPressed: () {
-                        ref.read(taxProvider.notifier).trashTax(taxId: taxId);
-                        Navigator.of(context).pop();
-                      },
+                      onPressed: loading
+                          ? null
+                          : () {
+                              ref
+                                  .read(taxProvider.notifier)
+                                  .trashTax(taxId: taxId);
+                              Navigator.of(context).pop();
+                            },
                       child: loading
                           ? const Center(
                               child: SizedBox(

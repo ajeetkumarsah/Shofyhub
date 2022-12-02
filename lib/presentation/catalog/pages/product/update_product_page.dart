@@ -21,7 +21,7 @@ import 'package:zcart_seller/domain/app/form/key_value_data.dart';
 import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.dart';
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/catalog/pages/product/create_product_page.dart';
+import 'package:zcart_seller/presentation/catalog/pages/product/update_product_image_list.dart';
 import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
@@ -52,6 +52,7 @@ class UpdateProductPage extends HookConsumerWidget {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
         productImagePicker.clearAllImages();
+        productImagePicker.clearDeletedImageIds();
         ref.read(categoryListProvider.notifier).loadData();
         ref.read(detailProcuctProvider(productId).notifier).getDetailProduct();
       });
@@ -86,6 +87,8 @@ class UpdateProductPage extends HookConsumerWidget {
     final active = useState(true);
     final shipping = useState(true);
 
+    final buttonPressed = useState(false);
+
     ref.listen<DetailProductState>(detailProcuctProvider(productId),
         (previous, next) async {
       if (previous != next && !next.loading) {
@@ -105,11 +108,14 @@ class UpdateProductPage extends HookConsumerWidget {
                 .where((element) => element.value == next.detailProduct.origin)
                 .toList()[0]
             : countryList[0];
+
         productImagePicker.setLoading(true);
         for (var i = 0; i < next.detailProduct.images.length; i++) {
           File file = await ImageConverter.getImage(
               url: next.detailProduct.images[i].path);
-          productImagePicker.addImage(file);
+          productImagePicker.addOldImage(CustomImageModel(
+              imageId: next.detailProduct.images[i].id.toString(),
+              image: file));
         }
         productImagePicker.setLoading(false);
       }
@@ -118,8 +124,9 @@ class UpdateProductPage extends HookConsumerWidget {
     ref.listen<ProductState>(productProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'product_updated'.tr());
+          buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -336,28 +343,29 @@ class UpdateProductPage extends HookConsumerWidget {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(10)),
-                              child: productImagePicker.productImages.isNotEmpty
-                                  ? Center(
-                                      child: ProductImageList(
-                                          productImagePicker:
-                                              productImagePicker),
-                                    )
-                                  : Center(
-                                      child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 20),
-                                      child: Column(
-                                        children: [
-                                          const Icon(
-                                            Icons.image,
-                                            size: 42,
-                                            color: Colors.grey,
+                              child:
+                                  productImagePicker.allProductImages.isNotEmpty
+                                      ? Center(
+                                          child: UpdateProductImageList(
+                                              productImages: productImagePicker
+                                                  .allProductImages),
+                                        )
+                                      : Center(
+                                          child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 20),
+                                          child: Column(
+                                            children: [
+                                              const Icon(
+                                                Icons.image,
+                                                size: 42,
+                                                color: Colors.grey,
+                                              ),
+                                              SizedBox(height: 5.h),
+                                              Text('upload_images'.tr()),
+                                            ],
                                           ),
-                                          SizedBox(height: 5.h),
-                                          Text('upload_images'.tr()),
-                                        ],
-                                      ),
-                                    )),
+                                        )),
                             ),
                           ),
                     SizedBox(height: 10.h),
@@ -391,58 +399,83 @@ class UpdateProductPage extends HookConsumerWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () async {
-                            if (selectedCategories.value.isNotEmpty) {
-                              Logger.i(nameController.text
-                                  .toLowerCase()
-                                  .replaceAll(RegExp(r' '), '-'));
+                          onPressed: loadingUpdate
+                              ? null
+                              : () async {
+                                  buttonPressed.value = false;
 
-                              FormData formData = FormData.fromMap({
-                                'id': productId,
-                                'slug': nameController.text
-                                    .toLowerCase()
-                                    .replaceAll(RegExp(r' '), '-'),
-                                'manufacturer_id':
-                                    int.parse(selectedMenufectur.value.id),
-                                'brand': brandController.text,
-                                'name': nameController.text,
-                                'mode_number': modelNumer.text,
-                                'mpn': mpn.text,
-                                'gtin': gtin.text,
-                                'gtin_type': selectedGtin.value.value,
-                                'description': description.text,
-                                'origin_country': originCountry.text,
-                                'active': active.value ? 1 : 0,
-                                'require_shipping': shipping.value ? 1 : 0,
-                                'category_list': selectedCategories.value
-                                    .map((element) =>
-                                        int.tryParse(element.key) ?? 0)
-                                    .toList(),
-                              });
+                                  if (selectedCategories.value.isNotEmpty) {
+                                    Logger.i(nameController.text
+                                        .toLowerCase()
+                                        .replaceAll(RegExp(r' '), '-'));
 
-                              for (File file
-                                  in productImagePicker.productImages) {
-                                formData.files.addAll([
-                                  MapEntry(
-                                    'images[]',
-                                    await MultipartFile.fromFile(
-                                      file.path,
-                                      filename: file.path.split('/').last,
-                                      contentType: MediaType("image", "png"),
-                                    ),
-                                  ),
-                                ]);
-                              }
+                                    // final String deleteImagesEndPoint = ref
+                                    //     .watch(productImagePickerProvider)
+                                    //     .deletedImageIds
+                                    //     .map((element) => "delete_images[]=$element")
+                                    //     .join('&');
 
-                              ref
-                                  .read(productProvider.notifier)
-                                  .updateProduct(productId, formData);
-                            } else {
-                              NotificationHelper.info(
-                                  message: 'please_select_atleast_one_category'
-                                      .tr());
-                            }
-                          },
+                                    FormData formData = FormData.fromMap({
+                                      'id': productId,
+                                      'slug': nameController.text
+                                          .toLowerCase()
+                                          .replaceAll(RegExp(r' '), '-'),
+                                      'manufacturer_id': int.parse(
+                                          selectedMenufectur.value.id),
+                                      'brand': brandController.text,
+                                      'name': nameController.text,
+                                      'mode_number': modelNumer.text,
+                                      'mpn': mpn.text,
+                                      'gtin': gtin.text,
+                                      'gtin_type': selectedGtin.value.value,
+                                      'description': description.text,
+                                      'origin_country': originCountry.text,
+                                      'active': active.value ? 1 : 0,
+                                      'require_shipping':
+                                          shipping.value ? 1 : 0,
+                                      'category_list': selectedCategories.value
+                                          .map((element) =>
+                                              int.tryParse(element.key) ?? 0)
+                                          .toList(),
+                                    });
+
+                                    for (CustomImageModel file
+                                        in productImagePicker
+                                            .newProductImages) {
+                                      formData.files.addAll([
+                                        MapEntry(
+                                          'images[]',
+                                          await MultipartFile.fromFile(
+                                            file.image.path,
+                                            filename:
+                                                file.image.path.split('/').last,
+                                            contentType:
+                                                MediaType("image", "png"),
+                                          ),
+                                        ),
+                                      ]);
+                                    }
+
+                                    for (String id in ref
+                                        .watch(productImagePickerProvider)
+                                        .deletedImageIds) {
+                                      formData.fields.addAll([
+                                        MapEntry('delete_images[]', id),
+                                      ]);
+                                    }
+
+                                    ref
+                                        .read(productProvider.notifier)
+                                        .updateProduct(productId, formData);
+
+                                    // log('New Images ${ref.watch(productImagePickerProvider).allProductImages}');
+                                  } else {
+                                    NotificationHelper.info(
+                                        message:
+                                            'please_select_atleast_one_category'
+                                                .tr());
+                                  }
+                                },
                           child: loadingUpdate
                               ? const CircularProgressIndicator()
                               : Text('update'.tr()),

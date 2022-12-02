@@ -40,8 +40,8 @@ class ManufacturerPaginationModel extends Equatable {
     return ManufacturerPaginationModel(
       data: List<ManufacturerModel>.from(
           map["data"].map((x) => ManufacturerModel.fromMap(x))),
-      links: Links.fromJson(map["links"]),
-      meta: Meta.fromJson(map["meta"]),
+      links: map["links"] != null ? Links.fromJson(map["links"]) : Links.init(),
+      meta: map["meta"] != null ? Meta.fromJson(map["meta"]) : Meta.init(),
     );
   }
 

@@ -33,7 +33,7 @@ class LogoutDialog extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -113,6 +113,11 @@ class LogoutDialog extends HookConsumerWidget {
                         ),
                       ),
                       onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const SignInPage()),
+                            (route) => false);
                         ref.read(authProvider.notifier).logout();
                       },
                       child: loading

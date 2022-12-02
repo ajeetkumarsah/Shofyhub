@@ -53,8 +53,9 @@ class CreateUpdateDelivaryBoyPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(
-              message:
-                  delivaryBoyDetails != null ? 'item_updated' : 'item_added');
+              message: delivaryBoyDetails != null
+                  ? 'item_updated'.tr()
+                  : 'item_added'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'something_went_wrong'.tr());
         }

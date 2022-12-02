@@ -38,12 +38,14 @@ class CreateSupplierPage extends HookConsumerWidget {
     final urlController = useTextEditingController();
     final zipCodeController = useTextEditingController();
     final active = useState(true);
+    final buttonPressed = useState(false);
 
     ref.listen<SupplierState>(supplierProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        if (next.failure == CleanFailure.none()) {
-          Navigator.of(context).pop();
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'supplier_added'.tr());
+          buttonPressed.value = false;
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -115,7 +117,7 @@ class CreateSupplierPage extends HookConsumerWidget {
                         style: TextStyle(color: Colors.grey.shade800),
                         isExpanded: true,
                         value: selectedCountry.value,
-                        hint: Text('select_country'.tr()),
+                        hint: Text('${'select_country'.tr()} *'),
                         icon: const Icon(Icons.keyboard_arrow_down_rounded),
                         items: countryList.map<DropdownMenuItem<KeyValueData?>>(
                             (KeyValueData? value) {
@@ -203,37 +205,43 @@ class CreateSupplierPage extends HookConsumerWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
-                          if (selectedCountry.value == null) {
-                            NotificationHelper.info(
-                                message: 'please_select_a_country'.tr());
-                          } else {
-                            if (formKey.currentState?.validate() ?? false) {
-                              final supplierInfo = CreateSupplierModel(
-                                name: nameController.text,
-                                email: emailController.text,
-                                phone: phoneController.text,
-                                addressLine1: addressLine1Controller.text,
-                                addressLine2: addressLine2Controller.text,
-                                contactPerson: contactPersonController.text,
-                                city: cityController.text,
-                                description: descriptionController.text,
-                                url: urlController.text,
-                                zipCode: zipCodeController.text,
-                                countryId: selectedCountry.value != null
-                                    ? int.tryParse(selectedCountry.value!.key)!
-                                    : 0,
-                                // stateId: 0,
-                                active: active.value ? 1 : 0,
-                              );
+                        onPressed: loading
+                            ? null
+                            : () {
+                                buttonPressed.value = true;
+                                if (selectedCountry.value == null) {
+                                  NotificationHelper.info(
+                                      message: 'please_select_a_country'.tr());
+                                } else {
+                                  if (formKey.currentState?.validate() ??
+                                      false) {
+                                    final supplierInfo = CreateSupplierModel(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      phone: phoneController.text,
+                                      addressLine1: addressLine1Controller.text,
+                                      addressLine2: addressLine2Controller.text,
+                                      contactPerson:
+                                          contactPersonController.text,
+                                      city: cityController.text,
+                                      description: descriptionController.text,
+                                      url: urlController.text,
+                                      zipCode: zipCodeController.text,
+                                      countryId: selectedCountry.value != null
+                                          ? int.tryParse(
+                                              selectedCountry.value!.key)!
+                                          : 0,
+                                      // stateId: 0,
+                                      active: active.value ? 1 : 0,
+                                    );
 
-                              ref
-                                  .read(supplierProvider.notifier)
-                                  .createNewSupplier(
-                                      supplierInfo: supplierInfo);
-                            }
-                          }
-                        },
+                                    ref
+                                        .read(supplierProvider.notifier)
+                                        .createNewSupplier(
+                                            supplierInfo: supplierInfo);
+                                  }
+                                }
+                              },
                         child: loading
                             ? const CircularProgressIndicator()
                             : Text('add'.tr()),

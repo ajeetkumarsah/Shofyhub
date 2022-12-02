@@ -35,8 +35,8 @@ class RoleRepo extends IRolesRepo {
         }
       },
       fromData: (json) =>
-          List<RoleModel>.from(json.map((e) => RoleModel.fromMap(e))),
-      endPoint: 'data/roles?filter=$filter',
+          List<RoleModel>.from(json['data'].map((e) => RoleModel.fromMap(e))),
+      endPoint: 'roles?filter=$filter',
     );
   }
 

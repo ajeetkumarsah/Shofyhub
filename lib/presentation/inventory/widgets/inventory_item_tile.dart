@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
+import 'package:zcart_seller/presentation/inventory/update_inventory_page.dart';
 import 'package:zcart_seller/presentation/inventory/widgets/quick_update_inventory_dialog.dart';
 import 'package:zcart_seller/presentation/inventory/widgets/trash_inventory.dart';
 
@@ -93,6 +94,11 @@ class InventoryItemTile extends StatelessWidget {
                       QuickUpdateInventoryDialog(inventoryInfo: inventory));
             }
             if (index == 2) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return UpdateInventoryPage(inventoryId: inventory.id);
+              }));
+            }
+            if (index == 3) {
               showDialog(
                   context: context,
                   builder: (context) =>
@@ -106,6 +112,10 @@ class InventoryItemTile extends StatelessWidget {
             ),
             PopupMenuItem(
               value: 2,
+              child: Text("update".tr()),
+            ),
+            PopupMenuItem(
+              value: 3,
               child: Text(
                 "trash".tr(),
                 style: const TextStyle(color: Colors.red),

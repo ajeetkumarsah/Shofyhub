@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
+import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/inventory/widgets/delete_inventory_dialog.dart';
 import 'package:zcart_seller/presentation/inventory/widgets/restore_inventory.dart';
 
@@ -15,6 +16,7 @@ class TrashInventoryItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Constants.trashColor,
       child: ListTile(
         contentPadding:
             const EdgeInsets.symmetric(vertical: 10, horizontal: 10),

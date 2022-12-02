@@ -260,34 +260,44 @@ class CreateManufactuererPage extends HookConsumerWidget {
                                     'email': emailController.text,
                                     'phone': phoneController.text,
                                     'description': descController.text,
-                                    'images[cover]':
-                                        await MultipartFile.fromFile(
-                                      ref
-                                          .read(singleImagePickerProvider)
-                                          .manufacturerCoverImage!
-                                          .path,
-                                      filename: ref
-                                          .read(singleImagePickerProvider)
-                                          .manufacturerCoverImage!
-                                          .path
-                                          .split('/')
-                                          .last,
-                                      contentType: MediaType("image", "png"),
-                                    ),
-                                    'images[logo]':
-                                        await MultipartFile.fromFile(
-                                      ref
-                                          .read(singleImagePickerProvider)
-                                          .manufacturerFeaturedImage!
-                                          .path,
-                                      filename: ref
-                                          .read(singleImagePickerProvider)
-                                          .manufacturerFeaturedImage!
-                                          .path
-                                          .split('/')
-                                          .last,
-                                      contentType: MediaType("image", "png"),
-                                    ),
+                                    'images[cover]': ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerCoverImage !=
+                                            null
+                                        ? await MultipartFile.fromFile(
+                                            ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerCoverImage!
+                                                .path,
+                                            filename: ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerCoverImage!
+                                                .path
+                                                .split('/')
+                                                .last,
+                                            contentType:
+                                                MediaType("image", "png"),
+                                          )
+                                        : null,
+                                    'images[logo]': ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerFeaturedImage !=
+                                            null
+                                        ? await MultipartFile.fromFile(
+                                            ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerFeaturedImage!
+                                                .path,
+                                            filename: ref
+                                                .read(singleImagePickerProvider)
+                                                .manufacturerFeaturedImage!
+                                                .path
+                                                .split('/')
+                                                .last,
+                                            contentType:
+                                                MediaType("image", "png"),
+                                          )
+                                        : null,
                                   });
                                   ref
                                       .read(manufacturerProvider.notifier)

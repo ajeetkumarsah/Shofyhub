@@ -12,7 +12,6 @@ import 'package:zcart_seller/presentation/auth/signup_screen.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
-
 class SignInPage extends HookConsumerWidget {
   const SignInPage({Key? key}) : super(key: key);
 

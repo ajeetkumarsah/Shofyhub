@@ -162,7 +162,7 @@ class AddRolePage extends HookConsumerWidget {
                             final roleModel = CreateUpdateRoleModel(
                               name: nameController.text,
                               description: descriptionController.text,
-                              level: int.tryParse(levelController.text)!,
+                              level: levelController.text.isNotEmpty ? int.tryParse(levelController.text)! : 5,
                               permissions: endPoint,
                             );
                             ref

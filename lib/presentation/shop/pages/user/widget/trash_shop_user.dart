@@ -30,7 +30,7 @@ class TrashShopUser extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -59,7 +59,7 @@ class TrashShopUser extends HookConsumerWidget {
       ),
       contentPadding: EdgeInsets.zero,
       content: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [

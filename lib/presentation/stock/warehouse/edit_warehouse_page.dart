@@ -111,10 +111,11 @@ class EditWarehousePage extends HookConsumerWidget {
     });
 
     ref.listen<WarehouseState>(warehouseProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
+      if (previous != next && !next.loading) {
         Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'warehouse_updated'.tr());
+          buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'next.failure.error'.tr());
         }
@@ -192,7 +193,7 @@ class EditWarehousePage extends HookConsumerWidget {
                               style: TextStyle(color: Colors.grey.shade800),
                               isExpanded: true,
                               value: selectedCountry.value,
-                              hint: Text('select_country'.tr()),
+                              hint: Text('${'select_country'.tr()} *'),
                               icon:
                                   const Icon(Icons.keyboard_arrow_down_rounded),
                               items: countryList
@@ -278,7 +279,7 @@ class EditWarehousePage extends HookConsumerWidget {
                         ),
                         // Business Days
                         Text(
-                          'business_days'.tr(),
+                          '${'business_days'.tr()} *',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const Divider(),

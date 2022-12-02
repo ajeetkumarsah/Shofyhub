@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,22 +14,15 @@ class TrashDelivaryDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+    final loading =
+        ref.watch(delivaryBoyProvider.select((value) => value.loading));
     ref.listen<DelivaryBoyState>(delivaryBoyProvider, (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_moved_trash'.tr());
-          // CherryToast.info(
-          //   title: Text('item_moved_trash'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'something_went_wrong'.tr());
-          
-          // CherryToast.info(
-          //   title: const Text('Something went wrong'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
           next.failure.showDialogue(context);
         }
       }
@@ -40,7 +32,7 @@ class TrashDelivaryDialog extends HookConsumerWidget {
       title: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -69,7 +61,7 @@ class TrashDelivaryDialog extends HookConsumerWidget {
       ),
       contentPadding: EdgeInsets.zero,
       content: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text('are_you_sure_trash_this_item'.tr()),
       ),
       actions: [
@@ -119,18 +111,30 @@ class TrashDelivaryDialog extends HookConsumerWidget {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                       ),
-                      onPressed: () {
-                        ref
-                            .read(delivaryBoyProvider.notifier)
-                            .trashDelivaryBoy(delivaryBoyID: delivaryBoyId);
-                      },
-                      child: Text(
-                        "trash".tr(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
+                      onPressed: loading
+                          ? null
+                          : () {
+                              ref
+                                  .read(delivaryBoyProvider.notifier)
+                                  .trashDelivaryBoy(
+                                      delivaryBoyID: delivaryBoyId);
+                            },
+                      child: loading
+                          ? const Center(
+                              child: SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )),
+                            )
+                          : Text(
+                              "trash".tr(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).canvasColor,
+                              ),
+                            ),
                     ),
                   ),
                 ],

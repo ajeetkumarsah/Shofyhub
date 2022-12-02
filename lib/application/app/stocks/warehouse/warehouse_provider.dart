@@ -84,8 +84,8 @@ class WarehouseNotifier extends StateNotifier<WarehouseState> {
 
     state = suppliersData
         .fold((l) => state.copyWith(loading: false, failure: l), (r) {
-      warehousePaginationModel = r;
-      trashWarehouses.addAll(warehousePaginationModel.data);
+      // warehousePaginationModel = r;
+      trashWarehouses.addAll(r.data);
 
       return state.copyWith(
           loading: false,

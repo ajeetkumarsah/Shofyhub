@@ -106,13 +106,14 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
     final data = await subGroupRepo.getCategorySubGroup(
         categoryGroupId: id, page: trashPageNumber, filter: 'trash');
 
-    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-      return state.copyWith(
-        loading: false,
-        categorySubGroupTrash: r.data,
-        failure: CleanFailure.none(),
-      );
-    });
+    state = data.fold(
+        (l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(
+              loading: false,
+              categorySubGroupTrash: r.data,
+              failure: CleanFailure.none(),
+            ));
+
     Logger.i(data);
   }
 
@@ -170,11 +171,10 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
     state = state.copyWith(loading: true);
     final data = await subGroupRepo.restoreCategorySubGroup(
         categorySubGroupId: categorySubGroupId);
-    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
-      getCategorySubGroup();
-      getTrashCategorySubGroup();
-      return state.copyWith(loading: false, failure: CleanFailure.none());
-    });
+    state = data.fold((l) => state.copyWith(loading: false, failure: l),
+        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
+    getCategorySubGroup();
+    getTrashCategorySubGroup();
     Logger.i(data);
   }
 }

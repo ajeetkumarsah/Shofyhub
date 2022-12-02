@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:clean_api/clean_api.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,6 +19,7 @@ import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.
 import 'package:zcart_seller/domain/app/product/create_product/manufacturer_id.dart';
 import 'package:zcart_seller/domain/app/product/create_product/tag_list.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/catalog/pages/product/create_product_image_list.dart';
 import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/select_multiple_key_value.dart';
@@ -68,8 +67,9 @@ class AddProductPage extends HookConsumerWidget {
     final shipping = useState(true);
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(categoryListProvider.notifier).loadData();
+        productImagePicker.clearDeletedImageIds();
         productImagePicker.clearAllImages();
+        ref.read(categoryListProvider.notifier).loadData();
       });
       return null;
     }, []);
@@ -323,10 +323,11 @@ class AddProductPage extends HookConsumerWidget {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10)),
-                    child: productImagePicker.productImages.isNotEmpty
+                    child: productImagePicker.allProductImages.isNotEmpty
                         ? Center(
                             child: ProductImageList(
-                                productImagePicker: productImagePicker),
+                                productImages:
+                                    productImagePicker.allProductImages),
                           )
                         : Center(
                             child: Container(
@@ -477,14 +478,14 @@ class AddProductPage extends HookConsumerWidget {
                               //         .last),
                             });
 
-                            for (File file
-                                in productImagePicker.productImages) {
+                            for (CustomImageModel file
+                                in productImagePicker.allProductImages) {
                               formData.files.addAll([
                                 MapEntry(
                                   'images[]',
                                   await MultipartFile.fromFile(
-                                    file.path,
-                                    filename: file.path.split('/').last,
+                                    file.image.path,
+                                    filename: file.image.path.split('/').last,
                                     contentType: MediaType("image", "png"),
                                   ),
                                 ),
@@ -542,61 +543,6 @@ class AddProductPage extends HookConsumerWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ProductImageList extends StatelessWidget {
-  const ProductImageList({
-    Key? key,
-    required this.productImagePicker,
-  }) : super(key: key);
-
-  final ProductImagePickerNotifier productImagePicker;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(10),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 1,
-      ),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: productImagePicker.productImages.length,
-      itemBuilder: (context, index) {
-        return Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-              ),
-              child: Image.file(
-                productImagePicker.productImages[index],
-                fit: BoxFit.cover,
-              ),
-            ),
-            Positioned(
-              right: -10,
-              top: -10,
-              child: IconButton(
-                onPressed: () {
-                  productImagePicker.removeImage(index);
-                },
-                icon: const Icon(
-                  Icons.remove_circle,
-                  color: Colors.redAccent,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

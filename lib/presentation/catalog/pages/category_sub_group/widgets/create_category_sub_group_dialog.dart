@@ -16,9 +16,9 @@ import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
-class AddCategorySubGroupDialog extends HookConsumerWidget {
+class CreateCategorySubGroupDialog extends HookConsumerWidget {
   final int categoryGroupId;
-  const AddCategorySubGroupDialog({Key? key, required this.categoryGroupId})
+  const CreateCategorySubGroupDialog({Key? key, required this.categoryGroupId})
       : super(key: key);
 
   @override
@@ -74,8 +74,8 @@ class AddCategorySubGroupDialog extends HookConsumerWidget {
                 controller: descController,
                 lebelText: 'Description *  ',
                 maxLines: 3,
-                validator: (text) =>
-                    ValidatorLogic.requiredField(text, fieldName: 'Name'),
+                validator: (text) => ValidatorLogic.requiredField(text,
+                    fieldName: 'description'.tr()),
               ),
               // SizedBox(height: 10.h),
               // KTextField(

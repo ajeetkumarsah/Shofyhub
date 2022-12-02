@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,8 +30,8 @@ class TrashWarehousePage extends HookConsumerWidget {
     final loading =
         ref.watch(warehouseProvider.select((value) => value.loading));
 
-    final warehousePaginationModel =
-        ref.watch(warehouseProvider.notifier).warehousePaginationModel;
+    // final warehousePaginationModel =
+    //     ref.watch(warehouseProvider.notifier).warehousePaginationModel;
 
     final warehouseList = ref.watch(warehouseProvider).trashWarehouses;
 
@@ -59,16 +58,16 @@ class TrashWarehousePage extends HookConsumerWidget {
                               itemCount: warehouseList.length,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
-                                if ((index == warehouseList.length - 1) &&
-                                    warehouseList.length <
-                                        warehousePaginationModel.meta.total!) {
-                                  return const SizedBox(
-                                    height: 100,
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }
+                                // if ((index == warehouseList.length - 1) &&
+                                //     warehouseList.length <
+                                //         warehousePaginationModel.meta.total!) {
+                                //   return const SizedBox(
+                                //     height: 100,
+                                //     child: Center(
+                                //       child: CircularProgressIndicator(),
+                                //     ),
+                                //   );
+                                // }
                                 return TrashWarehouseListTile(
                                   warehouseItem: warehouseList[index],
                                 );
