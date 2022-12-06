@@ -61,12 +61,16 @@ class TrashCategoryListTile extends StatelessWidget {
                   context: context,
                   builder: (context) => RestoreCategoryDialog(
                         id: category.id,
+                        categorySubGroupId: category.categorySubGroupId,
                       ));
             }
             if (index == 2) {
               showDialog(
                   context: context,
-                  builder: (context) => DeleteCategoryDialog(id: category.id));
+                  builder: (context) => DeleteCategoryDialog(
+                        id: category.id,
+                        categorySubGroupId: category.categorySubGroupId,
+                      ));
             }
           },
           itemBuilder: (context) => [

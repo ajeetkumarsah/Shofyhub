@@ -196,6 +196,7 @@ class InventoriesRepo extends IInventoriesRepo {
   @override
   Future<Either<CleanFailure, Unit>> updateInventory(
       {required UpdateInventoryModel updateinventory}) {
+    Logger.i('Inventory Endpoint: ${updateinventory.endPoint}');
     return cleanApi.put(
         failureHandler:
             <Unit>(int statusCode, Map<String, dynamic> responseBody) {

@@ -20,7 +20,7 @@ class InventoryDetailsModel extends Equatable {
   final int supplierId;
   final String conditionNote;
   final String description;
-  final String keyFeatures;
+  final List<String> keyFeatures;
   final String purchasePrice;
   final String offerPrice;
   final String offerStart;
@@ -82,7 +82,7 @@ class InventoryDetailsModel extends Equatable {
     int? supplierId,
     String? conditionNote,
     String? description,
-    String? keyFeatures,
+    List<String>? keyFeatures,
     String? purchasePrice,
     String? offerPrice,
     String? offerStart,
@@ -181,7 +181,9 @@ class InventoryDetailsModel extends Equatable {
       supplierId: map['supplier_id']?.toInt() ?? 0,
       conditionNote: map['condition_note'] ?? '',
       description: map['description'] ?? '',
-      keyFeatures: map['key_features'] ?? '',
+      keyFeatures: map['key_features'] != null
+          ? List<String>.from(map['key_features']?.map((x) => x))
+          : [],
       purchasePrice: map['purchase_price'] ?? '',
       offerPrice: map['offer_price'] ?? '',
       offerStart: map['offer_start'] ?? '',
@@ -260,7 +262,7 @@ class InventoryDetailsModel extends Equatable {
         supplierId: 0,
         conditionNote: '',
         description: '',
-        keyFeatures: '',
+        keyFeatures: [],
         purchasePrice: '',
         offerPrice: '',
         offerStart: '',

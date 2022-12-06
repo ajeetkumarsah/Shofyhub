@@ -1,13 +1,16 @@
+import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category/category_page.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/delete_category_sub_group_dialog.dart';
 import 'package:zcart_seller/presentation/catalog/pages/category_sub_group/widgets/restore_category_sub_group_dialog.dart';
 
-class TrashCategorySubgroupListTile extends StatelessWidget {
+class TrashCategorySubgroupListTile extends ConsumerWidget {
   final CategorySubGroupModel categorySubGroup;
   final int categoryGroupId;
   const TrashCategorySubgroupListTile({
@@ -17,10 +20,17 @@ class TrashCategorySubgroupListTile extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Card(
       color: Constants.trashColor,
       child: ListTile(
+        onLongPress: () {
+          ref
+              .read(categorySubGroupProvider(categoryGroupId).notifier)
+              .getTrashCategorySubGroup();
+          Logger.i(
+              ' AFSF ${ref.read(categorySubGroupProvider(categoryGroupId)).categorySubGroupTrash}');
+        },
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => CategoryPage(
@@ -47,6 +57,7 @@ class TrashCategorySubgroupListTile extends StatelessWidget {
                   context: context,
                   builder: (context) => RestoreCategorySubGroupDialog(
                         categorySubGroupId: categorySubGroup.id,
+                        categoryGroupId: categoryGroupId,
                       ));
             }
             if (index == 2) {
@@ -54,6 +65,7 @@ class TrashCategorySubgroupListTile extends StatelessWidget {
                   context: context,
                   builder: (context) => DeleteCategorySubGroupDialog(
                         id: categorySubGroup.id,
+                        categoryGroupId: categoryGroupId,
                       ));
             }
           },

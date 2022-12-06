@@ -99,17 +99,21 @@ class DisputeModel extends Equatable {
     return DisputeModel(
       id: map['id']?.toInt() ?? 0,
       reason: map['reason'] ?? '',
-      progress: map['progress'] ?? '',
-      closed: map['closed'] ?? '',
+      progress: map['progress'].toDouble() ?? 0,
+      closed: map['closed'] ?? false,
       description: map['description'] ?? '',
-      goodsReceived: map['goods_received'] ?? '',
+      goodsReceived: map['goods_received'] ?? false,
       returnGoods: map['return_goods'] ?? '',
       status: map['status'] ?? '',
       refundAmount: map['refund_amount'] ?? '',
       refundAmountRaw: map['refund_amount_raw'] ?? '',
       updatedAt: map['updated_at'] ?? '',
-      customer: UserModel.fromMap(map['customer']),
-      orderDetails: DisputeOrderDetailsModel.fromMap(map['order_details']),
+      customer: map['customer'] != null
+          ? UserModel.fromMap(map['customer'])
+          : UserModel.init(),
+      orderDetails: map['order_details'] != null
+          ? DisputeOrderDetailsModel.fromMap(map['order_details'])
+          : DisputeOrderDetailsModel.init(),
       attachments: map['attachments'] ?? '',
       replies: map['replies'] ?? '',
     );
@@ -135,7 +139,7 @@ class DisputeModel extends Equatable {
         customer: UserModel.init(),
         orderDetails: DisputeOrderDetailsModel.init(),
         attachments: const [],
-        replies:const  [],
+        replies: const [],
       );
 
   @override

@@ -123,10 +123,10 @@ class UpdateProductPage extends HookConsumerWidget {
 
     ref.listen<ProductState>(productProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'product_updated'.tr());
           buttonPressed.value = false;
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -402,7 +402,7 @@ class UpdateProductPage extends HookConsumerWidget {
                           onPressed: loadingUpdate
                               ? null
                               : () async {
-                                  buttonPressed.value = false;
+                                  buttonPressed.value = true;
 
                                   if (selectedCategories.value.isNotEmpty) {
                                     Logger.i(nameController.text

@@ -9,9 +9,11 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class DeleteCategorySubGroupDialog extends HookConsumerWidget {
   final int id;
+  final int categoryGroupId;
   const DeleteCategorySubGroupDialog({
     Key? key,
     required this.id,
+    required this.categoryGroupId,
   }) : super(key: key);
 
   @override
@@ -19,8 +21,14 @@ class DeleteCategorySubGroupDialog extends HookConsumerWidget {
     ref.listen<CategorySubGroupState>(categorySubGroupProvider(id),
         (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          ref
+              .read(categorySubGroupProvider(categoryGroupId).notifier)
+              .getTrashCategorySubGroup();
+          ref
+              .read(categorySubGroupProvider(categoryGroupId).notifier)
+              .getCategorySubGroup();
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'item_deleted'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

@@ -104,7 +104,7 @@ class DisputeOrderDetailsModel extends Equatable {
       orderDate: map['order_date'] ?? '',
       shippingDate: map['shipping_date'] ?? '',
       deliveryDate: map['delivery_date'] ?? '',
-      goodsRecieved: map['goods_received'] ?? '',
+      goodsRecieved: map['goods_received'] ?? false,
       canEvaluate: map['can_evaluate'] ?? false,
       trackingId: map['tracking_id'] ?? 0,
       trackingUrl: map['tracking_url'] ?? '',

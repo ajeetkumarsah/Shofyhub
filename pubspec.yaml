@@ -65,6 +65,8 @@ dependencies:
   path_provider: ^2.0.11
   carousel_slider: ^4.1.1
   flutter_app_badger: ^1.5.0
+  flutter_launcher_icons: ^0.11.0
+  badges: ^2.0.3
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -92,6 +94,11 @@ flutter:
     - assets/images/
     - assets/zcart_logo/
     - assets/translations/
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/zcart_logo/seller_icon.png"
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

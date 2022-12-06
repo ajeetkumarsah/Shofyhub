@@ -57,23 +57,16 @@ class EditAttributesDialog extends HookConsumerWidget {
     final ValueNotifier<AttributeTypeModel> selectedAttributeType =
         useState(attributeTypes[0]);
 
+    final buttonPressed = useState(false);
+
     ref.listen<AtributesState>(atributesProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'attribute_updated'.tr());
-          // CherryToast.info(
-          //   title: Text('attribute_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+          Navigator.of(context).pop();
+          buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -197,6 +190,8 @@ class EditAttributesDialog extends HookConsumerWidget {
                           onPressed: loadingUpdate
                               ? null
                               : () {
+                                  buttonPressed.value = true;
+
                                   final String endPoint = selectedCategories
                                       .value
                                       .map((category) =>

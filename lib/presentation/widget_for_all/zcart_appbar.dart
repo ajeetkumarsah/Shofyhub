@@ -1,6 +1,8 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zcart_seller/application/app/notification/notification_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/notification/notification_page.dart';
@@ -57,11 +59,28 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
                   MaterialPageRoute(builder: (_) => const NotificationPage()),
                 );
               },
-              icon: const Icon(
-                Icons.notifications,
-                color: Colors.white,
-              ),
-            ))
+              icon: Consumer(builder: (context, ref, child) {
+                int notificationCount =
+                    ref.watch(notificationProvider).notificationCount;
+                return notificationCount > 0
+                    ? Badge(
+                        padding: const EdgeInsets.all(6),
+                        badgeColor: Constants.kGreenColor,
+                        badgeContent: Text(
+                          notificationCount.toString(),
+                          style: TextStyle(color: Constants.kLightCardBgColor),
+                        ),
+                        child: const Icon(
+                          Icons.notifications,
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Icon(
+                        Icons.notifications,
+                        color: Colors.white,
+                      );
+              }),
+            )),
           ],
         ),
       ),

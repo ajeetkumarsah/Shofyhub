@@ -95,11 +95,11 @@ class EditManufactuererPage extends HookConsumerWidget {
 
     final buttonPressed = useState(false);
     ref.listen<ManufacturerState>(manufacturerProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
-        Navigator.of(context).pop();
-        buttonPressed.value = false;
-        if (next.failure == CleanFailure.none()) {
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          buttonPressed.value = false;
           NotificationHelper.success(message: 'manufacturer_updated'.tr());
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }

@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/notification/notification_data_provider.dart';
+import 'package:zcart_seller/application/app/notification/notification_provider.dart';
 import 'package:zcart_seller/application/core/utils.dart';
 import 'package:zcart_seller/domain/app/notification/notification_model.dart';
 import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
@@ -18,7 +19,9 @@ class NotificationPage extends HookConsumerWidget {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(notificationDataProvider.notifier).getNotifications();
+        ref.read(notificationProvider).clearNotificationCount();
       });
+
       return null;
     }, []);
 

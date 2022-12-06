@@ -8,18 +8,27 @@ import 'package:zcart_seller/application/app/category/category%20sub%20group/cat
 import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class RestoreCategorySubGroupDialog extends HookConsumerWidget {
+  final int categoryGroupId;
   final int categorySubGroupId;
-  const RestoreCategorySubGroupDialog(
-      {Key? key, required this.categorySubGroupId})
-      : super(key: key);
+  const RestoreCategorySubGroupDialog({
+    Key? key,
+    required this.categorySubGroupId,
+    required this.categoryGroupId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
     ref.listen<CategorySubGroupState>(
         categorySubGroupProvider(categorySubGroupId), (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          ref
+              .read(categorySubGroupProvider(categoryGroupId).notifier)
+              .getTrashCategorySubGroup();
+          ref
+              .read(categorySubGroupProvider(categoryGroupId).notifier)
+              .getCategorySubGroup();
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'item_restored'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

@@ -77,6 +77,7 @@ class AttributeValuesNotifier extends StateNotifier<AttributeValuesState> {
         (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
     Logger.i(data);
     getAttributeValues();
+    getTrashAttributeValues();
   }
 
   restoreAttributeValue(int attributeValueId) async {

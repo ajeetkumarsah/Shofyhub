@@ -153,7 +153,7 @@ class UpdateInventoryModel extends Equatable {
   }
 
   String get endPoint =>
-      'inventory/$id/update?active=$active&brand=$brand&condition=$condition&condition_note=$conditionNote&description=$description&free_shipping=$freeShipping&key_features=$keyFeatures&min_order_quantity=$minOrderQuantity&sku=$sku&slug=$slug&stock_quantity=$quantity&sale_price=$salePrice&shipping_weight=$shippingWeight&supplier_id=$supplierId&title=$title';
+      'inventory/$id/update?$keyFeatures&active=$active&brand=$brand&condition=$condition&condition_note=$conditionNote&description=$description&free_shipping=$freeShipping&min_order_quantity=$minOrderQuantity&sku=$sku&slug=$slug&stock_quantity=$quantity&sale_price=$salePrice&shipping_weight=$shippingWeight&supplier_id=$supplierId&title=$title';
 
   @override
   bool get stringify => true;

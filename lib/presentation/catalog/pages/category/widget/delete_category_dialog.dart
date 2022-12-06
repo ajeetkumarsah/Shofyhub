@@ -9,17 +9,25 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class DeleteCategoryDialog extends HookConsumerWidget {
   final int id;
+  final int categorySubGroupId;
   const DeleteCategoryDialog({
     Key? key,
     required this.id,
+    required this.categorySubGroupId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
     ref.listen<CategoryState>(categoryProvider(id), (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          ref
+              .read(categoryProvider(categorySubGroupId).notifier)
+              .getAllCategories();
+          ref
+              .read(categoryProvider(categorySubGroupId).notifier)
+              .getTrashCategories();
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'item_deleted'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

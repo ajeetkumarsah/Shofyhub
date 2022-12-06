@@ -6,9 +6,8 @@ import 'package:zcart_seller/domain/app/category/category%20sub%20group/category
 import 'package:zcart_seller/domain/app/category/category%20sub%20group/i_category_sub_group_repo.dart';
 import 'package:zcart_seller/infrastructure/app/category_management/category%20sub%20group/category_sub_group_repo.dart';
 
-final categorySubGroupProvider = StateNotifierProvider.family
-    .autoDispose<CategorySubGroupNotifier, CategorySubGroupState, int>(
-        (ref, id) {
+final categorySubGroupProvider = StateNotifierProvider.family<
+    CategorySubGroupNotifier, CategorySubGroupState, int>((ref, id) {
   return CategorySubGroupNotifier(id, CategorySubGroupRepo());
 });
 
@@ -114,7 +113,7 @@ class CategorySubGroupNotifier extends StateNotifier<CategorySubGroupState> {
               failure: CleanFailure.none(),
             ));
 
-    Logger.i(data);
+    Logger.i('trash data ${state.categorySubGroupTrash}');
   }
 
   // getMoreTrashCategorySubGroup() async {

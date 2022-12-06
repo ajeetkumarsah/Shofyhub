@@ -9,16 +9,26 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class RestoreAttributeValueDialog extends HookConsumerWidget {
   final int id;
-  const RestoreAttributeValueDialog({Key? key, required this.id})
-      : super(key: key);
+  final int attributeId;
+  const RestoreAttributeValueDialog({
+    Key? key,
+    required this.id,
+    required this.attributeId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
     ref.listen<AttributeValuesState>(attributeValuesProvider(id),
         (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          ref
+              .read(attributeValuesProvider(attributeId).notifier)
+              .getTrashAttributeValues();
+          ref
+              .read(attributeValuesProvider(attributeId).notifier)
+              .getAttributeValues();
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'item_restored'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

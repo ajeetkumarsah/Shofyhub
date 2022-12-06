@@ -9,9 +9,11 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 
 class DeleteAttributeValueDialog extends HookConsumerWidget {
   final int id;
+  final int attributeId;
   const DeleteAttributeValueDialog({
     Key? key,
     required this.id,
+    required this.attributeId,
   }) : super(key: key);
 
   @override
@@ -19,8 +21,14 @@ class DeleteAttributeValueDialog extends HookConsumerWidget {
     ref.listen<AttributeValuesState>(attributeValuesProvider(id),
         (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
+          ref
+              .read(attributeValuesProvider(attributeId).notifier)
+              .getTrashAttributeValues();
+          ref
+              .read(attributeValuesProvider(attributeId).notifier)
+              .getAttributeValues();
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'item_deleted'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);

@@ -37,8 +37,8 @@ class TrashCategorySubgroupListPage extends HookConsumerWidget {
       return null;
     }, []);
 
-    final trashCategorySubGroup =
-        ref.watch(categorySubGroupProvider(id)).categorySubGroupTrash;
+    final trashCategorySubGroup = ref.watch(categorySubGroupProvider(id)
+        .select((value) => value.categorySubGroupTrash));
 
     final loading = ref
         .watch(categorySubGroupProvider(id).select((value) => value.loading));

@@ -37,6 +37,9 @@ class UpdateInventoryPage extends HookConsumerWidget {
       return null;
     }, []);
 
+    final inveontryDetails = ref.watch(inventoryDetailsProvider(inventoryId)
+        .select((value) => value.inventoryDetails));
+
     final titleController = useTextEditingController();
     final slugController = useTextEditingController();
     final brandController = useTextEditingController();
@@ -45,7 +48,6 @@ class UpdateInventoryPage extends HookConsumerWidget {
     final availableFromController = useTextEditingController();
     final expirayDateController = useTextEditingController();
     final conditionController = useTextEditingController();
-    final keyFeaturesController = useTextEditingController();
     final offerStartsController = useTextEditingController();
     final offerEndsController = useTextEditingController();
     final minOrderQuantiryController = useTextEditingController();
@@ -59,6 +61,16 @@ class UpdateInventoryPage extends HookConsumerWidget {
     final active = useState(true);
     final freeShipping = useState(true);
 
+    final List<TextEditingController> keyFeaturesControllers = [
+      useTextEditingController(),
+      useTextEditingController(),
+      useTextEditingController(),
+      useTextEditingController(),
+      useTextEditingController(),
+      useTextEditingController(),
+      useTextEditingController(),
+    ];
+
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
     ref.listen<InventoryDetailsState>(inventoryDetailsProvider(inventoryId),
@@ -70,7 +82,6 @@ class UpdateInventoryPage extends HookConsumerWidget {
         descriptionController.text = next.inventoryDetails.description;
         conditionController.text = next.inventoryDetails.condition;
         conditionNoteController.text = next.inventoryDetails.conditionNote;
-        keyFeaturesController.text = next.inventoryDetails.keyFeatures;
         // expirayDateController.text = next.inventoryDetails.;
         // availableFromController.text = next.inventoryDetails.;
         offerStartsController.text = next.inventoryDetails.offerStart;
@@ -90,6 +101,9 @@ class UpdateInventoryPage extends HookConsumerWidget {
 
         active.value = next.inventoryDetails.active;
         freeShipping.value = next.inventoryDetails.freeShipping;
+        for (var i = 0; i < next.inventoryDetails.keyFeatures.length; i++) {
+          keyFeaturesControllers[i].text = next.inventoryDetails.keyFeatures[i];
+        }
       }
     });
     ref.listen<InventoriesState>(stockeInventoryProvider, (previous, next) {
@@ -216,13 +230,29 @@ class UpdateInventoryPage extends HookConsumerWidget {
                       //   },
                       //   suffixIcon: const Icon(Icons.date_range),
                       // ),
-                      SizedBox(
-                        height: 10.h,
+                      SizedBox(height: 10.h),
+                      Text(
+                        "key_features".tr(),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
-                      KTextField(
-                        controller: keyFeaturesController,
-                        lebelText: 'key_features'.tr(),
+                      SizedBox(height: 10.h),
+                      Column(
+                        children: keyFeaturesControllers
+                            .asMap()
+                            .map((index, value) => MapEntry(
+                                  index,
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: KTextField(
+                                      controller: keyFeaturesControllers[index],
+                                      lebelText: '',
+                                    ),
+                                  ),
+                                ))
+                            .values
+                            .toList(),
                       ),
+
                       SizedBox(
                         height: 10.h,
                       ),
@@ -335,11 +365,14 @@ class UpdateInventoryPage extends HookConsumerWidget {
                                 : () {
                                     if (formKey.currentState?.validate() ??
                                         false) {
+                                      final String keyFeatures =
+                                          keyFeaturesControllers
+                                              .map((keyFeature) =>
+                                                  "key_features[]=${keyFeature.text}")
+                                              .join('&');
                                       final inventory = UpdateInventoryModel(
                                         id: inventoryId,
-                                        slug: titleController.text
-                                            .toLowerCase()
-                                            .replaceAll(RegExp(r' '), '-'),
+                                        slug: slugController.text,
                                         title: titleController.text,
                                         brand: brandController.text,
                                         condition: conditionController.text,
@@ -347,7 +380,7 @@ class UpdateInventoryPage extends HookConsumerWidget {
                                         description: descriptionController.text,
                                         // expiryDate: DateTime.tryParse(
                                         //     expirayDateController.text)!,
-                                        keyFeatures: keyFeaturesController.text,
+                                        keyFeatures: keyFeatures,
                                         minOrderQuantity: int.tryParse(
                                             minOrderQuantiryController.text)!,
                                         // offerPrice: double.tryParse(

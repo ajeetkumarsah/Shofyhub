@@ -99,9 +99,12 @@ class SignInPage extends HookConsumerWidget {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadiusDirectional.circular(10)),
-            child: Image.asset(
-              'assets/zcart_logo/zcart_logo.png',
-              fit: BoxFit.cover,
+            child: ClipRRect(
+              borderRadius: BorderRadiusDirectional.circular(50),
+              child: Image.asset(
+                'assets/zcart_logo/seller_logo.png',
+                fit: BoxFit.cover,
+              ),
             )),
       ),
       body: DefaultTabController(

@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/form/country_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/shop/pages/taxes/create_tax_page.dart';
 import 'package:zcart_seller/presentation/shop/pages/taxes/widgets/tax_list_tile.dart';
 
@@ -42,13 +43,7 @@ class TaxListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : taxList.isEmpty
-              ? Center(
-                  child: Text(
-                    'no_item_available'.tr(),
-                    style:
-                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                  ),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref.read(taxProvider.notifier).getAllTax();

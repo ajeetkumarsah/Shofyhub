@@ -9,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:zcart_seller/application/app/notification/notification_provider.dart';
 import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/application/core/shared_prefs.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -87,6 +88,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
         //Update the badge count
         FlutterAppBadger.updateBadgeCount(1);
+        ref.read(notificationProvider).increamentNotificationCount(1);
 
         NotificationDetails platformChannelSpecifics =
             NotificationDetails(android: androidPlatformChannelSpecifics);
