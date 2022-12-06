@@ -7,7 +7,7 @@ import 'package:zcart_seller/domain/auth/user_model.dart';
 class DisputeModel extends Equatable {
   final int id;
   final String reason;
-  final int progress;
+  final double progress;
   final bool closed;
   final String description;
   final bool goodsReceived;
@@ -42,7 +42,7 @@ class DisputeModel extends Equatable {
   DisputeModel copyWith({
     int? id,
     String? reason,
-    int? progress,
+    double? progress,
     bool? closed,
     String? description,
     bool? goodsReceived,
@@ -99,7 +99,7 @@ class DisputeModel extends Equatable {
     return DisputeModel(
       id: map['id']?.toInt() ?? 0,
       reason: map['reason'] ?? '',
-      progress: map['progress'].toDouble() ?? 0,
+      progress: map['progress'].toDouble() ?? 0.0,
       closed: map['closed'] ?? false,
       description: map['description'] ?? '',
       goodsReceived: map['goods_received'] ?? false,

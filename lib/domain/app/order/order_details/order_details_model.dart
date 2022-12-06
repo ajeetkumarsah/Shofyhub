@@ -159,11 +159,15 @@ class OrderDetailsModel extends Equatable {
       customer_phone_number: map['customer_phone_number'] ?? '',
       order_status: map['order_status'] ?? '',
       payment_status: map['payment_status'] ?? '',
-      payment_method: PaymentMethod.fromMap(map['payment_method']),
+      payment_method: map['payment_method'] != null
+          ? PaymentMethod.fromMap(map['payment_method'])
+          : PaymentMethod.init(),
       customer:
           map['customer'] != null ? Customer.fromMap(map['customer']) : null,
-      items: List<Items>.from(
-          map['items']?.map((x) => Items.fromMap(x)) ?? const []),
+      items: map['items'] != null
+          ? List<Items>.from(
+              map['items']?.map((x) => Items.fromMap(x)) ?? const [])
+          : [],
       buyer_note: map['buyer_note'] ?? '',
       shipping_rate_id: map['shipping_rate_id']?.toInt() ?? 0,
       shipping_address: map['shipping_address'] ?? '',

@@ -109,7 +109,9 @@ class DisputeOrderDetailsModel extends Equatable {
       trackingId: map['tracking_id'] ?? 0,
       trackingUrl: map['tracking_url'] ?? '',
       itemCount: map['item_count'] ?? 0,
-      deliveryBoy: map['delivery_boy'] ?? DelivaryBoyModel.init(),
+      deliveryBoy: map['delivery_boy'] != null
+          ? DelivaryBoyModel.fromMap(map['delivery_boy'])
+          : DelivaryBoyModel.init(),
     );
   }
 

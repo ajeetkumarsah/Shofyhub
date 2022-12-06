@@ -98,7 +98,7 @@ class DisputeDetailsModel extends Equatable {
     return DisputeDetailsModel(
       id: map['id']?.toInt() ?? 0,
       reason: map['reason'] ?? '',
-      progress: map['progress'] ?? 0,
+      progress: map['progress'].toDouble() ?? 0,
       closed: map['closed'] ?? '',
       description: map['description'] ?? '',
       goodsReceived: map['goods_received'] ?? '',
@@ -107,8 +107,12 @@ class DisputeDetailsModel extends Equatable {
       refundAmount: map['refund_amount'] ?? '',
       refundAmountRaw: map['refund_amount_raw'] ?? '',
       updatedAt: map['updated_at'] ?? '',
-      customer: UserModel.fromMap(map['customer']),
-      orderDetails: OrderDetailsModel.fromMap(map['order_details']),
+      customer: map['customer'] != null
+          ? UserModel.fromMap(map['customer'])
+          : UserModel.init(),
+      orderDetails: map['order_details'] != null
+          ? OrderDetailsModel.fromMap(map['order_details'])
+          : OrderDetailsModel.init(),
       attachments: map['attachments'] ?? '',
       replies: map['replies'] ?? '',
     );

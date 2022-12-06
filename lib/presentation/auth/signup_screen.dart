@@ -46,25 +46,31 @@ class SignupScreen extends HookConsumerWidget {
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.user != UserModel.init()) {
-          if (isPhoneLogin.value) {
-            String phone = ref.read(countryCodeProvider).getSelectedCountry() +
-                phoneController.text;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => OTPVerificationScreen(
-                  phone: phone,
-                ),
-              ),
-            );
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const DashboardHome(),
-              ),
-            );
-          }
+          ref.watch(checkOtpLoginPluginProvider).when(
+              data: (data) {
+                if (data == true) {
+                  String phone =
+                      ref.read(countryCodeProvider).getSelectedCountry() +
+                          phoneController.text;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => OTPVerificationScreen(
+                        phone: phone,
+                      ),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const DashboardHome(),
+                    ),
+                  );
+                }
+              },
+              loading: () => const SizedBox(),
+              error: (_, __) => const SizedBox());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -158,7 +164,7 @@ class SignupScreen extends HookConsumerWidget {
 
                 return otpLoginPluginCheck.when(
                     data: (data) {
-                      // isPhoneLogin.value = true;
+                      isPhoneLogin.value = true;
                       return data == true
                           ? Column(
                               children: [
