@@ -38,10 +38,6 @@ class SignupScreen extends HookConsumerWidget {
     final shopNameController = useTextEditingController();
     final ValueNotifier<KeyValueData> selectedPlan = useState(planList[0]);
 
-    // useEffect(() {
-    //   isPhoneLogin.value = false;
-    //   return null;
-    // }, []);
 
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (previous != next && !next.loading) {

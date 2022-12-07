@@ -2,6 +2,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:zcart_seller/domain/app/settings/advance_shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/basic_shop_settings_model.dart';
+import 'package:zcart_seller/domain/app/settings/system_config_model.dart';
 
 class ShopSettingsState extends Equatable {
   final bool loading;
@@ -9,6 +10,7 @@ class ShopSettingsState extends Equatable {
   final CleanFailure failure;
   final BasicShopSettingsModel basicShopSettings;
   final AdvanceShopSettingsModel advanceShopSettings;
+  final ShopConfigModel shopConfigs;
 
   const ShopSettingsState({
     required this.loading,
@@ -16,6 +18,7 @@ class ShopSettingsState extends Equatable {
     required this.failure,
     required this.basicShopSettings,
     required this.advanceShopSettings,
+    required this.shopConfigs,
   });
 
   ShopSettingsState copyWith({
@@ -24,6 +27,7 @@ class ShopSettingsState extends Equatable {
     CleanFailure? failure,
     BasicShopSettingsModel? basicShopSettings,
     AdvanceShopSettingsModel? advanceShopSettings,
+    ShopConfigModel? shopConfigs,
   }) {
     return ShopSettingsState(
       loading: loading ?? this.loading,
@@ -31,6 +35,7 @@ class ShopSettingsState extends Equatable {
       failure: failure ?? this.failure,
       basicShopSettings: basicShopSettings ?? this.basicShopSettings,
       advanceShopSettings: advanceShopSettings ?? this.advanceShopSettings,
+      shopConfigs: shopConfigs ?? this.shopConfigs,
     );
   }
 
@@ -41,6 +46,7 @@ class ShopSettingsState extends Equatable {
       loadingUpdate,
       failure,
       basicShopSettings,
+      shopConfigs,
     ];
   }
 
@@ -50,5 +56,6 @@ class ShopSettingsState extends Equatable {
         failure: CleanFailure.none(),
         basicShopSettings: BasicShopSettingsModel.init(),
         advanceShopSettings: AdvanceShopSettingsModel.init(),
+        shopConfigs: ShopConfigModel.init(),
       );
 }
