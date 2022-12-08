@@ -9,6 +9,7 @@ import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/carriers/carrier_model.dart';
+import 'package:zcart_seller/presentation/order/widget/carrier_not_found_dialog.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class FullfillorderDialog extends HookConsumerWidget {
@@ -158,11 +159,18 @@ class FullfillorderDialog extends HookConsumerWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      ref.read(orderProvider.notifier).fulfillOrder(
-                          orderId,
-                          carriers.isNotEmpty ? selectedCarrier.value!.id : 0,
-                          trackingIdController.text,
-                          sendNotification.value);
+                      if (carriers.isEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const CarrierNotFoundDialog(),
+                        );
+                      } else {
+                        ref.read(orderProvider.notifier).fulfillOrder(
+                            orderId,
+                            carriers.isNotEmpty ? selectedCarrier.value!.id : 0,
+                            trackingIdController.text,
+                            sendNotification.value);
+                      }
                     },
                     child: loading
                         ? const CircularProgressIndicator()

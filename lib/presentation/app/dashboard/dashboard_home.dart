@@ -22,10 +22,11 @@ class DashboardHome extends HookConsumerWidget {
         // Post FCM token
         final fcmToken = await SharedPref.getFcmToken();
         NotificationRepo().postFcmToken(token: fcmToken);
-        ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
       });
       return null;
     }, []);
+
+    final settings = ref.watch(shopSettingsProvider);
 
     const screens = [
       DashboardPage(),
@@ -34,37 +35,77 @@ class DashboardHome extends HookConsumerWidget {
       SettingsHome(),
     ];
 
-    return ValueListenableBuilder(
-        valueListenable: DashboardUtility.index,
-        builder: (context, value, child) {
-          return Scaffold(
-            body: IndexedStack(
-              index: DashboardUtility.index.value,
-              children: screens,
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-                elevation: 5,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: Constants.appbarColor,
-                unselectedItemColor: Colors.grey,
-                selectedFontSize: 12,
-                currentIndex: DashboardUtility.index.value,
-                onTap: (value) {
-                  DashboardUtility.index.value = value;
-                },
-                items: [
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.dashboard),
-                      label: 'dashboard'.tr()),
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.list_alt_sharp),
-                      label: 'orders'.tr()),
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.message), label: 'messages'.tr()),
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.settings), label: 'settings'.tr()),
-                ]),
-          );
-        });
+    const screensWithoutChat = [
+      DashboardPage(),
+      OrderMainPage(index: 0),
+      SettingsHome(),
+    ];
+
+    return (settings.systemConfigs.enableChat &&
+            settings.shopConfigs.enableLiveChat)
+        ? ValueListenableBuilder(
+            valueListenable: DashboardUtility.index,
+            builder: (context, value, child) {
+              return Scaffold(
+                  body: IndexedStack(
+                    index: DashboardUtility.index.value,
+                    children: screens,
+                  ),
+                  bottomNavigationBar: BottomNavigationBar(
+                      elevation: 5,
+                      type: BottomNavigationBarType.fixed,
+                      selectedItemColor: Constants.appbarColor,
+                      unselectedItemColor: Colors.grey,
+                      selectedFontSize: 12,
+                      currentIndex: DashboardUtility.index.value,
+                      onTap: (value) {
+                        DashboardUtility.index.value = value;
+                      },
+                      items: [
+                        BottomNavigationBarItem(
+                            icon: const Icon(Icons.dashboard),
+                            label: 'dashboard'.tr()),
+                        BottomNavigationBarItem(
+                            icon: const Icon(Icons.list_alt_sharp),
+                            label: 'orders'.tr()),
+                        BottomNavigationBarItem(
+                            icon: const Icon(Icons.message),
+                            label: 'messages'.tr()),
+                        BottomNavigationBarItem(
+                            icon: const Icon(Icons.settings),
+                            label: 'settings'.tr()),
+                      ]));
+            })
+        : ValueListenableBuilder(
+            valueListenable: NoLiveChatDashboardUtility.index,
+            builder: (context, value, child) {
+              return Scaffold(
+                body: IndexedStack(
+                  index: NoLiveChatDashboardUtility.index.value,
+                  children: screensWithoutChat,
+                ),
+                bottomNavigationBar: BottomNavigationBar(
+                    elevation: 5,
+                    type: BottomNavigationBarType.fixed,
+                    selectedItemColor: Constants.appbarColor,
+                    unselectedItemColor: Colors.grey,
+                    selectedFontSize: 12,
+                    currentIndex: NoLiveChatDashboardUtility.index.value,
+                    onTap: (value) {
+                      NoLiveChatDashboardUtility.index.value = value;
+                    },
+                    items: [
+                      BottomNavigationBarItem(
+                          icon: const Icon(Icons.dashboard),
+                          label: 'dashboard'.tr()),
+                      BottomNavigationBarItem(
+                          icon: const Icon(Icons.list_alt_sharp),
+                          label: 'orders'.tr()),
+                      BottomNavigationBarItem(
+                          icon: const Icon(Icons.settings),
+                          label: 'settings'.tr()),
+                    ]),
+              );
+            });
   }
 }

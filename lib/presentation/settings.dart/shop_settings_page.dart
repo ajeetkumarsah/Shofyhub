@@ -38,7 +38,7 @@ class ShopSettingsPage extends HookConsumerWidget {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref.read(singleImagePickerProvider).clearShopLogo();
-        ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
+        ref.read(shopSettingsProvider.notifier).getShopSettings();
         ref.read(shopUserProvider.notifier).getShopUser();
       });
       return null;
@@ -54,15 +54,15 @@ class ShopSettingsPage extends HookConsumerWidget {
 
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) async {
       if (previous != next && !next.loading) {
-        nameController.text = next.basicShopSettings.name;
-        legalNameController.text = next.basicShopSettings.legalName;
-        emailController.text = next.basicShopSettings.email;
-        descriptionController.text = next.basicShopSettings.description;
-        if (next.basicShopSettings.logo.isNotEmpty) {
+        nameController.text = next.shopSettings.name;
+        legalNameController.text = next.shopSettings.legalName;
+        emailController.text = next.shopSettings.email;
+        descriptionController.text = next.shopSettings.description;
+        if (next.shopSettings.logo.isNotEmpty) {
           //Convert Network Image to File Image
           ref.watch(singleImagePickerProvider).setLoading(true);
           File file =
-              await ImageConverter.getImage(url: next.basicShopSettings.logo);
+              await ImageConverter.getImage(url: next.shopSettings.logo);
           ref.read(singleImagePickerProvider).setShopLogo(file);
           ref.watch(singleImagePickerProvider).setLoading(false);
         }
@@ -192,7 +192,7 @@ class ShopSettingsPage extends HookConsumerWidget {
                                             : null,
                                       });
                                       // final fo =
-                                      //     UpdateBasicShopSettingsModel(
+                                      //     UpdateshopSettingsModel(
                                       //   shopId: shopId,
                                       //   name: nameController.text,
                                       //   slug: nameController.text
@@ -204,7 +204,7 @@ class ShopSettingsPage extends HookConsumerWidget {
                                       // );
                                       ref
                                           .read(shopSettingsProvider.notifier)
-                                          .updateBasicShopSettings(
+                                          .updateShopSettings(
                                               formData: formData,
                                               shopId: shopId);
                                       buttonPressed.value = true;

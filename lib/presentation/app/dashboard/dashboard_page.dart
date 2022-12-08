@@ -38,11 +38,9 @@ class DashboardPage extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        // Post FCM token
-        final fcmToken = await SharedPref.getFcmToken();
-        NotificationRepo().postFcmToken(token: fcmToken);
-
-        ref.read(shopSettingsProvider.notifier).getBasicShopSettings();
+        ref.read(shopSettingsProvider.notifier).getSystemConfigs();
+        ref.read(shopSettingsProvider.notifier).getShopSettings();
+        ref.read(shopSettingsProvider.notifier).getShopConfigs();
         ref.read(shopUserProvider.notifier).getShopUser();
 
         ref.read(orderProvider.notifier).getOrders();
@@ -71,8 +69,8 @@ class DashboardPage extends HookConsumerWidget {
     final statistics =
         ref.watch(dashboardProvider.select((value) => value.statistics));
 
-    final shopData = ref
-        .watch(shopSettingsProvider.select((value) => value.basicShopSettings));
+    final shopData =
+        ref.watch(shopSettingsProvider.select((value) => value.shopSettings));
 
     // final shopDataLoading =
     //     ref.watch(shopSettingsProvider.select((value) => value.loading));
@@ -85,6 +83,9 @@ class DashboardPage extends HookConsumerWidget {
       body: RefreshIndicator(
         onRefresh: () {
           return Future.delayed(const Duration(milliseconds: 100), () async {
+            ref.read(shopSettingsProvider.notifier).getSystemConfigs();
+            ref.read(shopSettingsProvider.notifier).getShopSettings();
+            ref.read(shopSettingsProvider.notifier).getShopConfigs();
             ref.read(orderProvider.notifier).getOrders();
             ref.read(orderProvider.notifier).getFullFilledOrders();
             ref.read(orderProvider.notifier).getUnFullFilledOrders();

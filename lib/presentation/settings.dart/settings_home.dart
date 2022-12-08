@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
-import 'package:zcart_seller/presentation/settings.dart/advance_shop_settings_page.dart';
-import 'package:zcart_seller/presentation/settings.dart/basic_shop_settings_page.dart';
+import 'package:zcart_seller/presentation/settings.dart/shop_config_page.dart';
+import 'package:zcart_seller/presentation/settings.dart/shop_settings_page.dart';
 import 'package:zcart_seller/presentation/widget_for_all/zcart_appbar.dart';
 
 class SettingsHome extends StatelessWidget {
@@ -14,13 +14,10 @@ class SettingsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: hasBackButton
-          ? AppBar(
-              title: Text('settings'.tr()),
-            )
-          : ZcartAppBar(
-              title: 'settings'.tr(),
-            ),
+      appBar: AppBar(
+        title: Text('settings'.tr()),
+        automaticallyImplyLeading: hasBackButton,
+      ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Constants.buttonColor,
         onPressed: () {
@@ -41,7 +38,7 @@ class SettingsHome extends StatelessWidget {
               );
             },
             leading: const Icon(Icons.settings_applications),
-            title: Text('basic_shop_settings'.tr()),
+            title: Text('shop_settings'.tr()),
           ),
         ),
         Card(
@@ -49,12 +46,11 @@ class SettingsHome extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (_) => const AdvanceShopSettingsPage()),
+                MaterialPageRoute(builder: (_) => const ShopConfigPage()),
               );
             },
             leading: const Icon(Icons.settings_applications_outlined),
-            title: Text('advance_shop_settings'.tr()),
+            title: Text('shop_configuration'.tr()),
           ),
         ),
       ]),

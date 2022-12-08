@@ -6,6 +6,7 @@ import 'package:zcart_seller/application/app/carriers/carriers_provider.dart';
 import 'package:zcart_seller/application/app/delivary_boys/delivary_provider.dart';
 import 'package:zcart_seller/application/app/order/order_details_provider.dart';
 import 'package:zcart_seller/application/app/order/order_status_provider.dart';
+import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/order/widget/add_admin_note.dart';
 import 'package:zcart_seller/presentation/order/widget/archive_order_confirmation.dart';
@@ -94,10 +95,11 @@ class OrderDetailsScreen extends HookConsumerWidget {
                         value: 3,
                         child: Text("Mark as Delivered"),
                       ),
-                    const PopupMenuItem(
-                      value: 4,
-                      child: Text("Update order status"),
-                    ),
+                    if (orderDetails.order_status != 'FULFILLED')
+                      const PopupMenuItem(
+                        value: 4,
+                        child: Text("Update order status"),
+                      ),
                     const PopupMenuItem(
                       value: 5,
                       child: Text("Initiate Refund"),
@@ -515,12 +517,67 @@ class OrderDetailsScreen extends HookConsumerWidget {
       ),
       bottomNavigationBar: loading
           ? const SizedBox()
-          : Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
+          : ref.watch(shopSettingsProvider).systemConfigs.vendorGetPaid
+              ? Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 37.h,
+                        width: 160.w,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => CancelOrderDialog(
+                                orderId: orderDetails.id,
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xffFFD0D0),
+                              shape: const StadiumBorder()),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: Color(0xffF80000)),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 37.h,
+                        width: 160.w,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => MarkAsPaidUnpaidDialog(
+                                orderId: orderDetails.id,
+                                isPaid: orderDetails.payment_status == "UNPAID"
+                                    ? false
+                                    : true,
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff683CB7),
+                              shape: const StadiumBorder()),
+                          child: Text(
+                            orderDetails.payment_status == "UNPAID"
+                                ? 'Mark as Paid'
+                                : 'Mark as Unpaid',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  child: SizedBox(
                     height: 37.h,
                     width: 160.w,
                     child: ElevatedButton(
@@ -541,35 +598,7 @@ class OrderDetailsScreen extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 37.h,
-                    width: 160.w,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => MarkAsPaidUnpaidDialog(
-                            orderId: orderDetails.id,
-                            isPaid: orderDetails.payment_status == "UNPAID"
-                                ? false
-                                : true,
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff683CB7),
-                          shape: const StadiumBorder()),
-                      child: Text(
-                        orderDetails.payment_status == "UNPAID"
-                            ? 'Mark as Paid'
-                            : 'Mark as Unpaid',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                ),
     );
   }
 }

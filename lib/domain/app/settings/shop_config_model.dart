@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class AdvanceShopSettingsModel extends Equatable {
+class ShopConfigModel extends Equatable {
   final int shopId;
   final String supportPhone;
   final String supportPhoneTollFree;
@@ -39,7 +39,7 @@ class AdvanceShopSettingsModel extends Equatable {
   final int payOnline;
   final int payInPerson;
 
-  const AdvanceShopSettingsModel({
+  const ShopConfigModel({
     required this.shopId,
     required this.supportPhone,
     required this.supportPhoneTollFree,
@@ -79,7 +79,7 @@ class AdvanceShopSettingsModel extends Equatable {
     required this.payInPerson,
   });
 
-  AdvanceShopSettingsModel copyWith({
+  ShopConfigModel copyWith({
     int? shopId,
     String? supportPhone,
     String? supportPhoneTollFree,
@@ -118,7 +118,7 @@ class AdvanceShopSettingsModel extends Equatable {
     int? payOnline,
     int? payInPerson,
   }) {
-    return AdvanceShopSettingsModel(
+    return ShopConfigModel(
       shopId: shopId ?? this.shopId,
       supportPhone: supportPhone ?? this.supportPhone,
       supportPhoneTollFree: supportPhoneTollFree ?? this.supportPhoneTollFree,
@@ -165,8 +165,7 @@ class AdvanceShopSettingsModel extends Equatable {
     );
   }
 
-  factory AdvanceShopSettingsModel.fromMap(Map<String, dynamic> map) =>
-      AdvanceShopSettingsModel(
+  factory ShopConfigModel.fromMap(Map<String, dynamic> map) => ShopConfigModel(
         shopId: map["shop_id"]?.toInt() ?? 0,
         supportPhone: map["support_phone"] ?? '',
         supportPhoneTollFree: map["support_phone_toll_free"] ?? '',
@@ -207,7 +206,7 @@ class AdvanceShopSettingsModel extends Equatable {
         payInPerson: map["pay_in_person"]?.toInt() ?? 0,
       );
 
-  factory AdvanceShopSettingsModel.init() => AdvanceShopSettingsModel(
+  factory ShopConfigModel.init() => ShopConfigModel(
         shopId: 0,
         supportPhone: '',
         supportPhoneTollFree: '',

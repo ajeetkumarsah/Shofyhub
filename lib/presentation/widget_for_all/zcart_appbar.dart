@@ -6,6 +6,7 @@ import 'package:zcart_seller/application/app/notification/notification_provider.
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/notification/notification_page.dart';
+import 'package:zcart_seller/presentation/settings.dart/settings_home.dart';
 
 class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -25,20 +26,26 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             Expanded(
               child: Consumer(builder: (context, ref, child) {
-                return Container(
-                    constraints:
-                        const BoxConstraints(maxHeight: 50, maxWidth: 50),
-                    padding: const EdgeInsets.all(5),
-                    margin: const EdgeInsets.only(left: 10, right: 40),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Image.network(
-                      ref.watch(shopSettingsProvider
-                          .select((value) => value.basicShopSettings.logo)),
-                      errorBuilder: (c, e, s) => const Icon(Icons.error),
-                      fit: BoxFit.cover,
-                    ));
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => const SettingsHome()));
+                  },
+                  child: Container(
+                      constraints:
+                          const BoxConstraints(maxHeight: 50, maxWidth: 50),
+                      padding: const EdgeInsets.all(5),
+                      margin: const EdgeInsets.only(left: 10, right: 40),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Image.network(
+                        ref.watch(shopSettingsProvider
+                            .select((value) => value.shopSettings.logo)),
+                        errorBuilder: (c, e, s) => const Icon(Icons.error),
+                        fit: BoxFit.cover,
+                      )),
+                );
               }),
             ),
             Expanded(

@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -14,18 +13,19 @@ import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/settings/payment_method_model.dart';
-import 'package:zcart_seller/domain/app/settings/update_advance_shop_settings_model.dart';
+import 'package:zcart_seller/domain/app/settings/update_shop_configs_model.dart';
 import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
 import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/error_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
-class AdvanceShopSettingsPage extends HookConsumerWidget {
-  const AdvanceShopSettingsPage({Key? key}) : super(key: key);
+class ShopConfigPage extends HookConsumerWidget {
+  const ShopConfigPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ref) {
@@ -39,7 +39,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
 
     useEffect(() {
       Future.delayed(const Duration(milliseconds: 100), () async {
-        ref.read(shopSettingsProvider.notifier).getAdvanceShopSettings();
+        ref.read(shopSettingsProvider.notifier).getShopConfigs();
       });
       return null;
     }, []);
@@ -116,112 +116,90 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
 
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        alertQuanityController.text =
-            next.advanceShopSettings.alertQuantity.toString();
-        supportPhoneController.text = next.advanceShopSettings.supportPhone;
+        alertQuanityController.text = next.shopConfigs.alertQuantity.toString();
+        supportPhoneController.text = next.shopConfigs.supportPhone;
         supportPhoneTollFreeController.text =
-            next.advanceShopSettings.supportPhoneTollFree;
-        supportEmailController.text = next.advanceShopSettings.supportEmail;
-        // supportAgentController.text = next.advanceShopSettings.supportAgent;
+            next.shopConfigs.supportPhoneTollFree;
+        supportEmailController.text = next.shopConfigs.supportEmail;
+        // supportAgentController.text = next.shopConfigs.supportAgent;
+
+        paginationController.text = next.shopConfigs.pagination.toString();
+        defaultSenderEmailController.text =
+            next.shopConfigs.defaultSenderEmailAddress;
+        defaultEmailSenderNameController.text =
+            next.shopConfigs.defaultEmailSenderName;
+        returnRefundController.text = next.shopConfigs.returnRefund;
+        orderNumerPrefixController.text = next.shopConfigs.orderNumberPrefix;
+        orderNumberSuffixController.text = next.shopConfigs.orderNumberSuffix;
+        defaultTaxIdController.text = next.shopConfigs.defaultTaxId.toString();
+        orderHandlingCostController.text = next.shopConfigs.orderHandlingCost;
+        // activeEcommerceController.text =
+        //     next.shopConfigs.activeEcommerce.toString();
+        // payOnlineController.text =
+        //     next.shopConfigs.payOnline.toString();
+        // payInPersonController.text =
+        //     next.shopConfigs.payInPerson.toString();
+
+        autoArchiveOrder.value = next.shopConfigs.autoArchiveOrder;
+        showShopDescriptionWithListing.value =
+            next.shopConfigs.showShopDescWithListing == 1 ? true : false;
+        showRefundPolicyWithListing.value =
+            next.shopConfigs.showRefundPolicyWithListing == 1 ? true : false;
+        autoArchiveOrderController.value = next.shopConfigs.autoArchiveOrder;
+        digitalGoodsOnly.value = next.shopConfigs.digitalGoodsOnly;
+        // defaultPackagingIds.value =
+        //     int.tryParse(next.shopConfigs.defaultPackagingIds) == 1
+        //         ? true
+        //         : false;
+        notifyNewMessage.value = next.shopConfigs.notifyNewMessage;
+        notifyAlertQuantity.value = next.shopConfigs.notifyAlertQuantity;
+        notifyInventoryOut.value = next.shopConfigs.notifyInventoryOut;
+        notifyNewOrder.value = next.shopConfigs.notifyNewOrder;
+        notifyAbandonedCheckout.value =
+            next.shopConfigs.notifyAbandonedCheckout;
+        notifyNewDisput.value = next.shopConfigs.notifyNewDisput;
+        enableLiveChat.value = next.shopConfigs.enableLiveChat;
+        notifyNewChat.value = next.shopConfigs.notifyNewChat;
+        maintenanceMode.value = next.shopConfigs.maintenanceMode;
+
         selectedAgent.value = agentList.isEmpty
             ? ShopUsersModel.init()
             : agentList
-                .where((e) => e.id == next.advanceShopSettings.supportAgent)
+                .where((e) => e.id == next.shopConfigs.supportAgent)
                 .toList()[0];
 
         selectedPaymentMethod.value = paymentMethodList
-            .where(
-                (e) => e.id == next.advanceShopSettings.defaultPaymentMethodId)
+            .where((e) => e.id == next.shopConfigs.defaultPaymentMethodId)
             .toList()[0];
 
         selectedWarehouse.value = warehouseList.isEmpty
             ? WarehouseModel.init()
             : warehouseList
-                .where(
-                    (e) => e.id == next.advanceShopSettings.defaultWarehouseId)
+                .where((e) => e.id == next.shopConfigs.defaultWarehouseId)
                 .toList()[0];
 
         selectedSupplier.value = supplierList.isEmpty
             ? SupplierModel.init()
             : supplierList
-                .where(
-                    (e) => e.id == next.advanceShopSettings.defaultSupplierId)
+                .where((e) => e.id == next.shopConfigs.defaultSupplierId)
                 .toList()[0];
 
         selectedTax.value = taxList.isEmpty
             ? TaxModel.init()
             : taxList
-                .where((e) => e.id == next.advanceShopSettings.defaultTaxId)
+                .where((e) => e.id == next.shopConfigs.defaultTaxId)
                 .toList()[0];
-
-        paginationController.text =
-            next.advanceShopSettings.pagination.toString();
-        defaultSenderEmailController.text =
-            next.advanceShopSettings.defaultSenderEmailAddress;
-        defaultEmailSenderNameController.text =
-            next.advanceShopSettings.defaultEmailSenderName;
-        returnRefundController.text = next.advanceShopSettings.returnRefund;
-        orderNumerPrefixController.text =
-            next.advanceShopSettings.orderNumberPrefix;
-        orderNumberSuffixController.text =
-            next.advanceShopSettings.orderNumberSuffix;
-        defaultTaxIdController.text =
-            next.advanceShopSettings.defaultTaxId.toString();
-        orderHandlingCostController.text =
-            next.advanceShopSettings.orderHandlingCost;
-        // activeEcommerceController.text =
-        //     next.advanceShopSettings.activeEcommerce.toString();
-        // payOnlineController.text =
-        //     next.advanceShopSettings.payOnline.toString();
-        // payInPersonController.text =
-        //     next.advanceShopSettings.payInPerson.toString();
-
-        autoArchiveOrder.value = next.advanceShopSettings.autoArchiveOrder;
-        showShopDescriptionWithListing.value =
-            next.advanceShopSettings.showShopDescWithListing == 1
-                ? true
-                : false;
-        showRefundPolicyWithListing.value =
-            next.advanceShopSettings.showRefundPolicyWithListing == 1
-                ? true
-                : false;
-        autoArchiveOrderController.value =
-            next.advanceShopSettings.autoArchiveOrder;
-        digitalGoodsOnly.value = next.advanceShopSettings.digitalGoodsOnly;
-        // defaultPackagingIds.value =
-        //     int.tryParse(next.advanceShopSettings.defaultPackagingIds) == 1
-        //         ? true
-        //         : false;
-        notifyNewMessage.value = next.advanceShopSettings.notifyNewMessage;
-        notifyAlertQuantity.value =
-            next.advanceShopSettings.notifyAlertQuantity;
-        notifyInventoryOut.value = next.advanceShopSettings.notifyInventoryOut;
-        notifyNewOrder.value = next.advanceShopSettings.notifyNewOrder;
-        notifyAbandonedCheckout.value =
-            next.advanceShopSettings.notifyAbandonedCheckout;
-        notifyNewDisput.value = next.advanceShopSettings.notifyNewDisput;
-        enableLiveChat.value = next.advanceShopSettings.enableLiveChat;
-        notifyNewChat.value = next.advanceShopSettings.notifyNewChat;
-        maintenanceMode.value = next.advanceShopSettings.maintenanceMode;
       }
     });
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
-          NotificationHelper.success(message: 'advance_shop_settings_updated'.tr());
-          // CherryToast.info(
-          //   title: Text('advance_shop_settings_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          buttonPressed.value = false;
+          Navigator.of(context).pop();
+          NotificationHelper.success(
+              message: 'shop_configuration_updated'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -236,7 +214,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
           ),
         ),
         elevation: 0,
-        title: Text('advance_shop_settings'.tr()),
+        title: Text('shop_configuration'.tr()),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -258,7 +236,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                       const Divider(),
                       KTextField(
                         controller: alertQuanityController,
-                        lebelText: 'order_number_prefix'.tr(),
+                        lebelText: 'alert_quantity'.tr(),
                         numberFormatters: true,
                       ),
                       SizedBox(height: 10.h),
@@ -397,10 +375,11 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                         ),
                       ),
                       SizedBox(height: 10.h),
-                      const Text('default_tax'),
+                      Text('default_tax'.tr()),
                       SizedBox(height: 10.h),
                       taxList.isEmpty
-                          ? const Text('No tax found. Please add a Tax')
+                          ? const ErrorText(
+                              text: 'No tax found. Please add a Tax')
                           : SizedBox(
                               // height: 50.h,
                               child: DropdownButtonHideUnderline(
@@ -629,7 +608,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                             : () {
                                 if (formKey.currentState?.validate() ?? false) {
                                   final advanceSettings =
-                                      UpdateAdvanceShopSettingsModel(
+                                      UpdateShopConfigsModel(
                                     shopId: shopId,
                                     activeEcommerce: 0,
                                     alertQuantity: int.tryParse(
@@ -652,8 +631,7 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                                         selectedWarehouse.value.id,
                                     digitalGoodsOnly:
                                         digitalGoodsOnly.value ? 1 : 0,
-                                    enableLiveChat:
-                                        enableLiveChat.value ? 1 : 0,
+
                                     notifyAbandonedCheckout:
                                         notifyAbandonedCheckout.value ? 1 : 0,
                                     notifyAlertQuantity:
@@ -691,12 +669,18 @@ class AdvanceShopSettingsPage extends HookConsumerWidget {
                                     supportPhone: supportPhoneController.text,
                                     supportPhoneTollFree:
                                         supportPhoneTollFreeController.text,
+                                    enableLiveChat:
+                                        enableLiveChat.value ? 1 : 0,
                                   );
                                   ref
                                       .read(shopSettingsProvider.notifier)
-                                      .updateAdvanceShopSettings(
+                                      .updateShopConfigs(
                                           advanceSettingsInfo: advanceSettings,
                                           shopId: shopId);
+                                  Logger.i('Live Chat: $advanceSettings');
+                                  Logger.i(
+                                      'Live Chat: ${advanceSettings.enableLiveChat}');
+
                                   buttonPressed.value = true;
                                 }
                               },

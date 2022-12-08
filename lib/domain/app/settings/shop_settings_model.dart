@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class BasicShopSettingsModel extends Equatable {
+class ShopSettingsModel extends Equatable {
   final int id;
   final int ownerId;
   final String name;
@@ -12,7 +12,7 @@ class BasicShopSettingsModel extends Equatable {
   final dynamic externalUrl;
   final String logo;
 
-  const BasicShopSettingsModel({
+  const ShopSettingsModel({
     required this.id,
     required this.ownerId,
     required this.name,
@@ -25,7 +25,7 @@ class BasicShopSettingsModel extends Equatable {
     required this.logo,
   });
 
-  BasicShopSettingsModel copyWith({
+  ShopSettingsModel copyWith({
     int? id,
     int? ownerId,
     String? name,
@@ -37,7 +37,7 @@ class BasicShopSettingsModel extends Equatable {
     dynamic externalUrl,
     String? logo,
   }) {
-    return BasicShopSettingsModel(
+    return ShopSettingsModel(
       id: id ?? this.id,
       ownerId: ownerId ?? this.ownerId,
       name: name ?? this.name,
@@ -51,8 +51,8 @@ class BasicShopSettingsModel extends Equatable {
     );
   }
 
-  factory BasicShopSettingsModel.fromMap(Map<String, dynamic> map) =>
-      BasicShopSettingsModel(
+  factory ShopSettingsModel.fromMap(Map<String, dynamic> map) =>
+      ShopSettingsModel(
         id: map["id"]?.toInt() ?? 0,
         ownerId: map["owner_id"] ?? 0,
         name: map["name"] ?? '',
@@ -65,7 +65,7 @@ class BasicShopSettingsModel extends Equatable {
         logo: map["logo"] ?? '',
       );
 
-  factory BasicShopSettingsModel.init() => const BasicShopSettingsModel(
+  factory ShopSettingsModel.init() => const ShopSettingsModel(
         id: 0,
         ownerId: 0,
         name: '',

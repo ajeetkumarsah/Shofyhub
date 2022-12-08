@@ -372,7 +372,7 @@
   "default_supplier": "Default Supplier",
   "default_warehouse": "Default Warehouse",
   "default_payment_method": "Default Payment Method",
-  "order_handling_cost": "order Handling Cost",
+  "order_handling_cost": "Order Handling Cost",
   "enable_live_chat": "Enable Live Chat",
   "support_agent": "Support Agent",
   "support_phone": "Support Phone",
@@ -492,5 +492,12 @@
   "archived": "Archived",
   "are_you_sure_logout": "Are you sure you want to Logout?",
   "multivendor_app": "Multivendor App",
-  "warehouses" : "Warehouses"
+  "warehouses": "Warehouses",
+  "carrier_not_found": "Carrier not found",
+  "carrier_not_found_please_add": "No Carrier found. Please add Carrier from Web Admin Panel",
+  "shop_configuration": "Shop Configuration",
+  "shop_settings": "Shop Settings",
+  "shop_configuration_updated": "Shop Configuration Updated",
+  "alert_quantity": "Alert Quantity",
+  "default_tax" : "Default Tax"
 }

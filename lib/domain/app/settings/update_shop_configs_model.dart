@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class UpdateAdvanceShopSettingsModel extends Equatable {
+class UpdateShopConfigsModel extends Equatable {
   final int shopId;
   final int alertQuantity;
   final int defaultWarehouseId;
@@ -39,7 +39,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
   // final DateTime createdAt;
   // final DateTime updatedAt;
 
-  const UpdateAdvanceShopSettingsModel({
+  const UpdateShopConfigsModel({
     required this.shopId,
     required this.supportPhone,
     required this.supportPhoneTollFree,
@@ -79,7 +79,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
     required this.payInPerson,
   });
 
-  UpdateAdvanceShopSettingsModel copyWith({
+  UpdateShopConfigsModel copyWith({
     int? shopId,
     int? alertQuantity,
     int? defaultWarehouseId,
@@ -149,7 +149,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
     // int? payOnline,
     // int? payInPerson,
   }) {
-    return UpdateAdvanceShopSettingsModel(
+    return UpdateShopConfigsModel(
       shopId: shopId ?? this.shopId,
       supportPhone: supportPhone ?? this.supportPhone,
       supportPhoneTollFree: supportPhoneTollFree ?? this.supportPhoneTollFree,
@@ -196,8 +196,8 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
     );
   }
 
-  factory UpdateAdvanceShopSettingsModel.fromMap(Map<String, dynamic> map) =>
-      UpdateAdvanceShopSettingsModel(
+  factory UpdateShopConfigsModel.fromMap(Map<String, dynamic> map) =>
+      UpdateShopConfigsModel(
         shopId: map["shop_id"]?.toInt() ?? 0,
         supportPhone: map["support_phone"],
         supportPhoneTollFree: map["support_phone_toll_free"],
@@ -238,8 +238,7 @@ class UpdateAdvanceShopSettingsModel extends Equatable {
         payInPerson: map["pay_in_person"]?.toInt() ?? 0,
       );
 
-  factory UpdateAdvanceShopSettingsModel.init() =>
-      const UpdateAdvanceShopSettingsModel(
+  factory UpdateShopConfigsModel.init() => const UpdateShopConfigsModel(
         shopId: 0,
         supportPhone: null,
         supportPhoneTollFree: null,

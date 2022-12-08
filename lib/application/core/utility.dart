@@ -56,6 +56,10 @@ class DashboardUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }
 
+class NoLiveChatDashboardUtility {
+  static final ValueNotifier<int> index = ValueNotifier(0);
+}
+
 class WarehouseUtility {
   static final ValueNotifier<int> index = ValueNotifier(0);
 }

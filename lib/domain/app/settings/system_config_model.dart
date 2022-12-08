@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:zcart_seller/domain/app/settings/currency_model.dart';
 
-class ShopConfigModel extends Equatable {
+class SystemConfigModel extends Equatable {
   final bool maintenanceMode;
   final String installVerion;
   final String installVersion;
@@ -41,10 +41,10 @@ class ShopConfigModel extends Equatable {
   final bool addressShowMap;
   final bool allowGuestCheckout;
   final bool enableChat;
-
+  final bool vendorGetPaid;
   final CurrencyModel currency;
 
-  const ShopConfigModel({
+  const SystemConfigModel({
     required this.maintenanceMode,
     required this.installVerion,
     required this.installVersion,
@@ -84,10 +84,11 @@ class ShopConfigModel extends Equatable {
     required this.addressShowMap,
     required this.allowGuestCheckout,
     required this.enableChat,
+    required this.vendorGetPaid,
     required this.currency,
   });
 
-  ShopConfigModel copyWith({
+  SystemConfigModel copyWith({
     bool? maintenanceMode,
     String? installVerion,
     String? installVersion,
@@ -127,9 +128,10 @@ class ShopConfigModel extends Equatable {
     bool? addressShowMap,
     bool? allowGuestCheckout,
     bool? enableChat,
+    bool? vendorGetPaid,
     CurrencyModel? currency,
   }) {
-    return ShopConfigModel(
+    return SystemConfigModel(
       maintenanceMode: maintenanceMode ?? this.maintenanceMode,
       installVerion: installVerion ?? this.installVerion,
       installVersion: installVersion ?? this.installVersion,
@@ -172,11 +174,13 @@ class ShopConfigModel extends Equatable {
       addressShowMap: addressShowMap ?? this.addressShowMap,
       allowGuestCheckout: allowGuestCheckout ?? this.allowGuestCheckout,
       enableChat: enableChat ?? this.enableChat,
+      vendorGetPaid: vendorGetPaid ?? this.vendorGetPaid,
       currency: currency ?? this.currency,
     );
   }
 
-  factory ShopConfigModel.fromMap(Map<String, dynamic> map) => ShopConfigModel(
+  factory SystemConfigModel.fromMap(Map<String, dynamic> map) =>
+      SystemConfigModel(
         maintenanceMode: map["maintenance_mode"] ?? false,
         installVerion: map["install_verion"] ?? '',
         installVersion: map["install_version"] ?? '',
@@ -217,6 +221,7 @@ class ShopConfigModel extends Equatable {
         addressShowMap: map["address_show_map"] ?? false,
         allowGuestCheckout: map["allow_guest_checkout"] ?? false,
         enableChat: map["enable_chat"] ?? false,
+        vendorGetPaid: map["vendor_get_paid"] ?? false,
         currency: map["currency"] != null
             ? CurrencyModel.fromMap(map["currency"])
             : CurrencyModel.init(),
@@ -262,10 +267,11 @@ class ShopConfigModel extends Equatable {
         "address_show_map": addressShowMap,
         "allow_guest_checkout": allowGuestCheckout,
         "enable_chat": enableChat,
+        "vendor_get_paid": vendorGetPaid,
         "currency": currency.toJson(),
       };
 
-  factory ShopConfigModel.init() => ShopConfigModel(
+  factory SystemConfigModel.init() => SystemConfigModel(
         maintenanceMode: false,
         installVerion: '',
         installVersion: '',
@@ -305,6 +311,7 @@ class ShopConfigModel extends Equatable {
         addressShowMap: false,
         allowGuestCheckout: false,
         enableChat: false,
+        vendorGetPaid: false,
         currency: CurrencyModel.init(),
       );
 
@@ -349,6 +356,7 @@ class ShopConfigModel extends Equatable {
         addressShowMap,
         allowGuestCheckout,
         enableChat,
+        vendorGetPaid,
         currency
       ];
 }

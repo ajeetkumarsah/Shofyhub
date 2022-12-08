@@ -1,41 +1,41 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/settings/advance_shop_settings_model.dart';
-import 'package:zcart_seller/domain/app/settings/basic_shop_settings_model.dart';
+import 'package:zcart_seller/domain/app/settings/shop_config_model.dart';
+import 'package:zcart_seller/domain/app/settings/shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/system_config_model.dart';
 
 class ShopSettingsState extends Equatable {
   final bool loading;
   final bool loadingUpdate;
   final CleanFailure failure;
-  final BasicShopSettingsModel basicShopSettings;
-  final AdvanceShopSettingsModel advanceShopSettings;
+  final ShopSettingsModel shopSettings;
   final ShopConfigModel shopConfigs;
+  final SystemConfigModel systemConfigs;
 
   const ShopSettingsState({
     required this.loading,
     required this.loadingUpdate,
     required this.failure,
-    required this.basicShopSettings,
-    required this.advanceShopSettings,
+    required this.shopSettings,
     required this.shopConfigs,
+    required this.systemConfigs,
   });
 
   ShopSettingsState copyWith({
     bool? loading,
     bool? loadingUpdate,
     CleanFailure? failure,
-    BasicShopSettingsModel? basicShopSettings,
-    AdvanceShopSettingsModel? advanceShopSettings,
+    ShopSettingsModel? shopSettings,
     ShopConfigModel? shopConfigs,
+    SystemConfigModel? systemConfigs,
   }) {
     return ShopSettingsState(
       loading: loading ?? this.loading,
       loadingUpdate: loadingUpdate ?? this.loadingUpdate,
       failure: failure ?? this.failure,
-      basicShopSettings: basicShopSettings ?? this.basicShopSettings,
-      advanceShopSettings: advanceShopSettings ?? this.advanceShopSettings,
+      shopSettings: shopSettings ?? this.shopSettings,
       shopConfigs: shopConfigs ?? this.shopConfigs,
+      systemConfigs: systemConfigs ?? this.systemConfigs,
     );
   }
 
@@ -45,17 +45,17 @@ class ShopSettingsState extends Equatable {
       loading,
       loadingUpdate,
       failure,
-      basicShopSettings,
+      shopSettings,
       shopConfigs,
+      systemConfigs,
     ];
   }
 
   factory ShopSettingsState.init() => ShopSettingsState(
-        loading: false,
-        loadingUpdate: false,
-        failure: CleanFailure.none(),
-        basicShopSettings: BasicShopSettingsModel.init(),
-        advanceShopSettings: AdvanceShopSettingsModel.init(),
-        shopConfigs: ShopConfigModel.init(),
-      );
+      loading: false,
+      loadingUpdate: false,
+      failure: CleanFailure.none(),
+      shopSettings: ShopSettingsModel.init(),
+      shopConfigs: ShopConfigModel.init(),
+      systemConfigs: SystemConfigModel.init());
 }
