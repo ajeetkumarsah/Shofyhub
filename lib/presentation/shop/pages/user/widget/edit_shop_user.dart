@@ -10,6 +10,7 @@ import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class EditShopUser extends HookConsumerWidget {
@@ -75,31 +76,32 @@ class EditShopUser extends HookConsumerWidget {
         child: Padding(
           padding: EdgeInsets.all(20.sp),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               KTextField(
                 controller: nameController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Name',
+                lebelText: 'Name *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: nickNameController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Nick Name',
+                lebelText: 'Nick Name *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: emailController,
                 inputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
-                lebelText: 'Email',
+                lebelText: 'Email *',
               ),
               SizedBox(height: 10.h),
 
               KTextField(
                 controller: descController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Description',
+                lebelText: 'Description *',
               ),
               SizedBox(height: 10.h),
               CheckboxListTile(
@@ -169,6 +171,8 @@ class EditShopUser extends HookConsumerWidget {
               //     ),
               //   ),
               // ),
+              SizedBox(height: 10.h),
+              const RequiredFieldText(),
               SizedBox(height: 30.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -208,11 +212,6 @@ class EditShopUser extends HookConsumerWidget {
                             } else {
                               NotificationHelper.info(
                                   message: 'please_fill_all_fields'.tr());
-
-                              // CherryToast.info(
-                              //   title: const Text('Fillup all field'),
-                              //   animationType: AnimationType.fromTop,
-                              // ).show(context);
                             }
                           },
                     child: loading

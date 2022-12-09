@@ -52,9 +52,10 @@ class RoleNotifier extends StateNotifier<RolesState> {
   createNewRole({required CreateUpdateRoleModel roleModel}) async {
     state = state.copyWith(loading: true);
     final data = await rolesRepo.createRole(createRoleModel: roleModel);
-    state = data.fold((l) => state.copyWith(loading: false, failure: l),
-        (r) => state.copyWith(loading: false, failure: CleanFailure.none()));
-    getRoles();
+    state = data.fold((l) => state.copyWith(loading: false, failure: l), (r) {
+      getRoles();
+      return state.copyWith(loading: false, failure: CleanFailure.none());
+    });
   }
 
   updateRole(

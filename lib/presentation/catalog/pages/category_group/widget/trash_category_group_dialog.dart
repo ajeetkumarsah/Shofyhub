@@ -26,18 +26,10 @@ class TrashCategoryGroupDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_moved_trash'.tr());
-          // CherryToast.info(
-          //   title: Text('item_moved_trash'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+          
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
+         
         }
       }
     });

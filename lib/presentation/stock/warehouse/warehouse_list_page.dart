@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/create_warehouse_page.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/widgets/warehouse_list_tile.dart';
 
@@ -53,13 +54,7 @@ class WarehouseListPage extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : warehouseList.isEmpty
-              ? Center(
-                  child: Text(
-                    'no_item_available'.tr(),
-                    style:
-                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                  ),
-                )
+              ? const NoItemFound()
               : RefreshIndicator(
                   onRefresh: () {
                     return ref

@@ -35,10 +35,6 @@ class AuthRepo extends IAuthRepo {
         body: null,
         endPoint: "auth/login?email=${body.email}&password=${body.password}");
     return data.fold((l) => left(l), (r) async {
-      // await FirebaseFirestore.instance
-      //     .collection('setting')
-      //     .doc('app-setting')
-      //     .set({'token': r.api_token});
       final preferences = await SharedPreferences.getInstance();
       listenForTokenChange();
       preferences.setString('token', r.api_token);
@@ -92,10 +88,6 @@ class AuthRepo extends IAuthRepo {
         endPoint:
             "auth/register?email=${body.email}&phone=${body.phone}&shop_name=${body.shopName}&plan=${body.planId}&password=${body.password}&password_confirmation=${body.confirmPassword}&agree=${body.agree}");
     return data.fold((l) => left(l), (r) async {
-      // await FirebaseFirestore.instance
-      //     .collection('setting')
-      //     .doc('app-setting')
-      //     .set({'token': r.api_token});
       final preferences = await SharedPreferences.getInstance();
       listenForTokenChange();
       preferences.setString('token', r.api_token);
@@ -170,8 +162,8 @@ class AuthRepo extends IAuthRepo {
 
   @override
   Future<Either<CleanFailure, UserModel>> otpVerify(
-      {required String phoneNumber, required String code}) {
-    return cleanApi.post(
+      {required String phoneNumber, required String code}) async {
+    final data = await cleanApi.post(
         failureHandler:
             <unit>(int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
@@ -199,5 +191,13 @@ class AuthRepo extends IAuthRepo {
         body: null,
         endPoint:
             'auth/user/phone/verify?phone_number=$phoneNumber&verification_code=$code');
+
+    return data.fold((l) => left(l), (r) async {
+      final preferences = await SharedPreferences.getInstance();
+      listenForTokenChange();
+      preferences.setString('token', r.api_token);
+      cleanApi.setToken({'Authorization': 'Bearer ${r.api_token}'});
+      return right(r);
+    });
   }
 }

@@ -18,6 +18,7 @@ import 'package:zcart_seller/application/core/single_image_picker_provider.dart'
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
 import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
+import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
 
@@ -69,11 +70,11 @@ class ShopSettingsPage extends HookConsumerWidget {
       }
     });
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(
               message: 'basic_shop_settings_updated'.tr());
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -119,8 +120,9 @@ class ShopSettingsPage extends HookConsumerWidget {
                             fieldName: 'legal_name'.tr()),
                       ),
                       SizedBox(height: 10.h),
-                      KTextField(
+                      KMultiLineTextField(
                         controller: descriptionController,
+                        maxLines: 3,
                         lebelText: '${'description'.tr()} *',
                         validator: (text) => ValidatorLogic.requiredField(text,
                             fieldName: 'description'.tr()),

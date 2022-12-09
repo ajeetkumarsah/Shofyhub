@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
@@ -83,8 +84,7 @@ class ShopConfigPage extends HookConsumerWidget {
 
     final List<TaxModel> taxList =
         ref.watch(taxProvider.select((value) => value.taxList));
-    final ValueNotifier<TaxModel> selectedTax =
-        taxList.isEmpty ? useState(TaxModel.init()) : useState(taxList[0]);
+    final ValueNotifier<TaxModel?> selectedTax = useState(null);
 
     final List<ShopUsersModel> agentList =
         ref.watch(shopUserProvider.select((value) => value.getShopUser));
@@ -101,10 +101,7 @@ class ShopConfigPage extends HookConsumerWidget {
     final List<WarehouseModel> warehouseList =
         ref.watch(warehouseProvider.select((value) => value.warehouseItemList));
     final ValueNotifier<WarehouseModel> selectedWarehouse =
-        warehouseList.isEmpty
-            ? useState(WarehouseModel.init())
-            : useState(warehouseList[0]);
-
+        useState(warehouseList[0]);
     const List<PaymentMethodModel> paymentMethodList = [
       PaymentMethodModel(id: 1, title: 'Cash On Delivery'),
       PaymentMethodModel(id: 2, title: 'Bank Wire Transfer'),
@@ -133,12 +130,6 @@ class ShopConfigPage extends HookConsumerWidget {
         orderNumberSuffixController.text = next.shopConfigs.orderNumberSuffix;
         defaultTaxIdController.text = next.shopConfigs.defaultTaxId.toString();
         orderHandlingCostController.text = next.shopConfigs.orderHandlingCost;
-        // activeEcommerceController.text =
-        //     next.shopConfigs.activeEcommerce.toString();
-        // payOnlineController.text =
-        //     next.shopConfigs.payOnline.toString();
-        // payInPersonController.text =
-        //     next.shopConfigs.payInPerson.toString();
 
         autoArchiveOrder.value = next.shopConfigs.autoArchiveOrder;
         showShopDescriptionWithListing.value =
@@ -147,10 +138,7 @@ class ShopConfigPage extends HookConsumerWidget {
             next.shopConfigs.showRefundPolicyWithListing == 1 ? true : false;
         autoArchiveOrderController.value = next.shopConfigs.autoArchiveOrder;
         digitalGoodsOnly.value = next.shopConfigs.digitalGoodsOnly;
-        // defaultPackagingIds.value =
-        //     int.tryParse(next.shopConfigs.defaultPackagingIds) == 1
-        //         ? true
-        //         : false;
+
         notifyNewMessage.value = next.shopConfigs.notifyNewMessage;
         notifyAlertQuantity.value = next.shopConfigs.notifyAlertQuantity;
         notifyInventoryOut.value = next.shopConfigs.notifyInventoryOut;
@@ -168,36 +156,42 @@ class ShopConfigPage extends HookConsumerWidget {
                 .where((e) => e.id == next.shopConfigs.supportAgent)
                 .toList()[0];
 
-        selectedPaymentMethod.value = paymentMethodList
-            .where((e) => e.id == next.shopConfigs.defaultPaymentMethodId)
-            .toList()[0];
+        selectedPaymentMethod.value = next.shopConfigs.defaultPaymentMethodId !=
+                null
+            ? paymentMethodList
+                .where((e) => e.id == next.shopConfigs.defaultPaymentMethodId)
+                .toList()[0]
+            : PaymentMethodModel.init();
 
-        selectedWarehouse.value = warehouseList.isEmpty
-            ? WarehouseModel.init()
-            : warehouseList
-                .where((e) => e.id == next.shopConfigs.defaultWarehouseId)
-                .toList()[0];
+        var selectedWarehouseList = warehouseList
+            .where((e) => e.id == next.shopConfigs.defaultWarehouseId)
+            .toList();
 
-        selectedSupplier.value = supplierList.isEmpty
-            ? SupplierModel.init()
-            : supplierList
-                .where((e) => e.id == next.shopConfigs.defaultSupplierId)
-                .toList()[0];
+        selectedWarehouse.value = selectedWarehouseList[0];
 
-        selectedTax.value = taxList.isEmpty
-            ? TaxModel.init()
-            : taxList
-                .where((e) => e.id == next.shopConfigs.defaultTaxId)
-                .toList()[0];
+        var selectedSupplierList = supplierList
+            .where((e) => e.id == next.shopConfigs.defaultSupplierId)
+            .toList();
+
+        selectedSupplier.value =
+            supplierList.isEmpty || selectedSupplierList.isEmpty
+                ? SupplierModel.init()
+                : selectedSupplierList[0];
+
+        var selectedTaxList = taxList
+            .where((e) => e.id == next.shopConfigs.defaultTaxId)
+            .toList();
+
+        selectedTax.value = selectedTaxList[0];
       }
     });
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
           buttonPressed.value = false;
-          Navigator.of(context).pop();
           NotificationHelper.success(
               message: 'shop_configuration_updated'.tr());
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -243,8 +237,8 @@ class ShopConfigPage extends HookConsumerWidget {
                       Text('default_supplier'.tr()),
                       SizedBox(height: 10.h),
                       supplierList.isEmpty
-                          ? const Text(
-                              'No supplier found. Please add a Supplier')
+                          ? const ErrorText(
+                              text: 'No supplier found. Please add a Supplier')
                           : SizedBox(
                               // height: 50.h,
                               child: DropdownButtonHideUnderline(
@@ -283,8 +277,9 @@ class ShopConfigPage extends HookConsumerWidget {
                       Text('default_warehouse'.tr()),
                       SizedBox(height: 10.h),
                       warehouseList.isEmpty
-                          ? const Text(
-                              'No warehouse item found. Please add warehouse')
+                          ? const ErrorText(
+                              text:
+                                  'No warehouse item found. Please add warehouse')
                           : SizedBox(
                               // height: 50.h,
                               child: DropdownButtonHideUnderline(
@@ -427,19 +422,19 @@ class ShopConfigPage extends HookConsumerWidget {
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       const Divider(),
-                      SwitchListTile(
-                        value: enableLiveChat.value,
-                        onChanged: (value) => enableLiveChat.value = value,
-                        title: Text('enable_live_chat'.tr()),
-                      ),
+                      // SwitchListTile(
+                      //   value: enableLiveChat.value,
+                      //   onChanged: (value) => enableLiveChat.value = value,
+                      //   title: Text('enable_live_chat'.tr()),
+                      // ),
                       SizedBox(height: 10.h),
                       Text(
                         'support_agent'.tr(),
-                        style: Theme.of(context).textTheme.headline6,
                       ),
                       SizedBox(height: 10.h),
                       agentList.isEmpty
-                          ? const Text('No agent found. Please add an User')
+                          ? const ErrorText(
+                              text: 'No agent found. Please add an User')
                           : SizedBox(
                               // height: 50.h,
                               child: DropdownButtonHideUnderline(
@@ -626,12 +621,14 @@ class ShopConfigPage extends HookConsumerWidget {
                                         defaultSenderEmailController.text,
                                     defaultSupplierId:
                                         selectedSupplier.value.id!,
-                                    defaultTaxId: selectedTax.value.id,
+                                    defaultTaxId: selectedTax.value != null
+                                        ? selectedTax.value!.id
+                                        : 0,
                                     defaultWarehouseId:
                                         selectedWarehouse.value.id,
                                     digitalGoodsOnly:
                                         digitalGoodsOnly.value ? 1 : 0,
-
+                                    returnRefund: returnRefundController.text,
                                     notifyAbandonedCheckout:
                                         notifyAbandonedCheckout.value ? 1 : 0,
                                     notifyAlertQuantity:
@@ -677,9 +674,6 @@ class ShopConfigPage extends HookConsumerWidget {
                                       .updateShopConfigs(
                                           advanceSettingsInfo: advanceSettings,
                                           shopId: shopId);
-                                  Logger.i('Live Chat: $advanceSettings');
-                                  Logger.i(
-                                      'Live Chat: ${advanceSettings.enableLiveChat}');
 
                                   buttonPressed.value = true;
                                 }

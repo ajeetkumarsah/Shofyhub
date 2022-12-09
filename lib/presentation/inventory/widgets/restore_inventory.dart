@@ -20,19 +20,11 @@ class RestoreInventory extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_restored'.tr());
-          // CherryToast.info(
-          //   title: const Text('Inventory Restored'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+          
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
 
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
+         
         }
       }
     });

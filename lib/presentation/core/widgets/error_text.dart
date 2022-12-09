@@ -12,7 +12,7 @@ class ErrorText extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
-          'No tax found. Please add a Tax',
+          text,
           style: TextStyle(color: Constants.kRedColor),
         ),
       ),

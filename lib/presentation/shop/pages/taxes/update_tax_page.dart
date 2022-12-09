@@ -1,4 +1,3 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -33,7 +32,7 @@ class UpdateTaxPage extends HookConsumerWidget {
     final IList<KeyValueData> countryList =
         ref.watch(countryProvider.select((value) => value.dataList));
 
-  final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
+    final ValueNotifier<KeyValueData?> selectedCountry = useState(null);
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final nameController = useTextEditingController();
@@ -59,22 +58,12 @@ class UpdateTaxPage extends HookConsumerWidget {
     });
 
     ref.listen<TaxState>(taxProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'tax_updated'.tr());
-          // CherryToast.info(
-          //   title: Text('tax_updated'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
         }
       }
     });
@@ -179,12 +168,8 @@ class UpdateTaxPage extends HookConsumerWidget {
                       TextButton(
                         onPressed: () {
                           if (selectedCountry.value == null) {
-                            NotificationHelper.info(message: 'please_select_a_country'.tr());
-
-                            // CherryToast.info(
-                            //   title: Text('please_select_a_country'.tr()),
-                            //   animationType: AnimationType.fromTop,
-                            // ).show(context);
+                            NotificationHelper.info(
+                                message: 'please_select_a_country'.tr());
                           } else {
                             if (formKey.currentState?.validate() ?? false) {
                               buttonPressed.value = true;

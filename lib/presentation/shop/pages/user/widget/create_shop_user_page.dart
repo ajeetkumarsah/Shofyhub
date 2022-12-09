@@ -10,6 +10,7 @@ import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/shop/user/create_shop_user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class CreateShopUserPage extends HookConsumerWidget {
@@ -38,17 +39,8 @@ class CreateShopUserPage extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'user_added'.tr());
-
-          // CherryToast.info(
-          //   title: const Text('User Added'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'something_went_wrong'.tr());
-          // CherryToast.info(
-          //   title: const Text('Something went wrong'),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
           next.failure.showDialogue(context);
         }
       }
@@ -71,47 +63,48 @@ class CreateShopUserPage extends HookConsumerWidget {
         child: Padding(
           padding: EdgeInsets.all(20.sp),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               KTextField(
                 controller: firstNameController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Name',
+                lebelText: 'Name *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: nickNameController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Nick Name',
+                lebelText: 'Nick Name *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: emailController,
                 inputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
-                lebelText: 'Email',
+                lebelText: 'Email *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: passwordController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Password',
+                lebelText: 'Password *',
                 hintText: 'Password must be 6 characters long',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: confirmPasswordController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Confirm Password',
+                lebelText: 'Confirm Password *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: descController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Description',
+                lebelText: 'Description *',
               ),
               SizedBox(height: 10.h),
               CheckboxListTile(
-                title: Text('active'.tr()),
+                title: Text('${'active'.tr()} *'),
                 value: active.value,
                 onChanged: (value) {
                   active.value = value!;
@@ -124,7 +117,7 @@ class CreateShopUserPage extends HookConsumerWidget {
                 readOnly: true,
                 decoration: InputDecoration(
                   // prefixIcon: prefixIcon,
-                  labelText: 'Date Of Birth',
+                  labelText: 'Date Of Birth *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.r),
                   ),
@@ -177,6 +170,8 @@ class CreateShopUserPage extends HookConsumerWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 10.h),
+              const RequiredFieldText(),
               SizedBox(height: 30.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

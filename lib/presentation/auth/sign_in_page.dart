@@ -312,6 +312,7 @@ class SignInPage extends HookConsumerWidget {
             },
             controller: emailController,
             prefixIcon: const Icon(Icons.mail),
+            inputAction: TextInputAction.next,
             lebelText: 'Email address',
           ),
           SizedBox(height: 15.h),

@@ -28,21 +28,11 @@ class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
           NotificationHelper.success(
               message:
                   isPaid ? 'marked_as_unpaid'.tr() : 'marked_as_paid'.tr());
-          // CherryToast.info(
-          //   title: isPaid
-          //       ? Text('marked_as_unpaid'.tr())
-          //       : Text('marked_as_paid'.tr()),
-          //   animationType: AnimationType.fromTop,
-          // ).show(context);
+          
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
 
-          // CherryToast.error(
-          //   title: Text(
-          //     next.failure.error,
-          //   ),
-          //   toastPosition: Position.bottom,
-          // ).show(context);
+         
         }
       }
     });

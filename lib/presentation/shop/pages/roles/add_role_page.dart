@@ -39,10 +39,10 @@ class AddRolePage extends HookConsumerWidget {
     }, []);
 
     ref.listen<RolesState>(roleProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           NotificationHelper.success(message: 'role_added'.tr());
+          Navigator.of(context).pop();
 
           buttonPressed.value = false;
         } else if (next.failure != CleanFailure.none()) {
@@ -149,8 +149,8 @@ class AddRolePage extends HookConsumerWidget {
                 ),
                 SizedBox(height: 30.h),
                 ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Constants.buttonColor),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Constants.buttonColor),
                   onPressed: loading
                       ? null
                       : () {
@@ -162,7 +162,9 @@ class AddRolePage extends HookConsumerWidget {
                             final roleModel = CreateUpdateRoleModel(
                               name: nameController.text,
                               description: descriptionController.text,
-                              level: levelController.text.isNotEmpty ? int.tryParse(levelController.text)! : 5,
+                              level: levelController.text.isNotEmpty
+                                  ? int.tryParse(levelController.text)!
+                                  : 5,
                               permissions: endPoint,
                             );
                             ref

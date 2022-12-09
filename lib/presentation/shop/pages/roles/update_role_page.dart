@@ -52,12 +52,11 @@ class UpdateRolePage extends HookConsumerWidget {
     });
 
     ref.listen<RolesState>(roleProvider, (previous, next) {
-      if (previous != next && !next.loading && buttonPressed.value) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
-          NotificationHelper.success(message: 'role_updated'.tr());
-
+      if (previous != next && !next.loading) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
           buttonPressed.value = false;
+          Navigator.of(context).pop();
+          NotificationHelper.success(message: 'role_updated'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }

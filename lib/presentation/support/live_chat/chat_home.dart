@@ -30,6 +30,13 @@ class ChatHome extends HookConsumerWidget {
       appBar: AppBar(
         leading: const Icon(Icons.message),
         title: Text('messages'.tr()),
+        actions: [
+          IconButton(
+              onPressed: () {
+                ref.read(conversessionProvider.notifier).getAllConversessions();
+              },
+              icon: const Icon(Icons.sync))
+        ],
       ),
       body: loading
           ? const Center(

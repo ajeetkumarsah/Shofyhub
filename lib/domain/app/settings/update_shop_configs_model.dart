@@ -23,6 +23,7 @@ class UpdateShopConfigsModel extends Equatable {
   final int autoArchiveOrder;
   final String defaultSenderEmailAddress;
   final String defaultEmailSenderName;
+  final String returnRefund;
   final int notifyNewMessage;
   final int notifyAlertQuantity;
   final int notifyInventoryOut;
@@ -47,7 +48,7 @@ class UpdateShopConfigsModel extends Equatable {
     required this.supportAgent,
     required this.defaultSenderEmailAddress,
     required this.defaultEmailSenderName,
-    // required this.returnRefund,
+    required this.returnRefund,
     required this.orderNumberPrefix,
     required this.orderNumberSuffix,
     required this.defaultTaxId,
@@ -101,6 +102,7 @@ class UpdateShopConfigsModel extends Equatable {
     String? supportEmail,
     String? defaultSenderEmailAddress,
     String? defaultEmailSenderName,
+    String? returnRefund,
     int? notifyNewMessage,
     int? notifyAlertQuantity,
     int? notifyInventoryOut,
@@ -159,7 +161,7 @@ class UpdateShopConfigsModel extends Equatable {
           defaultSenderEmailAddress ?? this.defaultSenderEmailAddress,
       defaultEmailSenderName:
           defaultEmailSenderName ?? this.defaultEmailSenderName,
-      // returnRefund: returnRefund ?? this.returnRefund,
+      returnRefund: returnRefund ?? this.returnRefund,
       orderNumberPrefix: orderNumberPrefix ?? this.orderNumberPrefix,
       orderNumberSuffix: orderNumberSuffix ?? this.orderNumberSuffix,
       defaultTaxId: defaultTaxId ?? this.defaultTaxId,
@@ -205,7 +207,7 @@ class UpdateShopConfigsModel extends Equatable {
         supportAgent: map["support_agent"],
         defaultSenderEmailAddress: map["default_sender_email_address"] ?? '',
         defaultEmailSenderName: map["default_email_sender_name"] ?? '',
-        // returnRefund: map["return_refund"] ?? '',
+        returnRefund: map["return_refund"] ?? '',
         orderNumberPrefix: map["order_number_prefix"],
         orderNumberSuffix: map["order_number_suffix"],
         defaultTaxId: map["default_tax_id"]?.toInt() ?? 0,
@@ -246,7 +248,7 @@ class UpdateShopConfigsModel extends Equatable {
         supportAgent: null,
         defaultSenderEmailAddress: '',
         defaultEmailSenderName: '',
-        // returnRefund: '',
+        returnRefund: '',
         orderNumberPrefix: '',
         orderNumberSuffix: '',
         defaultTaxId: 0,
@@ -287,7 +289,7 @@ class UpdateShopConfigsModel extends Equatable {
         supportAgent,
         defaultSenderEmailAddress,
         defaultEmailSenderName,
-        // returnRefund,
+        returnRefund,
         orderNumberPrefix,
         orderNumberSuffix,
         defaultTaxId,

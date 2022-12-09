@@ -499,5 +499,7 @@
   "shop_settings": "Shop Settings",
   "shop_configuration_updated": "Shop Configuration Updated",
   "alert_quantity": "Alert Quantity",
-  "default_tax" : "Default Tax"
+  "default_tax" : "Default Tax",
+  "ok": "Ok",
+  "tap_again_to_leave": "Tap again to leave"
 }

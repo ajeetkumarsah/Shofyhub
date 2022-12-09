@@ -27,16 +27,18 @@ class DelivaryBoyListPage extends HookConsumerWidget {
         ref.watch(delivaryBoyProvider.select((value) => value.loading));
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Constants.buttonColor,
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) => const CreateUpdateDelivaryBoyPage());
-        },
-        label: const Text('Add new'),
-        icon: const Icon(Icons.add),
-      ),
+      floatingActionButton: loading
+          ? null
+          : FloatingActionButton.extended(
+              backgroundColor: Constants.buttonColor,
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => const CreateUpdateDelivaryBoyPage());
+              },
+              label: const Text('Add new'),
+              icon: const Icon(Icons.add),
+            ),
       body: loading
           ? const Center(
               child: CircularProgressIndicator(),

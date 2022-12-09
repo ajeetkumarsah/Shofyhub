@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
+import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/application/core/shared_prefs.dart';
 import 'package:zcart_seller/application/core/utility.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -26,6 +28,8 @@ class DashboardHome extends HookConsumerWidget {
       return null;
     }, []);
 
+    DateTime? currentBackPressTime;
+
     final settings = ref.watch(shopSettingsProvider);
 
     const screens = [
@@ -46,35 +50,54 @@ class DashboardHome extends HookConsumerWidget {
         ? ValueListenableBuilder(
             valueListenable: DashboardUtility.index,
             builder: (context, value, child) {
-              return Scaffold(
-                  body: IndexedStack(
-                    index: DashboardUtility.index.value,
-                    children: screens,
-                  ),
-                  bottomNavigationBar: BottomNavigationBar(
-                      elevation: 5,
-                      type: BottomNavigationBarType.fixed,
-                      selectedItemColor: Constants.appbarColor,
-                      unselectedItemColor: Colors.grey,
-                      selectedFontSize: 12,
-                      currentIndex: DashboardUtility.index.value,
-                      onTap: (value) {
-                        DashboardUtility.index.value = value;
-                      },
-                      items: [
-                        BottomNavigationBarItem(
-                            icon: const Icon(Icons.dashboard),
-                            label: 'dashboard'.tr()),
-                        BottomNavigationBarItem(
-                            icon: const Icon(Icons.list_alt_sharp),
-                            label: 'orders'.tr()),
-                        BottomNavigationBarItem(
-                            icon: const Icon(Icons.message),
-                            label: 'messages'.tr()),
-                        BottomNavigationBarItem(
-                            icon: const Icon(Icons.settings),
-                            label: 'settings'.tr()),
-                      ]));
+              return WillPopScope(
+                onWillPop: () async {
+                  if (DashboardUtility.index.value == 0) {
+                    DateTime now = DateTime.now();
+                    if (currentBackPressTime == null ||
+                        now.difference(currentBackPressTime!) >
+                            const Duration(seconds: 2)) {
+                      currentBackPressTime = now;
+                      NotificationHelper.info(
+                          message: 'tap_again_to_leave'.tr());
+                      return Future.value(false);
+                    }
+                    return Future.value(true);
+                  } else {
+                    DashboardUtility.index.value = 0;
+                    return false;
+                  }
+                },
+                child: Scaffold(
+                    body: IndexedStack(
+                      index: DashboardUtility.index.value,
+                      children: screens,
+                    ),
+                    bottomNavigationBar: BottomNavigationBar(
+                        elevation: 5,
+                        type: BottomNavigationBarType.fixed,
+                        selectedItemColor: Constants.appbarColor,
+                        unselectedItemColor: Colors.grey,
+                        selectedFontSize: 12,
+                        currentIndex: DashboardUtility.index.value,
+                        onTap: (value) {
+                          DashboardUtility.index.value = value;
+                        },
+                        items: [
+                          BottomNavigationBarItem(
+                              icon: const Icon(Icons.dashboard),
+                              label: 'dashboard'.tr()),
+                          BottomNavigationBarItem(
+                              icon: const Icon(Icons.list_alt_sharp),
+                              label: 'orders'.tr()),
+                          BottomNavigationBarItem(
+                              icon: const Icon(Icons.message),
+                              label: 'messages'.tr()),
+                          BottomNavigationBarItem(
+                              icon: const Icon(Icons.settings),
+                              label: 'settings'.tr()),
+                        ])),
+              );
             })
         : ValueListenableBuilder(
             valueListenable: NoLiveChatDashboardUtility.index,

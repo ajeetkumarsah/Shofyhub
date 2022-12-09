@@ -47,5 +47,5 @@ class PaymentMethodModel extends Equatable {
   List<Object> get props => [id, title];
 
   factory PaymentMethodModel.init() =>
-      const PaymentMethodModel(id: 1, title: 'New');
+      const PaymentMethodModel(id: 1, title: 'Cash On Delivery');
 }

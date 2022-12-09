@@ -29,7 +29,7 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
                 return InkWell(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const SettingsHome()));
+                        builder: (_) => const SettingsHome(hasBackButton: true,)));
                   },
                   child: Container(
                       constraints:

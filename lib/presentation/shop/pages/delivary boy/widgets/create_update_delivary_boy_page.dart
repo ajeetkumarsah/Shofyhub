@@ -11,6 +11,7 @@ import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/domain/app/shop/delivery%20boy/create_delivary_boy_model.dart';
 import 'package:zcart_seller/domain/app/shop/delivery%20boy/delivary_boy_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
 
 class CreateUpdateDelivaryBoyPage extends HookConsumerWidget {
@@ -81,55 +82,56 @@ class CreateUpdateDelivaryBoyPage extends HookConsumerWidget {
         child: Padding(
           padding: EdgeInsets.all(20.sp),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               KTextField(
                 controller: firstNameController,
                 inputAction: TextInputAction.next,
-                lebelText: 'First Name',
+                lebelText: 'First Name *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: lastNameController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Last Name',
+                lebelText: 'Last Name *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: nickNameController,
                 inputAction: TextInputAction.next,
-                lebelText: 'Nick Name',
+                lebelText: 'Nick Name *',
               ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: emailController,
                 inputAction: TextInputAction.next,
                 keyboardType: TextInputType.emailAddress,
-                lebelText: 'Email',
+                lebelText: 'Email *',
               ),
               if (delivaryBoyDetails == null) SizedBox(height: 10.h),
               if (delivaryBoyDetails == null)
                 KTextField(
                   controller: passwordController,
                   inputAction: TextInputAction.next,
-                  lebelText: 'Password',
+                  lebelText: 'Password *',
                 ),
               if (delivaryBoyDetails == null) SizedBox(height: 10.h),
               if (delivaryBoyDetails == null)
                 KTextField(
                   controller: confirmPasswordController,
                   inputAction: TextInputAction.next,
-                  lebelText: 'Confirm Password',
+                  lebelText: 'Confirm Password *',
                 ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: phoneNoController,
                 inputAction: TextInputAction.next,
                 keyboardType: const TextInputType.numberWithOptions(),
-                lebelText: 'Phone Number',
+                lebelText: 'Phone Number *',
               ),
               SizedBox(height: 10.h),
               CheckboxListTile(
-                title: Text('active'.tr()),
+                title: Text('${'active'.tr()} *'),
                 value: status.value,
                 onChanged: (value) {
                   status.value = value!;
@@ -142,7 +144,7 @@ class CreateUpdateDelivaryBoyPage extends HookConsumerWidget {
                 readOnly: true,
                 decoration: InputDecoration(
                   // prefixIcon: prefixIcon,
-                  labelText: 'Date Of Birth',
+                  labelText: 'Date Of Birth *',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.r),
                   ),
@@ -196,6 +198,8 @@ class CreateUpdateDelivaryBoyPage extends HookConsumerWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 10.h),
+              const RequiredFieldText(),
               SizedBox(height: 30.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

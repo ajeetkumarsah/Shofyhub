@@ -112,10 +112,10 @@ class EditWarehousePage extends HookConsumerWidget {
 
     ref.listen<WarehouseState>(warehouseProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
-          NotificationHelper.success(message: 'warehouse_updated'.tr());
           buttonPressed.value = false;
+          NotificationHelper.success(message: 'warehouse_updated'.tr());
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: 'next.failure.error'.tr());
         }
