@@ -17,12 +17,14 @@ import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/support/live_chat/widgets/first_message_box.dart';
 
 class ChatScreen extends HookConsumerWidget {
+  final int id;
   final int customerId;
   final String customerName;
   final String customerAvater;
 
   const ChatScreen({
     Key? key,
+    required this.id,
     required this.customerId,
     required this.customerName,
     required this.customerAvater,
@@ -36,7 +38,7 @@ class ChatScreen extends HookConsumerWidget {
       Future.delayed(const Duration(milliseconds: 100), () async {
         ref
             .read(conversessionProvider.notifier)
-            .getConversessionDetails(customerId: customerId);
+            .getConversessionDetails(customerId: id);
       });
 
       return null;
@@ -70,7 +72,7 @@ class ChatScreen extends HookConsumerWidget {
               onPressed: () async {
                 await ref
                     .read(conversessionProvider.notifier)
-                    .getConversessionDetails(customerId: customerId);
+                    .getConversessionDetails(customerId: id);
               },
               icon: const Icon(
                 Icons.sync,
@@ -125,7 +127,7 @@ class ChatScreen extends HookConsumerWidget {
                                     ref
                                         .read(conversessionProvider.notifier)
                                         .replyConversession(
-                                          customerId: customerId,
+                                          customerId: id,
                                           message: message,
                                         );
                                   } else {

@@ -61,6 +61,7 @@ class ChatHome extends HookConsumerWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => ChatScreen(
+                                  id: conversessions[index].id,
                                   customerId: conversessions[index].customer.id,
                                   customerName:
                                       conversessions[index].customer.name,

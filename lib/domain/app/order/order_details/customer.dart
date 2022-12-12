@@ -51,7 +51,7 @@ class Customer extends Equatable {
 
   factory Customer.fromMap(Map<String, dynamic> map) {
     return Customer(
-      id: map['id'].toInt() ?? 0,
+      id: map['id'] ?? 0,
       name: map['name'] ?? '',
       email: map['email'] ?? '',
       phone_number: map['phone_number'] ?? '',
