@@ -8,6 +8,7 @@ class ReplyModel extends Equatable {
   final dynamic read;
   final String updatedAt;
   final List<dynamic> attachments;
+  final Customer user;
 
   const ReplyModel({
     required this.id,
@@ -16,6 +17,7 @@ class ReplyModel extends Equatable {
     required this.read,
     required this.updatedAt,
     required this.attachments,
+    required this.user,
   });
 
   ReplyModel copyWith({
@@ -25,6 +27,7 @@ class ReplyModel extends Equatable {
     dynamic read,
     String? updatedAt,
     List<dynamic>? attachments,
+    Customer? user,
   }) {
     return ReplyModel(
       id: id ?? this.id,
@@ -33,6 +36,7 @@ class ReplyModel extends Equatable {
       read: read ?? this.read,
       updatedAt: updatedAt ?? this.updatedAt,
       attachments: attachments ?? this.attachments,
+      user: user ?? this.user,
     );
   }
 
@@ -45,6 +49,9 @@ class ReplyModel extends Equatable {
         read: map["read"],
         updatedAt: map["updated_at"],
         attachments: List<dynamic>.from(map["attachments"].map((x) => x)),
+        user: map["user"] != null
+            ? Customer.fromMap(map["user"])
+            : Customer.init(),
       );
 
   factory ReplyModel.init() => ReplyModel(
@@ -54,6 +61,7 @@ class ReplyModel extends Equatable {
         read: '',
         updatedAt: '',
         attachments: const [],
+        user: Customer.init(),
       );
 
   @override
@@ -64,5 +72,6 @@ class ReplyModel extends Equatable {
         read,
         updatedAt,
         attachments,
+        user,
       ];
 }

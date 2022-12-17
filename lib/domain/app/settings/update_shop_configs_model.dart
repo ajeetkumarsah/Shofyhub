@@ -3,12 +3,12 @@ import 'package:equatable/equatable.dart';
 class UpdateShopConfigsModel extends Equatable {
   final int shopId;
   final int alertQuantity;
-  final int defaultWarehouseId;
-  final int defaultSupplierId;
+  final int? defaultWarehouseId;
+  final int? defaultSupplierId;
   final String orderNumberPrefix;
   final dynamic orderNumberSuffix;
   final dynamic defaultPaymentMethodId;
-  final int defaultTaxId;
+  final int? defaultTaxId;
   final String orderHandlingCost;
   final int activeEcommerce;
   final int payOnline;

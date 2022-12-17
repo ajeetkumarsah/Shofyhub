@@ -176,6 +176,7 @@ class ChatScreen extends HookConsumerWidget {
               reverse: true,
               children: reversedMessageList.map((message) {
                 return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Visibility(
                       visible: messageList.indexOf(message) == 0,
@@ -183,11 +184,12 @@ class ChatScreen extends HookConsumerWidget {
                         conversessionDetailsModel: conversessionDetailsModel,
                       ),
                     ),
+                    SizedBox(height: 10.h),
                     Container(
                       padding:
                           const EdgeInsets.only(left: 16, right: 16, bottom: 5),
                       child: Align(
-                        alignment: (message.customer == null
+                        alignment: (message.user.name.isEmpty
                             ? Alignment.topLeft
                             : Alignment.topRight),
                         child: Container(
@@ -196,8 +198,8 @@ class ChatScreen extends HookConsumerWidget {
                               maxWidth: ScreenUtil().screenWidth * 0.75),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: (message.customer == null
-                                ? Constants.kDarkCardBgColor
+                            color: (message.user.name.isEmpty
+                                ? Constants.kGreenColor
                                 : Constants.primaryColor),
                           ),
                           child: Column(

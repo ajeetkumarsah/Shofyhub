@@ -88,28 +88,25 @@ class ShopConfigPage extends HookConsumerWidget {
 
     final List<ShopUsersModel> agentList =
         ref.watch(shopUserProvider.select((value) => value.getShopUser));
-    final ValueNotifier<ShopUsersModel> selectedAgent = agentList.isEmpty
-        ? useState(ShopUsersModel.init())
-        : useState(agentList[0]);
+    final ValueNotifier<ShopUsersModel?> selectedAgent =
+        agentList.isEmpty ? useState(null) : useState(agentList[0]);
 
     final List<SupplierModel> supplierList =
         ref.watch(supplierProvider.select((value) => value.allSuppliers));
-    final ValueNotifier<SupplierModel> selectedSupplier = supplierList.isEmpty
-        ? useState(SupplierModel.init())
-        : useState(supplierList[0]);
+    final ValueNotifier<SupplierModel?> selectedSupplier = useState(null);
 
     final List<WarehouseModel> warehouseList =
         ref.watch(warehouseProvider.select((value) => value.warehouseItemList));
-    final ValueNotifier<WarehouseModel> selectedWarehouse =
-        useState(warehouseList[0]);
+    final ValueNotifier<WarehouseModel?> selectedWarehouse = useState(null);
+    
     const List<PaymentMethodModel> paymentMethodList = [
       PaymentMethodModel(id: 1, title: 'Cash On Delivery'),
       PaymentMethodModel(id: 2, title: 'Bank Wire Transfer'),
       PaymentMethodModel(id: 3, title: 'PayPal Express Checkout'),
       PaymentMethodModel(id: 4, title: 'Stripe'),
     ];
-    final ValueNotifier<PaymentMethodModel> selectedPaymentMethod =
-        useState(paymentMethodList[0]);
+    final ValueNotifier<PaymentMethodModel?> selectedPaymentMethod =
+        useState(null);
 
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
@@ -150,11 +147,11 @@ class ShopConfigPage extends HookConsumerWidget {
         notifyNewChat.value = next.shopConfigs.notifyNewChat;
         maintenanceMode.value = next.shopConfigs.maintenanceMode;
 
-        selectedAgent.value = agentList.isEmpty
-            ? ShopUsersModel.init()
-            : agentList
-                .where((e) => e.id == next.shopConfigs.supportAgent)
-                .toList()[0];
+        var selectedAgenList = agentList
+            .where((e) => e.id == next.shopConfigs.supportAgent)
+            .toList();
+        selectedAgent.value =
+            selectedAgenList.isNotEmpty ? selectedAgenList[0] : null;
 
         selectedPaymentMethod.value = next.shopConfigs.defaultPaymentMethodId !=
                 null
@@ -167,7 +164,8 @@ class ShopConfigPage extends HookConsumerWidget {
             .where((e) => e.id == next.shopConfigs.defaultWarehouseId)
             .toList();
 
-        selectedWarehouse.value = selectedWarehouseList[0];
+        selectedWarehouse.value =
+            selectedWarehouseList.isEmpty ? null : selectedWarehouseList[0];
 
         var selectedSupplierList = supplierList
             .where((e) => e.id == next.shopConfigs.defaultSupplierId)
@@ -175,14 +173,14 @@ class ShopConfigPage extends HookConsumerWidget {
 
         selectedSupplier.value =
             supplierList.isEmpty || selectedSupplierList.isEmpty
-                ? SupplierModel.init()
+                ? null
                 : selectedSupplierList[0];
 
         var selectedTaxList = taxList
             .where((e) => e.id == next.shopConfigs.defaultTaxId)
             .toList();
 
-        selectedTax.value = selectedTaxList[0];
+        selectedTax.value = selectedTaxList.isEmpty ? null : selectedTaxList[0];
       }
     });
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
@@ -616,16 +614,22 @@ class ShopConfigPage extends HookConsumerWidget {
                                     // defaultPackagingIds:
                                     //     defaultPackagingIds.value ? 1 : 0,
                                     defaultPaymentMethodId:
-                                        selectedPaymentMethod.value.id,
+                                        selectedPaymentMethod.value != null
+                                            ? selectedPaymentMethod.value!.id
+                                            : null,
                                     defaultSenderEmailAddress:
                                         defaultSenderEmailController.text,
                                     defaultSupplierId:
-                                        selectedSupplier.value.id!,
+                                        selectedSupplier.value != null
+                                            ? selectedSupplier.value!.id!
+                                            : null,
                                     defaultTaxId: selectedTax.value != null
                                         ? selectedTax.value!.id
-                                        : 0,
+                                        : null,
                                     defaultWarehouseId:
-                                        selectedWarehouse.value.id,
+                                        selectedWarehouse.value != null
+                                            ? selectedWarehouse.value!.id
+                                            : null,
                                     digitalGoodsOnly:
                                         digitalGoodsOnly.value ? 1 : 0,
                                     returnRefund: returnRefundController.text,
@@ -661,7 +665,9 @@ class ShopConfigPage extends HookConsumerWidget {
                                         showShopDescriptionWithListing.value
                                             ? 1
                                             : 0,
-                                    supportAgent: selectedAgent.value.id,
+                                    supportAgent: selectedAgent.value != null
+                                        ? selectedAgent.value!.id
+                                        : null,
                                     supportEmail: supportEmailController.text,
                                     supportPhone: supportPhoneController.text,
                                     supportPhoneTollFree:
