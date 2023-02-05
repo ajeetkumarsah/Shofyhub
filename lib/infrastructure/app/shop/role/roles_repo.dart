@@ -12,8 +12,7 @@ class RoleRepo extends IRolesRepo {
   Future<Either<CleanFailure, List<RoleModel>>> getRoles(
       {required String filter}) {
     return cleanApi.get(
-      failureHandler:
-          <RoleModel>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -43,8 +42,7 @@ class RoleRepo extends IRolesRepo {
   @override
   Future<Either<CleanFailure, List<PermissionListModel>>> getPermissions() {
     return cleanApi.get(
-      failureHandler: <PermissionListModel>(int statusCode,
-          Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -75,8 +73,7 @@ class RoleRepo extends IRolesRepo {
   Future<Either<CleanFailure, CreateUpdateRoleModel>> createRole(
       {required CreateUpdateRoleModel createRoleModel}) async {
     return await cleanApi.post(
-        failureHandler: <CreateUpdateRoleModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -109,8 +106,7 @@ class RoleRepo extends IRolesRepo {
       {required int roleId,
       required CreateUpdateRoleModel updateRoleModel}) async {
     return await cleanApi.post(
-        failureHandler: <CreateUpdateRoleModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -141,8 +137,7 @@ class RoleRepo extends IRolesRepo {
   @override
   Future<Either<CleanFailure, Unit>> trashRole({required int roleId}) {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -173,8 +168,7 @@ class RoleRepo extends IRolesRepo {
   Future<Either<CleanFailure, RoleDetailsModel>> getRoleDetails(
       {required int id}) {
     return cleanApi.get(
-        failureHandler: <RoleDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -203,8 +197,7 @@ class RoleRepo extends IRolesRepo {
   @override
   Future<Either<CleanFailure, Unit>> deleteRole({required int roleId}) {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -234,8 +227,7 @@ class RoleRepo extends IRolesRepo {
   @override
   Future<Either<CleanFailure, Unit>> restoreRole({required int roleId}) {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

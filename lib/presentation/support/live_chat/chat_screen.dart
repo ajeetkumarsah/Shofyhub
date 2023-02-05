@@ -6,7 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nb_utils/nb_utils.dart' as nbUtils;
+import 'package:nb_utils/nb_utils.dart' as nbutils;
 import 'package:overlay_support/overlay_support.dart';
 import 'package:zcart_seller/application/app/support/live_chat/conversession_provider.dart';
 import 'package:zcart_seller/application/app/support/live_chat/conversession_state.dart';
@@ -83,7 +83,7 @@ class ChatScreen extends HookConsumerWidget {
         body: SafeArea(
           child: GestureDetector(
             onTap: () {
-              nbUtils.hideKeyboard(context);
+              nbutils.hideKeyboard(context);
             },
             child: Column(
               children: [
@@ -109,7 +109,7 @@ class ChatScreen extends HookConsumerWidget {
                         placeholder: 'type_a_message'.tr(),
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle2!
+                            .titleSmall!
                             .copyWith(fontWeight: FontWeight.bold),
                         prefixMode: OverlayVisibilityMode.always,
                         textAlignVertical: TextAlignVertical.center,

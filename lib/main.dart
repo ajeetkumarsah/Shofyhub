@@ -40,7 +40,6 @@ void main() async {
         path: 'assets/translations',
         supportedLocales: const [Locale('en'), Locale('bn')],
         fallbackLocale: const Locale('en'),
-        // assetLoader: codegen,
         child: const MyApp(),
       ),
     ),

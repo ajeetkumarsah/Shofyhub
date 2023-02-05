@@ -7,8 +7,7 @@ class RefundRepo extends IRefundRepo {
   @override
   Future<Either<CleanFailure, List<RefundModel>>> getOpenRefunds() async {
     return cleanApi.get(
-        failureHandler:
-            <RefundModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -38,8 +37,7 @@ class RefundRepo extends IRefundRepo {
   @override
   Future<Either<CleanFailure, List<RefundModel>>> getClosedRefunds() async {
     return cleanApi.get(
-        failureHandler:
-            <RefundModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -70,8 +68,7 @@ class RefundRepo extends IRefundRepo {
   Future<Either<CleanFailure, RefundModel>> getRefundDetails(
       {required int refundId}) async {
     return cleanApi.get(
-        failureHandler:
-            <RefundModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -101,8 +98,7 @@ class RefundRepo extends IRefundRepo {
   Future<Either<CleanFailure, Unit>> approveRefunds(
       {required int refundId}) async {
     return cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -133,8 +129,7 @@ class RefundRepo extends IRefundRepo {
   Future<Either<CleanFailure, Unit>> declineRefunds(
       {required int refundId}) async {
     return cleanApi.get(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -171,8 +166,7 @@ class RefundRepo extends IRefundRepo {
       required int notifyCustomer,
       required int status}) async {
     return cleanApi.post(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();

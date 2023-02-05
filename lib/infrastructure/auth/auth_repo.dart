@@ -14,8 +14,7 @@ class AuthRepo extends IAuthRepo {
     Logger.i("email = ${body.email}, pass ${body.password}");
 
     final data = await cleanApi.post(
-        failureHandler:
-            <UserModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['message'] != null) {
             return left(CleanFailure(
                 tag: 'login',
@@ -60,8 +59,7 @@ class AuthRepo extends IAuthRepo {
   Future<Either<CleanFailure, UserModel>> registration(
       {required RegistrationBody body}) async {
     final data = await cleanApi.post(
-        failureHandler:
-            <UserModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -100,8 +98,7 @@ class AuthRepo extends IAuthRepo {
   Future<Either<CleanFailure, Unit>> forgetPassword(
       {required String email}) async {
     return cleanApi.post(
-        failureHandler:
-            <unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -132,8 +129,7 @@ class AuthRepo extends IAuthRepo {
   @override
   Future<Either<CleanFailure, Unit>> otpLogin({required String phoneNumber}) {
     return cleanApi.post(
-        failureHandler:
-            <unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -164,8 +160,7 @@ class AuthRepo extends IAuthRepo {
   Future<Either<CleanFailure, UserModel>> otpVerify(
       {required String phoneNumber, required String code}) async {
     final data = await cleanApi.post(
-        failureHandler:
-            <unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

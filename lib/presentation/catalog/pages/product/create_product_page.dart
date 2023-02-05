@@ -311,7 +311,7 @@ class AddProductPage extends HookConsumerWidget {
                 SizedBox(height: 20.h),
                 Text(
                   "upload_images".tr(),
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 SizedBox(height: 10.h),
                 InkWell(
@@ -457,9 +457,8 @@ class AddProductPage extends HookConsumerWidget {
                                   ? selectedGtin.value!.value
                                   : '',
                               'description': description.text,
-                              'origin_country': selectedCountry.value != null
-                                  ? selectedCountry.value.key
-                                  : '',
+                              'origin_country': selectedCountry.value.key,
+
                               'slug': nameController.text
                                   .toLowerCase()
                                   .replaceAll(RegExp(r' '), '-'),

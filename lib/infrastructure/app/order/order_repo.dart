@@ -18,8 +18,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, OrderPaginationModel>> getOrders(
       {required String? filter, required int page}) async {
     return cleanApi.get(
-        failureHandler:
-            <OrderModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -48,8 +47,7 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, List<OrderModel>>> getArchivedOrder() async {
     return cleanApi.get(
-        failureHandler:
-            <OrderModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -80,8 +78,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> assignDelivaryBoy(
       {required int orderId, required int delivaryBoyId}) async {
     return cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -116,8 +113,7 @@ class OrderRepo extends IOrderRepo {
       required String trackingId,
       required bool notifyCustomer}) async {
     return cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -151,8 +147,7 @@ class OrderRepo extends IOrderRepo {
       required int orderStatusId,
       required bool notifyCustomer}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -183,8 +178,7 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, Unit>> markAsPaid({required int orderId}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -215,8 +209,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> markAsUnpaid(
       {required int orderId}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -247,8 +240,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> markAsDelivered(
       {required int orderId, required bool notifyCustomer}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -279,8 +271,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> cancleOrder(
       {required int orderId, required bool notifyCustomer}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -311,8 +302,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> unarchiveOrder(
       {required int orderId}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -343,8 +333,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> archiveOrder(
       {required int orderId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -374,8 +363,7 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, Unit>> deleteOrder({required int orderId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -406,8 +394,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, OrderDetailsModel>> getOrderDetails(
       {required int orderId}) async {
     return cleanApi.get(
-        failureHandler: <OrderDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -436,8 +423,7 @@ class OrderRepo extends IOrderRepo {
   @override
   Future<Either<CleanFailure, List<OrderStatusModel>>> getOrderStatus() async {
     return cleanApi.get(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -470,8 +456,7 @@ class OrderRepo extends IOrderRepo {
   Future<Either<CleanFailure, Unit>> adminNote(
       {required int orderId, required String adminNote}) async {
     return await cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

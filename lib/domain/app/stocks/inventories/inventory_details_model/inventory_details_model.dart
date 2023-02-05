@@ -262,7 +262,7 @@ class InventoryDetailsModel extends Equatable {
         supplierId: 0,
         conditionNote: '',
         description: '',
-        keyFeatures: [],
+        keyFeatures: const [],
         purchasePrice: '',
         offerPrice: '',
         offerStart: '',

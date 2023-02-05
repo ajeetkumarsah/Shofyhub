@@ -82,7 +82,6 @@ class SignInPage extends HookConsumerWidget {
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final formKey2 = useMemoized(() => GlobalKey<FormState>());
-    final formKey3 = useMemoized(() => GlobalKey<FormState>());
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -153,7 +152,7 @@ class SignInPage extends HookConsumerWidget {
                                       textAlign: TextAlign.start,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText2!
+                                          .bodyMedium!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -166,7 +165,7 @@ class SignInPage extends HookConsumerWidget {
                                       textAlign: TextAlign.start,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText2!
+                                          .bodyMedium!
                                           .copyWith(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -371,85 +370,85 @@ class SignInPage extends HookConsumerWidget {
     );
   }
 
-  Form _buildEmailLoginFormInside(
-      GlobalKey<FormState> formKey,
-      TextEditingController emailController,
-      TextEditingController passwordController,
-      ValueNotifier<bool> showPassword,
-      ValueNotifier<bool> isPhoneLogin,
-      bool loading,
-      WidgetRef ref) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          SizedBox(height: 10.h),
-          KTextField(
-            validator: (text) {
-              final d = ValidatorLogic.requiredEmail(text);
-              Logger.i('checking');
-              Logger.i('email: $d');
-              return d;
-            },
-            controller: emailController,
-            prefixIcon: const Icon(Icons.mail),
-            lebelText: 'Email address',
-          ),
-          SizedBox(height: 15.h),
-          KTextField(
-            validator: (text) => ValidatorLogic.requiredPassword(text),
-            controller: passwordController,
-            lebelText: 'Password',
-            prefixIcon: const Icon(Icons.lock),
-            suffixIcon: InkWell(
-              onTap: () {
-                showPassword.value = !showPassword.value;
-              },
-              child: showPassword.value
-                  ? const Icon(
-                      Icons.visibility_off,
-                    )
-                  : const Icon(Icons.remove_red_eye),
-            ),
-            obscureText: !showPassword.value,
-          ),
-          SizedBox(height: 20.h),
-          KButton(
-            onPressed: loading
-                ? null
-                : () {
-                    isPhoneLogin.value = false;
-                    Logger.i(formKey.currentState?.validate() ?? false);
-                    if (formKey.currentState?.validate() ?? false) {
-                      final body = LogInBody(
-                          email: emailController.text,
-                          password: passwordController.text);
-                      Logger.i(body);
-                      ref.read(authProvider.notifier).login(body: body);
-                    }
-                  },
-            child: loading
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  )
-                : Text(
-                    'Sign in',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
-        ],
-      ),
-    );
-  }
+  // Form _buildEmailLoginFormInside(
+  //     GlobalKey<FormState> formKey,
+  //     TextEditingController emailController,
+  //     TextEditingController passwordController,
+  //     ValueNotifier<bool> showPassword,
+  //     ValueNotifier<bool> isPhoneLogin,
+  //     bool loading,
+  //     WidgetRef ref) {
+  //   return Form(
+  //     key: formKey,
+  //     child: Column(
+  //       children: [
+  //         SizedBox(height: 10.h),
+  //         KTextField(
+  //           validator: (text) {
+  //             final d = ValidatorLogic.requiredEmail(text);
+  //             Logger.i('checking');
+  //             Logger.i('email: $d');
+  //             return d;
+  //           },
+  //           controller: emailController,
+  //           prefixIcon: const Icon(Icons.mail),
+  //           lebelText: 'Email address',
+  //         ),
+  //         SizedBox(height: 15.h),
+  //         KTextField(
+  //           validator: (text) => ValidatorLogic.requiredPassword(text),
+  //           controller: passwordController,
+  //           lebelText: 'Password',
+  //           prefixIcon: const Icon(Icons.lock),
+  //           suffixIcon: InkWell(
+  //             onTap: () {
+  //               showPassword.value = !showPassword.value;
+  //             },
+  //             child: showPassword.value
+  //                 ? const Icon(
+  //                     Icons.visibility_off,
+  //                   )
+  //                 : const Icon(Icons.remove_red_eye),
+  //           ),
+  //           obscureText: !showPassword.value,
+  //         ),
+  //         SizedBox(height: 20.h),
+  //         KButton(
+  //           onPressed: loading
+  //               ? null
+  //               : () {
+  //                   isPhoneLogin.value = false;
+  //                   Logger.i(formKey.currentState?.validate() ?? false);
+  //                   if (formKey.currentState?.validate() ?? false) {
+  //                     final body = LogInBody(
+  //                         email: emailController.text,
+  //                         password: passwordController.text);
+  //                     Logger.i(body);
+  //                     ref.read(authProvider.notifier).login(body: body);
+  //                   }
+  //                 },
+  //           child: loading
+  //               ? const Center(
+  //                   child: CircularProgressIndicator(
+  //                     color: Colors.white,
+  //                   ),
+  //                 )
+  //               : Text(
+  //                   'Sign in',
+  //                   style: TextStyle(
+  //                     color: Colors.white,
+  //                     fontSize: 16.sp,
+  //                     fontWeight: FontWeight.w500,
+  //                   ),
+  //                 ),
+  //         ),
+  //         SizedBox(
+  //           height: 5.h,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 
 class PhoneLoginForm extends ConsumerWidget {

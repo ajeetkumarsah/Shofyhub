@@ -17,8 +17,7 @@ class NotificationRepo extends INotificationRepo {
   @override
   Future<Either<CleanFailure, List<NotificationModel>>> getNotifications() {
     return cleanApi.get(
-        failureHandler: <NotificationModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

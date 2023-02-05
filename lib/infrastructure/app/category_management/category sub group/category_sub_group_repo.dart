@@ -14,8 +14,7 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
           required int page,
           required String filter}) async {
     return cleanApi.get(
-        failureHandler: <CategorySubGroupModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -70,8 +69,7 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
   Future<Either<CleanFailure, Unit>> trashCategorySubGroup(
       {required int categorySubGroupId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -102,8 +100,7 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
   Future<Either<CleanFailure, Unit>> deleteCategorySubGroup(
       {required int categorySubGroupId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -134,8 +131,7 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
   Future<Either<CleanFailure, Unit>> restoreCategorySubGroup(
       {required int categorySubGroupId}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -166,8 +162,7 @@ class CategorySubGroupRepo extends ICategorySubGroupRepo {
   Future<Either<CleanFailure, CategorySubGroupDetailsModel>>
       getCategorySubGroupDetails({required int categorySubGroupId}) async {
     return cleanApi.get(
-        failureHandler: <CategorySubGroupDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

@@ -23,7 +23,7 @@ class CountryWidget extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Text(
           ref.watch(countryCodeProvider).getSelectedCountry(),
-          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),

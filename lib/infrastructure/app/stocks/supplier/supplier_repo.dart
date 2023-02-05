@@ -11,8 +11,7 @@ class SupplierRepo extends ISupplierRepo {
   Future<Either<CleanFailure, SupplierPaginationModel>> getSuppliers(
       {required String supplierFilter, required int page}) {
     return cleanApi.get(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -41,8 +40,7 @@ class SupplierRepo extends ISupplierRepo {
   @override
   Future<Either<CleanFailure, Unit>> trashSupplier({required int supplierId}) {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -71,8 +69,7 @@ class SupplierRepo extends ISupplierRepo {
   @override
   Future<Either<CleanFailure, Unit>> deleteSupplier({required supplierId}) {
     return cleanApi.delete(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -101,8 +98,7 @@ class SupplierRepo extends ISupplierRepo {
   @override
   Future<Either<CleanFailure, Unit>> restoreSupplier({required supplierId}) {
     return cleanApi.put(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -143,8 +139,7 @@ class SupplierRepo extends ISupplierRepo {
   Future<Either<CleanFailure, SupplierDetailsModel>> getSupplierDetails(
       {required int supplierId}) {
     return cleanApi.get(
-        failureHandler: <SupplierDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

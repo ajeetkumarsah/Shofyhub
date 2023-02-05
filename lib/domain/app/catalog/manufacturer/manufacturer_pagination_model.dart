@@ -6,7 +6,7 @@ import 'package:zcart_seller/domain/app/category/categories/links_model.dart';
 import 'package:zcart_seller/domain/app/category/categories/meta_model.dart';
 
 class ManufacturerPaginationModel extends Equatable {
-  final List<ManufacturerModel> data;
+  final List data;
   final Links links;
   final Meta meta;
 
@@ -17,7 +17,7 @@ class ManufacturerPaginationModel extends Equatable {
   });
 
   ManufacturerPaginationModel copyWith({
-    List<ManufacturerModel>? data,
+    List? data,
     Links? links,
     Meta? meta,
   }) {
@@ -38,8 +38,7 @@ class ManufacturerPaginationModel extends Equatable {
 
   factory ManufacturerPaginationModel.fromMap(Map<String, dynamic> map) {
     return ManufacturerPaginationModel(
-      data: List<ManufacturerModel>.from(
-          map["data"].map((x) => ManufacturerModel.fromMap(x))),
+      data: List.from(map["data"].map((x) => ManufacturerModel.fromMap(x))),
       links: map["links"] != null ? Links.fromJson(map["links"]) : Links.init(),
       meta: map["meta"] != null ? Meta.fromJson(map["meta"]) : Meta.init(),
     );

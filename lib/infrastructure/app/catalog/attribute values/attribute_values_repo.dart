@@ -18,8 +18,7 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, AttributeValueDetailsModel>>
       getAttributeValueDetails({required int attributeValueId}) async {
     return cleanApi.get(
-        failureHandler: <AttributeValueDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -53,8 +52,7 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
       required String color,
       required int order}) async {
     return cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -91,8 +89,7 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
       required int attributeId,
       required int order}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -125,8 +122,7 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, Unit>> trashAttributeValue(
       {required int attributeValueId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -158,8 +154,7 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, Unit>> restoreAttributeValue(
       {required int attributeValueId}) {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -191,8 +186,7 @@ class AttributeValuesRepo extends IAttributeValuesRepo {
   Future<Either<CleanFailure, Unit>> deleteAttributeValue(
       {required int attributeValueId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

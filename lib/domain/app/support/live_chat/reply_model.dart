@@ -4,7 +4,7 @@ import 'package:zcart_seller/domain/app/order/order_details/customer.dart';
 class ReplyModel extends Equatable {
   final int id;
   final String reply;
-  final Customer customer;
+  final Customer? customer;
   final dynamic read;
   final String updatedAt;
   final List<dynamic> attachments;

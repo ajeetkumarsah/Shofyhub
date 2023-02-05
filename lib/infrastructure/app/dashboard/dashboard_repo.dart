@@ -10,8 +10,7 @@ class DashboardRepo extends IDashBoardRepo {
   @override
   Future<Either<CleanFailure, List<ItemModel>>> getOutOfStockItems() {
     return cleanApi.get(
-        failureHandler:
-            <ItemModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -41,8 +40,7 @@ class DashboardRepo extends IDashBoardRepo {
   @override
   Future<Either<CleanFailure, StatisticModel>> getStatistics() {
     return cleanApi.get(
-        failureHandler: <StatisticModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -71,8 +69,7 @@ class DashboardRepo extends IDashBoardRepo {
   @override
   Future<Either<CleanFailure, List<ItemModel>>> getTopSellingItems() {
     return cleanApi.get(
-        failureHandler:
-            <ItemModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -103,8 +100,7 @@ class DashboardRepo extends IDashBoardRepo {
   @override
   Future<Either<CleanFailure, List<OrderModel>>> getlatestOrders() {
     return cleanApi.get(
-        failureHandler:
-            <OrderModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

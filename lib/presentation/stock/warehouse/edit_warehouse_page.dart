@@ -52,7 +52,6 @@ class EditWarehousePage extends HookConsumerWidget {
 
     final IList<KeyValueData> businessDaysList =
         ref.watch(businessDaysProvider.select((value) => value.dataList));
-    List<String> selectedBusinessDays = [];
 
     final nameController = useTextEditingController();
     final addressLine1Controller = useTextEditingController();

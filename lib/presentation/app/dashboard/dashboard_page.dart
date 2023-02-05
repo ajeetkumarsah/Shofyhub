@@ -15,17 +15,13 @@ import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
 import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
-import 'package:zcart_seller/application/core/shared_prefs.dart';
-import 'package:zcart_seller/infrastructure/app/notification/notification_repo.dart';
 import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';
-import 'package:zcart_seller/presentation/order/latest_order_list_page.dart';
 import 'package:zcart_seller/presentation/order/order_main_page.dart';
 import 'package:zcart_seller/presentation/settings.dart/settings_home.dart';
 import 'package:zcart_seller/presentation/shop/shop_home.dart';
 import 'package:zcart_seller/presentation/stock/stock_home.dart';
 import 'package:zcart_seller/presentation/support/support_home_page.dart';
 import 'package:zcart_seller/presentation/widget_for_all/zcart_appbar.dart';
-
 import 'widgets/more_option_item.dart';
 import 'widgets/order_grid.dart';
 import 'widgets/top_selling_products.dart';

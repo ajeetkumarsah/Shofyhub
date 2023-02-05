@@ -149,7 +149,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
                         borderRadius: 30.0,
                         child: Text(
                           'resend_code'.tr(),
-                          style: Theme.of(context).textTheme.bodyText2,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         loader: (timeLeft) {
                           return Row(

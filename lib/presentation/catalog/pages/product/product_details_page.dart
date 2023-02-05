@@ -125,7 +125,7 @@ class ProductDetailsPage extends HookConsumerWidget {
                   ListTile(
                     title: Text(
                       productDetails.name,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                   Card(

@@ -26,7 +26,7 @@ class SingleImageUpload extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         SizedBox(height: 10.h),
         Row(

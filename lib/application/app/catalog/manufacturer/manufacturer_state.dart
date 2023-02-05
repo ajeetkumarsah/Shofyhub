@@ -1,13 +1,11 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_model.dart';
-
 class ManufacturerState extends Equatable {
   final bool loading;
   final CleanFailure failure;
-  final List<ManufacturerModel> manufacturerList;
-  final List<ManufacturerModel> trashManufacturerList;
+  final List manufacturerList;
+  final List trashManufacturerList;
 
   const ManufacturerState({
     required this.loading,
@@ -19,8 +17,8 @@ class ManufacturerState extends Equatable {
   ManufacturerState copyWith({
     bool? loading,
     CleanFailure? failure,
-    List<ManufacturerModel>? manufacturerList,
-    final List<ManufacturerModel>? trashManufacturerList,
+    List? manufacturerList,
+    final List? trashManufacturerList,
   }) {
     return ManufacturerState(
       loading: loading ?? this.loading,

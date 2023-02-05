@@ -32,7 +32,7 @@ class _EditProductState extends State<EditProduct> {
         title: const Text('Edit Product'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(15.sm),
+        padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

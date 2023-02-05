@@ -10,8 +10,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, List<CategoryGroupModel>>>
       getAllCategoryGroup() async {
     return cleanApi.get(
-        failureHandler: <CategoryGroupModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -41,8 +40,8 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   @override
   Future<Either<CleanFailure, String>> createCategoryGroup(formData) async {
     try {
-      final response =
-          await DioClient.post(url: '/category-group/create', payload: formData);
+      final response = await DioClient.post(
+          url: '/category-group/create', payload: formData);
       Logger.i('Create Cat Group: ${response.data}');
       return right(response.data['message']);
     } catch (e) {
@@ -54,8 +53,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, CategoryGroupDetailsModel>> getCategoryGroupById(
       {required int id}) async {
     return cleanApi.get(
-        failureHandler: <CategoryGroupDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -97,8 +95,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> trashCategoryGroup(
       {required int categoryGroupId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -129,8 +126,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> restoreCategoryGroup(
       {required int categoryGroupId}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -161,8 +157,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, Unit>> deleteCategoryGroup(
       {required int categoryGroupId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -193,8 +188,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, CategoryGroupDetailsModel>> detailsCategoryGroup(
       {required int categoryGroupId}) {
     return cleanApi.get(
-        failureHandler: <CategoryGroupDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -224,8 +218,7 @@ class CategoryGroupRepo extends ICategoryGroupRepo {
   Future<Either<CleanFailure, List<CategoryGroupModel>>>
       getTrashCategoryGroup() async {
     return cleanApi.get(
-        failureHandler: <CategoryGroupModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

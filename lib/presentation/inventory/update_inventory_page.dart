@@ -37,16 +37,11 @@ class UpdateInventoryPage extends HookConsumerWidget {
       return null;
     }, []);
 
-    final inveontryDetails = ref.watch(inventoryDetailsProvider(inventoryId)
-        .select((value) => value.inventoryDetails));
-
     final titleController = useTextEditingController();
     final slugController = useTextEditingController();
     final brandController = useTextEditingController();
     final conditionNoteController = useTextEditingController();
     final descriptionController = useTextEditingController();
-    final availableFromController = useTextEditingController();
-    final expirayDateController = useTextEditingController();
     final conditionController = useTextEditingController();
     final offerStartsController = useTextEditingController();
     final offerEndsController = useTextEditingController();
@@ -233,7 +228,7 @@ class UpdateInventoryPage extends HookConsumerWidget {
                       SizedBox(height: 10.h),
                       Text(
                         "key_features".tr(),
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       SizedBox(height: 10.h),
                       Column(

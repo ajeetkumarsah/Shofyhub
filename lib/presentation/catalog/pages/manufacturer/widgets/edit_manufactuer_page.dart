@@ -89,9 +89,6 @@ class EditManufactuererPage extends HookConsumerWidget {
     });
     final loadingDetails = ref.watch(manufacturerDetailsProvider(manufacturerId)
         .select((value) => value.loading));
-    final manufactuererDetails = ref.watch(
-        manufacturerDetailsProvider(manufacturerId)
-            .select((value) => value.manufacturerDetails));
 
     final buttonPressed = useState(false);
     ref.listen<ManufacturerState>(manufacturerProvider, (previous, next) {

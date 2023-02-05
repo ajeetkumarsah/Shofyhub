@@ -53,8 +53,6 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
         ref.watch(categoryGroupProvider.select((value) => value.loading));
     final dataLoading = ref.watch(categoryGroupFamilyProvider(categoryGroupId)
         .select((value) => value.loading));
-    final categoryGroup = ref.watch(categoryGroupFamilyProvider(categoryGroupId)
-        .select((value) => value.categoryGroupDetails));
 
     ref.listen<CategoryGroupFamilyState>(
         categoryGroupFamilyProvider(categoryGroupId), (previous, next) async {
@@ -62,8 +60,7 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
         nameController.text = next.categoryGroupDetails.name;
         descController.text = next.categoryGroupDetails.description;
 
-        if (next.categoryGroupDetails.coverImage != null ||
-            next.categoryGroupDetails.coverImage.isNotEmpty) {
+        if (next.categoryGroupDetails.coverImage.isNotEmpty) {
           //Convert Network Image to File Image
           ref.watch(singleImagePickerProvider).setLoading(true);
           File file = await ImageConverter.getImage(

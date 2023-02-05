@@ -129,7 +129,7 @@ class UpdateRolePage extends HookConsumerWidget {
                               children: [
                                 Text(
                                   permissionList[index].name,
-                                  style: Theme.of(context).textTheme.headline6,
+                                  style: Theme.of(context).textTheme.titleLarge,
                                 ),
                                 const Divider(),
                                 Column(

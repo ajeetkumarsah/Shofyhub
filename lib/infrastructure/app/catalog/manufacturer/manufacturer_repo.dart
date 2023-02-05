@@ -11,8 +11,7 @@ class ManufacturerRepo extends IManufacturerRepo {
   Future<Either<CleanFailure, ManufacturerPaginationModel>> getManufacturerList(
       {required String filter, required int page}) async {
     return cleanApi.get(
-        failureHandler: <ManufacturerModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -42,8 +41,7 @@ class ManufacturerRepo extends IManufacturerRepo {
   Future<Either<CleanFailure, ManufacturerDetailsModel>> getManufacturerDetails(
       {required int manufacturerId}) async {
     return cleanApi.get(
-        failureHandler: <ManufacturerDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -96,8 +94,7 @@ class ManufacturerRepo extends IManufacturerRepo {
   Future<Either<CleanFailure, Unit>> deleteManufacturer(
       {required int manufacturerId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -127,8 +124,7 @@ class ManufacturerRepo extends IManufacturerRepo {
   Future<Either<CleanFailure, Unit>> restoreManufacturer(
       {required int manufacturerId}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -159,8 +155,7 @@ class ManufacturerRepo extends IManufacturerRepo {
   Future<Either<CleanFailure, Unit>> trashManufacturer(
       {required int manufacturerId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

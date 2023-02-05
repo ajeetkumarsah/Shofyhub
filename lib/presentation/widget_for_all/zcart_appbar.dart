@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,7 +29,9 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
                 return InkWell(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const SettingsHome(hasBackButton: true,)));
+                        builder: (_) => const SettingsHome(
+                              hasBackButton: true,
+                            )));
                   },
                   child: Container(
                       constraints:
@@ -70,7 +72,7 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
                 int notificationCount =
                     ref.watch(notificationProvider).notificationCount;
                 return notificationCount > 0
-                    ? Badge(
+                    ? badge.Badge(
                         padding: const EdgeInsets.all(6),
                         badgeColor: Constants.kGreenColor,
                         badgeContent: Text(

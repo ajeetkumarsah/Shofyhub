@@ -43,9 +43,6 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
 
     final nameController = useTextEditingController();
     final descController = useTextEditingController();
-    final metaController = useTextEditingController();
-    final metaDescController = useTextEditingController();
-    final orderDescController = useTextEditingController();
 
     final active = useState(true);
     final buttonPressed = useState(false);
@@ -73,9 +70,6 @@ class EditCategorySubGroupDialog extends HookConsumerWidget {
         }
       }
     });
-
-    final data = ref.watch(categorySubGroupDetalsProvider(categorySubGroupId)
-        .select((value) => value.categorySubGroupDetails));
 
     ref.listen<CategorySubGroupState>(categorySubGroupProvider(categoryGroupId),
         (previous, next) {

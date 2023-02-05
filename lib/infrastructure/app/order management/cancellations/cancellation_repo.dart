@@ -9,8 +9,7 @@ class CancellationRepo extends ICancellationRepo {
   Future<Either<CleanFailure, CancellationPaginationModel>> getCancellations(
       {required int page}) {
     return cleanApi.get(
-        failureHandler: <CancellationModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -40,8 +39,7 @@ class CancellationRepo extends ICancellationRepo {
   Future<Either<CleanFailure, Unit>> approveCancellation(
       {required int id}) async {
     return await cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -72,8 +70,7 @@ class CancellationRepo extends ICancellationRepo {
   Future<Either<CleanFailure, Unit>> declineCancellation(
       {required int id}) async {
     return await cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:clean_api/clean_api.dart';
 import 'package:dio/dio.dart';
-import 'package:nb_utils/nb_utils.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

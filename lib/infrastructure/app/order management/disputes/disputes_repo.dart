@@ -10,8 +10,7 @@ class DisputeRepo extends IDisputeRepo {
   Future<Either<CleanFailure, DisputePaginationModel>> getDisputes(
       {required int page}) {
     return cleanApi.get(
-        failureHandler:
-            <DisputeModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -43,8 +42,7 @@ class DisputeRepo extends IDisputeRepo {
       required int statusId,
       required String reply}) async {
     return await cleanApi.post(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -76,8 +74,7 @@ class DisputeRepo extends IDisputeRepo {
   Future<Either<CleanFailure, DisputeDetailsModel>> getDisputeDetails(
       {required int dispiteId}) {
     return cleanApi.get(
-        failureHandler:
-            <DisputeDetailsModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

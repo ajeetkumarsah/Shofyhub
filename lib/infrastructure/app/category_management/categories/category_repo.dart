@@ -51,8 +51,7 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, Unit>> trashCategory(
       {required int categoryId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -82,8 +81,7 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, Unit>> restoreCategory(
       {required int categoryId}) async {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -114,8 +112,7 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, Unit>> deleteCategory(
       {required int categoryId}) async {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -145,8 +142,7 @@ class CategoryRepo extends ICategoryRepo {
   Future<Either<CleanFailure, CategoryDetailsModel>> detailsCategory(
       {required int categoryId}) {
     return cleanApi.get(
-        failureHandler: <CategoryDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

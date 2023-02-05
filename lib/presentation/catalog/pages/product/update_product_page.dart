@@ -327,7 +327,7 @@ class UpdateProductPage extends HookConsumerWidget {
                     SizedBox(height: 10.h),
                     Text(
                       "upload_images".tr(),
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(height: 10.h),
                     productImagePicker.isLoading

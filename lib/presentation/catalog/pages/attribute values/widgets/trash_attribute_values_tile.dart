@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/application/app/form/attribute_list_provider.dart';
 import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/catalog/pages/attribute%20values/widgets/delete_attribute_value_dialog.dart';

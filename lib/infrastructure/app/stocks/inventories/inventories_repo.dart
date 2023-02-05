@@ -11,8 +11,7 @@ class InventoriesRepo extends IInventoriesRepo {
   Future<Either<CleanFailure, InventoryPaginationModel>> getAllInventories(
       {required String inventoryFilter, required int page}) async {
     return cleanApi.get(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -42,8 +41,7 @@ class InventoriesRepo extends IInventoriesRepo {
   Future<Either<CleanFailure, InventoryDetailsModel>> inventoryDetails(
       {required int inventoryId}) async {
     return cleanApi.get(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -73,8 +71,7 @@ class InventoriesRepo extends IInventoriesRepo {
   Future<Either<CleanFailure, Unit>> quickUpdate(
       {required QuickUpdateModel quickUpdateModel, required int id}) async {
     return await cleanApi.put(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -105,8 +102,7 @@ class InventoriesRepo extends IInventoriesRepo {
   @override
   Future<Either<CleanFailure, Unit>> moveToTrash({required inventoryId}) {
     return cleanApi.delete(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -135,8 +131,7 @@ class InventoriesRepo extends IInventoriesRepo {
   @override
   Future<Either<CleanFailure, Unit>> deleteInventory({required inventoryId}) {
     return cleanApi.delete(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -165,8 +160,7 @@ class InventoriesRepo extends IInventoriesRepo {
   @override
   Future<Either<CleanFailure, Unit>> restoreInventory({required inventoryId}) {
     return cleanApi.put(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -198,8 +192,7 @@ class InventoriesRepo extends IInventoriesRepo {
       {required UpdateInventoryModel updateinventory}) {
     Logger.i('Inventory Endpoint: ${updateinventory.endPoint}');
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

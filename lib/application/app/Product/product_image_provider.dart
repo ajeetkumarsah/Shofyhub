@@ -43,7 +43,7 @@ class ProductImagePickerNotifier extends ChangeNotifier {
     try {
       final images =
           await _picker.pickMultiImage(maxWidth: 2000, maxHeight: 2000);
-      if (images == null) return;
+
       for (XFile image in images) {
         var imagesTemporary = File(image.path);
         newProductImages.add(CustomImageModel(

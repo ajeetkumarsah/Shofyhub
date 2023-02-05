@@ -14,8 +14,7 @@ class ProductRepo extends IProductRepo {
   Future<Either<CleanFailure, ProductPaginationModel>> getProducts(
       {required String productFilter, required int page}) {
     return cleanApi.get(
-        failureHandler:
-            <ProductModel>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -44,8 +43,7 @@ class ProductRepo extends IProductRepo {
   @override
   Future<Either<CleanFailure, Unit>> trashProduct(int productId) {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -130,8 +128,7 @@ class ProductRepo extends IProductRepo {
   @override
   Future<Either<CleanFailure, Unit>> restoreProduct({required productId}) {
     return cleanApi.put(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -161,8 +158,7 @@ class ProductRepo extends IProductRepo {
   @override
   Future<Either<CleanFailure, Unit>> deleteProduct({required productId}) {
     return cleanApi.delete(
-      failureHandler:
-          <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+      failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();

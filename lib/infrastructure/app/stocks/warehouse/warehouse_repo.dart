@@ -11,8 +11,7 @@ class WarehouseRepo extends IWarehouseRepo {
   Future<Either<CleanFailure, WarehousePaginationModel>> getWarehouseItems(
       {required String warehouseFilter, required int page}) async {
     return cleanApi.get(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -42,8 +41,7 @@ class WarehouseRepo extends IWarehouseRepo {
   Future<Either<CleanFailure, Unit>> trashWarehouse(
       {required int warehouseId}) {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -84,8 +82,7 @@ class WarehouseRepo extends IWarehouseRepo {
   Future<Either<CleanFailure, WarehouseDetailsModel>> getWarehouseDetails(
       {required int warehouseId}) {
     return cleanApi.get(
-        failureHandler: <SupplierDetailsModel>(int statusCode,
-            Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -126,8 +123,7 @@ class WarehouseRepo extends IWarehouseRepo {
   Future<Either<CleanFailure, Unit>> deleteWarehouse(
       {required int warehouseId}) {
     return cleanApi.delete(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values
@@ -157,8 +153,7 @@ class WarehouseRepo extends IWarehouseRepo {
   Future<Either<CleanFailure, Unit>> restoreWarehouse(
       {required int warehouseId}) {
     return cleanApi.put(
-        failureHandler:
-            <Unit>(int statusCode, Map<String, dynamic> responseBody) {
+        failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])
                 .values

@@ -26,7 +26,7 @@ class FirstMessageBox extends StatelessWidget {
             visible: conversessionDetailsModel.subject == null,
             child: Text(
               "${conversessionDetailsModel.subject ?? "Hello"}",
-              style: Theme.of(context).textTheme.caption!,
+              style: Theme.of(context).textTheme.bodySmall!,
             ),
           ),
           HtmlWidget(

@@ -39,7 +39,6 @@ class InventoryListPage extends HookConsumerWidget {
     final loading =
         ref.watch(stockeInventoryProvider.select((value) => value.loading));
 
-    final searchController = useTextEditingController();
     var inventoryList = totalInventoryList;
 
     final inventoryPaginationModel =

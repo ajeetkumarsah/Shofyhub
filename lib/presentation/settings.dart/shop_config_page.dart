@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
@@ -98,7 +97,7 @@ class ShopConfigPage extends HookConsumerWidget {
     final List<WarehouseModel> warehouseList =
         ref.watch(warehouseProvider.select((value) => value.warehouseItemList));
     final ValueNotifier<WarehouseModel?> selectedWarehouse = useState(null);
-    
+
     const List<PaymentMethodModel> paymentMethodList = [
       PaymentMethodModel(id: 1, title: 'Cash On Delivery'),
       PaymentMethodModel(id: 2, title: 'Bank Wire Transfer'),
@@ -223,7 +222,7 @@ class ShopConfigPage extends HookConsumerWidget {
                       // INVENTORY
                       Text(
                         'inventory'.tr(),
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const Divider(),
                       KTextField(
@@ -317,7 +316,7 @@ class ShopConfigPage extends HookConsumerWidget {
                       // ORDER
                       Text(
                         'order'.tr(),
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const Divider(),
                       KTextField(
@@ -417,7 +416,7 @@ class ShopConfigPage extends HookConsumerWidget {
                       // SUPPORT
                       Text(
                         'support'.tr(),
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const Divider(),
                       // SwitchListTile(
@@ -514,7 +513,7 @@ class ShopConfigPage extends HookConsumerWidget {
                       // VIEWS
                       Text(
                         'views'.tr(),
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const Divider(),
 

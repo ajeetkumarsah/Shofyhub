@@ -2,7 +2,6 @@ import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_state.dart';
 import 'package:zcart_seller/domain/app/catalog/manufacturer/i_manufacturer_repo.dart';
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_model.dart';
 import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_pagination_model.dart';
 import 'package:zcart_seller/infrastructure/app/catalog/manufacturer/manufacturer_repo.dart';
 
@@ -20,10 +19,10 @@ class ManufacturerNotifier extends StateNotifier<ManufacturerState> {
   ManufacturerPaginationModel trashManufacturerPaginationModel =
       ManufacturerPaginationModel.init();
 
-  List<ManufacturerModel> manufactureres = [];
+  List manufactureres = [];
   int pageNumber = 1;
 
-  List<ManufacturerModel> trashManufactureres = [];
+  List trashManufactureres = [];
   int trashPageNumber = 1;
 
   getManufacturerList() async {
