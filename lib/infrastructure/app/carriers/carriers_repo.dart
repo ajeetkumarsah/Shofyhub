@@ -7,8 +7,9 @@ class CarriersRepo extends ICarrierRepo {
   @override
   Future<Either<CleanFailure, List<CarrierModel>>> getCarriers() async {
     return cleanApi.get(
-        fromData: ((json) => List<CarrierModel>.from(
-            json['data'].map((e) => CarrierModel.fromMap(e)))),
-        endPoint: 'carriers');
+      fromData: ((json) => List<CarrierModel>.from(
+          json['data'].map((e) => CarrierModel.fromMap(e)))),
+      endPoint: 'carriers',
+    );
   }
 }

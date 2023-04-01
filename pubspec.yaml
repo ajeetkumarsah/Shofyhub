@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1+2
+version: 1.0.2+3
 
 environment:
   sdk: ">=2.15.6 <3.0.0"
@@ -28,42 +28,40 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cherry_toast: ^1.0.8
-  clean_api: ^0.2.3
-  # cloud_firestore: ^3.4.5
-  cupertino_icons: ^1.0.2
+  clean_api: ^0.3.1
+  cupertino_icons: ^1.0.5
   easy_localization: ^3.0.1
-  equatable: ^2.0.3
-  fast_immutable_collections: ^7.4.1
-  # firebase_core: ^1.21.0
+  equatable: ^2.0.5
+  fast_immutable_collections: ^9.0.0
   flutter:
     sdk: flutter
   flutter_custom_selector: ^0.0.3
-  flutter_hooks: ^0.18.5+1
-  flutter_screenutil: ^5.5.3+2
+  flutter_hooks: ^0.18.6
+  flutter_screenutil: ^5.7.0
   flutter_switch: ^0.3.2
   font_awesome_flutter: ^10.1.0
-  hooks_riverpod: ^1.0.4
+  hooks_riverpod: ^2.3.2
   intl: ^0.17.0
   pie_chart: ^5.3.2
-  search_choices: ^2.1.1
-  shared_preferences: ^2.0.15
+  search_choices: ^2.2.5
+  shared_preferences: ^2.0.20
   sliver_bar_chart: ^0.0.1
-  image_picker: ^0.8.6
-  fluttertoast: ^8.0.9
+  image_picker: ^0.8.7+1
+  fluttertoast: ^8.2.1
   flutter_multi_select_items: ^0.4.2
-  overlay_support: ^2.0.1
-  dio: ^4.0.6
-  http_parser: ^4.0.0
+  overlay_support: ^2.1.0
+  dio: ^5.1.0
+  http_parser: ^4.0.2
   country_calling_code_picker: ^2.0.1
   argon_buttons_flutter_fix: ^1.1.3
   pin_code_fields: ^7.4.0
-  firebase_core: ^2.1.1
-  firebase_messaging: ^14.0.4
+  firebase_core: ^2.8.0
+  firebase_messaging: ^14.3.0
   flutter_local_notifications: ^9.0.3
-  flutter_widget_from_html: ^0.8.0
-  nb_utils: ^4.6.22
-  path_provider: ^2.0.11
-  carousel_slider: ^4.1.1
+  flutter_widget_from_html: ^0.10.0
+  nb_utils: ^5.0.6
+  path_provider: ^2.0.14
+  carousel_slider: ^4.2.1
   flutter_app_badger: ^1.5.0
   flutter_launcher_icons: ^0.11.0
   badges: ^2.0.3

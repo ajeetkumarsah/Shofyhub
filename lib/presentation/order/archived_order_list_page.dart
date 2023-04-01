@@ -7,17 +7,13 @@ import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/order/order_state.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
 import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
-import 'package:zcart_seller/presentation/widget_for_all/zcart_appbar.dart';
 
 import 'widget/archived_order_tile.dart';
 
 class ArchivedOrderListPage extends HookConsumerWidget {
   const ArchivedOrderListPage({
     Key? key,
-    this.showAppBar = true,
   }) : super(key: key);
-
-  final bool showAppBar;
 
   @override
   Widget build(BuildContext context, ref) {
@@ -44,7 +40,6 @@ class ArchivedOrderListPage extends HookConsumerWidget {
 
     final orderList = ref.watch(orderProvider).archivedOrderList;
     return Scaffold(
-      appBar: showAppBar ? const ZcartAppBar(title: 'Archived orders') : null,
       backgroundColor: const Color(0xffEFEFEF),
       body: orderList.isEmpty
           ? const NoItemFound()

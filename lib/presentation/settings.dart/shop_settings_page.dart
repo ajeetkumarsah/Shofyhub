@@ -193,17 +193,7 @@ class ShopSettingsPage extends HookConsumerWidget {
                                               )
                                             : null,
                                       });
-                                      // final fo =
-                                      //     UpdateshopSettingsModel(
-                                      //   shopId: shopId,
-                                      //   name: nameController.text,
-                                      //   slug: nameController.text
-                                      //       .toLowerCase()
-                                      //       .replaceAll(RegExp(r' '), '-'),
-                                      //   legalName: legalNameController.text,
-                                      //   email: emailController.text,
-                                      //   description: descriptionController.text,
-                                      // );
+
                                       ref
                                           .read(shopSettingsProvider.notifier)
                                           .updateShopSettings(
