@@ -51,6 +51,7 @@ class ShopSettingsPage extends HookConsumerWidget {
     final descriptionController = useTextEditingController();
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
+
     final buttonPressed = useState(false);
 
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) async {
@@ -72,6 +73,7 @@ class ShopSettingsPage extends HookConsumerWidget {
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          buttonPressed.value = false;
           NotificationHelper.success(
               message: 'basic_shop_settings_updated'.tr());
           Navigator.of(context).pop();
@@ -194,11 +196,12 @@ class ShopSettingsPage extends HookConsumerWidget {
                                             : null,
                                       });
 
-                                      ref
+                                      await ref
                                           .read(shopSettingsProvider.notifier)
                                           .updateShopSettings(
                                               formData: formData,
                                               shopId: shopId);
+
                                       buttonPressed.value = true;
                                     }
                                   },

@@ -45,11 +45,13 @@ class CreateManufactuererPage extends HookConsumerWidget {
     final urlController = useTextEditingController();
 
     final active = useState(true);
+    final buttonPressed = useState(false);
     ref.listen<ManufacturerState>(manufacturerProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          buttonPressed.value = false;
           NotificationHelper.success(message: 'manufacturer_added'.tr());
+          Navigator.of(context).pop();
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
         }
@@ -247,6 +249,7 @@ class CreateManufactuererPage extends HookConsumerWidget {
                             ? null
                             : () async {
                                 if (formKey.currentState?.validate() ?? false) {
+                                  buttonPressed.value = true;
                                   FormData formData = FormData.fromMap({
                                     'name': nameController.text,
                                     'slug': nameController.text

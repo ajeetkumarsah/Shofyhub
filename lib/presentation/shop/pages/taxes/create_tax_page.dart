@@ -29,11 +29,13 @@ class CreateTaxPage extends HookConsumerWidget {
     final nameController = useTextEditingController();
     final taxRateController = useTextEditingController();
     final active = useState(true);
+    final buttonPressed = useState(false);
 
     ref.listen<TaxState>(taxProvider, (previous, next) {
       if (previous != next && !next.loading) {
-        Navigator.of(context).pop();
-        if (next.failure == CleanFailure.none()) {
+        if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          buttonPressed.value = false;
+          Navigator.of(context).pop();
           NotificationHelper.success(message: 'tax_added'.tr());
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
@@ -143,6 +145,7 @@ class CreateTaxPage extends HookConsumerWidget {
                                 message: 'please_select_a_country'.tr());
                           } else {
                             if (formKey.currentState?.validate() ?? false) {
+                              buttonPressed.value = true;
                               final taxInfo = CreateTaxModel(
                                   name: nameController.text,
                                   taxrate:

@@ -31,7 +31,7 @@ class CreateCategoryGroupDialog extends HookConsumerWidget {
     final descController = useTextEditingController();
     final metaTitleController = useTextEditingController();
     final metaDescController = useTextEditingController();
-    final iconController = useTextEditingController();
+    // final iconController = useTextEditingController();
     final orderController = useTextEditingController();
     final buttonPressed = useState(false);
     final active = useState(true);
@@ -90,12 +90,12 @@ class CreateCategoryGroupDialog extends HookConsumerWidget {
                 inputAction: TextInputAction.next,
                 lebelText: 'Meta description',
               ),
-              SizedBox(height: 10.h),
-              KTextField(
-                controller: iconController,
-                inputAction: TextInputAction.next,
-                lebelText: 'Icon',
-              ),
+              // SizedBox(height: 10.h),
+              // KTextField(
+              //   controller: iconController,
+              //   inputAction: TextInputAction.next,
+              //   lebelText: 'Icon',
+              // ),
               SizedBox(height: 10.h),
               KTextField(
                 controller: orderController,
@@ -151,7 +151,7 @@ class CreateCategoryGroupDialog extends HookConsumerWidget {
                       'description': descController.text,
                       'meta_title': metaDescController.text,
                       'meta_description': metaDescController.text,
-                      'icon': iconController.text,
+                      // 'icon': iconController.text,
                       'active': active.value ? 1 : 0,
                       'order': orderController.text == ''
                           ? 0

@@ -188,9 +188,10 @@ class UpdateRolePage extends HookConsumerWidget {
                                     level: int.tryParse(levelController.text)!,
                                     permissions: endPoint,
                                   );
-                                  ref
-                                      .read(roleProvider.notifier)
-                                      .createNewRole(roleModel: roleModel);
+                                  ref.read(roleProvider.notifier).updateRole(
+                                        roleModel: roleModel,
+                                        roleId: roleId,
+                                      );
                                   buttonPressed.value = true;
                                 }
                               },
@@ -206,7 +207,7 @@ class UpdateRolePage extends HookConsumerWidget {
                             : SizedBox(
                                 height: 50.h,
                                 width: ScreenUtil().screenWidth,
-                                child: Center(child: Text('add'.tr())),
+                                child: Center(child: Text('update'.tr())),
                               ),
                       ),
                     ],

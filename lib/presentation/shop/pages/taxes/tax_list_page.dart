@@ -25,7 +25,6 @@ class TaxListPage extends HookConsumerWidget {
     }, []);
 
     final loading = ref.watch(taxProvider.select((value) => value.loading));
-
     final taxList = ref.watch(taxProvider.select((value) => value.taxList));
 
     return Scaffold(
