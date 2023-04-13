@@ -182,7 +182,9 @@ class InventoryDetailsModel extends Equatable {
       conditionNote: map['condition_note'] ?? '',
       description: map['description'] ?? '',
       keyFeatures: map['key_features'] != null
-          ? List<String>.from(map['key_features']?.map((x) => x))
+          ? map['key_features'] is bool
+              ? []
+              : List<String>.from(map['key_features']?.map((x) => x))
           : [],
       purchasePrice: map['purchase_price'] ?? '',
       offerPrice: map['offer_price'] ?? '',

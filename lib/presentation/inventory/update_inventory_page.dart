@@ -29,7 +29,7 @@ class UpdateInventoryPage extends HookConsumerWidget {
         ref.watch(stockeInventoryProvider.select((value) => value.loading));
 
     useEffect(() {
-      Future.delayed(const Duration(milliseconds: 100), () async {
+      Future.delayed(const Duration(milliseconds: 400), () async {
         ref
             .read(inventoryDetailsProvider(inventoryId).notifier)
             .inventoryDetails();
@@ -71,6 +71,7 @@ class UpdateInventoryPage extends HookConsumerWidget {
     ref.listen<InventoryDetailsState>(inventoryDetailsProvider(inventoryId),
         (previous, next) {
       if (previous != next && !next.loading) {
+
         titleController.text = next.inventoryDetails.title;
         slugController.text = next.inventoryDetails.slug;
         brandController.text = next.inventoryDetails.brand;

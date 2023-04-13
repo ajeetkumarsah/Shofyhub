@@ -42,6 +42,8 @@ class InventoriesRepo extends IInventoriesRepo {
       {required int inventoryId}) async {
     return cleanApi.get(
       failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
+
+
         if (responseBody['errors'] != null) {
           final errors =
               Map<String, dynamic>.from(responseBody['errors']).values.toList();
@@ -58,11 +60,12 @@ class InventoriesRepo extends IInventoriesRepo {
               error: responseBody['error'],
               statusCode: statusCode));
         } else {
-          return left(
-              CleanFailure(tag: 'inventory', error: responseBody.toString()));
+          return right(InventoryDetailsModel.fromMap(responseBody["data"]));
         }
       },
-      fromData: (json) => InventoryDetailsModel.fromMap(json["data"]),
+      fromData: (json) {
+        return InventoryDetailsModel.fromMap(json["data"]);
+      },
       endPoint: 'inventory/$inventoryId',
     );
   }

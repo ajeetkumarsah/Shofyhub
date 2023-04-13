@@ -287,7 +287,6 @@ class ShopConfigPage extends HookConsumerWidget {
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
                                   ),
-                                  style: TextStyle(color: Colors.grey.shade800),
                                   isExpanded: true,
                                   value: selectedWarehouse.value,
                                   icon: const Icon(
@@ -306,7 +305,7 @@ class ShopConfigPage extends HookConsumerWidget {
                                     );
                                   }).toList(),
                                   onChanged: (WarehouseModel? newValue) {
-                                    selectedWarehouse.value = newValue!;
+                                    selectedWarehouse.value = newValue;
                                   },
                                 ),
                               ),
@@ -597,8 +596,16 @@ class ShopConfigPage extends HookConsumerWidget {
                             backgroundColor: Constants.buttonColor),
                         onPressed: updateLoading
                             ? null
-                            : () {
+                            : () async {
                                 if (formKey.currentState?.validate() ?? false) {
+                                  String refundText =
+                                      returnRefundController.text;
+                                  if (refundText.contains('&')) {
+                                    refundText =
+                                        refundText.replaceAll('&', 'and');
+                                  }
+
+                                  buttonPressed.value = true;
                                   final advanceSettings =
                                       UpdateShopConfigsModel(
                                     shopId: shopId,
@@ -610,8 +617,6 @@ class ShopConfigPage extends HookConsumerWidget {
                                         autoArchiveOrder.value ? 1 : 0,
                                     defaultEmailSenderName:
                                         defaultEmailSenderNameController.text,
-                                    // defaultPackagingIds:
-                                    //     defaultPackagingIds.value ? 1 : 0,
                                     defaultPaymentMethodId:
                                         selectedPaymentMethod.value != null
                                             ? selectedPaymentMethod.value!.id
@@ -631,7 +636,7 @@ class ShopConfigPage extends HookConsumerWidget {
                                             : null,
                                     digitalGoodsOnly:
                                         digitalGoodsOnly.value ? 1 : 0,
-                                    returnRefund: returnRefundController.text,
+                                    returnRefund: refundText,
                                     notifyAbandonedCheckout:
                                         notifyAbandonedCheckout.value ? 1 : 0,
                                     notifyAlertQuantity:
@@ -674,13 +679,11 @@ class ShopConfigPage extends HookConsumerWidget {
                                     enableLiveChat:
                                         enableLiveChat.value ? 1 : 0,
                                   );
-                                  ref
+                                  await ref
                                       .read(shopSettingsProvider.notifier)
                                       .updateShopConfigs(
                                           advanceSettingsInfo: advanceSettings,
                                           shopId: shopId);
-
-                                  buttonPressed.value = true;
                                 }
                               },
                         child: SizedBox(
@@ -694,9 +697,7 @@ class ShopConfigPage extends HookConsumerWidget {
                                     child: CircularProgressIndicator(
                                       color: Colors.white,
                                     ))
-                                : Text(
-                                    'update'.tr(),
-                                  ),
+                                : Text('update'.tr()),
                           ),
                         ),
                       ),

@@ -172,28 +172,27 @@ class ShopSettingsPage extends HookConsumerWidget {
                                         'email': emailController.text,
                                         'description':
                                             descriptionController.text,
-                                        'logo': ref
-                                                    .watch(
-                                                        singleImagePickerProvider)
-                                                    .shopLogo !=
-                                                null
-                                            ? await MultipartFile.fromFile(
-                                                ref
-                                                    .watch(
-                                                        singleImagePickerProvider)
-                                                    .shopLogo!
-                                                    .path,
-                                                filename: ref
-                                                    .watch(
-                                                        singleImagePickerProvider)
-                                                    .shopLogo!
-                                                    .path
-                                                    .split('/')
-                                                    .last,
-                                                contentType:
-                                                    MediaType("image", "png"),
-                                              )
-                                            : null,
+                                        if (ref
+                                                .watch(
+                                                    singleImagePickerProvider)
+                                                .shopLogo !=
+                                            null)
+                                          'logo': await MultipartFile.fromFile(
+                                            ref
+                                                .watch(
+                                                    singleImagePickerProvider)
+                                                .shopLogo!
+                                                .path,
+                                            filename: ref
+                                                .watch(
+                                                    singleImagePickerProvider)
+                                                .shopLogo!
+                                                .path
+                                                .split('/')
+                                                .last,
+                                            contentType:
+                                                MediaType("image", "png"),
+                                          ),
                                       });
 
                                       await ref
