@@ -4,13 +4,13 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class CarrierModel extends Equatable {
-  final int id;
-  final String name;
-  final int tax_id;
-  final String email;
-  final String phone;
-  final String tracking_url;
-  final int active;
+  final int? id;
+  final String? name;
+  final int? tax_id;
+  final String? email;
+  final String? phone;
+  final String? tracking_url;
+  final int? active;
   const CarrierModel({
     required this.id,
     required this.name,
@@ -55,13 +55,13 @@ class CarrierModel extends Equatable {
 
   factory CarrierModel.fromMap(Map<String, dynamic> map) {
     return CarrierModel(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      tax_id: map['tax_id'] as int,
-      email: map['email'] as String,
-      phone: map['phone'] as String,
-      tracking_url: map['tracking_url'] as String,
-      active: map['active'] as int,
+      id: map['id'] as int?,
+      name: map['name'] as String?,
+      tax_id: map['tax_id'] as int?,
+      email: map['email'] as String?,
+      phone: map['phone'] as String?,
+      tracking_url: map['tracking_url'] as String?,
+      active: map['active'] as int?,
     );
   }
 
@@ -76,13 +76,13 @@ class CarrierModel extends Equatable {
   @override
   List<Object> get props {
     return [
-      id,
-      name,
-      tax_id,
-      email,
-      phone,
-      tracking_url,
-      active,
+      id ?? 0,
+      name ?? '',
+      tax_id ?? 0,
+      email ?? '',
+      phone ?? '',
+      tracking_url ?? '',
+      active ?? 0,
     ];
   }
 

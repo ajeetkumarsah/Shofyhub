@@ -73,9 +73,7 @@ class DashboardPage extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFEFEFEF),
-      appBar: ZcartAppBar(
-        title: shopData.name,
-      ),
+      appBar: ZcartAppBar(title: shopData.name),
       body: RefreshIndicator(
         onRefresh: () {
           return Future.delayed(const Duration(milliseconds: 100), () async {

@@ -21,15 +21,16 @@ class FullfillorderDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    // useEffect(() {
-    //   Future.delayed(const Duration(milliseconds: 100), () async {
-    //     ref.read(carriersProvider.notifier).getCarrier();
-    //   });
-    //   return null;
-    // }, []);
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () async {
+        ref.read(carriersProvider.notifier).getCarrier();
+      });
+      return null;
+    }, []);
 
     final List<CarrierModel> carriers = ref.watch(carriersProvider).carriers;
-    final ValueNotifier<CarrierModel?> selectedCarrier = useState(null);
+    final ValueNotifier<CarrierModel?> selectedCarrier =
+        useState(carriers.first);
     final trackingIdController = useTextEditingController(text: tarckingId);
     final sendNotification = useState(true);
     ref.listen<OrderState>(orderProvider, (previous, next) {
@@ -43,6 +44,7 @@ class FullfillorderDialog extends HookConsumerWidget {
       }
     });
     final loading = ref.watch(orderProvider.select((value) => value.loading));
+
 
     return AlertDialog(
       shape: const RoundedRectangleBorder(
@@ -97,7 +99,7 @@ class FullfillorderDialog extends HookConsumerWidget {
                       return DropdownMenuItem<CarrierModel>(
                         value: value,
                         child: Text(
-                          value.name,
+                          value.name ?? "None",
                           style: TextStyle(
                               color: Colors.grey.shade700,
                               fontWeight: FontWeight.w500),
@@ -167,7 +169,9 @@ class FullfillorderDialog extends HookConsumerWidget {
                       } else {
                         ref.read(orderProvider.notifier).fulfillOrder(
                             orderId,
-                            carriers.isNotEmpty ? selectedCarrier.value!.id : 0,
+                            carriers.isNotEmpty
+                                ? selectedCarrier.value!.id ?? 0
+                                : 0,
                             trackingIdController.text,
                             sendNotification.value);
                       }

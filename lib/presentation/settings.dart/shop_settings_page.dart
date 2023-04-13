@@ -51,6 +51,7 @@ class ShopSettingsPage extends HookConsumerWidget {
     final descriptionController = useTextEditingController();
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
+
     final buttonPressed = useState(false);
 
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) async {
@@ -72,6 +73,7 @@ class ShopSettingsPage extends HookConsumerWidget {
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
+          buttonPressed.value = false;
           NotificationHelper.success(
               message: 'basic_shop_settings_updated'.tr());
           Navigator.of(context).pop();
@@ -170,45 +172,35 @@ class ShopSettingsPage extends HookConsumerWidget {
                                         'email': emailController.text,
                                         'description':
                                             descriptionController.text,
-                                        'logo': ref
-                                                    .watch(
-                                                        singleImagePickerProvider)
-                                                    .shopLogo !=
-                                                null
-                                            ? await MultipartFile.fromFile(
-                                                ref
-                                                    .watch(
-                                                        singleImagePickerProvider)
-                                                    .shopLogo!
-                                                    .path,
-                                                filename: ref
-                                                    .watch(
-                                                        singleImagePickerProvider)
-                                                    .shopLogo!
-                                                    .path
-                                                    .split('/')
-                                                    .last,
-                                                contentType:
-                                                    MediaType("image", "png"),
-                                              )
-                                            : null,
+                                        if (ref
+                                                .watch(
+                                                    singleImagePickerProvider)
+                                                .shopLogo !=
+                                            null)
+                                          'logo': await MultipartFile.fromFile(
+                                            ref
+                                                .watch(
+                                                    singleImagePickerProvider)
+                                                .shopLogo!
+                                                .path,
+                                            filename: ref
+                                                .watch(
+                                                    singleImagePickerProvider)
+                                                .shopLogo!
+                                                .path
+                                                .split('/')
+                                                .last,
+                                            contentType:
+                                                MediaType("image", "png"),
+                                          ),
                                       });
-                                      // final fo =
-                                      //     UpdateshopSettingsModel(
-                                      //   shopId: shopId,
-                                      //   name: nameController.text,
-                                      //   slug: nameController.text
-                                      //       .toLowerCase()
-                                      //       .replaceAll(RegExp(r' '), '-'),
-                                      //   legalName: legalNameController.text,
-                                      //   email: emailController.text,
-                                      //   description: descriptionController.text,
-                                      // );
-                                      ref
+
+                                      await ref
                                           .read(shopSettingsProvider.notifier)
                                           .updateShopSettings(
                                               formData: formData,
                                               shopId: shopId);
+
                                       buttonPressed.value = true;
                                     }
                                   },

@@ -71,6 +71,7 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
               icon: Consumer(builder: (context, ref, child) {
                 int notificationCount =
                     ref.watch(notificationProvider).notificationCount;
+
                 return notificationCount > 0
                     ? badge.Badge(
                         padding: const EdgeInsets.all(6),

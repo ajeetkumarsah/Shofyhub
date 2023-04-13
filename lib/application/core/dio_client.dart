@@ -7,8 +7,8 @@ class DioClient {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     BaseOptions options = BaseOptions(
-      connectTimeout: 500000,
-      receiveTimeout: 500000,
+      connectTimeout: const Duration(seconds: 120),
+      receiveTimeout: const Duration(seconds: 120),
       followRedirects: false,
       validateStatus: (status) {
         return status! < 500;

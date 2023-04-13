@@ -41,9 +41,11 @@ class TrashCategorySubGroupDialog extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'trash_category_sub_group'.tr(),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                Expanded(
+                  child: Text(
+                    'trash_category_sub_group'.tr(),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
                 IconButton(
                   padding: EdgeInsets.zero,

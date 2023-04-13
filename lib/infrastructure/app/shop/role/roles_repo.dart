@@ -105,7 +105,7 @@ class RoleRepo extends IRolesRepo {
   Future<Either<CleanFailure, CreateUpdateRoleModel>> updateRole(
       {required int roleId,
       required CreateUpdateRoleModel updateRoleModel}) async {
-    return await cleanApi.post(
+    return await cleanApi.put(
         failureHandler: (int statusCode, Map<String, dynamic> responseBody) {
           if (responseBody['errors'] != null) {
             final errors = Map<String, dynamic>.from(responseBody['errors'])

@@ -67,9 +67,7 @@ class OrderMainPage extends HookConsumerWidget {
         body: const TabBarView(children: [
           UnFullFilledOrderListPage(),
           FullFilledOrderListPage(),
-          ArchivedOrderListPage(
-            showAppBar: false,
-          ),
+          ArchivedOrderListPage(),
         ]),
       ),
     );

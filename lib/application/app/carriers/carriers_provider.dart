@@ -16,10 +16,16 @@ class CarriersNotifier extends StateNotifier<CarriersState> {
   getCarrier() async {
     state = state.copyWith(loading: true);
     final data = await carrierRepo.getCarriers();
-    state = data.fold(
-        (l) => state.copyWith(loading: false, failure: l),
-        (r) => state.copyWith(
-            loading: false, failure: CleanFailure.none(), carriers: r));
-    Logger.i(state.carriers);
+    state = data.fold((l) {
+      return state.copyWith(
+        loading: false,
+        failure: l,
+      );
+    }, (r) {
+      return state.copyWith(
+          loading: false, failure: CleanFailure.none(), carriers: r);
+    });
+
+    Logger.i("Carriers: ${state.carriers}");
   }
 }

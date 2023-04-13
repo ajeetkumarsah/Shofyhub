@@ -21,9 +21,7 @@ class QuickUpdateInventoryDialog extends HookConsumerWidget {
   Widget build(BuildContext context, ref) {
     final titleController = useTextEditingController(text: inventoryInfo.title);
     final priceController = useTextEditingController(
-        text: double.parse(inventoryInfo.price
-                .replaceAll(RegExp(r'\p{Sc}', unicode: true), ''))
-            .toString());
+        text: inventoryInfo.price.replaceAll(RegExp(r'[a-zA-Z]'), ''));
     final amount = inventoryInfo.stockQuantity;
     final active = useState(inventoryInfo.active);
     final buttonPressed = useState(false);

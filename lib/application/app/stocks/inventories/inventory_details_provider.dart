@@ -20,7 +20,9 @@ class InventoryDetailsNotifier extends StateNotifier<InventoryDetailsState> {
     final inventoryDetailsData =
         await inventoryRepo.inventoryDetails(inventoryId: id);
     state = inventoryDetailsData.fold(
-      (l) => state.copyWith(failure: l),
+      (l) {
+        return state.copyWith(failure: l, loading: false);
+      },
       (r) => state.copyWith(
           loading: false, failure: CleanFailure.none(), inventoryDetails: r),
     );
