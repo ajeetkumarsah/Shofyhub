@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/inventory/inventory_page.dart';
+import 'package:zcart_seller/presentation/stock/inventory/inventory_page.dart';
 import 'package:zcart_seller/presentation/stock/suppliers/supplier_page.dart';
 import 'package:zcart_seller/presentation/stock/warehouse/warehouse_page.dart';
 

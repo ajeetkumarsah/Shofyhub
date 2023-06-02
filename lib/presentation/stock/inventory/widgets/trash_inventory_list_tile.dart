@@ -1,13 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/delete_inventory_dialog.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/restore_inventory.dart';
+import 'package:zcart_seller/models/inventory/inventory_model.dart';
 
 class TrashInventoryItemTile extends StatelessWidget {
-  final InventoriesModel inventory;
+  final Inventory inventory;
   const TrashInventoryItemTile({
     Key? key,
     required this.inventory,
@@ -22,10 +20,10 @@ class TrashInventoryItemTile extends StatelessWidget {
             const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         leading: CircleAvatar(
           radius: 25,
-          backgroundImage: NetworkImage(inventory.image),
+          backgroundImage: NetworkImage(inventory.image ?? ""),
         ),
         title: Text(
-          inventory.title,
+          inventory.title ?? "",
           style: TextStyle(
             color: Colors.grey.shade800,
             fontSize: 16.sp,
@@ -51,7 +49,7 @@ class TrashInventoryItemTile extends StatelessWidget {
                         color: Colors.green.shade300),
                     child: Center(
                       child: Text(
-                        inventory.condition,
+                        inventory.condition ?? "",
                         style: const TextStyle(
                           color: Colors.white,
                           wordSpacing: 5,
@@ -70,7 +68,7 @@ class TrashInventoryItemTile extends StatelessWidget {
                     style: TextStyle(fontSize: 16.sp),
                   ),
                   Text(
-                    inventory.price,
+                    inventory.price ?? "",
                     style: TextStyle(
                         color: Colors.grey.shade800,
                         fontWeight: FontWeight.w500,
@@ -89,16 +87,16 @@ class TrashInventoryItemTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
             if (index == 1) {
-              showDialog(
-                  context: context,
-                  builder: (context) =>
-                      RestoreInventory(inventoryId: inventory.id));
+              // showDialog(
+              //     context: context,
+              //     builder: (context) =>
+              //         RestoreInventory(inventoryId: inventory.id));
             }
             if (index == 2) {
-              showDialog(
-                  context: context,
-                  builder: (context) =>
-                      DeleteInventory(inventoryId: inventory.id));
+              // showDialog(
+              //     context: context,
+              //     builder: (context) =>
+              //         DeleteInventory(inventoryId: inventory.id));
             }
           },
           itemBuilder: (context) => [

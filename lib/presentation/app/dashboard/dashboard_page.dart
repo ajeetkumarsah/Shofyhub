@@ -38,15 +38,8 @@ class DashboardPage extends HookConsumerWidget {
         ref.read(shopSettingsProvider.notifier).getShopSettings();
         ref.read(shopSettingsProvider.notifier).getShopConfigs();
         ref.read(shopUserProvider.notifier).getShopUser();
-
         ref.read(orderProvider.notifier).getOrders();
         ref.read(orderProvider.notifier).getFullFilledOrders();
-        // ref.read(orderProvider.notifier).getUnFullFilledOrders();
-        // ref.read(orderProvider.notifier).getArchivedOrders();
-
-        ref
-            .read(stockeInventoryProvider.notifier)
-            .getAllInventories(inventoryFilter: 'active');
         ref.read(categoryGroupProvider.notifier).getAllCategoryGroup();
         ref.read(refundProvider.notifier).getOpenRefunds();
         ref.read(dashboardProvider.notifier).getStatistics();
@@ -84,10 +77,6 @@ class DashboardPage extends HookConsumerWidget {
             ref.read(orderProvider.notifier).getFullFilledOrders();
             ref.read(orderProvider.notifier).getUnFullFilledOrders();
             ref.read(orderProvider.notifier).getArchivedOrders();
-
-            ref
-                .read(stockeInventoryProvider.notifier)
-                .getAllInventories(inventoryFilter: 'active');
             ref.read(categoryGroupProvider.notifier).getAllCategoryGroup();
             ref.read(categoryGroupProvider.notifier).getTrashCategoryGroup();
             ref.read(refundProvider.notifier).getOpenRefunds();

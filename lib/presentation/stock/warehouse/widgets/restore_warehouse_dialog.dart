@@ -26,7 +26,7 @@ class RestoreWarehouseDialog extends HookConsumerWidget {
       }
     });
     final loading =
-        ref.watch(stockeInventoryProvider.select((value) => value.loading));
+        ref.watch(warehouseProvider.select((value) => value.loading));
     return AlertDialog(
       titlePadding: EdgeInsets.zero,
       title: Column(
