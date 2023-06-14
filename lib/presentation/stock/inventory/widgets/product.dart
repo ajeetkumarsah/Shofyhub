@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/sub_title_text.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/title_text.dart';
+import 'package:zcart_seller/models/inventory/inventory_details_model.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/sub_title_text.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/title_text.dart';
 
 class ProductTile extends StatelessWidget {
   final InventoryDetailsModel productDetails;
@@ -15,12 +16,10 @@ class ProductTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TitleText(
-            title: 'Name:',
-          ),
+          const TitleText(title: 'Name:'),
           SizedBox(height: 8.h),
           SubTitleText(
-            subTitleText: productDetails.product.name,
+            subTitleText: productDetails.data?.product?.name ?? "N/A",
           ),
           SizedBox(height: 15.h),
           // const TitleText(
@@ -40,11 +39,11 @@ class ProductTile extends StatelessWidget {
           // ),
           // SizedBox(height: 28.h),
           TitleText(
-            title: '${productDetails.product.gtinType}:',
+            title: '${productDetails.data?.product?.gtinType ?? "N/A"}:',
           ),
           SizedBox(height: 8.h),
           SubTitleText(
-            subTitleText: productDetails.product.gtin,
+            subTitleText: productDetails.data?.product?.gtin ?? "N/A",
           ),
           SizedBox(height: 28.h),
           const TitleText(
@@ -52,7 +51,7 @@ class ProductTile extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           SubTitleText(
-            subTitleText: productDetails.product.mpn,
+            subTitleText: productDetails.data?.product?.mpn ?? "N/A",
           ),
           // SizedBox(height: 8.h),
           // const TitleText(
@@ -76,7 +75,8 @@ class ProductTile extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           SubTitleText(
-            subTitleText: productDetails.freeShipping ? 'Yes' : 'No',
+            subTitleText:
+                (productDetails.data?.freeShipping ?? false) ? 'Yes' : 'No',
           ),
           SizedBox(height: 16.h),
         ],

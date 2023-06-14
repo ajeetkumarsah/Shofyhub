@@ -1,13 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
-import 'package:zcart_seller/presentation/inventory/update_inventory_page.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/quick_update_inventory_dialog.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/trash_inventory.dart';
+import 'package:zcart_seller/models/inventory/inventory_model.dart';
+import 'package:zcart_seller/presentation/stock/inventory/inventory_details_page.dart';
 
 class InventoryItemTile extends StatelessWidget {
-  final InventoriesModel inventory;
+  final Inventory inventory;
   const InventoryItemTile({
     Key? key,
     required this.inventory,
@@ -17,14 +15,21 @@ class InventoryItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: inventory.id == null
+            ? null
+            : () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return InventoryDetailsPage(id: inventory.id!);
+                }));
+              },
         contentPadding:
             const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         leading: CircleAvatar(
           radius: 25,
-          backgroundImage: NetworkImage(inventory.image),
+          backgroundImage: NetworkImage(inventory.image ?? ""),
         ),
         title: Text(
-          inventory.title,
+          inventory.title ?? "",
           style: TextStyle(
             color: Colors.grey.shade800,
             fontSize: 16.sp,
@@ -50,7 +55,7 @@ class InventoryItemTile extends StatelessWidget {
                         color: Colors.green.shade300),
                     child: Center(
                       child: Text(
-                        inventory.condition,
+                        inventory.condition ?? "",
                         style: const TextStyle(
                           color: Colors.white,
                           wordSpacing: 5,
@@ -69,7 +74,7 @@ class InventoryItemTile extends StatelessWidget {
                     style: TextStyle(fontSize: 16.sp),
                   ),
                   Text(
-                    inventory.price,
+                    inventory.price ?? "",
                     style: TextStyle(
                         color: Colors.grey.shade800,
                         fontWeight: FontWeight.w500,
@@ -88,21 +93,21 @@ class InventoryItemTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
             if (index == 1) {
-              showDialog(
-                  context: context,
-                  builder: (context) =>
-                      QuickUpdateInventoryDialog(inventoryInfo: inventory));
+              // showDialog(
+              //     context: context,
+              //     builder: (context) =>
+              //         QuickUpdateInventoryDialog(inventoryInfo: inventory));
             }
             if (index == 2) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return UpdateInventoryPage(inventoryId: inventory.id);
-              }));
+              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //   return UpdateInventoryPage(inventoryId: inventory.id);
+              // }));
             }
             if (index == 3) {
-              showDialog(
-                  context: context,
-                  builder: (context) =>
-                      TrashInventory(inventoryId: inventory.id));
+              // showDialog(
+              //     context: context,
+              //     builder: (context) =>
+              //         TrashInventory(inventoryId: inventory.id));
             }
           },
           itemBuilder: (context) => [

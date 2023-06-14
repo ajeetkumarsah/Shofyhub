@@ -2,5 +2,6 @@
   "dart-data-class-generator.constructor.default_values": false,
   "dart-data-class-generator.fromMap.default_values": true,
   "dart-data-class-generator.json.key_format": "snake_case",
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "dart.flutterSdkPath": "/Users/devshakib/Development/flutter3712"
 }

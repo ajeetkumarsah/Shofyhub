@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/left_side_text.dart';
-import 'package:zcart_seller/presentation/inventory/widgets/right_side_text.dart';
+import 'package:zcart_seller/models/inventory/inventory_details_model.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/left_side_text.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/right_side_text.dart';
 
 class OfferTile extends StatelessWidget {
   final InventoryDetailsModel productDetails;
@@ -15,7 +15,7 @@ class OfferTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-      child: productDetails.hasOffer
+      child: productDetails.data?.hasOffer == true
           ? Column(
               children: [
                 Row(
@@ -25,7 +25,7 @@ class OfferTile extends StatelessWidget {
                       title: 'Offer Price:',
                     ),
                     RightSideText(
-                      subTitle: '\$${productDetails.offerPrice}',
+                      subTitle: '\$${productDetails.data?.offerPrice}',
                     ),
                   ],
                 ),
@@ -38,7 +38,7 @@ class OfferTile extends StatelessWidget {
                       title: 'Offer Start:',
                     ),
                     RightSideText(
-                      subTitle: productDetails.offerStart
+                      subTitle: productDetails.data?.offerStart
                           .replaceFirst(RegExp(r'T'), ' ')
                           .replaceFirst(RegExp(r'.000000Z'), ''),
                     ),
@@ -53,7 +53,7 @@ class OfferTile extends StatelessWidget {
                       title: 'Offer End:',
                     ),
                     RightSideText(
-                      subTitle: productDetails.offerEnd
+                      subTitle: productDetails.data?.offerEnd
                           .replaceFirst(RegExp(r'T'), ' ')
                           .replaceFirst(RegExp(r'.000000Z'), ''),
                     ),
