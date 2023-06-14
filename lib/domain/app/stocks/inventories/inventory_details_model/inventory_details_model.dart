@@ -30,7 +30,7 @@ class InventoryDetailsModel extends Equatable {
   final dynamic linkedItems;
   final String metaTitle;
   final String metaDescription;
-  final String inspectionStatus;
+
   final bool hasOffer;
   final bool freeShipping;
   final bool active;
@@ -60,7 +60,6 @@ class InventoryDetailsModel extends Equatable {
     required this.linkedItems,
     required this.metaTitle,
     required this.metaDescription,
-    required this.inspectionStatus,
     required this.hasOffer,
     required this.freeShipping,
     required this.active,
@@ -123,7 +122,6 @@ class InventoryDetailsModel extends Equatable {
       linkedItems: linkedItems ?? this.linkedItems,
       metaTitle: metaTitle ?? this.metaTitle,
       metaDescription: metaDescription ?? this.metaDescription,
-      inspectionStatus: inspectionStatus ?? this.inspectionStatus,
       hasOffer: hasOffer ?? this.hasOffer,
       freeShipping: freeShipping ?? this.freeShipping,
       active: active ?? this.active,
@@ -157,7 +155,6 @@ class InventoryDetailsModel extends Equatable {
       'linked_items': linkedItems,
       'meta_title': metaTitle,
       'meta_description': metaDescription,
-      'inspection_status': inspectionStatus,
       'has_offer': hasOffer,
       'free_shipping': freeShipping,
       'active': active,
@@ -195,7 +192,6 @@ class InventoryDetailsModel extends Equatable {
       linkedItems: map['linked_items'],
       metaTitle: map['meta_title'] ?? '',
       metaDescription: map['meta_description'] ?? '',
-      inspectionStatus: map['inspection_status'] ?? '',
       hasOffer: map['has_offer'] ?? false,
       freeShipping: map['free_shipping'] ?? false,
       active: map['active'] ?? false,
@@ -211,7 +207,7 @@ class InventoryDetailsModel extends Equatable {
 
   @override
   String toString() {
-    return 'InventoryDetailsModel(id: $id, sku: $sku, title: $title, slug: $slug, condition: $condition, stockQuantity: $stockQuantity, salePrice: $salePrice, warehouseId: $warehouseId, productId: $productId, product: $product, brand: $brand, supplierId: $supplierId, conditionNote: $conditionNote, description: $description, keyFeatures: $keyFeatures, purchasePrice: $purchasePrice, offerPrice: $offerPrice, offerStart: $offerStart, offerEnd: $offerEnd, shippingWeight: $shippingWeight, minOrderQuantity: $minOrderQuantity, linkedItems: $linkedItems, metaTitle: $metaTitle, metaDescription: $metaDescription, inspectionStatus: $inspectionStatus, hasOffer: $hasOffer, freeShipping: $freeShipping, active: $active, images: $images)';
+    return 'InventoryDetailsModel(id: $id, sku: $sku, title: $title, slug: $slug, condition: $condition, stockQuantity: $stockQuantity, salePrice: $salePrice, warehouseId: $warehouseId, productId: $productId, product: $product, brand: $brand, supplierId: $supplierId, conditionNote: $conditionNote, description: $description, keyFeatures: $keyFeatures, purchasePrice: $purchasePrice, offerPrice: $offerPrice, offerStart: $offerStart, offerEnd: $offerEnd, shippingWeight: $shippingWeight, minOrderQuantity: $minOrderQuantity, linkedItems: $linkedItems, metaTitle: $metaTitle, metaDescription: $metaDescription,hasOffer: $hasOffer, freeShipping: $freeShipping, active: $active, images: $images)';
   }
 
   @override
@@ -241,7 +237,6 @@ class InventoryDetailsModel extends Equatable {
       linkedItems,
       metaTitle,
       metaDescription,
-      inspectionStatus,
       hasOffer,
       freeShipping,
       active,
@@ -274,7 +269,6 @@ class InventoryDetailsModel extends Equatable {
         linkedItems: const [],
         metaTitle: '',
         metaDescription: '',
-        inspectionStatus: '',
         hasOffer: false,
         freeShipping: false,
         active: false,
