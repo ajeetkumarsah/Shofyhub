@@ -16,7 +16,7 @@ import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
 
 Future<void> _firebaseMessegingBackgroundHandler(RemoteMessage message) async {
-  Logger.i ('Handling a background message ${message.messageId}');
+  Logger.i('Handling a background message ${message.messageId}');
 }
 
 void main() async {

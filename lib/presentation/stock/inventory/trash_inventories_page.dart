@@ -1,25 +1,14 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/presentation/stock/inventory/widgets/trash_inventory_list_tile.dart';
 import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
 
-class TrashInventoriesPage extends ConsumerStatefulWidget {
+class TrashInventoriesPage extends ConsumerWidget {
   const TrashInventoriesPage({super.key});
 
   @override
-  ConsumerState<TrashInventoriesPage> createState() =>
-      _TrashInventoriesPageState();
-}
-
-class _TrashInventoriesPageState extends ConsumerState<TrashInventoriesPage> {
-  int? _page;
-
-  @override
-  Widget build(BuildContext context) {
-    final query = {'page': _page, 'filter': 'trash'};
-    final activeInventoriesRef =
-        ref.watch(inventoriesFutureProvider(jsonEncode(query)));
+  Widget build(BuildContext context, ref) {
+    final activeInventoriesRef = ref.watch(inventoriesFutureProvider("trash"));
 
     return Scaffold(
       body: activeInventoriesRef.when(data: (data) {
@@ -49,9 +38,8 @@ class _TrashInventoriesPageState extends ConsumerState<TrashInventoriesPage> {
                     if (currentPage > 1)
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            _page = currentPage - 1;
-                          });
+                          ref.read(trashInventoryPageProvider.notifier).state =
+                              currentPage - 1;
                         },
                         icon: const Icon(Icons.chevron_left),
                       ),
@@ -59,9 +47,8 @@ class _TrashInventoriesPageState extends ConsumerState<TrashInventoriesPage> {
                     if (currentPage < totalPage)
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            _page = currentPage + 1;
-                          });
+                          ref.read(trashInventoryPageProvider.notifier).state =
+                              currentPage + 1;
                         },
                         icon: const Icon(Icons.chevron_right),
                       ),

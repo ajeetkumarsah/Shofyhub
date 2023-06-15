@@ -4,22 +4,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/presentation/stock/inventory/widgets/inventory_item_tile.dart';
 import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
 
-class ActiveInventoriesPage extends ConsumerStatefulWidget {
+class ActiveInventoriesPage extends ConsumerWidget {
   const ActiveInventoriesPage({super.key});
 
   @override
-  ConsumerState<ActiveInventoriesPage> createState() =>
-      _ActiveInventoriesPageState();
-}
-
-class _ActiveInventoriesPageState extends ConsumerState<ActiveInventoriesPage> {
-  int? _page;
-
-  @override
-  Widget build(BuildContext context) {
-    final query = {'page': _page};
-    final activeInventoriesRef =
-        ref.watch(inventoriesFutureProvider(jsonEncode(query)));
+  Widget build(BuildContext context, ref) {
+    final activeInventoriesRef = ref.watch(inventoriesFutureProvider("active"));
 
     return Scaffold(
       body: activeInventoriesRef.when(data: (data) {
@@ -49,9 +39,8 @@ class _ActiveInventoriesPageState extends ConsumerState<ActiveInventoriesPage> {
                     if (currentPage > 1)
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            _page = currentPage - 1;
-                          });
+                          ref.read(inventoryPageProvider.notifier).state =
+                              currentPage - 1;
                         },
                         icon: const Icon(Icons.chevron_left),
                       ),
@@ -59,9 +48,8 @@ class _ActiveInventoriesPageState extends ConsumerState<ActiveInventoriesPage> {
                     if (currentPage < totalPage)
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            _page = currentPage + 1;
-                          });
+                          ref.read(inventoryPageProvider.notifier).state =
+                              currentPage + 1;
                         },
                         icon: const Icon(Icons.chevron_right),
                       ),

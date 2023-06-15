@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
 import 'package:zcart_seller/models/inventory/inventory_model.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/delete_inventory_dialog.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/restore_inventory.dart';
 
 class TrashInventoryItemTile extends StatelessWidget {
   final Inventory inventory;
@@ -87,16 +89,16 @@ class TrashInventoryItemTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
             if (index == 1) {
-              // showDialog(
-              //     context: context,
-              //     builder: (context) =>
-              //         RestoreInventory(inventoryId: inventory.id));
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      RestoreInventory(inventoryId: inventory.id!));
             }
             if (index == 2) {
-              // showDialog(
-              //     context: context,
-              //     builder: (context) =>
-              //         DeleteInventory(inventoryId: inventory.id));
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      DeleteInventory(inventoryId: inventory.id!));
             }
           },
           itemBuilder: (context) => [

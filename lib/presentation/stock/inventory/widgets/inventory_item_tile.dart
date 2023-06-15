@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zcart_seller/models/inventory/inventory_model.dart';
 import 'package:zcart_seller/presentation/stock/inventory/inventory_details_page.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/quick_update_inventory_dialog.dart';
+import 'package:zcart_seller/presentation/stock/inventory/widgets/trash_inventory.dart';
 
 class InventoryItemTile extends StatelessWidget {
   final Inventory inventory;
+
   const InventoryItemTile({
     Key? key,
     required this.inventory,
@@ -93,10 +96,12 @@ class InventoryItemTile extends StatelessWidget {
           icon: const Icon(Icons.more_horiz),
           onSelected: (index) {
             if (index == 1) {
-              // showDialog(
-              //     context: context,
-              //     builder: (context) =>
-              //         QuickUpdateInventoryDialog(inventoryInfo: inventory));
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return QuickUpdateInventoryDialog(inventory: inventory);
+                },
+              );
             }
             if (index == 2) {
               // Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -104,10 +109,11 @@ class InventoryItemTile extends StatelessWidget {
               // }));
             }
             if (index == 3) {
-              // showDialog(
-              //     context: context,
-              //     builder: (context) =>
-              //         TrashInventory(inventoryId: inventory.id));
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    TrashInventory(inventoryId: inventory.id!),
+              );
             }
           },
           itemBuilder: (context) => [

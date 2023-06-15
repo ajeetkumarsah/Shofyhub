@@ -6,17 +6,28 @@ import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/models/inventory/inventory_details_model.dart';
 import 'package:zcart_seller/models/inventory/inventory_model.dart';
 
-final inventoriesFutureProvider =
-    FutureProvider.family<InventoryModel, String>((ref, queryJson) async {
-  const url = "$apiEndpoint/inventories";
-  final Map<String, dynamic> query = jsonDecode(queryJson);
+final inventoryPageProvider = StateProvider<int>((ref) {
+  return 1;
+});
 
-  final String? filter = query['filter'] ?? "active";
-  final int? page = query['page'];
+// Trash inventory page provider
+final trashInventoryPageProvider = StateProvider<int>((ref) {
+  return 1;
+});
+
+final inventoriesFutureProvider =
+    FutureProvider.family<InventoryModel, String>((ref, filter) async {
+  const url = "$apiEndpoint/inventories";
+
+  final int page = filter == "active"
+      ? ref.watch(inventoryPageProvider)
+      : ref.watch(trashInventoryPageProvider);
+
+  print("Page: $page");
 
   final params = {
-    if (filter != null) 'filter': filter,
-    if (page != null) 'page': page.toString(),
+    'filter': filter,
+    'page': page.toString(),
   };
 
   final authRef = ref.read(authProvider);
@@ -58,3 +69,119 @@ final inventoryDetailsFutureProvider =
     throw Exception('Failed to load data!');
   }
 });
+
+class InventoryProvider {
+  // Quick update
+
+  static Future<void> inventoryQuickUpdate({
+    required int id,
+    required String apiKey,
+    required int active,
+    required String title,
+    required String salePrice,
+    required int stockQuantity,
+
+    // TODO: Expiry date for pharmacy
+  }) async {
+    final url = "$apiEndpoint/inventory/$id/quick_update";
+    final params = {
+      'active': active,
+      'title': title,
+      'sale_price': salePrice,
+      'stock_quantity': stockQuantity,
+    };
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey'
+    };
+
+    final dioClient = Dio();
+    final response = await dioClient.put(
+      url,
+      data: jsonEncode(params),
+      options: Options(headers: headers),
+    );
+
+    print(response.data);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load data!');
+    }
+  }
+
+  // Trash inventory
+  static Future<void> trashItem({
+    required int id,
+    required String apiKey,
+  }) async {
+    final url = "$apiEndpoint/inventory/$id/trash";
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey'
+    };
+
+    final dioClient = Dio();
+    final response = await dioClient.delete(
+      url,
+      options: Options(headers: headers),
+    );
+
+    print(response.data);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to trash data!');
+    }
+  }
+
+  //restore inventory
+  static Future<void> restoreItem({
+    required int id,
+    required String apiKey,
+  }) async {
+    final url = "$apiEndpoint/inventory/$id/restore";
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey'
+    };
+
+    final dioClient = Dio();
+    final response = await dioClient.put(
+      url,
+      options: Options(headers: headers),
+    );
+
+    print(response.data);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to restore data!');
+    }
+  }
+
+  //delete inventory
+  static Future<void> deleteItem({
+    required int id,
+    required String apiKey,
+  }) async {
+    final url = "$apiEndpoint/inventory/$id/delete";
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey'
+    };
+
+    final dioClient = Dio();
+    final response = await dioClient.delete(
+      url,
+      options: Options(headers: headers),
+    );
+
+    print(response.data);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to delete data!');
+    }
+  }
+}
