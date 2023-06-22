@@ -5,6 +5,7 @@ import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/models/inventory/inventory_details_model.dart';
 import 'package:zcart_seller/models/inventory/inventory_model.dart';
+import 'package:zcart_seller/models/product/search_product_model.dart';
 
 final inventoryPageProvider = StateProvider<int>((ref) {
   return 1;
@@ -71,8 +72,35 @@ final inventoryDetailsFutureProvider =
 });
 
 class InventoryProvider {
-  // Quick update
+  static Future<void> addInventory({
+    required String apiKey,
+    required FormData data,
+  }) async {
+    const url = "$apiEndpoint/inventory/create";
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey'
+    };
 
+    print(url);
+
+    final dioClient = Dio();
+    final response = await dioClient
+        .post(url, data: data, options: Options(headers: headers))
+        .onError((error, stackTrace) async {
+      print(error);
+      print(stackTrace);
+      return Future.error(error.toString());
+    });
+
+    print(response.data);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to add inventory!');
+    }
+  }
+
+  // Quick update
   static Future<void> inventoryQuickUpdate({
     required int id,
     required String apiKey,
@@ -185,3 +213,27 @@ class InventoryProvider {
     }
   }
 }
+
+// Add Inventory
+final searchProductToInventoryProvider =
+    FutureProvider.family<List<SearchProductModel>, String>((ref, query) async {
+  const url = "$apiEndpoint/search/product";
+
+  final Map<String, String> params = {'q': query};
+
+  final authRef = ref.read(authProvider);
+  final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${authRef.user.api_token}'
+  };
+  final dioClient = Dio();
+  final response = await dioClient.get(url,
+      queryParameters: params, options: Options(headers: headers));
+
+  if (response.statusCode == 200) {
+    final List<dynamic> data = response.data['data'];
+    return data.map((e) => SearchProductModel.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load data!');
+  }
+});
