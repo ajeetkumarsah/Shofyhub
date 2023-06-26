@@ -12,7 +12,6 @@ import 'package:zcart_seller/application/app/order/order_provider.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
 import 'package:zcart_seller/application/app/shop/user/shop_user_provider.dart';
-import 'package:zcart_seller/application/app/stocks/inventories/inventories_provider.dart';
 import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
 import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_provider.dart';
 import 'package:zcart_seller/presentation/catalog/catalogue_screen.dart';

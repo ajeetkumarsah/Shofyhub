@@ -103,7 +103,7 @@ class _SearchProductToAddInventoryState
                                           ),
                                         );
                                       },
-                                      child: Text("Add to Inventory"),
+                                      child: const Text("Add to Inventory"),
                                     ),
                                     const SizedBox(width: 8),
                                     OutlinedButton(
@@ -117,7 +117,7 @@ class _SearchProductToAddInventoryState
                                         Fluttertoast.showToast(
                                             msg: "Work in progress");
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "Add to Inventory\nwith Variant",
                                         textAlign: TextAlign.end,
                                       ),
