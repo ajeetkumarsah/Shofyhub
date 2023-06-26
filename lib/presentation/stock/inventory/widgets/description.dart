@@ -15,7 +15,6 @@ class DescriptionTile extends StatelessWidget {
         style: TextStyle(
           color: const Color(0xFF4D4D4D),
           fontSize: 16.sp,
-          // fontWeight: FontWeight.w600,
         ),
       ),
     );

@@ -35,23 +35,27 @@ class TrashInventoriesPage extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (currentPage > 1)
-                      IconButton(
-                        onPressed: () {
-                          ref.read(trashInventoryPageProvider.notifier).state =
-                              currentPage - 1;
-                        },
-                        icon: const Icon(Icons.chevron_left),
-                      ),
+                    IconButton(
+                      onPressed: currentPage > 1
+                          ? () {
+                              ref
+                                  .read(trashInventoryPageProvider.notifier)
+                                  .state = currentPage - 1;
+                            }
+                          : null,
+                      icon: const Icon(Icons.chevron_left),
+                    ),
                     Text('$currentPage of $totalPage'),
-                    if (currentPage < totalPage)
-                      IconButton(
-                        onPressed: () {
-                          ref.read(trashInventoryPageProvider.notifier).state =
-                              currentPage + 1;
-                        },
-                        icon: const Icon(Icons.chevron_right),
-                      ),
+                    IconButton(
+                      onPressed: currentPage < totalPage
+                          ? () {
+                              ref
+                                  .read(trashInventoryPageProvider.notifier)
+                                  .state = currentPage + 1;
+                            }
+                          : null,
+                      icon: const Icon(Icons.chevron_right),
+                    ),
                   ],
                 ),
             ],

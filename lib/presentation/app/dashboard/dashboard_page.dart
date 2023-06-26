@@ -83,187 +83,189 @@ class DashboardPage extends HookConsumerWidget {
             ref.read(dashboardProvider.notifier).getStatistics();
           });
         },
-        child: ListView(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(10),
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: TotalInfoWidget(
-                    icon: FontAwesomeIcons.clipboard,
-                    title: 'Total Order',
-                    color: Colors.blue,
-                    value: totalOrders.toString(),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const OrderMainPage(
-                                index: 0,
-                              )));
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TotalInfoWidget(
-                    icon: FontAwesomeIcons.percent,
-                    title: 'Today\'s Sale',
-                    color: Colors.teal,
-                    value: statistics.todaysSaleAmount,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const OrderMainPage(
-                                index: 0,
-                              )));
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: TotalInfoWidget(
-                    icon: FontAwesomeIcons.clipboardList,
-                    title: 'Total Latest Order',
-                    color: Colors.purple,
-                    value: statistics.latestOrderCount.toString(),
-                    onTap: () {
-                      // Navigator.of(context).push(MaterialPageRoute(
-                      //     builder: (_) => const LatesOrderListPage()));
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const OrderMainPage(
-                                index: 0,
-                              )));
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: TotalInfoWidget(
-                    icon: FontAwesomeIcons.boxOpen,
-                    title: 'YESTERDAY\'S TOTAL',
-                    color: Colors.pink,
-                    value: statistics.yesterdaysSaleAmount,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const OrderMainPage(
-                                index: 0,
-                              )));
-                    },
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20.h),
-            Text(
-              'Store Reports',
-              style: TextStyle(
-                color: const Color(0xFF484848),
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            SizedBox(height: 8.h),
-            // Store Reports Icon Data
-            OrderGrid(
-              statistics: statistics,
-            ),
-            SizedBox(height: 25.h),
-            Text(
-              'More Option',
-              style: TextStyle(
-                color: const Color(0xFF484848),
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            SizedBox(height: 8.h),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-              height: 240.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
+          child: Column(
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MoreOptionItems(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const CatalogueScreen()));
-                        },
-                        icon: FontAwesomeIcons.bookBookmark,
-                        title: 'Catalog',
-                      ),
-                      MoreOptionItems(
-                        icon: FontAwesomeIcons.file,
-                        title: 'Order',
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const OrderMainPage(
-                                    index: 0,
-                                  )));
-                        },
-                      ),
-                      MoreOptionItems(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const StockHome()));
-                        },
-                        icon: FontAwesomeIcons.store,
-                        title: 'Stock',
-                      ),
-                    ],
+                  Expanded(
+                    child: TotalInfoWidget(
+                      icon: FontAwesomeIcons.clipboard,
+                      title: 'Total Order',
+                      color: Colors.blue,
+                      value: totalOrders.toString(),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const OrderMainPage(
+                                  index: 0,
+                                )));
+                      },
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MoreOptionItems(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const SupportHome()));
-                        },
-                        icon: FontAwesomeIcons.firstOrder,
-                        title: 'Support',
-                      ),
-                      MoreOptionItems(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const ShopHome()));
-                        },
-                        icon: FontAwesomeIcons.personDotsFromLine,
-                        title: 'Admin',
-                      ),
-                      MoreOptionItems(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const SettingsHome(
-                                    hasBackButton: true,
-                                  )));
-                        },
-                        icon: FontAwesomeIcons.gear,
-                        title: 'Setting',
-                      ),
-                    ],
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TotalInfoWidget(
+                      icon: FontAwesomeIcons.percent,
+                      title: 'Today\'s Sale',
+                      color: Colors.teal,
+                      value: statistics.todaysSaleAmount,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const OrderMainPage(
+                                  index: 0,
+                                )));
+                      },
+                    ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: 25.h),
-            const TopSellingProducts(),
-          ],
+              SizedBox(height: 10.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: TotalInfoWidget(
+                      icon: FontAwesomeIcons.clipboardList,
+                      title: 'Total Latest Order',
+                      color: Colors.purple,
+                      value: statistics.latestOrderCount.toString(),
+                      onTap: () {
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //     builder: (_) => const LatesOrderListPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const OrderMainPage(
+                                  index: 0,
+                                )));
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TotalInfoWidget(
+                      icon: FontAwesomeIcons.boxOpen,
+                      title: 'YESTERDAY\'S TOTAL',
+                      color: Colors.pink,
+                      value: statistics.yesterdaysSaleAmount,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => const OrderMainPage(
+                                  index: 0,
+                                )));
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+              Text(
+                'Store Reports',
+                style: TextStyle(
+                  color: const Color(0xFF484848),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              // Store Reports Icon Data
+              OrderGrid(
+                statistics: statistics,
+              ),
+              SizedBox(height: 25.h),
+              Text(
+                'More Option',
+                style: TextStyle(
+                  color: const Color(0xFF484848),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
+                height: 240.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MoreOptionItems(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const CatalogueScreen()));
+                          },
+                          icon: FontAwesomeIcons.bookBookmark,
+                          title: 'Catalog',
+                        ),
+                        MoreOptionItems(
+                          icon: FontAwesomeIcons.file,
+                          title: 'Order',
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const OrderMainPage(
+                                      index: 0,
+                                    )));
+                          },
+                        ),
+                        MoreOptionItems(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const StockHome()));
+                          },
+                          icon: FontAwesomeIcons.store,
+                          title: 'Stock',
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MoreOptionItems(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const SupportHome()));
+                          },
+                          icon: FontAwesomeIcons.firstOrder,
+                          title: 'Support',
+                        ),
+                        MoreOptionItems(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const ShopHome()));
+                          },
+                          icon: FontAwesomeIcons.personDotsFromLine,
+                          title: 'Admin',
+                        ),
+                        MoreOptionItems(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => const SettingsHome(
+                                      hasBackButton: true,
+                                    )));
+                          },
+                          icon: FontAwesomeIcons.gear,
+                          title: 'Setting',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 25.h),
+              const TopSellingProducts(),
+            ],
+          ),
         ),
       ),
     );

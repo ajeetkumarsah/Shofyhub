@@ -50,8 +50,9 @@ class ListingTile extends StatelessWidget {
                 title: 'Stock Quantity:',
               ),
               RightSideText(
-                subTitle:
-                    productDetails.data?.stockQuantity.toString() ?? "N/A",
+                subTitle: productDetails.data?.stockQuantity == null
+                    ? "N/A"
+                    : productDetails.data!.stockQuantity.toString(),
               ),
             ],
           ),
@@ -63,8 +64,9 @@ class ListingTile extends StatelessWidget {
                 title: 'Min Order quantity:',
               ),
               RightSideText(
-                subTitle:
-                    productDetails.data?.minOrderQuantity.toString() ?? "N/A",
+                subTitle: productDetails.data?.minOrderQuantity == null
+                    ? "N/A"
+                    : productDetails.data!.minOrderQuantity.toString(),
               ),
             ],
           ),
@@ -107,18 +109,18 @@ class ListingTile extends StatelessWidget {
             ],
           ),
           SizedBox(height: 12.h),
-          SizedBox(height: 12.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const LeftSideText(
-                title: 'Supplier:',
-              ),
-              RightSideText(
-                subTitle: productDetails.data?.supplierId.toString() ?? "N/A",
-              ),
-            ],
-          ),
+          // SizedBox(height: 12.h),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     const LeftSideText(
+          //       title: 'Supplier:',
+          //     ),
+          //     RightSideText(
+          //       subTitle: productDetails.data?.supplierId.toString() ?? "N/A",
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

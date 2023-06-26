@@ -235,8 +235,11 @@ class Product {
         id: json["id"],
         slug: json["slug"],
         name: json["name"],
-        categories: Map.from(json["categories"]!)
-            .map((k, v) => MapEntry<String, String>(k, v)),
+        categories:
+            json["categories"] == null || json["categories"].runtimeType != Map
+                ? {}
+                : Map.from(json["categories"]!)
+                    .map((k, v) => MapEntry<String, String>(k, v)),
         modelNumber: json["model_number"],
         gtin: json["gtin"],
         gtinType: json["gtin_type"],

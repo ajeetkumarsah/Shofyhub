@@ -17,13 +17,19 @@ class InfoTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             '$title:',
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           SizedBox(width: 20.h),
-          Text(value),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+            ),
+          ),
         ],
       ),
     );

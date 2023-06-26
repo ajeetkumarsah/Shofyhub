@@ -165,6 +165,8 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
           ? _metaDescriptionController.text
           : null;
 
+      print("Available from: $availableFrom");
+
       final map = {
         "product_id": widget.product.id,
         "title": _titleController.text,
@@ -179,15 +181,13 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
         "min_order_quantity": int.parse(_minOrderQuantityController.text),
         "sale_price": double.parse(_priceController.text),
         if (offerPrice != null) "offer_price": double.parse(offerPrice),
-        if (offerStartDate != null)
-          "offer_start": DateTime.parse(offerStartDate),
-        if (offerEndDate != null) "offer_end": DateTime.parse(offerEndDate),
-        if (availableFrom != null)
-          "available_from": DateTime.parse(availableFrom),
-        if (expiryDate != null) "expiry_date": DateTime.parse(expiryDate),
+        if (offerStartDate != null) "offer_start": offerStartDate,
+        if (offerEndDate != null) "offer_end": offerEndDate,
+        if (availableFrom != null) "available_from": availableFrom,
+        if (expiryDate != null) "expiry_date": expiryDate,
         "free_shipping": _isFreeShipping ? 1 : 0,
         if (_warehouse != null) "warehouse_id": _warehouse,
-        if (_packaging != null) "packaging_id": _packaging,
+        if (_packaging != null) "packaging_list[]": _packaging,
         if (shippingWeight != null) "shipping_weight": shippingWeight,
         if (purchasePrice != null) "purchase_price": purchasePrice,
         if (_supplier != null) "supplier_id": _supplier,
@@ -237,7 +237,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
           _isLoading = false;
         });
         Fluttertoast.showToast(msg: 'Inventory added successfully');
-        ref.read(inventoryPageProvider.notifier).state == 1;
         ref.invalidate(inventoriesFutureProvider('active'));
         Navigator.of(context).pop();
         Navigator.of(context).pop();
@@ -262,6 +261,13 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
     final suppliersRef = ref.watch(suppliersFormDataProvider);
     final linkedItesRef = ref.watch(linkedItemsFormDataProvider);
     final packagingsRef = ref.watch(packagingsFormDataProvider);
+
+    // 2022-07-30 07:57 pm
+    String formatDate(DateTime date) {
+      final String formattedDate =
+          DateFormat('yyyy-MM-dd hh:mm a').format(date);
+      return formattedDate;
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -539,7 +545,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                 controller: _priceController,
                                 lebelText: 'Price *',
                                 inputAction: TextInputAction.next,
-                                numberFormatters: true,
+                                keyboardType: TextInputType.number,
                                 validator: (text) =>
                                     ValidatorLogic.requiredField(text,
                                         fieldName: 'Price'),
@@ -565,6 +571,12 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                 lebelText: 'Offer Start Date',
                                 inputAction: TextInputAction.next,
                                 readOnly: true,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    _salePriceStartDateController.clear();
+                                  },
+                                  icon: const Icon(Icons.clear),
+                                ),
                                 validator: (p0) {
                                   final bool hasOfferPrice =
                                       _salePriceController.text.isNotEmpty;
@@ -586,7 +598,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                   ).then((value) {
                                     if (value != null) {
                                       _salePriceStartDateController.text =
-                                          value.toString();
+                                          formatDate(value);
                                     }
                                   });
                                 },
@@ -599,6 +611,12 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                 keyboardType: TextInputType.number,
                                 inputAction: TextInputAction.next,
                                 readOnly: true,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    _salePriceEndDateController.clear();
+                                  },
+                                  icon: const Icon(Icons.clear),
+                                ),
                                 validator: (p0) {
                                   final bool hasOfferPrice =
                                       _salePriceController.text.isNotEmpty;
@@ -620,7 +638,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                   ).then((value) {
                                     if (value != null) {
                                       _salePriceEndDateController.text =
-                                          value.toString();
+                                          formatDate(value);
                                     }
                                   });
                                 },
@@ -715,6 +733,12 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                           controller: _availableFromController,
                           lebelText: 'Available From',
                           readOnly: true,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              _availableFromController.clear();
+                            },
+                            icon: const Icon(Icons.clear),
+                          ),
                           validator: (p0) {
                             if (p0?.isEmpty ?? true) {
                               return ValidatorLogic.requiredField(p0,
@@ -734,7 +758,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             ).then((value) {
                               if (value != null) {
                                 _availableFromController.text =
-                                    value.toString();
+                                    formatDate(value);
                               }
                             });
                           },
@@ -746,14 +770,20 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                           controller: _expiryDateController,
                           lebelText: 'Expiry Date',
                           readOnly: true,
-                          validator: (p0) {
-                            if (p0?.isEmpty ?? true) {
-                              return ValidatorLogic.requiredField(p0,
-                                  fieldName: 'Expiry Date');
-                            } else {
-                              return null;
-                            }
-                          },
+                          // validator: (p0) {
+                          //   if (p0?.isEmpty ?? true) {
+                          //     return ValidatorLogic.requiredField(p0,
+                          //         fieldName: 'Expiry Date');
+                          //   } else {
+                          //     return null;
+                          //   }
+                          // },
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              _expiryDateController.clear();
+                            },
+                            icon: const Icon(Icons.clear),
+                          ),
                           onTap: () {
                             showDatePicker(
                               context: context,
@@ -764,11 +794,12 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                               ),
                             ).then((value) {
                               if (value != null) {
-                                _expiryDateController.text = value.toString();
+                                _expiryDateController.text = formatDate(value);
                               }
                             });
                           },
                         ),
+                        const SizedBox(height: 16),
 
                         // Is Free Shipping
                         Container(
@@ -792,31 +823,50 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
 
                         wareHousesRef.when(
                           data: (data) {
-                            return DropdownButtonHideUnderline(
-                              child: DropdownButtonFormField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(width: 1.w),
-                                    borderRadius: BorderRadius.circular(8.r),
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButtonFormField(
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderSide: BorderSide(width: 1.w),
+                                          borderRadius:
+                                              BorderRadius.circular(8.r),
+                                        ),
+                                        labelText: 'Warehouse',
+                                      ),
+                                      style: TextStyle(
+                                          color: Colors.grey.shade800),
+                                      isExpanded: true,
+                                      icon: const Icon(
+                                          Icons.keyboard_arrow_down_rounded),
+                                      items: [
+                                        const DropdownMenuItem(
+                                          value: null,
+                                          child: Text('Select'),
+                                        ),
+                                        ...data.keys.map((key) {
+                                          return DropdownMenuItem(
+                                            value: key,
+                                            child: Text(data[key] ?? ''),
+                                          );
+                                        }).toList()
+                                      ],
+                                      onChanged: (value) {
+                                        setState(() {
+                                          if (value != null) {
+                                            _warehouse =
+                                                int.parse(value.toString());
+                                          } else {
+                                            _warehouse = null;
+                                          }
+                                        });
+                                      },
+                                    ),
                                   ),
-                                  labelText: 'Warehouse',
                                 ),
-                                style: TextStyle(color: Colors.grey.shade800),
-                                isExpanded: true,
-                                icon: const Icon(
-                                    Icons.keyboard_arrow_down_rounded),
-                                items: data.keys.map((key) {
-                                  return DropdownMenuItem(
-                                    value: key,
-                                    child: Text(data[key] ?? ''),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _warehouse = int.parse(value.toString());
-                                  });
-                                },
-                              ),
+                              ],
                             );
                           },
                           error: (error, stackTrace) {
@@ -855,15 +905,25 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                 isExpanded: true,
                                 icon: const Icon(
                                     Icons.keyboard_arrow_down_rounded),
-                                items: data.keys.map((key) {
-                                  return DropdownMenuItem(
-                                    value: key,
-                                    child: Text(data[key] ?? ''),
-                                  );
-                                }).toList(),
+                                items: [
+                                  const DropdownMenuItem(
+                                    value: null,
+                                    child: Text('Select'),
+                                  ),
+                                  ...data.keys.map((key) {
+                                    return DropdownMenuItem(
+                                      value: key,
+                                      child: Text(data[key] ?? ''),
+                                    );
+                                  }).toList()
+                                ],
                                 onChanged: (value) {
                                   setState(() {
-                                    _packaging = int.parse(value.toString());
+                                    if (value != null) {
+                                      _packaging = int.parse(value.toString());
+                                    } else {
+                                      _packaging = null;
+                                    }
                                   });
                                 },
                               ),
@@ -921,17 +981,28 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                         isExpanded: true,
                                         icon: const Icon(
                                             Icons.keyboard_arrow_down_rounded),
-                                        items: values!.keys.map((valueKey) {
-                                          return DropdownMenuItem(
-                                            value: valueKey,
-                                            child: Text(values[valueKey] ?? ''),
-                                          );
-                                        }).toList(),
+                                        items: [
+                                          const DropdownMenuItem(
+                                            value: null,
+                                            child: Text('Select'),
+                                          ),
+                                          ...values!.keys.map((valueKey) {
+                                            return DropdownMenuItem(
+                                              value: valueKey,
+                                              child:
+                                                  Text(values[valueKey] ?? ''),
+                                            );
+                                          }).toList()
+                                        ],
                                         onChanged: (value) {
                                           if (value != null) {
                                             setState(() {
                                               _attributes[key] =
                                                   value.toString();
+                                            });
+                                          } else {
+                                            setState(() {
+                                              _attributes.remove(key);
                                             });
                                           }
                                         },
@@ -989,15 +1060,25 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                 isExpanded: true,
                                 icon: const Icon(
                                     Icons.keyboard_arrow_down_rounded),
-                                items: data.keys.map((key) {
-                                  return DropdownMenuItem(
-                                    value: key,
-                                    child: Text(data[key] ?? ''),
-                                  );
-                                }).toList(),
+                                items: [
+                                  const DropdownMenuItem(
+                                    value: null,
+                                    child: Text('Select'),
+                                  ),
+                                  ...data.keys.map((key) {
+                                    return DropdownMenuItem(
+                                      value: key,
+                                      child: Text(data[key] ?? ''),
+                                    );
+                                  }).toList()
+                                ],
                                 onChanged: (value) {
                                   setState(() {
-                                    _supplier = int.parse(value.toString());
+                                    if (value != null) {
+                                      _supplier = int.parse(value.toString());
+                                    } else {
+                                      _supplier = null;
+                                    }
                                   });
                                 },
                               ),

@@ -25,6 +25,7 @@ class InventoryDetailsPage extends ConsumerStatefulWidget {
 
 class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
   int navigationSelect = 0;
+
   @override
   Widget build(BuildContext context) {
     final detailsRef = ref.watch(inventoryDetailsFutureProvider(widget.id));
@@ -50,6 +51,8 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
           if (productDetails == null) {
             return const Center(child: Text('No data found'));
           } else {
+            final images = productDetails.images ?? [];
+
             final List<Widget> pages = [
               ListingTile(productDetails: data),
               ProductTile(productDetails: data),
@@ -61,16 +64,34 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
               children: [
                 Container(
-                  height: 200.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(productDetails.product?.image ?? ""),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                    height: 200.h,
+                    width: double.infinity,
+                    decoration: images.isEmpty
+                        ? BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  productDetails.product?.image ?? ""),
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : null,
+                    child: PageView.builder(
+                      itemCount: images.length,
+                      itemBuilder: (context, index) {
+                        final image = images[index];
+
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                              image: NetworkImage(image.path ?? ""),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                    )),
                 SizedBox(height: 50.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -296,6 +317,9 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
           }
         },
         error: (error, stack) {
+          print(error.toString());
+          print(stack.toString());
+
           return Center(
             child: Text(error.toString()),
           );
