@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
@@ -20,6 +19,8 @@ final attributesByProductsFormDataProvider =
   final dioClient = Dio();
   final response = await dioClient.get(url, options: Options(headers: headers));
 
+  print("Attributes by product response: ${response.data}");
+
   if (response.statusCode == 200) {
     return attributesByProductModelFromJson(jsonEncode(response.data));
   } else {
@@ -39,6 +40,8 @@ final itemConditionsFormDataProvider =
 
   final dioClient = Dio();
   final response = await dioClient.get(url, options: Options(headers: headers));
+
+  print("Item conditions response: ${response.data}");
 
   if (response.statusCode == 200) {
     final jsonData = jsonEncode(response.data);
@@ -62,6 +65,8 @@ final warehousesFormDataProvider =
   final dioClient = Dio();
   final response = await dioClient.get(url, options: Options(headers: headers));
 
+  print("Warehouses response: ${response.data}");
+
   if (response.statusCode == 200) {
     final jsonData = jsonEncode(response.data);
     return Map<String, String>.from(jsonDecode(jsonData));
@@ -84,6 +89,8 @@ final tagListFormDataProvider =
   final dioClient = Dio();
   final response = await dioClient.get(url, options: Options(headers: headers));
 
+  print("Tag list response: ${response.data}");
+
   if (response.statusCode == 200) {
     final jsonData = jsonEncode(response.data);
     return Map<String, String>.from(jsonDecode(jsonData));
@@ -104,6 +111,8 @@ final suppliersFormDataProvider =
 
   final dioClient = Dio();
   final response = await dioClient.get(url, options: Options(headers: headers));
+
+  print("Suppliers response: ${response.data}");
 
   if (response.statusCode == 200) {
     final jsonData = jsonEncode(response.data);
@@ -128,6 +137,8 @@ final linkedItemsFormDataProvider =
   final dioClient = Dio();
   final response = await dioClient.get(url, options: Options(headers: headers));
 
+  print("Linked items response: ${response.data}");
+
   if (response.statusCode == 200) {
     final jsonData = jsonEncode(response.data);
     return Map<String, String>.from(jsonDecode(jsonData));
@@ -149,6 +160,8 @@ final packagingsFormDataProvider =
 
   final dioClient = Dio();
   final response = await dioClient.get(url, options: Options(headers: headers));
+
+  print("Packagings response: ${response.data}");
 
   if (response.statusCode == 200) {
     final jsonData = jsonEncode(response.data);

@@ -81,7 +81,8 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
       TextEditingController();
 
   // Packagings (Dropdown)
-  int? _packaging;
+  // int? _packaging;
+  final List<int> _packagings = [];
 
   // Attributes (Dropdown)
   final Map<String, String> _attributes = {};
@@ -115,6 +116,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
   void initState() {
     _keyFeaturesController.add(TextEditingController());
     _minOrderQuantityController.text = '1';
+    _condition = 'New';
     super.initState();
   }
 
@@ -186,22 +188,25 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
         if (expiryDate != null) "expiry_date": expiryDate,
         "free_shipping": _isFreeShipping ? 1 : 0,
         if (_warehouse != null) "warehouse_id": _warehouse,
-        if (_packaging != null) "packaging_list[]": _packaging,
+        if (_packagings.isNotEmpty)
+          for (int i = 0; i < _packagings.length; i++)
+            "packaging_list[$i]": _packagings[i],
         if (shippingWeight != null) "shipping_weight": shippingWeight,
         if (purchasePrice != null) "purchase_price": purchasePrice,
         if (_supplier != null) "supplier_id": _supplier,
         if (metaTitle != null) "meta_title": metaTitle,
         if (metaDescription != null) "meta_description": metaDescription,
         if (_linkedItems.isNotEmpty)
-          for (int linkedItem in _linkedItems) "linked_items[]": linkedItem,
+          for (int i = 0; i < _linkedItems.length; i++)
+            "linked_items[$i]": _linkedItems[i],
         if (_keyFeaturesController.isNotEmpty)
-          for (TextEditingController controller in _keyFeaturesController)
-            if (controller.text.isNotEmpty) "key_features[]": controller.text,
+          for (int i = 0; i < _keyFeaturesController.length; i++)
+            "key_features[$i]": _keyFeaturesController[i].text,
         if (_attributes.isNotEmpty)
           for (String key in _attributes.keys)
             "variants[$key]": _attributes[key],
         if (_tags.isNotEmpty)
-          for (int tag in _tags) "tags[]": tag,
+          for (int i = 0; i < _tags.length; i++) "tags[$i]": _tags[i],
       };
 
       FormData formdata = FormData.fromMap(map);
@@ -223,7 +228,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
 
       print(map);
 
-      print("Available from: $availableFrom");
       final authRef = ref.read(authProvider);
       Fluttertoast.showToast(msg: 'Adding new inventory...');
       setState(() {
@@ -254,8 +258,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
     final wareHousesRef = ref.watch(warehousesFormDataProvider);
     final attributesByProductRef =
         ref.watch(attributesByProductsFormDataProvider(widget.product.id!));
-
-    // Tag list
     final tagListRef = ref.watch(tagListFormDataProvider);
     final suppliersRef = ref.watch(suppliersFormDataProvider);
     final linkedItesRef = ref.watch(linkedItemsFormDataProvider);
@@ -370,7 +372,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                         // Slug
                         KTextField(
                           controller: _slugController,
-                          lebelText: 'Slug',
+                          lebelText: 'Slug *',
                           inputAction: TextInputAction.next,
                           validator: (text) => ValidatorLogic.requiredField(
                               text,
@@ -404,6 +406,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                 ),
                                 style: TextStyle(color: Colors.grey.shade800),
                                 isExpanded: true,
+                                value: _condition,
                                 icon: const Icon(
                                     Icons.keyboard_arrow_down_rounded),
                                 items: data.keys.map((key) {
@@ -421,6 +424,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
+                            print("Condition error");
                             print(error);
                             print(stackTrace);
                             return const SizedBox();
@@ -709,6 +713,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
+                            print("Linked items error");
                             print(error);
                             print(stackTrace);
                             return const SizedBox();
@@ -869,6 +874,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
+                            print("Warehouse error");
                             print(error);
                             print(stackTrace);
                             return const SizedBox();
@@ -891,44 +897,75 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
 
                         packagingsRef.when(
                           data: (data) {
-                            return DropdownButtonHideUnderline(
-                              child: DropdownButtonFormField(
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(width: 1.w),
-                                    borderRadius: BorderRadius.circular(8.r),
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                DropdownButtonHideUnderline(
+                                  child: DropdownButtonFormField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(width: 1.w),
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                      ),
+                                      labelText: 'Packagings',
+                                    ),
+                                    style:
+                                        TextStyle(color: Colors.grey.shade800),
+                                    isExpanded: true,
+                                    icon: const Icon(
+                                        Icons.keyboard_arrow_down_rounded),
+                                    items: [
+                                      const DropdownMenuItem(
+                                        value: null,
+                                        child: Text('Select'),
+                                      ),
+                                      ...data.keys.map((key) {
+                                        return DropdownMenuItem(
+                                          value: key,
+                                          child: Text(data[key] ?? ''),
+                                        );
+                                      }).toList()
+                                    ],
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        _packagings
+                                            .add(int.parse(value.toString()));
+
+                                        setState(() {});
+                                      }
+                                    },
                                   ),
-                                  labelText: 'Packagings',
                                 ),
-                                style: TextStyle(color: Colors.grey.shade800),
-                                isExpanded: true,
-                                icon: const Icon(
-                                    Icons.keyboard_arrow_down_rounded),
-                                items: [
-                                  const DropdownMenuItem(
-                                    value: null,
-                                    child: Text('Select'),
+                                const SizedBox(height: 16),
+                                if (_packagings.isNotEmpty)
+                                  Wrap(
+                                    spacing: 8,
+                                    children: _packagings.map((packagingId) {
+                                      return InputChip(
+                                        label: Text(
+                                            data[packagingId.toString()] ?? ''),
+                                        deleteIcon:
+                                            const Icon(Icons.clear, size: 16),
+                                        onDeleted: () {
+                                          setState(() {
+                                            _packagings.remove(packagingId);
+                                          });
+                                        },
+                                      );
+                                    }).toList(),
+                                  )
+                                else
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 24),
+                                    child: Text("Select packagings"),
                                   ),
-                                  ...data.keys.map((key) {
-                                    return DropdownMenuItem(
-                                      value: key,
-                                      child: Text(data[key] ?? ''),
-                                    );
-                                  }).toList()
-                                ],
-                                onChanged: (value) {
-                                  setState(() {
-                                    if (value != null) {
-                                      _packaging = int.parse(value.toString());
-                                    } else {
-                                      _packaging = null;
-                                    }
-                                  });
-                                },
-                              ),
+                              ],
                             );
                           },
                           error: (error, stackTrace) {
+                            print("Packaging error");
                             print(error);
                             print(stackTrace);
                             return const SizedBox();
@@ -1014,6 +1051,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
+                            print("Attributes error");
                             print(error);
                             print(stackTrace);
                             return const SizedBox();
@@ -1084,6 +1122,9 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
+                            print("Supplier error");
+                            print(error);
+                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),
@@ -1163,6 +1204,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
+                            print("Tags error");
                             print(error);
                             print(stackTrace);
                             return const SizedBox();

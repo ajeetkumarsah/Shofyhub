@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:zcart_seller/presentation/stock/inventory/add_inventory/update_inventory_page.dart';
 import 'package:zcart_seller/presentation/stock/inventory/widgets/description.dart';
 import 'package:zcart_seller/presentation/stock/inventory/widgets/left_side_text.dart';
 import 'package:zcart_seller/presentation/stock/inventory/widgets/listing.dart';
@@ -30,8 +31,6 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
   Widget build(BuildContext context) {
     final detailsRef = ref.watch(inventoryDetailsFutureProvider(widget.id));
 
-    // int navigationSelect = use
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60.h,
@@ -46,17 +45,17 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
       ),
       body: detailsRef.when(
         data: (data) {
-          final productDetails = data.data;
+          final details = data.data;
 
-          if (productDetails == null) {
+          if (details == null) {
             return const Center(child: Text('No data found'));
           } else {
-            final images = productDetails.images ?? [];
+            final images = details.images ?? [];
 
             final List<Widget> pages = [
               ListingTile(productDetails: data),
               ProductTile(productDetails: data),
-              DescriptionTile(description: productDetails.description ?? ""),
+              DescriptionTile(description: details.description ?? ""),
               OfferTile(productDetails: data),
             ];
 
@@ -70,8 +69,7 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                         ? BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
-                              image: NetworkImage(
-                                  productDetails.product?.image ?? ""),
+                              image: NetworkImage(details.product?.image ?? ""),
                               fit: BoxFit.cover,
                             ),
                           )
@@ -97,7 +95,7 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const LeftSideText(title: 'Name:'),
-                    RightSideText(subTitle: productDetails.title ?? "N/A"),
+                    RightSideText(subTitle: details.title ?? "N/A"),
                   ],
                 ),
                 SizedBox(height: 12.h),
@@ -105,8 +103,7 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const LeftSideText(title: 'Brand:'),
-                    RightSideText(
-                        subTitle: productDetails.product?.brand ?? "N/A"),
+                    RightSideText(subTitle: details.product?.brand ?? "N/A"),
                   ],
                 ),
                 SizedBox(height: 12.h),
@@ -115,7 +112,7 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                   children: [
                     const LeftSideText(title: 'Model No:'),
                     RightSideText(
-                        subTitle: productDetails.product?.modelNumber ?? "N/A"),
+                        subTitle: details.product?.modelNumber ?? "N/A"),
                   ],
                 ),
                 SizedBox(height: 12.h),
@@ -124,9 +121,8 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                   children: [
                     const LeftSideText(title: 'Status:'),
                     RightSideText(
-                      subTitle: (productDetails.active ?? false)
-                          ? 'Active'
-                          : 'Inactive',
+                      subTitle:
+                          (details.active ?? false) ? 'Active' : 'Inactive',
                     ),
                   ],
                 ),
@@ -136,7 +132,7 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                   children: [
                     const LeftSideText(title: 'Available Form:'),
                     RightSideText(
-                      subTitle: productDetails.product?.availableFrom ?? "N/A",
+                      subTitle: details.product?.availableFrom ?? "N/A",
                     ),
                   ],
                 ),
@@ -302,15 +298,19 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Constants.primaryColor),
                   onPressed: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return UpdateInventoryPage(
-                    //       inventoryId: productDetails.id);
-                    // }));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return UpdateInventoryPage(
+                        inventoryId: details.id!,
+                      );
+                    }));
                   },
                   child: SizedBox(
-                      height: 60,
-                      child: Center(child: Text('update_inventory'.tr()))),
+                    height: 60,
+                    child: Center(
+                      child: Text('update_inventory'.tr()),
+                    ),
+                  ),
                 ),
               ],
             );

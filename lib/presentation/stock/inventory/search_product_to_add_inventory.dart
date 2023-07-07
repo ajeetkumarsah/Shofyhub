@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:zcart_seller/presentation/stock/inventory/add_inventory_page.dart';
+import 'package:zcart_seller/presentation/stock/inventory/add_inventory/add_inventory_page.dart';
+import 'package:zcart_seller/presentation/stock/inventory/add_inventory/create_variants_page.dart';
 import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
 
 class SearchProductToAddInventory extends ConsumerStatefulWidget {
@@ -114,8 +115,16 @@ class _SearchProductToAddInventoryState
                                         ),
                                       ),
                                       onPressed: () {
-                                        Fluttertoast.showToast(
-                                            msg: "Work in progress");
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return CreateVariantsPage(
+                                                product: item,
+                                              );
+                                            },
+                                          ),
+                                        );
                                       },
                                       child: const Text(
                                         "Add to Inventory\nwith Variant",

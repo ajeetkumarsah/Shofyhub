@@ -100,6 +100,64 @@ class InventoryProvider {
     }
   }
 
+  static Future<void> addInventoryWithVariants({
+    required String apiKey,
+    required FormData data,
+  }) async {
+    const url = "$apiEndpoint/inventory/createWithVariant";
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey'
+    };
+
+    print(url);
+
+    final dioClient = Dio();
+    final response = await dioClient
+        .post(url, data: data, options: Options(headers: headers))
+        .onError((error, stackTrace) async {
+      print(error);
+      print(stackTrace);
+      return Future.error(error.toString());
+    });
+
+    print(response.data);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to add inventory!');
+    }
+  }
+
+  //Update
+  static Future<void> updateInventory({
+    required int id,
+    required String apiKey,
+    required FormData data,
+  }) async {
+    final url = "$apiEndpoint/inventory/$id/update";
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey'
+    };
+
+    print(url);
+
+    final dioClient = Dio();
+    final response = await dioClient
+        .put(url, data: data, options: Options(headers: headers))
+        .onError((error, stackTrace) async {
+      print(error);
+      print(stackTrace);
+      return Future.error(error.toString());
+    });
+
+    print(response.data);
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to update inventory!');
+    }
+  }
+
   // Quick update
   static Future<void> inventoryQuickUpdate({
     required int id,
