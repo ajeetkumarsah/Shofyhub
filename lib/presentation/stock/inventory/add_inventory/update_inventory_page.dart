@@ -29,7 +29,11 @@ class UpdateInventoryPage extends ConsumerWidget {
           return UpdateInventoryBody(inventory: inventory);
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text(error.toString())),
+        error: (error, stackTrace) {
+          print(error);
+          print(stackTrace);
+          return Center(child: Text(error.toString()));
+        },
       ),
     );
   }
@@ -207,9 +211,9 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
         "stock_quantity": int.parse(_stockQuantityController.text),
         "min_order_quantity": int.parse(_minOrderQuantityController.text),
         "sale_price": double.parse(_priceController.text),
-        if (offerPrice != null) "offer_price": double.parse(offerPrice),
-        if (offerStartDate != null) "offer_start": offerStartDate,
-        if (offerEndDate != null) "offer_end": offerEndDate,
+        "offer_price": offerPrice != null ? double.parse(offerPrice) : null,
+        "offer_start": offerStartDate,
+        "offer_end": offerEndDate,
         "free_shipping": _isFreeShipping ? 1 : 0,
         if (_warehouse != null) "warehouse_id": _warehouse,
         if (shippingWeight != null) "shipping_weight": shippingWeight,
@@ -233,17 +237,17 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
         _isLoading = true;
       });
       await InventoryProvider.updateInventory(
-              id: widget.inventory.data!.id!,
-              apiKey: authRef.user.api_token,
-              data: formdata)
-          .then((value) {
+        id: widget.inventory.data!.id!,
+        apiKey: authRef.user.api_token,
+        data: formdata,
+      ).then((value) {
         setState(() {
           _isLoading = false;
         });
         Fluttertoast.showToast(msg: 'Inventory added successfully');
         ref.invalidate(inventoriesFutureProvider('active'));
         Navigator.of(context).pop();
-        Navigator.of(context).pop();
+        // Navigator.of(context).pop();
       }).onError((error, stackTrace) {
         setState(() {
           _isLoading = false;

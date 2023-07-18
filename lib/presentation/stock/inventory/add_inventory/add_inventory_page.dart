@@ -735,7 +735,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                         // Available From
                         KTextField(
                           controller: _availableFromController,
-                          lebelText: 'Available From',
+                          lebelText: 'Available From *',
                           readOnly: true,
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -754,7 +754,9 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                           onTap: () {
                             showDatePicker(
                               context: context,
-                              initialDate: DateTime.now(),
+                              initialDate: DateTime.now().subtract(
+                                const Duration(days: 365),
+                              ),
                               firstDate: DateTime.now(),
                               lastDate: DateTime.now().add(
                                 const Duration(days: 365),

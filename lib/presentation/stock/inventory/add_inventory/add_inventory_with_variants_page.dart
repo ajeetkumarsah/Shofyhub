@@ -477,7 +477,9 @@ class _AddInventoryWithVariantsPageState
                           onTap: () {
                             showDatePicker(
                               context: context,
-                              initialDate: DateTime.now(),
+                              initialDate: DateTime.now().subtract(
+                                const Duration(days: 365),
+                              ),
                               firstDate: DateTime.now(),
                               lastDate: DateTime.now().add(
                                 const Duration(days: 365),
