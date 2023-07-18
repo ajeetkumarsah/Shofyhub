@@ -1,4 +1,4 @@
-package com.incevio.zcart_seller
+package your_app_id
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -75,9 +75,9 @@ dev_dependencies:
 flutter_rename_app_plus:
   application_name: zCart Seller
   dart_package_name: zcart_seller
-  application_id: com.incevio.zcart_seller
-  bundle_id: com.incevio.zcart_seller
-  android_package_name: com.incevio.zcart_seller
+  application_id: your_app_id
+  bundle_id: your_app_id
+  android_package_name: your_app_id
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
