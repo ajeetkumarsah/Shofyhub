@@ -17,10 +17,12 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          color: Constants.appbarColor,
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10))),
+        color: Constants.appbarColor,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        ),
+      ),
       child: SafeArea(
         child: Row(
           children: [
@@ -51,46 +53,53 @@ class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
               }),
             ),
             Expanded(
-                flex: 2,
-                child: Center(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )),
+              flex: 2,
+              child: Center(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
             Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
                 child: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const NotificationPage()),
-                );
-              },
-              icon: Consumer(builder: (context, ref, child) {
-                int notificationCount =
-                    ref.watch(notificationProvider).notificationCount;
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (_) => const NotificationPage()),
+                    );
+                  },
+                  icon: Consumer(builder: (context, ref, child) {
+                    int notificationCount =
+                        ref.watch(notificationProvider).notificationCount;
 
-                return notificationCount > 0
-                    ? badge.Badge(
-                        padding: const EdgeInsets.all(6),
-                        badgeColor: Constants.kGreenColor,
-                        badgeContent: Text(
-                          notificationCount.toString(),
-                          style: TextStyle(color: Constants.kLightCardBgColor),
-                        ),
-                        child: const Icon(
-                          Icons.notifications,
-                          color: Colors.white,
-                        ),
-                      )
-                    : const Icon(
-                        Icons.notifications,
-                        color: Colors.white,
-                      );
-              }),
-            )),
+                    return notificationCount > 0
+                        ? badge.Badge(
+                            padding: const EdgeInsets.all(6),
+                            badgeColor: Constants.kGreenColor,
+                            badgeContent: Text(
+                              notificationCount.toString(),
+                              style:
+                                  TextStyle(color: Constants.kLightCardBgColor),
+                            ),
+                            child: const Icon(
+                              Icons.notifications,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                          );
+                  }),
+                ),
+              ),
+            ),
           ],
         ),
       ),

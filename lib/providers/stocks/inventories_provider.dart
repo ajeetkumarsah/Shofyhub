@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
@@ -16,15 +15,13 @@ final trashInventoryPageProvider = StateProvider<int>((ref) {
   return 1;
 });
 
-final inventoriesFutureProvider =
-    FutureProvider.family<InventoryModel, String>((ref, filter) async {
+final inventoriesFutureProvider = FutureProvider.autoDispose
+    .family<InventoryModel, String>((ref, filter) async {
   const url = "$apiEndpoint/inventories";
 
   final int page = filter == "active"
       ? ref.watch(inventoryPageProvider)
       : ref.watch(trashInventoryPageProvider);
-
-  print("Page: $page");
 
   final params = {
     'filter': filter,
@@ -42,8 +39,6 @@ final inventoriesFutureProvider =
   final response = await dioClient.get(url,
       queryParameters: params, options: Options(headers: headers));
 
-  print(response.data);
-
   if (response.statusCode == 200) {
     return InventoryModel.fromJson(response.data);
   } else {
@@ -52,8 +47,8 @@ final inventoriesFutureProvider =
 });
 
 // inventory details provider
-final inventoryDetailsFutureProvider =
-    FutureProvider.family<InventoryDetailsModel, int>((ref, id) async {
+final inventoryDetailsFutureProvider = FutureProvider.autoDispose
+    .family<InventoryDetailsModel, int>((ref, id) async {
   final url = "$apiEndpoint/inventory/$id";
 
   final authRef = ref.read(authProvider);
@@ -82,18 +77,12 @@ class InventoryProvider {
       'Authorization': 'Bearer $apiKey'
     };
 
-    print(url);
-
     final dioClient = Dio();
     final response = await dioClient
         .post(url, data: data, options: Options(headers: headers))
         .onError((error, stackTrace) async {
-      print(error);
-      print(stackTrace);
       return Future.error(error.toString());
     });
-
-    print(response.data);
 
     if (response.statusCode != 200) {
       throw Exception('Failed to add inventory!');
@@ -110,18 +99,12 @@ class InventoryProvider {
       'Authorization': 'Bearer $apiKey'
     };
 
-    print(url);
-
     final dioClient = Dio();
     final response = await dioClient
         .post(url, data: data, options: Options(headers: headers))
         .onError((error, stackTrace) async {
-      print(error);
-      print(stackTrace);
       return Future.error(error.toString());
     });
-
-    print(response.data);
 
     if (response.statusCode != 200) {
       throw Exception('Failed to add inventory!');
@@ -132,7 +115,7 @@ class InventoryProvider {
   static Future<void> updateInventory({
     required int id,
     required String apiKey,
-    required FormData data,
+    required Map<String, dynamic> data,
   }) async {
     final url = "$apiEndpoint/inventory/$id/update";
     final headers = {
@@ -140,18 +123,16 @@ class InventoryProvider {
       'Authorization': 'Bearer $apiKey'
     };
 
-    print(url);
-
     final dioClient = Dio();
     final response = await dioClient
-        .put(url, data: data, options: Options(headers: headers))
+        .put(
+      url,
+      queryParameters: data,
+      options: Options(headers: headers),
+    )
         .onError((error, stackTrace) async {
-      print(error);
-      print(stackTrace);
       return Future.error(error.toString());
     });
-
-    print(response.data);
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update inventory!');
@@ -185,11 +166,9 @@ class InventoryProvider {
     final dioClient = Dio();
     final response = await dioClient.put(
       url,
-      data: jsonEncode(params),
+      queryParameters: params,
       options: Options(headers: headers),
     );
-
-    print(response.data);
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load data!');
@@ -214,8 +193,6 @@ class InventoryProvider {
       options: Options(headers: headers),
     );
 
-    print(response.data);
-
     if (response.statusCode != 200) {
       throw Exception('Failed to trash data!');
     }
@@ -239,8 +216,6 @@ class InventoryProvider {
       options: Options(headers: headers),
     );
 
-    print(response.data);
-
     if (response.statusCode != 200) {
       throw Exception('Failed to restore data!');
     }
@@ -263,8 +238,6 @@ class InventoryProvider {
       url,
       options: Options(headers: headers),
     );
-
-    print(response.data);
 
     if (response.statusCode != 200) {
       throw Exception('Failed to delete data!');

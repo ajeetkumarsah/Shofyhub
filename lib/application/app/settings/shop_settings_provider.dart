@@ -1,4 +1,5 @@
 import 'package:clean_api/clean_api.dart';
+import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
 import 'package:zcart_seller/domain/app/settings/i_shop_settings_repo.dart';
@@ -23,10 +24,17 @@ class ShopSettingsNotifier extends StateNotifier<ShopSettingsState> {
             loading: false, failure: CleanFailure.none(), shopSettings: r));
   }
 
-  updateShopSettings({required formData, required int shopId}) async {
+  updateShopSettings({
+    required FormData formData,
+    required int shopId,
+    required String apiKey,
+  }) async {
     state = state.copyWith(loadingUpdate: true);
     final data = await shopSettingsRepo.updateShopSettings(
-        formData: formData, shopId: shopId);
+      formData: formData,
+      shopId: shopId,
+      apiKey: apiKey,
+    );
     state = data.fold(
         (l) => state.copyWith(loadingUpdate: false, failure: l),
         (r) =>

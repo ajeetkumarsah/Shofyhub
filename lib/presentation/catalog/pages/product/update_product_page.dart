@@ -424,7 +424,7 @@ class UpdateProductPage extends HookConsumerWidget {
                                           selectedMenufectur.value.id),
                                       'brand': brandController.text,
                                       'name': nameController.text,
-                                      'mode_number': modelNumer.text,
+                                      'model_number': modelNumer.text,
                                       'mpn': mpn.text,
                                       'gtin': gtin.text,
                                       'gtin_type': selectedGtin.value.value,
