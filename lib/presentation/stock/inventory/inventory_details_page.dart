@@ -55,7 +55,10 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
             final List<Widget> pages = [
               ListingTile(productDetails: data),
               ProductTile(productDetails: data),
-              DescriptionTile(description: details.description ?? ""),
+              DescriptionTile(
+                description: details.description ?? "",
+                images: details.images,
+              ),
               OfferTile(productDetails: data),
             ];
 
@@ -302,6 +305,7 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
                         MaterialPageRoute(builder: (context) {
                       return UpdateInventoryPage(
                         inventoryId: details.id!,
+                        needsDouleBack: true,
                       );
                     }));
                   },
@@ -317,9 +321,6 @@ class _InventoryDetailsPageState extends ConsumerState<InventoryDetailsPage> {
           }
         },
         error: (error, stack) {
-          print(error.toString());
-          print(stack.toString());
-
           return Center(
             child: Text(error.toString()),
           );

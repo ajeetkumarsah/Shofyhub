@@ -68,34 +68,36 @@ class DashboardHome extends HookConsumerWidget {
                   }
                 },
                 child: Scaffold(
-                    body: IndexedStack(
-                      index: DashboardUtility.index.value,
-                      children: screens,
-                    ),
-                    bottomNavigationBar: BottomNavigationBar(
-                        elevation: 5,
-                        type: BottomNavigationBarType.fixed,
-                        selectedItemColor: Constants.appbarColor,
-                        unselectedItemColor: Colors.grey,
-                        selectedFontSize: 12,
-                        currentIndex: DashboardUtility.index.value,
-                        onTap: (value) {
-                          DashboardUtility.index.value = value;
-                        },
-                        items: [
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.dashboard),
-                              label: 'dashboard'.tr()),
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.list_alt_sharp),
-                              label: 'orders'.tr()),
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.message),
-                              label: 'messages'.tr()),
-                          BottomNavigationBarItem(
-                              icon: const Icon(Icons.settings),
-                              label: 'settings'.tr()),
-                        ])),
+                  body: IndexedStack(
+                    index: DashboardUtility.index.value,
+                    children: screens,
+                  ),
+                  bottomNavigationBar: BottomNavigationBar(
+                    elevation: 5,
+                    type: BottomNavigationBarType.fixed,
+                    selectedItemColor: Constants.appbarColor,
+                    unselectedItemColor: Colors.grey,
+                    selectedFontSize: 12,
+                    currentIndex: DashboardUtility.index.value,
+                    onTap: (value) {
+                      DashboardUtility.index.value = value;
+                    },
+                    items: [
+                      BottomNavigationBarItem(
+                          icon: const Icon(Icons.dashboard),
+                          label: 'dashboard'.tr()),
+                      BottomNavigationBarItem(
+                          icon: const Icon(Icons.list_alt_sharp),
+                          label: 'orders'.tr()),
+                      BottomNavigationBarItem(
+                          icon: const Icon(Icons.message),
+                          label: 'messages'.tr()),
+                      BottomNavigationBarItem(
+                          icon: const Icon(Icons.settings),
+                          label: 'settings'.tr()),
+                    ],
+                  ),
+                ),
               );
             })
         : ValueListenableBuilder(

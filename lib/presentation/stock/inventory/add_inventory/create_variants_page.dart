@@ -200,9 +200,6 @@ class _CreateVariantsPageState extends ConsumerState<CreateVariantsPage> {
             );
           },
           error: (error, stackTrace) {
-            print("Attributes error");
-            print(error);
-            print(stackTrace);
             return const Center(child: Text('Error'));
           },
           loading: () => const Center(child: CircularProgressIndicator()),

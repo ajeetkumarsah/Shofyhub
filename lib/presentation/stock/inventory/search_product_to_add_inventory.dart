@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:zcart_seller/presentation/stock/inventory/add_inventory/add_inventory_page.dart';
 import 'package:zcart_seller/presentation/stock/inventory/add_inventory/create_variants_page.dart';
 import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
@@ -62,90 +61,96 @@ class _SearchProductToAddInventoryState
 
                   return searchProductRef.when(
                     data: (data) {
-                      return ListView.separated(
-                        itemCount: data.length,
-                        separatorBuilder: (context, index) {
-                          return const Divider(height: 0);
-                        },
-                        itemBuilder: (context, index) {
-                          final item = data[index];
-                          return ListTile(
-                            contentPadding: const EdgeInsets.all(16),
-                            title: Text(item.name ?? ''),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "${item.gtinType ?? ''} : ${item.gtin ?? ''}",
-                                ),
-                                // Model
-                                Text(
-                                  "Model: ${item.modelNumber ?? ''}",
-                                ),
-                                // Brand
-                                Text(
-                                  "Brand: ${item.brand ?? ''}",
-                                ),
-                                const SizedBox(height: 8),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return AddInventoryPage(
-                                                product: item,
+                      return data.isEmpty
+                          ? const Center(child: Text('No data found'))
+                          : ListView.separated(
+                              itemCount: data.length,
+                              separatorBuilder: (context, index) {
+                                return const Divider(height: 0);
+                              },
+                              itemBuilder: (context, index) {
+                                final item = data[index];
+                                return ListTile(
+                                  contentPadding: const EdgeInsets.all(16),
+                                  title: Text(item.name ?? ''),
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "${item.gtinType ?? ''} : ${item.gtin ?? ''}",
+                                      ),
+                                      // Model
+                                      Text(
+                                        "Model: ${item.modelNumber ?? ''}",
+                                      ),
+                                      // Brand
+                                      Text(
+                                        "Brand: ${item.brand ?? ''}",
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return AddInventoryPage(
+                                                      product: item,
+                                                    );
+                                                  },
+                                                ),
                                               );
                                             },
+                                            child:
+                                                const Text("Add to Inventory"),
                                           ),
-                                        );
-                                      },
-                                      child: const Text("Add to Inventory"),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: 4,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return CreateVariantsPage(
-                                                product: item,
+                                          const SizedBox(width: 8),
+                                          OutlinedButton(
+                                            style: OutlinedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 16,
+                                                vertical: 4,
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return CreateVariantsPage(
+                                                      product: item,
+                                                    );
+                                                  },
+                                                ),
                                               );
                                             },
+                                            child: const Text(
+                                              "Add to Inventory\nwith Variant",
+                                              textAlign: TextAlign.end,
+                                            ),
                                           ),
-                                        );
-                                      },
-                                      child: const Text(
-                                        "Add to Inventory\nwith Variant",
-                                        textAlign: TextAlign.end,
-                                      ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  leading: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      item.image ?? '',
                                     ),
-                                  ],
-                                )
-                              ],
-                            ),
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                item.image ?? '',
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                                  ),
+                                );
+                              },
+                            );
                     },
                     error: (error, stackTrace) {
-                      return const Center(child: Text('Error'));
+                      return const Center(child: Text('No data found'));
                     },
                     loading: () => const Center(
                       child: CircularProgressIndicator(),

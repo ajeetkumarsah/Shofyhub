@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
 import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/models/product/search_product_model.dart';
 import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
@@ -166,7 +167,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
           ? _metaDescriptionController.text
           : null;
 
-      print("Available from: $availableFrom");
+      // print("Available from: $availableFrom");
 
       final map = {
         "product_id": widget.product.id,
@@ -226,8 +227,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
         }
       }
 
-      print(map);
-
       final authRef = ref.read(authProvider);
       Fluttertoast.showToast(msg: 'Adding new inventory...');
       setState(() {
@@ -263,6 +262,9 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
     final linkedItesRef = ref.watch(linkedItemsFormDataProvider);
     final packagingsRef = ref.watch(packagingsFormDataProvider);
 
+    final shopData =
+        ref.watch(shopSettingsProvider.select((value) => value.shopSettings));
+
     // 2022-07-30 07:57 pm
     String formatDate(DateTime date) {
       final String formattedDate =
@@ -274,6 +276,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
       onWillPop: () async {
         return await showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (context) {
             return AlertDialog(
               title: const Text('Are you sure?'),
@@ -373,6 +376,16 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                         KTextField(
                           controller: _slugController,
                           lebelText: 'Slug *',
+                          onTap: () {
+                            final shopName = shopData.name
+                                .toLowerCase()
+                                .replaceAll(' ', '-')
+                                .replaceAll('.', '');
+                            final slug = _titleController.text
+                                .toLowerCase()
+                                .replaceAll(' ', '-');
+                            _slugController.text = '$shopName-$slug';
+                          },
                           inputAction: TextInputAction.next,
                           validator: (text) => ValidatorLogic.requiredField(
                               text,
@@ -424,9 +437,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            print("Condition error");
-                            print(error);
-                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),
@@ -594,9 +604,11 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                   showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
+                                    firstDate: DateTime.now().subtract(
+                                      const Duration(days: 365 * 20),
+                                    ),
                                     lastDate: DateTime.now().add(
-                                      const Duration(days: 365),
+                                      const Duration(days: 365 * 20),
                                     ),
                                   ).then((value) {
                                     if (value != null) {
@@ -634,9 +646,11 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                                   showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime.now(),
+                                    firstDate: DateTime.now().subtract(
+                                      const Duration(days: 365 * 20),
+                                    ),
                                     lastDate: DateTime.now().add(
-                                      const Duration(days: 365),
+                                      const Duration(days: 365 * 20),
                                     ),
                                   ).then((value) {
                                     if (value != null) {
@@ -713,9 +727,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            print("Linked items error");
-                            print(error);
-                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),
@@ -754,12 +765,12 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                           onTap: () {
                             showDatePicker(
                               context: context,
-                              initialDate: DateTime.now().subtract(
-                                const Duration(days: 365),
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now().subtract(
+                                const Duration(days: 365 * 20),
                               ),
-                              firstDate: DateTime.now(),
                               lastDate: DateTime.now().add(
-                                const Duration(days: 365),
+                                const Duration(days: 365 * 20),
                               ),
                             ).then((value) {
                               if (value != null) {
@@ -794,9 +805,11 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
+                              firstDate: DateTime.now().subtract(
+                                const Duration(days: 365 * 20),
+                              ),
                               lastDate: DateTime.now().add(
-                                const Duration(days: 2000),
+                                const Duration(days: 365 * 20),
                               ),
                             ).then((value) {
                               if (value != null) {
@@ -876,9 +889,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            print("Warehouse error");
-                            print(error);
-                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),
@@ -891,7 +901,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                           lebelText: 'Shipping weight (g)',
                           keyboardType: TextInputType.number,
                           inputAction: TextInputAction.next,
-                          numberFormatters: true,
+                          decimalFormatters: true,
                         ),
                         const SizedBox(height: 16),
 
@@ -967,9 +977,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            print("Packaging error");
-                            print(error);
-                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),
@@ -1053,9 +1060,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            print("Attributes error");
-                            print(error);
-                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),
@@ -1124,9 +1128,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            print("Supplier error");
-                            print(error);
-                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),
@@ -1206,9 +1207,6 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                             );
                           },
                           error: (error, stackTrace) {
-                            print("Tags error");
-                            print(error);
-                            print(stackTrace);
                             return const SizedBox();
                           },
                           loading: () => const SizedBox(),

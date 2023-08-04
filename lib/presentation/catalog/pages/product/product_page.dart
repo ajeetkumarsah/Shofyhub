@@ -22,29 +22,30 @@ class ProductPage extends HookConsumerWidget {
     ];
 
     return ValueListenableBuilder(
-        valueListenable: ProductUtility.index,
-        builder: (context, value, child) {
-          return Scaffold(
-            body: IndexedStack(
-              index: ProductUtility.index.value,
-              children: screens,
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: Constants.appbarColor,
-                unselectedItemColor: Colors.grey,
-                selectedFontSize: 12,
-                currentIndex: ProductUtility.index.value,
-                onTap: (value) {
-                  ProductUtility.index.value = value;
-                },
-                items: [
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.list), label: 'products'.tr()),
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.delete), label: 'trash'.tr()),
-                ]),
-          );
-        });
+      valueListenable: ProductUtility.index,
+      builder: (context, value, child) {
+        return Scaffold(
+          body: IndexedStack(
+            index: ProductUtility.index.value,
+            children: screens,
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: Constants.appbarColor,
+              unselectedItemColor: Colors.grey,
+              selectedFontSize: 12,
+              currentIndex: ProductUtility.index.value,
+              onTap: (value) {
+                ProductUtility.index.value = value;
+              },
+              items: [
+                BottomNavigationBarItem(
+                    icon: const Icon(Icons.list), label: 'products'.tr()),
+                BottomNavigationBarItem(
+                    icon: const Icon(Icons.delete), label: 'trash'.tr()),
+              ]),
+        );
+      },
+    );
   }
 }

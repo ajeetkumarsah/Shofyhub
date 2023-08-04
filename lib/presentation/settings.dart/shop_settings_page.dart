@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:clean_api/clean_api.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -61,7 +60,6 @@ class ShopSettingsPage extends HookConsumerWidget {
         emailController.text = next.shopSettings.email;
         descriptionController.text = next.shopSettings.description;
         if (next.shopSettings.logo.isNotEmpty) {
-          //Convert Network Image to File Image
           ref.watch(singleImagePickerProvider).setLoading(true);
           File file =
               await ImageConverter.getImage(url: next.shopSettings.logo);
@@ -70,6 +68,7 @@ class ShopSettingsPage extends HookConsumerWidget {
         }
       }
     });
+
     ref.listen<ShopSettingsState>(shopSettingsProvider, (previous, next) {
       if (previous != next && !next.loading) {
         if (next.failure == CleanFailure.none() && buttonPressed.value) {
@@ -162,7 +161,7 @@ class ShopSettingsPage extends HookConsumerWidget {
                                 : () async {
                                     if (formKey.currentState?.validate() ??
                                         false) {
-                                      FormData formData = FormData.fromMap({
+                                      final map = {
                                         'shop_id': shopId,
                                         'name': nameController.text,
                                         'slug': nameController.text
@@ -172,34 +171,44 @@ class ShopSettingsPage extends HookConsumerWidget {
                                         'email': emailController.text,
                                         'description':
                                             descriptionController.text,
-                                        if (ref
-                                                .watch(
-                                                    singleImagePickerProvider)
-                                                .shopLogo !=
-                                            null)
-                                          'logo': await MultipartFile.fromFile(
-                                            ref
-                                                .watch(
-                                                    singleImagePickerProvider)
-                                                .shopLogo!
-                                                .path,
-                                            filename: ref
-                                                .watch(
-                                                    singleImagePickerProvider)
-                                                .shopLogo!
-                                                .path
-                                                .split('/')
-                                                .last,
-                                            contentType:
-                                                MediaType("image", "png"),
-                                          ),
-                                      });
+                                      };
 
+                                      // print('map: $map');
+
+                                      FormData formData = FormData.fromMap(map);
+
+                                      if (ref
+                                              .watch(singleImagePickerProvider)
+                                              .shopLogo !=
+                                          null) {
+                                        formData.files.add(MapEntry(
+                                            'logo',
+                                            await MultipartFile.fromFile(
+                                              ref
+                                                  .watch(
+                                                      singleImagePickerProvider)
+                                                  .shopLogo!
+                                                  .path,
+                                              filename: ref
+                                                  .watch(
+                                                      singleImagePickerProvider)
+                                                  .shopLogo!
+                                                  .path
+                                                  .split('/')
+                                                  .last,
+                                              contentType:
+                                                  MediaType("image", "png"),
+                                            )));
+                                      }
+
+                                      final authRef = ref.read(authProvider);
                                       await ref
                                           .read(shopSettingsProvider.notifier)
                                           .updateShopSettings(
-                                              formData: formData,
-                                              shopId: shopId);
+                                            formData: formData,
+                                            shopId: shopId,
+                                            apiKey: authRef.user.api_token,
+                                          );
 
                                       buttonPressed.value = true;
                                     }

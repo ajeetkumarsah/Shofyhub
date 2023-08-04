@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,9 +13,11 @@ import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
 
 class UpdateInventoryPage extends ConsumerWidget {
   final int inventoryId;
+  final bool needsDouleBack;
   const UpdateInventoryPage({
     super.key,
     required this.inventoryId,
+    this.needsDouleBack = false,
   });
 
   @override
@@ -26,12 +27,11 @@ class UpdateInventoryPage extends ConsumerWidget {
       appBar: AppBar(title: const Text("Update Inventory")),
       body: inventoryRef.when(
         data: (inventory) {
-          return UpdateInventoryBody(inventory: inventory);
+          return UpdateInventoryBody(
+              inventory: inventory, needsDouleBack: needsDouleBack);
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) {
-          print(error);
-          print(stackTrace);
           return Center(child: Text(error.toString()));
         },
       ),
@@ -41,9 +41,11 @@ class UpdateInventoryPage extends ConsumerWidget {
 
 class UpdateInventoryBody extends ConsumerStatefulWidget {
   final InventoryDetailsModel inventory;
+  final bool needsDouleBack;
   const UpdateInventoryBody({
     super.key,
     required this.inventory,
+    required this.needsDouleBack,
   });
 
   @override
@@ -144,9 +146,13 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
         ? ""
         : inventoryData?.offerPrice.toString() ?? "";
     // Sale Price Start Date
-    _salePriceStartDateController.text = inventoryData?.offerStart ?? "";
+    _salePriceStartDateController.text = inventoryData?.offerStart == null
+        ? ""
+        : formatDate(DateTime.parse(inventoryData?.offerStart ?? ""));
     // Sale Price End Date
-    _salePriceEndDateController.text = inventoryData?.offerEnd ?? "";
+    _salePriceEndDateController.text = inventoryData?.offerEnd == null
+        ? ""
+        : formatDate(DateTime.parse(inventoryData?.offerEnd ?? ""));
     // LinkedItems
     _linkedItems.addAll(inventoryData?.linkedItems ?? []);
     // Is Free Shipping
@@ -227,10 +233,6 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
             "key_features[$i]": _keyFeaturesController[i].text,
       };
 
-      print(map);
-
-      FormData formdata = FormData.fromMap(map);
-
       final authRef = ref.read(authProvider);
       Fluttertoast.showToast(msg: 'Updating inventory...');
       setState(() {
@@ -239,15 +241,18 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
       await InventoryProvider.updateInventory(
         id: widget.inventory.data!.id!,
         apiKey: authRef.user.api_token,
-        data: formdata,
+        data: map,
       ).then((value) {
         setState(() {
           _isLoading = false;
         });
-        Fluttertoast.showToast(msg: 'Inventory added successfully');
+        Fluttertoast.showToast(msg: 'Inventory updated successfully');
         ref.invalidate(inventoriesFutureProvider('active'));
         Navigator.of(context).pop();
-        // Navigator.of(context).pop();
+        if (widget.needsDouleBack) {
+          ref.invalidate(
+              inventoryDetailsFutureProvider(widget.inventory.data!.id!));
+        }
       }).onError((error, stackTrace) {
         setState(() {
           _isLoading = false;
@@ -257,18 +262,17 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
     }
   }
 
+  String formatDate(DateTime date) {
+    final String formattedDate = DateFormat('yyyy-MM-dd hh:mm a').format(date);
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     final conditionsRef = ref.watch(itemConditionsFormDataProvider);
     final wareHousesRef = ref.watch(warehousesFormDataProvider);
     final suppliersRef = ref.watch(suppliersFormDataProvider);
     final linkedItesRef = ref.watch(linkedItemsFormDataProvider);
-
-    String formatDate(DateTime date) {
-      final String formattedDate =
-          DateFormat('yyyy-MM-dd hh:mm a').format(date);
-      return formattedDate;
-    }
 
     return GestureDetector(
       onTap: () {
@@ -395,9 +399,6 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
                           );
                         },
                         error: (error, stackTrace) {
-                          print("Condition error");
-                          print(error);
-                          print(stackTrace);
                           return const SizedBox();
                         },
                         loading: () => const SizedBox(),
@@ -681,9 +682,6 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
                           );
                         },
                         error: (error, stackTrace) {
-                          print("Linked items error");
-                          print(error);
-                          print(stackTrace);
                           return const SizedBox();
                         },
                         loading: () => const SizedBox(),
@@ -738,11 +736,11 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
                                     style:
                                         TextStyle(color: Colors.grey.shade800),
                                     isExpanded: true,
+                                    value: _warehouse?.toString(),
                                     icon: const Icon(
                                         Icons.keyboard_arrow_down_rounded),
                                     items: [
                                       const DropdownMenuItem(
-                                        value: null,
                                         child: Text('Select'),
                                       ),
                                       ...data.keys.map((key) {
@@ -769,9 +767,6 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
                           );
                         },
                         error: (error, stackTrace) {
-                          print("Warehouse error");
-                          print(error);
-                          print(stackTrace);
                           return const SizedBox();
                         },
                         loading: () => const SizedBox(),
@@ -784,7 +779,7 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
                         lebelText: 'Shipping weight (g)',
                         keyboardType: TextInputType.number,
                         inputAction: TextInputAction.next,
-                        numberFormatters: true,
+                        decimalFormatters: true,
                       ),
 
                       const SizedBox(height: 24),
@@ -823,11 +818,11 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
                               ),
                               style: TextStyle(color: Colors.grey.shade800),
                               isExpanded: true,
+                              value: _supplier?.toString(),
                               icon:
                                   const Icon(Icons.keyboard_arrow_down_rounded),
                               items: [
                                 const DropdownMenuItem(
-                                  value: null,
                                   child: Text('Select'),
                                 ),
                                 ...data.keys.map((key) {
@@ -850,9 +845,6 @@ class _UpdateInventoryBodyState extends ConsumerState<UpdateInventoryBody> {
                           );
                         },
                         error: (error, stackTrace) {
-                          print("Supplier error");
-                          print(error);
-                          print(stackTrace);
                           return const SizedBox();
                         },
                         loading: () => const SizedBox(),

@@ -1,5 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/application/core/dio_client.dart';
+import 'package:dio/dio.dart';
+import 'package:zcart_seller/application/core/config.dart';
 import 'package:zcart_seller/domain/app/settings/shop_config_model.dart';
 import 'package:zcart_seller/domain/app/settings/shop_settings_model.dart';
 import 'package:zcart_seller/domain/app/settings/i_shop_settings_repo.dart';
@@ -17,16 +18,26 @@ class ShopSettingsRepo extends IShopSettingsRepo {
   }
 
   @override
-  Future<Either<CleanFailure, String>> updateShopSettings(
-      {required formData, required int shopId}) async {
+  Future<Either<CleanFailure, String>> updateShopSettings({
+    required FormData formData,
+    required int shopId,
+    required String apiKey,
+  }) async {
     try {
-      final response = await DioClient.post(
-          url: '/settings/$shopId/update', payload: formData);
-      Logger.i('Shop Settings: ${response.data}');
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $apiKey'
+      };
+
+      final dioClient = Dio();
+      final response = await dioClient.post(
+        '$apiEndpoint/settings/$shopId/update',
+        data: formData,
+        options: Options(headers: headers),
+      );
       return right(response.data['message']);
     } catch (e) {
-      return left(
-          CleanFailure(tag: 'Shop settings', error: e.toString()));
+      return left(CleanFailure(tag: 'Shop settings', error: e.toString()));
     }
   }
 

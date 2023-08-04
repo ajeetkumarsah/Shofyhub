@@ -62,7 +62,6 @@ class TrashInventoriesPage extends ConsumerWidget {
           );
         }
       }, error: (error, stackTrace) {
-        print(stackTrace);
         return Center(
           child: Text(error.toString()),
         );

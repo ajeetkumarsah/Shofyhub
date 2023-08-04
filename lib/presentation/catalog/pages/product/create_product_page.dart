@@ -227,8 +227,14 @@ class AddProductPage extends HookConsumerWidget {
                   lebelText: '${'description'.tr()} *',
                   validator: (text) => ValidatorLogic.requiredField(text),
                 ),
-                SizedBox(
-                  height: 10.h,
+
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  child: Text(
+                    '${'select_origin_country'.tr()} *',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                 ),
 
                 SizedBox(
@@ -450,7 +456,7 @@ class AddProductPage extends HookConsumerWidget {
                                       : 0,
                               'brand': brand.text,
                               'name': nameController.text,
-                              'mode_number': modelNumer.text,
+                              'model_number': modelNumer.text,
                               'mpn': mpn.text,
                               'gtin': gtin.text,
                               'gtin_type': selectedGtin.value != null
@@ -467,7 +473,7 @@ class AddProductPage extends HookConsumerWidget {
                                       int.tryParse(element.key) ?? 0)
                                   .toList(),
                               'tag_list': selectedTags.value.unlock,
-                              'active': active.value,
+                              'active': active.value ? 1 : 0,
                               'require_shipping': shipping.value,
                               // 'image': await MultipartFile.fromFile(
                               //     productImagePicker.productImages[0].path,
