@@ -901,7 +901,7 @@ class _AddInventoryPageState extends ConsumerState<AddInventoryPage> {
                           lebelText: 'Shipping weight (g)',
                           keyboardType: TextInputType.number,
                           inputAction: TextInputAction.next,
-                          numberFormatters: true,
+                          decimalFormatters: true,
                         ),
                         const SizedBox(height: 16),
 
