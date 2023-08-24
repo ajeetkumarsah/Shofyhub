@@ -11,6 +11,7 @@ import 'package:zcart_seller/application/auth/auth_provider.dart';
 import 'package:zcart_seller/application/auth/auth_state.dart';
 import 'package:zcart_seller/application/auth/country_code_provider.dart';
 import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:zcart_seller/application/core/utils.dart';
 import 'package:zcart_seller/domain/auth/log_in_body.dart';
 import 'package:zcart_seller/domain/auth/user_model.dart';
 import 'package:zcart_seller/infrastructure/app/constants.dart';
@@ -29,8 +30,10 @@ class SignInPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final phoneController = useTextEditingController();
-    final passwordController = useTextEditingController();
-    final emailController = useTextEditingController();
+    final passwordController =
+        useTextEditingController(text: isDemoApp ? '123456' : '');
+    final emailController =
+        useTextEditingController(text: isDemoApp ? 'merchant@demo.com' : '');
 
     final isPhoneLogin = useState(false);
 
@@ -130,6 +133,8 @@ class SignInPage extends HookConsumerWidget {
                     fontWeight: FontWeight.normal,
                   ),
                 ),
+                if (isDemoApp) SizedBox(height: 12.h),
+                if (isDemoApp) const Text("Demo App"),
                 SizedBox(height: 30.h),
                 //check if plugin is activated
                 Consumer(builder: (context, watch, child) {
