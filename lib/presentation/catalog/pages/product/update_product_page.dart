@@ -433,7 +433,8 @@ class UpdateProductPage extends HookConsumerWidget {
                                       'active': active.value ? 1 : 0,
                                       'require_shipping':
                                           shipping.value ? 1 : 0,
-                                      'category_list': selectedCategories.value
+                                      'category_list[]': selectedCategories
+                                          .value
                                           .map((element) =>
                                               int.tryParse(element.key) ?? 0)
                                           .toList(),

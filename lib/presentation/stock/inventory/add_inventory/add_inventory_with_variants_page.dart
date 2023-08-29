@@ -268,7 +268,7 @@ class _AddInventoryWithVariantsPageState
           if (image != null) {
             formdata.files.addAll([
               MapEntry(
-                'images[]',
+                'image[]',
                 await MultipartFile.fromFile(
                   image.path,
                   filename: image.path.split('/').last,

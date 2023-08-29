@@ -464,23 +464,18 @@ class AddProductPage extends HookConsumerWidget {
                                   : '',
                               'description': description.text,
                               'origin_country': selectedCountry.value.key,
-
                               'slug': nameController.text
                                   .toLowerCase()
                                   .replaceAll(RegExp(r' '), '-'),
-                              'category_list': selectedCategories.value
+                              'category_list[]': selectedCategories.value
                                   .map((element) =>
                                       int.tryParse(element.key) ?? 0)
                                   .toList(),
-                              'tag_list': selectedTags.value.unlock,
+                              'tag_list[]': selectedTags.value
+                                  .map((element) => element)
+                                  .toList(),
                               'active': active.value ? 1 : 0,
                               'require_shipping': shipping.value,
-                              // 'image': await MultipartFile.fromFile(
-                              //     productImagePicker.productImages[0].path,
-                              //     filename: productImagePicker
-                              //         .productImages[0].path
-                              //         .split('/')
-                              //         .last),
                             });
 
                             for (CustomImageModel file

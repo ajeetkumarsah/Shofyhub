@@ -5,3 +5,6 @@ class Utils {
     return DateFormat('yyyy/MM/dd hh:mm aa').format(dateTime);
   }
 }
+
+// Demo App //TODO: Remove this before release
+const bool isDemoApp = false;

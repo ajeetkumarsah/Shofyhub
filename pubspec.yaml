@@ -46,7 +46,7 @@ dependencies:
   search_choices: ^2.2.5
   shared_preferences: ^2.0.20
   sliver_bar_chart: ^0.0.1
-  image_picker: ^0.8.7+1
+  image_picker: ^1.0.2
   fluttertoast: ^8.2.1
   flutter_multi_select_items: ^0.4.2
   overlay_support: ^2.1.0
@@ -54,16 +54,16 @@ dependencies:
   http_parser: ^4.0.2
   country_calling_code_picker: ^2.0.1
   argon_buttons_flutter_fix: ^1.1.3
-  pin_code_fields: ^7.4.0
+  pin_code_fields: ^8.0.1
   firebase_core: ^2.8.0
   firebase_messaging: ^14.3.0
   flutter_local_notifications: ^9.0.3
   flutter_widget_from_html: ^0.10.0
-  nb_utils: ^5.0.6
+  nb_utils: ^6.0.2
   path_provider: ^2.0.14
   carousel_slider: ^4.2.1
   flutter_app_badger: ^1.5.0
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.13.1
   badges: ^2.0.3
 
 dev_dependencies:

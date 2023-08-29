@@ -38,7 +38,11 @@ class ListingTile extends StatelessWidget {
                 title: 'Price:',
               ),
               RightSideText(
-                subTitle: productDetails.data?.salePrice ?? "N/A",
+                subTitle: productDetails.data?.salePrice == null
+                    ? "N/A"
+                    : double.tryParse(productDetails.data!.salePrice.toString())
+                            ?.toStringAsFixed(2) ??
+                        "N/A",
               ),
             ],
           ),
