@@ -7,4 +7,4 @@ class Utils {
 }
 
 // Demo App //TODO: Remove this before release
-const bool isDemoApp = true;
+const bool isDemoApp = false;

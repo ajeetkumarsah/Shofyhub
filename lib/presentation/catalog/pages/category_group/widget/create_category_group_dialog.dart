@@ -156,19 +156,6 @@ class CreateCategoryGroupDialog extends HookConsumerWidget {
                       'order': orderController.text == ''
                           ? 0
                           : int.parse(orderController.text),
-                      // 'images[background]': await MultipartFile.fromFile(
-                      //   ref
-                      //       .read(singleImagePickerProvider)
-                      //       .categoryGroupImage!
-                      //       .path,
-                      //   filename: ref
-                      //       .read(singleImagePickerProvider)
-                      //       .categoryGroupImage!
-                      //       .path
-                      //       .split('/')
-                      //       .last,
-                      //   contentType: MediaType("image", "png"),
-                      // ),
                     });
 
                     if (ref
@@ -194,20 +181,7 @@ class CreateCategoryGroupDialog extends HookConsumerWidget {
                         ),
                       ]);
                     }
-                    // final categoryGroupModel = CreateCategoryGroupModel(
-                    //   name: nameController.text,
-                    //   slug: nameController.text
-                    //       .toLowerCase()
-                    //       .replaceAll(RegExp(r' '), '-'),
-                    //   desc: descController.text,
-                    //   metaTitle: metaTitleController.text,
-                    //   meatDesc: metaDescController.text,
-                    //   icon: iconController.text,
-                    //   order: orderController.text == ''
-                    //       ? 0
-                    //       : int.parse(orderController.text),
-                    //   active: active.value ? 1 : 0,
-                    // );
+
                     buttonPressed.value = true;
                     ref
                         .read(categoryGroupProvider.notifier)

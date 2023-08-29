@@ -203,49 +203,47 @@ class EditCategoryGroupDialog extends HookConsumerWidget {
                     'order': orderController.text == ''
                         ? 0
                         : int.parse(orderController.text),
-                    'images[cover]': ref
-                                .read(singleImagePickerProvider)
-                                .categoryGroupImage !=
-                            null
-                        ? await MultipartFile.fromFile(
-                            ref
-                                .read(singleImagePickerProvider)
-                                .categoryGroupImage!
-                                .path,
-                            filename: ref
-                                .read(singleImagePickerProvider)
-                                .categoryGroupImage!
-                                .path
-                                .split('/')
-                                .last,
-                            contentType: MediaType("image", "png"),
-                          )
-                        : null,
+                    // 'images[cover]': ref
+                    //             .read(singleImagePickerProvider)
+                    //             .categoryGroupImage !=
+                    //         null
+                    //     ? await MultipartFile.fromFile(
+                    //         ref
+                    //             .read(singleImagePickerProvider)
+                    //             .categoryGroupImage!
+                    //             .path,
+                    //         filename: ref
+                    //             .read(singleImagePickerProvider)
+                    //             .categoryGroupImage!
+                    //             .path
+                    //             .split('/')
+                    //             .last,
+                    //         contentType: MediaType("image", "png"),
+                    //       )
+                    //     : null,
                   });
+
+                  if (ref.read(singleImagePickerProvider).categoryGroupImage !=
+                      null) {
+                    formData.files.add(MapEntry(
+                        'images[cover]',
+                        await MultipartFile.fromFile(
+                          ref
+                              .read(singleImagePickerProvider)
+                              .categoryGroupImage!
+                              .path,
+                          filename: ref
+                              .read(singleImagePickerProvider)
+                              .categoryGroupImage!
+                              .path
+                              .split('/')
+                              .last,
+                          contentType: MediaType("image", "png"),
+                        )));
+                  }
+
                   ref.read(categoryGroupProvider.notifier).updateCategoryGroup(
                       formData: formData, id: categoryGroupId);
-                  //       categoryGroupId: categoryGroupId,
-                  //       name: nameController.text.isEmpty
-                  //           ? categoryGroup.name
-                  //           : nameController.text,
-                  //       slug: nameController.text.isEmpty
-                  //           ? categoryGroup.name
-                  //           : nameController.text,
-                  //       description: descController.text.isEmpty
-                  //           ? categoryGroup.description
-                  //           : descController.text,
-                  //       metaTitle: metaTitleController.text.isEmpty
-                  //           ? categoryGroup.metaTitle
-                  //           : metaTitleController.text,
-                  //       metaDescription: metaDescController.text.isEmpty
-                  //           ? categoryGroup.metaDescription
-                  //           : metaDescController.text,
-                  //       order: int.parse(orderController.text),
-                  //       icon: iconController.text.isEmpty
-                  //           ? categoryGroup.icon
-                  //           : iconController.text,
-                  //       active: active.value == true ? 1 : 0,
-                  //     );
                 },
           child: loading
               ? const CircularProgressIndicator()

@@ -57,42 +57,6 @@ class ProductDetailsPage extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // productDetails.images.isEmpty
-                  //     ? Container()
-                  //     : SizedBox(
-                  //         height: ScreenUtil().screenHeight * 0.35,
-                  //         child: Column(
-                  //           children: [
-                  //             Expanded(
-                  //               child: CarouselSlider(
-                  //                 items: productDetails.images
-                  //                     .map((image) => SizedBox(
-                  //                           width: ScreenUtil().screenWidth,
-                  //                           // height: ScreenUtil().screenHeight *
-                  //                           //     0.35,
-                  //                           child: Image(
-                  //                             image: NetworkImage(image.path),
-                  //                             fit: BoxFit.cover,
-                  //                           ),
-                  //                         ))
-                  //                     .toList(),
-                  //                 carouselController: carouselController,
-                  //                 options: CarouselOptions(
-                  //                   enableInfiniteScroll: false,
-                  //                   autoPlay: false,
-                  //                   height: 243,
-                  //                   viewportFraction: 1,
-                  //                   aspectRatio: 2.0,
-                  //                   onPageChanged: (index, reason) {
-                  //                     // reviewDetailsNotifier.setCarouselIndex(index);
-                  //                   },
-                  //                 ),
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-
                   SizedBox(
                     height: 200,
                     child: CarouselSlider(
