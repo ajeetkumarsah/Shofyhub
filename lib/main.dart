@@ -9,11 +9,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:zcart_seller/application/app/notification/notification_provider.dart';
-import 'package:zcart_seller/application/core/config.dart';
-import 'package:zcart_seller/application/core/shared_prefs.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
+import 'package:alpesportif_seller/application/app/notification/notification_provider.dart';
+import 'package:alpesportif_seller/application/core/config.dart';
+import 'package:alpesportif_seller/application/core/shared_prefs.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/auth/sign_in_page.dart';
 
 Future<void> _firebaseMessegingBackgroundHandler(RemoteMessage message) async {
   Logger.i('Handling a background message ${message.messageId}');

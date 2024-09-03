@@ -3,11 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/auth/auth_provider.dart';
-import 'package:zcart_seller/application/auth/auth_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/domain/auth/user_model.dart';
-import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
+import 'package:alpesportif_seller/application/auth/auth_provider.dart';
+import 'package:alpesportif_seller/application/auth/auth_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/domain/auth/user_model.dart';
+import 'package:alpesportif_seller/presentation/auth/sign_in_page.dart';
 
 class LogoutDialog extends HookConsumerWidget {
   const LogoutDialog({Key? key}) : super(key: key);

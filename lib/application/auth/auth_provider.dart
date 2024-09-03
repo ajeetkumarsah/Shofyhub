@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zcart_seller/application/auth/auth_state.dart';
-import 'package:zcart_seller/domain/auth/i_auth_repo.dart';
-import 'package:zcart_seller/domain/auth/log_in_body.dart';
-import 'package:zcart_seller/domain/auth/registration_body.dart';
-import 'package:zcart_seller/domain/auth/user_model.dart';
-import 'package:zcart_seller/infrastructure/auth/auth_repo.dart';
+import 'package:alpesportif_seller/application/auth/auth_state.dart';
+import 'package:alpesportif_seller/domain/auth/i_auth_repo.dart';
+import 'package:alpesportif_seller/domain/auth/log_in_body.dart';
+import 'package:alpesportif_seller/domain/auth/registration_body.dart';
+import 'package:alpesportif_seller/domain/auth/user_model.dart';
+import 'package:alpesportif_seller/infrastructure/auth/auth_repo.dart';
 
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   return AuthNotifier(AuthRepo());

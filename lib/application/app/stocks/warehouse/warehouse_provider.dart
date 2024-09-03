@@ -1,11 +1,11 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_state.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/create_update_warehouse_model.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/i_warehouse_repo.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_pagination_model.dart';
-import 'package:zcart_seller/infrastructure/app/stocks/warehouse/warehouse_repo.dart';
+import 'package:alpesportif_seller/application/app/stocks/warehouse/warehouse_state.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/create_update_warehouse_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/i_warehouse_repo.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/warehouse_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/warehouse_pagination_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/stocks/warehouse/warehouse_repo.dart';
 
 final warehouseProvider =
     StateNotifierProvider<WarehouseNotifier, WarehouseState>((ref) {

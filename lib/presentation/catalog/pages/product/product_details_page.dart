@@ -5,9 +5,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/product/detail_product/detail_product_provider.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/catalog/pages/product/update_product_page.dart';
+import 'package:alpesportif_seller/application/app/product/detail_product/detail_product_provider.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/product/update_product_page.dart';
 
 class ProductDetailsPage extends HookConsumerWidget {
   const ProductDetailsPage({

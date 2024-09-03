@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/order/order_details/customer.dart';
-import 'package:zcart_seller/domain/app/order/order_details/items.dart';
-import 'package:zcart_seller/domain/app/order/order_details/payment_method.dart';
+import 'package:alpesportif_seller/domain/app/order/order_details/customer.dart';
+import 'package:alpesportif_seller/domain/app/order/order_details/items.dart';
+import 'package:alpesportif_seller/domain/app/order/order_details/payment_method.dart';
 
 class OrderDetailsModel extends Equatable {
   final int id;

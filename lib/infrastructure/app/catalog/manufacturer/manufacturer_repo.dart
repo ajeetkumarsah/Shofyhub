@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/application/core/dio_client.dart';
+import 'package:alpesportif_seller/application/core/dio_client.dart';
 
-import 'package:zcart_seller/domain/app/catalog/manufacturer/i_manufacturer_repo.dart';
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_details_model.dart';
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/manufacturer/i_manufacturer_repo.dart';
+import 'package:alpesportif_seller/domain/app/catalog/manufacturer/manufacturer_details_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/manufacturer/manufacturer_pagination_model.dart';
 
 class ManufacturerRepo extends IManufacturerRepo {
   final cleanApi = CleanApi.instance;

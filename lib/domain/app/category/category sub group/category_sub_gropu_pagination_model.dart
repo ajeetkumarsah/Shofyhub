@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/category/categories/links_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/meta_model.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/links_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/meta_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/category_sub_group_model.dart';
 
 class CategorySubGropuPaginationModel extends Equatable {
   final List<CategorySubGroupModel> data;

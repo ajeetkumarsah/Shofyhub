@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/auth/auth_provider.dart';
-import 'package:zcart_seller/application/core/config.dart';
-import 'package:zcart_seller/models/inventory/inventory_details_model.dart';
-import 'package:zcart_seller/models/inventory/inventory_model.dart';
-import 'package:zcart_seller/models/product/search_product_model.dart';
+import 'package:alpesportif_seller/application/auth/auth_provider.dart';
+import 'package:alpesportif_seller/application/core/config.dart';
+import 'package:alpesportif_seller/models/inventory/inventory_details_model.dart';
+import 'package:alpesportif_seller/models/inventory/inventory_model.dart';
+import 'package:alpesportif_seller/models/product/search_product_model.dart';
 
 final inventoryPageProvider = StateProvider<int>((ref) {
   return 1;

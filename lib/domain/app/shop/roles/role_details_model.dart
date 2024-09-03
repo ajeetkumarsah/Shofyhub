@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/shop/roles/permission_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/permission_model.dart';
 
 class RoleDetailsModel extends Equatable {
   final int id;

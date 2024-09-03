@@ -1,6 +1,6 @@
 // import 'package:clean_api/clean_api.dart';
 // import 'package:equatable/equatable.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
 
 // class InventoryDetailsState extends Equatable {
 //   final bool loading;

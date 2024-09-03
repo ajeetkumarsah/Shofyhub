@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
-import 'package:zcart_seller/presentation/support/cancellation/approve_cancellation_dialog.dart';
-import 'package:zcart_seller/presentation/support/cancellation/decline_cancellation_dialog.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
+import 'package:alpesportif_seller/presentation/support/cancellation/approve_cancellation_dialog.dart';
+import 'package:alpesportif_seller/presentation/support/cancellation/decline_cancellation_dialog.dart';
 
 class CancellationListTile extends StatelessWidget {
   const CancellationListTile({Key? key, required this.cancellation})

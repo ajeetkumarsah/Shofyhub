@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
-import 'package:zcart_seller/presentation/settings.dart/shop_config_page.dart';
-import 'package:zcart_seller/presentation/settings.dart/shop_settings_page.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/app/dashboard/widgets/logout_dialog.dart';
+import 'package:alpesportif_seller/presentation/settings.dart/shop_config_page.dart';
+import 'package:alpesportif_seller/presentation/settings.dart/shop_settings_page.dart';
 
 class SettingsHome extends StatelessWidget {
   const SettingsHome({Key? key, this.hasBackButton = false}) : super(key: key);

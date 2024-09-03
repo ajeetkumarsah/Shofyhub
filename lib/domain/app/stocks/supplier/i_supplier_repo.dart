@@ -1,7 +1,7 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/supplier_details_model.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/supplier_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/create_supplier_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/supplier_details_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/supplier_pagination_model.dart';
 
 abstract class ISupplierRepo {
   Future<Either<CleanFailure, SupplierPaginationModel>> getSuppliers(

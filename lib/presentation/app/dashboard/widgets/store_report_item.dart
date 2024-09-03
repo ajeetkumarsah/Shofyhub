@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
 
 class StoreReportItems extends StatelessWidget {
   final void Function()? onTap;

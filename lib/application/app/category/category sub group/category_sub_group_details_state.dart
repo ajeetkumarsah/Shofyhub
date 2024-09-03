@@ -2,7 +2,7 @@
 
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
 
 class CategorySubGroupDetalsState extends Equatable {
   final bool loading;

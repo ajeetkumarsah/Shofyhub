@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
-import 'package:zcart_seller/presentation/catalog/pages/manufacturer/widgets/trash_manufacturer_list_tile.dart';
-import 'package:zcart_seller/presentation/core/widgets/no_item_found_widget.dart';
+import 'package:alpesportif_seller/application/app/catalog/manufacturer/manufacturer_provider.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/manufacturer/widgets/trash_manufacturer_list_tile.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/no_item_found_widget.dart';
 
 class TrashManufacturerPage extends HookConsumerWidget {
   const TrashManufacturerPage({Key? key}) : super(key: key);

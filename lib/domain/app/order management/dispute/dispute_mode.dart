@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_order_details_model.dart';
-import 'package:zcart_seller/domain/auth/user_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_order_details_model.dart';
+import 'package:alpesportif_seller/domain/auth/user_model.dart';
 
 class DisputeModel extends Equatable {
   final int id;

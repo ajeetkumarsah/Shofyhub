@@ -1,7 +1,7 @@
 import 'package:country_calling_code_picker/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/auth/country_code_provider.dart';
+import 'package:alpesportif_seller/application/auth/country_code_provider.dart';
 
 class CountryWidget extends ConsumerWidget {
   const CountryWidget({

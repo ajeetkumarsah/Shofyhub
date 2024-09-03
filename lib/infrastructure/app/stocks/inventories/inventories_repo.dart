@@ -1,9 +1,9 @@
 // import 'package:clean_api/clean_api.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/i_inventories_repo.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventory_pagination_model.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/quick_update_model.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/update_inventory_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/i_inventories_repo.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventory_details_model/inventory_details_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventory_pagination_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/quick_update_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/update_inventory_model.dart';
 
 // class InventoriesRepo extends IInventoriesRepo {
 //   final cleanApi = CleanApi.instance;

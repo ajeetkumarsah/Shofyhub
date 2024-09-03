@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/application/core/dio_client.dart';
-import 'package:zcart_seller/domain/app/category/categories/category_details_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/i_category_repo.dart';
+import 'package:alpesportif_seller/application/core/dio_client.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/category_details_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/category_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/category_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/i_category_repo.dart';
 
 class CategoryRepo extends ICategoryRepo {
   final cleanApi = CleanApi.instance;

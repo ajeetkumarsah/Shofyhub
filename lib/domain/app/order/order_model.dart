@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/order/order_delivaryboy.dart';
+import 'package:alpesportif_seller/domain/app/order/order_delivaryboy.dart';
 
 class OrderModel extends Equatable {
   final int id;

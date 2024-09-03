@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_pagination_model.dart';
 
 abstract class IDisputeRepo {
   Future<Either<CleanFailure, DisputePaginationModel>> getDisputes(

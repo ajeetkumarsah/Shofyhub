@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/Product/product_pagination_model.dart';
-import 'package:zcart_seller/domain/app/product/create_product/gtin_types_model.dart';
+import 'package:alpesportif_seller/domain/app/Product/product_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/product/create_product/gtin_types_model.dart';
 
 import 'create_product/manufacturer_id.dart';
 import 'create_product/tag_list.dart';

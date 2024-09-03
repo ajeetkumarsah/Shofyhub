@@ -2,15 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/stock/inventory/add_inventory/update_inventory_page.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/description.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/left_side_text.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/listing.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/offer.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/product.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/right_side_text.dart';
-import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/add_inventory/update_inventory_page.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/description.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/left_side_text.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/listing.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/offer.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/product.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/right_side_text.dart';
+import 'package:alpesportif_seller/providers/stocks/inventories_provider.dart';
 
 class InventoryDetailsPage extends ConsumerStatefulWidget {
   final int id;

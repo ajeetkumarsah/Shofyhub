@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/core/utility.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/stock/suppliers/supplier_list_page.dart';
-import 'package:zcart_seller/presentation/stock/suppliers/trash_supplier_list_page.dart';
+import 'package:alpesportif_seller/application/core/utility.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/stock/suppliers/supplier_list_page.dart';
+import 'package:alpesportif_seller/presentation/stock/suppliers/trash_supplier_list_page.dart';
 
 class SupplierPage extends HookConsumerWidget {
   const SupplierPage({Key? key}) : super(key: key);

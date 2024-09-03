@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:nb_utils/nb_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zcart_seller/domain/app/notification/notification_model.dart';
+import 'package:alpesportif_seller/domain/app/notification/notification_model.dart';
 
 class SharedPref {
   static const notificationKey = 'notification';

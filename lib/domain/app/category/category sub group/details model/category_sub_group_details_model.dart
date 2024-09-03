@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/details%20model/parent_group_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/details%20model/parent_group_model.dart';
 
 class CategorySubGroupDetailsModel extends Equatable {
   final int id;

@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+import 'package:alpesportif_seller/domain/app/form/key_value_data.dart';
 
 abstract class IFormRepo {
   Future<Either<CleanFailure, IList<KeyValueData>>> getCategoriesList();

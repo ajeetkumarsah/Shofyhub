@@ -2,16 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/application/core/shared_prefs.dart';
-import 'package:zcart_seller/application/core/utility.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/infrastructure/app/notification/notification_repo.dart';
-import 'package:zcart_seller/presentation/app/dashboard/dashboard_page.dart';
-import 'package:zcart_seller/presentation/order/order_main_page.dart';
-import 'package:zcart_seller/presentation/settings.dart/settings_home.dart';
-import 'package:zcart_seller/presentation/support/live_chat/chat_home.dart';
+import 'package:alpesportif_seller/application/app/settings/shop_settings_provider.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/application/core/shared_prefs.dart';
+import 'package:alpesportif_seller/application/core/utility.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/infrastructure/app/notification/notification_repo.dart';
+import 'package:alpesportif_seller/presentation/app/dashboard/dashboard_page.dart';
+import 'package:alpesportif_seller/presentation/order/order_main_page.dart';
+import 'package:alpesportif_seller/presentation/settings.dart/settings_home.dart';
+import 'package:alpesportif_seller/presentation/support/live_chat/chat_home.dart';
 
 class DashboardHome extends HookConsumerWidget {
   const DashboardHome({Key? key}) : super(key: key);

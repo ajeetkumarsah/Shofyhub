@@ -2,8 +2,8 @@
 
 // import 'package:equatable/equatable.dart';
 
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/images_class.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventory_details_model/product_class.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventory_details_model/images_class.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventory_details_model/product_class.dart';
 
 // class InventoryDetailsModel extends Equatable {
 //   final int id;

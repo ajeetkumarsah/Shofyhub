@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/i_supplier_repo.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/supplier_details_model.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/supplier_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/create_supplier_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/i_supplier_repo.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/supplier_details_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/supplier_pagination_model.dart';
 
 class SupplierRepo extends ISupplierRepo {
   final cleanApi = CleanApi.instance;

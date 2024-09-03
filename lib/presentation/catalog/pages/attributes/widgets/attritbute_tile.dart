@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
-import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/trash_attribute_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/attributes/widgets/edit_attributes_dialog.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/atributes_model.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/attributes/widgets/trash_attribute_dialog.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/attributes/widgets/edit_attributes_dialog.dart';
 
 class AttributeTile extends StatelessWidget {
   final AtributesModel attribute;

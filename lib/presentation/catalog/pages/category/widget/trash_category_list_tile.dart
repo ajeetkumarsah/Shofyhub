@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category/widget/delete_category_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/category/widget/restore_category_dialog.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/category_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/category/widget/delete_category_dialog.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/category/widget/restore_category_dialog.dart';
 
 class TrashCategoryListTile extends StatelessWidget {
   final CategoryModel category;

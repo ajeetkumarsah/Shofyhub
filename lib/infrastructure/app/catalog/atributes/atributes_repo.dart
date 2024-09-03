@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/atributes_model.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/categories_model.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/attribute_type_model.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.dart/get_atributes_model.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/i_atributes_repo.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/atributes_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/categories_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/attribute_type_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/get_atributes_model.dart/get_atributes_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/i_atributes_repo.dart';
 
 class AtributesRepo extends IAtributesRepo {
   final cleanApi = CleanApi.instance;

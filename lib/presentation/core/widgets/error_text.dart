@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
 
 class ErrorText extends StatelessWidget {
   const ErrorText({Key? key, required this.text}) : super(key: key);

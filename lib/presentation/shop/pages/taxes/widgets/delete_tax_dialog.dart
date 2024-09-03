@@ -3,9 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/shop/taxes/tax_provider.dart';
-import 'package:zcart_seller/application/app/shop/taxes/tax_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/application/app/shop/taxes/tax_provider.dart';
+import 'package:alpesportif_seller/application/app/shop/taxes/tax_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
 
 class DeleteTaxDialog extends HookConsumerWidget {
   final int id;
@@ -39,7 +39,7 @@ class DeleteTaxDialog extends HookConsumerWidget {
                 Text(
                   'delete'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
+                ),
                 IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {

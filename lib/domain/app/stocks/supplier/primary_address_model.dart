@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/shop/taxes/country_state_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/country_state_model.dart';
 
 class PrimaryAddressModel extends Equatable {
   final int id;

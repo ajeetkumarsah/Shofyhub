@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/all_seller_page/widget/seller_full_info.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/all_seller_page/widget/seller_full_info.dart';
 
 class AllSellers extends StatelessWidget {
   const AllSellers({Key? key}) : super(key: key);

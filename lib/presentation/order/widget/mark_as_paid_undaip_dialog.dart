@@ -1,11 +1,10 @@
- 
 import 'package:clean_api/models/clean_failure.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order/order_details_provider.dart';
-import 'package:zcart_seller/application/app/order/order_details_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/application/app/order/order_details_provider.dart';
+import 'package:alpesportif_seller/application/app/order/order_details_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
 
 class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
   final int orderId;
@@ -28,11 +27,8 @@ class MarkAsPaidUnpaidDialog extends HookConsumerWidget {
           NotificationHelper.success(
               message:
                   isPaid ? 'marked_as_unpaid'.tr() : 'marked_as_paid'.tr());
-          
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-
-         
         }
       }
     });

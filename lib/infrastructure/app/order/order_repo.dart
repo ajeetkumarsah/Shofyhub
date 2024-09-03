@@ -3,11 +3,11 @@
 import 'dart:io';
 
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/order/i_order_repo.dart';
-import 'package:zcart_seller/domain/app/order/order_details/order_details_model.dart';
-import 'package:zcart_seller/domain/app/order/order_model.dart';
-import 'package:zcart_seller/domain/app/order/order_pagination_model.dart';
-import 'package:zcart_seller/domain/app/order/order_status_model.dart';
+import 'package:alpesportif_seller/domain/app/order/i_order_repo.dart';
+import 'package:alpesportif_seller/domain/app/order/order_details/order_details_model.dart';
+import 'package:alpesportif_seller/domain/app/order/order_model.dart';
+import 'package:alpesportif_seller/domain/app/order/order_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/order/order_status_model.dart';
 // ignore: depend_on_referenced_packages
 import 'package:path_provider/path_provider.dart';
 

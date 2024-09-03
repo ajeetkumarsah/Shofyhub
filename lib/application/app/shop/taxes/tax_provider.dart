@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/shop/taxes/tax_state.dart';
-import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
-import 'package:zcart_seller/domain/app/shop/taxes/i_tax_repo.dart';
-import 'package:zcart_seller/infrastructure/app/shop/tax/tax_repo.dart';
+import 'package:alpesportif_seller/application/app/shop/taxes/tax_state.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/create_tax_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/i_tax_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/shop/tax/tax_repo.dart';
 
 final taxProvider = StateNotifierProvider<TaxNotifier, TaxState>((ref) {
   return TaxNotifier(TaxRepo());

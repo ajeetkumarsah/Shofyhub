@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/carriers/carrier_model.dart';
-import 'package:zcart_seller/domain/app/carriers/i_carrier_repo.dart';
+import 'package:alpesportif_seller/domain/app/carriers/carrier_model.dart';
+import 'package:alpesportif_seller/domain/app/carriers/i_carrier_repo.dart';
 
 class CarriersRepo extends ICarrierRepo {
   final cleanApi = CleanApi.instance;

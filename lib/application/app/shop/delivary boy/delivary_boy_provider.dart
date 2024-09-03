@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/shop/delivary%20boy/delivary_boy_state.dart';
-import 'package:zcart_seller/domain/app/shop/delivery%20boy/create_delivary_boy_model.dart';
-import 'package:zcart_seller/domain/app/shop/delivery%20boy/i_delivary_boy_repo.dart';
-import 'package:zcart_seller/infrastructure/app/shop/delivary%20boy/delivary_boy_repo.dart';
+import 'package:alpesportif_seller/application/app/shop/delivary%20boy/delivary_boy_state.dart';
+import 'package:alpesportif_seller/domain/app/shop/delivery%20boy/create_delivary_boy_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/delivery%20boy/i_delivary_boy_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/shop/delivary%20boy/delivary_boy_repo.dart';
 
 final delivaryBoyProvider =
     StateNotifierProvider<DelivaryBoyNotifier, DelivaryBoyState>((ref) {

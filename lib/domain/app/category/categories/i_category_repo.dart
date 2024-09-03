@@ -1,5 +1,5 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/category/categories/category_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/category_pagination_model.dart';
 
 import 'category_details_model.dart';
 import 'category_model.dart';

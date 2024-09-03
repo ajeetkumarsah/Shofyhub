@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_details_model.dart';
-import 'package:zcart_seller/domain/app/catalog/manufacturer/manufacturer_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/manufacturer/manufacturer_details_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/manufacturer/manufacturer_pagination_model.dart';
 
 abstract class IManufacturerRepo {
   Future<Either<CleanFailure, ManufacturerPaginationModel>> getManufacturerList(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
 
 import 'widget_for_all/my_text_field.dart';
 

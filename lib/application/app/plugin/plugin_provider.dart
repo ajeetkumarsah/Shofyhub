@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/infrastructure/app/plugin/plugin_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/plugin/plugin_repo.dart';
 
 final checkAppleLoginPluginProvider = FutureProvider<bool>((ref) async {
   final res = await PluginRepo().checkPlugin(slug: "apple-login");

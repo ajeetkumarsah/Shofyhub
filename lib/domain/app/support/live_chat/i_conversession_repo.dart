@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/support/live_chat/conversation_model.dart';
-import 'package:zcart_seller/domain/app/support/live_chat/conversession_details_model.dart';
+import 'package:alpesportif_seller/domain/app/support/live_chat/conversation_model.dart';
+import 'package:alpesportif_seller/domain/app/support/live_chat/conversession_details_model.dart';
 
 abstract class IConversessionRepo {
   Future<Either<CleanFailure, List<ConversessionModel>>> getAllConversessions();

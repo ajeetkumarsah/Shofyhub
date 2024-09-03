@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/shop/taxes/country_state_model.dart';
-import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/primary_address_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/country_state_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/user/get_shop_users_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/primary_address_model.dart';
 
 class WarehouseDetailsModel extends Equatable {
   final int id;

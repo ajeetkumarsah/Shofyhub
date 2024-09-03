@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/domain/app/shop/delivery%20boy/delivary_boy_model.dart';
-import 'package:zcart_seller/presentation/core/widgets/info_tile.dart';
-import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/create_update_delivary_boy_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivery_boy_dialog.dart';
+import 'package:alpesportif_seller/domain/app/shop/delivery%20boy/delivary_boy_model.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/info_tile.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/delivary%20boy/widgets/create_update_delivary_boy_page.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/delivary%20boy/widgets/delete_delivery_boy_dialog.dart';
 
 class DeliveryBoyDetailsPage extends HookConsumerWidget {
   final DelivaryBoyModel deliveryBoyData;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/models/inventory/inventory_details_model.dart'
+import 'package:alpesportif_seller/models/inventory/inventory_details_model.dart'
     as idm;
 
 class DescriptionTile extends StatelessWidget {

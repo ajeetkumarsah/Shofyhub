@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/dashboard/item_model.dart';
-import 'package:zcart_seller/domain/app/dashboard/statistic_model.dart';
-import 'package:zcart_seller/domain/app/order/order_model.dart';
+import 'package:alpesportif_seller/domain/app/dashboard/item_model.dart';
+import 'package:alpesportif_seller/domain/app/dashboard/statistic_model.dart';
+import 'package:alpesportif_seller/domain/app/order/order_model.dart';
 
 class DashboardState extends Equatable {
   final bool loading;

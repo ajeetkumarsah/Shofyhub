@@ -1,4 +1,4 @@
-package your_app_id
+package com.shofyhub.seller
 
 import io.flutter.embedding.android.FlutterActivity
 

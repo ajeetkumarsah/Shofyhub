@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/support/live_chat/conversession_state.dart';
-import 'package:zcart_seller/domain/app/support/live_chat/i_conversession_repo.dart';
-import 'package:zcart_seller/infrastructure/app/support/live_chat/conversession_repo.dart';
+import 'package:alpesportif_seller/application/app/support/live_chat/conversession_state.dart';
+import 'package:alpesportif_seller/domain/app/support/live_chat/i_conversession_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/support/live_chat/conversession_repo.dart';
 
 final conversessionProvider =
     StateNotifierProvider<ConversessionNotifier, ConversessionState>((ref) {

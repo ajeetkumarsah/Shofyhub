@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/stocks/warehouse/warehouse_details_provider.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/stock/suppliers/widgets/supplier_info_tile.dart';
+import 'package:alpesportif_seller/application/app/stocks/warehouse/warehouse_details_provider.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/stock/suppliers/widgets/supplier_info_tile.dart';
 
 class WarehouseDetailsPage extends HookConsumerWidget {
   const WarehouseDetailsPage({Key? key, required this.warehouseId})

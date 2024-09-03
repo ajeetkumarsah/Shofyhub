@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/shop/pages/delivary%20boy/delivary_boy_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/roles_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/taxes/tax_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/user/user_page.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/delivary%20boy/delivary_boy_page.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/roles/roles_page.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/taxes/tax_page.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/user/user_page.dart';
 
 class ShopHome extends StatelessWidget {
   const ShopHome({Key? key}) : super(key: key);

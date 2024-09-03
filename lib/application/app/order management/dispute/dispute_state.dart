@@ -1,7 +1,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_mode.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_mode.dart';
 
 class DisputeState extends Equatable {
   final bool loading;

@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/account_setting/change_pass_popup.dart';
-import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
-import 'package:zcart_seller/presentation/delivery_orders_page/delivery_orders_page.dart';
-import 'package:zcart_seller/presentation/previously_completed_orders_page/previously_completed_orders_page.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/account_setting/change_pass_popup.dart';
+import 'package:alpesportif_seller/presentation/auth/sign_in_page.dart';
+import 'package:alpesportif_seller/presentation/delivery_orders_page/delivery_orders_page.dart';
+import 'package:alpesportif_seller/presentation/previously_completed_orders_page/previously_completed_orders_page.dart';
 
 class AcountSettingsPage extends StatelessWidget {
   const AcountSettingsPage({Key? key}) : super(key: key);

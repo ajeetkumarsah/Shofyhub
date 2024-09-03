@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order/order_details/customer.dart';
+import 'package:alpesportif_seller/domain/app/order/order_details/customer.dart';
 
 class ReplyModel extends Equatable {
   final int id;

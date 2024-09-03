@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/Product/product_image_provider.dart';
+import 'package:alpesportif_seller/application/app/Product/product_image_provider.dart';
 
 class UpdateProductImageList extends ConsumerWidget {
   const UpdateProductImageList({

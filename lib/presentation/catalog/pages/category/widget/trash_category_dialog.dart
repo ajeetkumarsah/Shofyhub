@@ -1,12 +1,11 @@
- 
 import 'package:clean_api/clean_api.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/category/categories/categories_provider.dart';
-import 'package:zcart_seller/application/app/category/categories/categories_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/application/app/category/categories/categories_provider.dart';
+import 'package:alpesportif_seller/application/app/category/categories/categories_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
 
 class TrashCategoryDialog extends HookConsumerWidget {
   final int categorySubGroupId;
@@ -20,16 +19,14 @@ class TrashCategoryDialog extends HookConsumerWidget {
     final loading = ref.watch(
         categoryProvider(categorySubGroupId).select((value) => value.loading));
 
-    ref.listen<CategoryState>(categoryProvider(categorySubGroupId), (previous, next) {
+    ref.listen<CategoryState>(categoryProvider(categorySubGroupId),
+        (previous, next) {
       if (previous != next && !next.loading) {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_moved_trash'.tr());
-
-          
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          
         }
       }
     });

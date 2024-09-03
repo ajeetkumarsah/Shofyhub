@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/stock/inventory/search_product_to_add_inventory.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/inventory_item_tile.dart';
-import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/search_product_to_add_inventory.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/inventory_item_tile.dart';
+import 'package:alpesportif_seller/providers/stocks/inventories_provider.dart';
 
 class ActiveInventoriesPage extends ConsumerWidget {
   const ActiveInventoriesPage({super.key});

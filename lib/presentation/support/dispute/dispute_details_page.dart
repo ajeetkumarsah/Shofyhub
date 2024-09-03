@@ -4,11 +4,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order%20management/dispute/dispute_provider.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/core/widgets/info_tile.dart';
-import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
-import 'package:zcart_seller/presentation/support/dispute/dispute_response_dialog.dart';
+import 'package:alpesportif_seller/application/app/order%20management/dispute/dispute_provider.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/info_tile.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/loading_widget.dart';
+import 'package:alpesportif_seller/presentation/support/dispute/dispute_response_dialog.dart';
 
 class DisputeDetailsPage extends HookConsumerWidget {
   final int disputeId;

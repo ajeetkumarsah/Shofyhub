@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/settings/shop_config_model.dart';
-import 'package:zcart_seller/domain/app/settings/shop_settings_model.dart';
-import 'package:zcart_seller/domain/app/settings/system_config_model.dart';
+import 'package:alpesportif_seller/domain/app/settings/shop_config_model.dart';
+import 'package:alpesportif_seller/domain/app/settings/shop_settings_model.dart';
+import 'package:alpesportif_seller/domain/app/settings/system_config_model.dart';
 
 class ShopSettingsState extends Equatable {
   final bool loading;

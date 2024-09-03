@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
 
 class EditProduct extends StatefulWidget {
   const EditProduct({Key? key}) : super(key: key);
@@ -376,7 +376,7 @@ class _EditProductState extends State<EditProduct> {
                     ),
                   ),
                   child: Text(
-                    '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                    '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                       when an unknown printer took a galley''',
                     style: TextStyle(color: Colors.grey.shade800),
                   ),

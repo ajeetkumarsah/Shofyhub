@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/carriers/carriers_state.dart';
-import 'package:zcart_seller/domain/app/carriers/i_carrier_repo.dart';
-import 'package:zcart_seller/infrastructure/app/carriers/carriers_repo.dart';
+import 'package:alpesportif_seller/application/app/carriers/carriers_state.dart';
+import 'package:alpesportif_seller/domain/app/carriers/i_carrier_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/carriers/carriers_repo.dart';
 
 final carriersProvider =
     StateNotifierProvider<CarriersNotifier, CarriersState>((ref) {

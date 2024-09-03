@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/shop/roles/create_update_role_model.dart';
-import 'package:zcart_seller/domain/app/shop/roles/i_roles_repo.dart';
-import 'package:zcart_seller/domain/app/shop/roles/permission_list_model.dart';
-import 'package:zcart_seller/domain/app/shop/roles/role_details_model.dart';
-import 'package:zcart_seller/domain/app/shop/roles/role_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/create_update_role_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/i_roles_repo.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/permission_list_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/role_details_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/role_model.dart';
 
 class RoleRepo extends IRolesRepo {
   final cleanApi = CleanApi.instance;

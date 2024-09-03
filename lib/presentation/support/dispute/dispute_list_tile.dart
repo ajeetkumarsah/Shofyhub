@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_mode.dart';
-import 'package:zcart_seller/presentation/support/dispute/dispute_details_page.dart';
-import 'package:zcart_seller/presentation/support/dispute/dispute_response_dialog.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_mode.dart';
+import 'package:alpesportif_seller/presentation/support/dispute/dispute_details_page.dart';
+import 'package:alpesportif_seller/presentation/support/dispute/dispute_response_dialog.dart';
 
 class DisputeListTile extends StatelessWidget {
   const DisputeListTile({Key? key, required this.dispute}) : super(key: key);

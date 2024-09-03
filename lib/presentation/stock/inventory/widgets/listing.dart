@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:zcart_seller/models/inventory/inventory_details_model.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/left_side_text.dart';
-import 'package:zcart_seller/presentation/stock/inventory/widgets/right_side_text.dart';
+import 'package:alpesportif_seller/models/inventory/inventory_details_model.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/left_side_text.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/widgets/right_side_text.dart';
 
 class ListingTile extends StatelessWidget {
   final InventoryDetailsModel productDetails;

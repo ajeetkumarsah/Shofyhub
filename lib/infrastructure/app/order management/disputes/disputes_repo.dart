@@ -1,7 +1,7 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_pagination_model.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/i_dispute_repo.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_details_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/i_dispute_repo.dart';
 
 class DisputeRepo extends IDisputeRepo {
   final cleanApi = CleanApi.instance;

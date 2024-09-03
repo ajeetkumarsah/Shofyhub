@@ -1,10 +1,10 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order%20management/cancellation/cancellation_state.dart';
-import 'package:zcart_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
-import 'package:zcart_seller/domain/app/order%20management/cancellation/cancellation_pagination_model.dart';
-import 'package:zcart_seller/domain/app/order%20management/cancellation/i_cancellation_repo.dart';
-import 'package:zcart_seller/infrastructure/app/order%20management/cancellations/cancellation_repo.dart';
+import 'package:alpesportif_seller/application/app/order%20management/cancellation/cancellation_state.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/cancellation/cancellation_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/cancellation/i_cancellation_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/order%20management/cancellations/cancellation_repo.dart';
 
 final cancellationProvider =
     StateNotifierProvider<CancellationNotifier, CancellationState>((ref) {

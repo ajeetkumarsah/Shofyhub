@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/account_setting/account_setting_page.dart';
-import 'package:zcart_seller/presentation/delivery_details_page/delivery_details_page.dart';
-import 'package:zcart_seller/presentation/delivery_orders_page/delivery_orders_page.dart';
-import 'package:zcart_seller/presentation/previously_completed_orders_page/radio_dialogue.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/account_setting/account_setting_page.dart';
+import 'package:alpesportif_seller/presentation/delivery_details_page/delivery_details_page.dart';
+import 'package:alpesportif_seller/presentation/delivery_orders_page/delivery_orders_page.dart';
+import 'package:alpesportif_seller/presentation/previously_completed_orders_page/radio_dialogue.dart';
 
 class PreviouslyCompletedOrdersPage extends StatelessWidget {
   const PreviouslyCompletedOrdersPage({Key? key}) : super(key: key);

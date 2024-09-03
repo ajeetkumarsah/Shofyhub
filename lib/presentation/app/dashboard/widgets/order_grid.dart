@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order%20management/refunds/refund_provider.dart';
-import 'package:zcart_seller/application/app/order/order_provider.dart';
-import 'package:zcart_seller/domain/app/dashboard/statistic_model.dart';
-import 'package:zcart_seller/presentation/app/dashboard/out_of_stock_page.dart';
-import 'package:zcart_seller/presentation/order/order_main_page.dart';
-import 'package:zcart_seller/presentation/stock/stock_home.dart';
-import 'package:zcart_seller/presentation/support/refund/refund_home.dart';
+import 'package:alpesportif_seller/application/app/order%20management/refunds/refund_provider.dart';
+import 'package:alpesportif_seller/application/app/order/order_provider.dart';
+import 'package:alpesportif_seller/domain/app/dashboard/statistic_model.dart';
+import 'package:alpesportif_seller/presentation/app/dashboard/out_of_stock_page.dart';
+import 'package:alpesportif_seller/presentation/order/order_main_page.dart';
+import 'package:alpesportif_seller/presentation/stock/stock_home.dart';
+import 'package:alpesportif_seller/presentation/support/refund/refund_home.dart';
 
 import 'store_report_item.dart';
 

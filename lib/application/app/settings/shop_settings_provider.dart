@@ -1,10 +1,10 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/settings/shop_settings_state.dart';
-import 'package:zcart_seller/domain/app/settings/i_shop_settings_repo.dart';
-import 'package:zcart_seller/domain/app/settings/update_shop_configs_model.dart';
-import 'package:zcart_seller/infrastructure/app/settings/shop_settings_repo.dart';
+import 'package:alpesportif_seller/application/app/settings/shop_settings_state.dart';
+import 'package:alpesportif_seller/domain/app/settings/i_shop_settings_repo.dart';
+import 'package:alpesportif_seller/domain/app/settings/update_shop_configs_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/settings/shop_settings_repo.dart';
 
 final shopSettingsProvider =
     StateNotifierProvider<ShopSettingsNotifier, ShopSettingsState>((ref) {

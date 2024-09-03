@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/product/product_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/catalog/pages/product/delete_product_dialog.dart';
-import 'package:zcart_seller/presentation/catalog/pages/product/restore_product_dialog.dart';
+import 'package:alpesportif_seller/domain/app/product/product_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/product/delete_product_dialog.dart';
+import 'package:alpesportif_seller/presentation/catalog/pages/product/restore_product_dialog.dart';
 
 class TrashProductTile extends StatelessWidget {
   final ProductModel product;

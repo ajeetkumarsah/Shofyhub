@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:zcart_seller/models/product/search_product_model.dart';
-import 'package:zcart_seller/presentation/stock/inventory/add_inventory/add_inventory_with_variants_page.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
-import 'package:zcart_seller/providers/stocks/form_data_provider.dart';
+import 'package:alpesportif_seller/models/product/search_product_model.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/add_inventory/add_inventory_with_variants_page.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_button.dart';
+import 'package:alpesportif_seller/providers/stocks/form_data_provider.dart';
 
 class _AttributeForVariantModel {
   String attributeId;

@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/catalog/atributes/atributes_state.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/i_atributes_repo.dart';
-import 'package:zcart_seller/infrastructure/app/catalog/atributes/atributes_repo.dart';
+import 'package:alpesportif_seller/application/app/catalog/atributes/atributes_state.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/i_atributes_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/catalog/atributes/atributes_repo.dart';
 
 final atributesProvider =
     StateNotifierProvider<AtributesNotifier, AtributesState>((ref) {

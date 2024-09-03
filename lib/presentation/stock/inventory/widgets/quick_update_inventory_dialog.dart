@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:zcart_seller/application/auth/auth_provider.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/models/inventory/inventory_model.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
-import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
+import 'package:alpesportif_seller/application/auth/auth_provider.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/models/inventory/inventory_model.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:alpesportif_seller/providers/stocks/inventories_provider.dart';
 
 class QuickUpdateInventoryDialog extends ConsumerStatefulWidget {
   final Inventory inventory;

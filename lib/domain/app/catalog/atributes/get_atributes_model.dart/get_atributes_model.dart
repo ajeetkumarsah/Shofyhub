@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.dart/classes/attribute_type_class.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.dart/classes/categories_class.dart';
-import 'package:zcart_seller/domain/app/catalog/atributes/get_atributes_model.dart/classes/values_class.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/get_atributes_model.dart/classes/attribute_type_class.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/get_atributes_model.dart/classes/categories_class.dart';
+import 'package:alpesportif_seller/domain/app/catalog/atributes/get_atributes_model.dart/classes/values_class.dart';
 
 class GetAtributesModel extends Equatable {
   final int id;

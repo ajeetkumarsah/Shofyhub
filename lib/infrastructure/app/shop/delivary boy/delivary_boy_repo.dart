@@ -1,15 +1,15 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/shop/delivery%20boy/delivary_boy_model.dart';
-import 'package:zcart_seller/domain/app/shop/delivery%20boy/create_delivary_boy_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/delivery%20boy/delivary_boy_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/delivery%20boy/create_delivary_boy_model.dart';
 
-import 'package:zcart_seller/domain/app/shop/delivery%20boy/i_delivary_boy_repo.dart';
+import 'package:alpesportif_seller/domain/app/shop/delivery%20boy/i_delivary_boy_repo.dart';
 
 class DelivaryBoyRepo extends IDelivaryBoyRepo {
   final cleanApi = CleanApi.instance;
 
   @override
-  Future<Either<CleanFailure, List<DelivaryBoyModel>>>
-      getAllDelivaryBoy({required String filter}) async {
+  Future<Either<CleanFailure, List<DelivaryBoyModel>>> getAllDelivaryBoy(
+      {required String filter}) async {
     return cleanApi.get(
         fromData: ((json) => List<DelivaryBoyModel>.from(
             json['data'].map((e) => DelivaryBoyModel.fromMap(e)))),

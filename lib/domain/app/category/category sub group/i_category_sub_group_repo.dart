@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_gropu_pagination_model.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/category_sub_gropu_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
 
 abstract class ICategorySubGroupRepo {
   Future<Either<CleanFailure, CategorySubGroupDetailsModel>>

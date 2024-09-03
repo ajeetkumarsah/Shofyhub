@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
-import 'package:zcart_seller/presentation/core/widgets/info_tile.dart';
-import 'package:zcart_seller/presentation/shop/pages/user/widget/edit_shop_user.dart';
+import 'package:alpesportif_seller/domain/app/shop/user/get_shop_users_model.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/info_tile.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/user/widget/edit_shop_user.dart';
 
 class UserDetailsPage extends HookConsumerWidget {
   final ShopUsersModel userData;
@@ -64,7 +64,9 @@ class UserDetailsPage extends HookConsumerWidget {
         SizedBox(height: 10.h),
         InfoTile(title: 'email'.tr(), value: userData.email),
         SizedBox(height: 10.h),
-        InfoTile(title: 'status'.tr(), value: userData.active == true? 'active'.tr(): 'inactive'.tr()),
+        InfoTile(
+            title: 'status'.tr(),
+            value: userData.active == true ? 'active'.tr() : 'inactive'.tr()),
       ]),
     );
   }

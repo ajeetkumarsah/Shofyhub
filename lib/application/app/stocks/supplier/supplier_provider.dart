@@ -1,11 +1,11 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/create_supplier_model.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/i_supplier_repo.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/supplier_model.dart';
-import 'package:zcart_seller/domain/app/stocks/supplier/supplier_pagination_model.dart';
-import 'package:zcart_seller/infrastructure/app/stocks/supplier/supplier_repo.dart';
+import 'package:alpesportif_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/create_supplier_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/i_supplier_repo.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/supplier_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/supplier/supplier_pagination_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/stocks/supplier/supplier_repo.dart';
 
 final supplierProvider =
     StateNotifierProvider<SupplierNotifier, SupplierState>((ref) {

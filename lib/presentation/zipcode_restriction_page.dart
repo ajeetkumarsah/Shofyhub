@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/my_account_page.dart';
-import 'package:zcart_seller/presentation/notification/notification_page.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/my_account_page.dart';
+import 'package:alpesportif_seller/presentation/notification/notification_page.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_text_field.dart';
 
 class ZipCodeRestriction extends HookConsumerWidget {
   const ZipCodeRestriction({Key? key}) : super(key: key);

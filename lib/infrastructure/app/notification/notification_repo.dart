@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/notification/i_notification_repo.dart';
-import 'package:zcart_seller/domain/app/notification/notification_model.dart';
+import 'package:alpesportif_seller/domain/app/notification/i_notification_repo.dart';
+import 'package:alpesportif_seller/domain/app/notification/notification_model.dart';
 
 class NotificationRepo extends INotificationRepo {
   final cleanApi = CleanApi.instance;

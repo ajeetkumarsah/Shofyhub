@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/settings/currency_model.dart';
+import 'package:alpesportif_seller/domain/app/settings/currency_model.dart';
 
 class SystemConfigModel extends Equatable {
   final bool maintenanceMode;

@@ -8,13 +8,13 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart' as nbutils;
 import 'package:overlay_support/overlay_support.dart';
-import 'package:zcart_seller/application/app/support/live_chat/conversession_provider.dart';
-import 'package:zcart_seller/application/app/support/live_chat/conversession_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/domain/app/support/live_chat/conversession_details_model.dart';
-import 'package:zcart_seller/domain/app/support/live_chat/reply_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/support/live_chat/widgets/first_message_box.dart';
+import 'package:alpesportif_seller/application/app/support/live_chat/conversession_provider.dart';
+import 'package:alpesportif_seller/application/app/support/live_chat/conversession_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/domain/app/support/live_chat/conversession_details_model.dart';
+import 'package:alpesportif_seller/domain/app/support/live_chat/reply_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/support/live_chat/widgets/first_message_box.dart';
 
 class ChatScreen extends HookConsumerWidget {
   final int id;

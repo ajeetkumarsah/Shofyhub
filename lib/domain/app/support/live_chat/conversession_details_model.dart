@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order/order_details/customer.dart';
-import 'package:zcart_seller/domain/app/shop/user/get_shop_users_model.dart';
-import 'package:zcart_seller/domain/app/support/live_chat/reply_model.dart';
+import 'package:alpesportif_seller/domain/app/order/order_details/customer.dart';
+import 'package:alpesportif_seller/domain/app/shop/user/get_shop_users_model.dart';
+import 'package:alpesportif_seller/domain/app/support/live_chat/reply_model.dart';
 
 class ConversessionDetailsModel extends Equatable {
   final int id;

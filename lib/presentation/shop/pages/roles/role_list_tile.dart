@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/shop/roles/role_model.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/role_details_page.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/trash_role_dialog.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/update_role_page.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/role_model.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/roles/role_details_page.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/roles/trash_role_dialog.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/roles/update_role_page.dart';
 
 class RoleListTile extends StatelessWidget {
   const RoleListTile({Key? key, required this.role}) : super(key: key);

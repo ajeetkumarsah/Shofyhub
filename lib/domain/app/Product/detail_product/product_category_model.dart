@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+import 'package:alpesportif_seller/domain/app/form/key_value_data.dart';
 
 class Category extends Equatable {
   final int id;

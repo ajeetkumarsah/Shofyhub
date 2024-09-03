@@ -2,11 +2,11 @@ import 'package:badges/badges.dart' as badge;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/notification/notification_provider.dart';
-import 'package:zcart_seller/application/app/settings/shop_settings_provider.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/notification/notification_page.dart';
-import 'package:zcart_seller/presentation/settings.dart/settings_home.dart';
+import 'package:alpesportif_seller/application/app/notification/notification_provider.dart';
+import 'package:alpesportif_seller/application/app/settings/shop_settings_provider.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/notification/notification_page.dart';
+import 'package:alpesportif_seller/presentation/settings.dart/settings_home.dart';
 
 class ZcartAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

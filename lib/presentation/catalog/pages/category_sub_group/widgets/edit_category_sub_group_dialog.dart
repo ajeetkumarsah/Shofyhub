@@ -8,17 +8,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_details_provider.dart';
-import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_details_state.dart';
-import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
-import 'package:zcart_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
-import 'package:zcart_seller/application/core/image_converter.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/application/core/single_image_picker_provider.dart';
-import 'package:zcart_seller/presentation/core/widgets/loading_widget.dart';
-import 'package:zcart_seller/presentation/core/widgets/required_field_text.dart';
-import 'package:zcart_seller/presentation/core/widgets/singel_image_upload.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:alpesportif_seller/application/app/category/category%20sub%20group/category_sub_group_details_provider.dart';
+import 'package:alpesportif_seller/application/app/category/category%20sub%20group/category_sub_group_details_state.dart';
+import 'package:alpesportif_seller/application/app/category/category%20sub%20group/category_sub_group_provider.dart';
+import 'package:alpesportif_seller/application/app/category/category%20sub%20group/category_sub_group_state.dart';
+import 'package:alpesportif_seller/application/core/image_converter.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/application/core/single_image_picker_provider.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/loading_widget.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/required_field_text.dart';
+import 'package:alpesportif_seller/presentation/core/widgets/singel_image_upload.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_text_field.dart';
 
 class EditCategorySubGroupDialog extends HookConsumerWidget {
   final int categorySubGroupId;

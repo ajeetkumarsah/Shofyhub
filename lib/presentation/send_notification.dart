@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
 
 import 'order/manage_order_page.dart';
 import 'widget_for_all/my_text_field.dart';

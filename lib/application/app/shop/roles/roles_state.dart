@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/shop/roles/permission_list_model.dart';
-import 'package:zcart_seller/domain/app/shop/roles/role_details_model.dart';
-import 'package:zcart_seller/domain/app/shop/roles/role_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/permission_list_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/role_details_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/role_model.dart';
 
 class RolesState extends Equatable {
   final bool loading;

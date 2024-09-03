@@ -2,10 +2,10 @@ import 'package:clean_api/models/clean_failure.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order/order_details_provider.dart';
-import 'package:zcart_seller/application/app/order/order_provider.dart';
-import 'package:zcart_seller/application/app/order/order_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/application/app/order/order_details_provider.dart';
+import 'package:alpesportif_seller/application/app/order/order_provider.dart';
+import 'package:alpesportif_seller/application/app/order/order_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
 
 class MarkAsDeliveredDialog extends HookConsumerWidget {
   final int orderId;

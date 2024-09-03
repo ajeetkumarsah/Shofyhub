@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/shop/taxes/create_tax_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/create_tax_model.dart';
 
-import 'package:zcart_seller/domain/app/shop/taxes/i_tax_repo.dart';
-import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/i_tax_repo.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/tax_model.dart';
 
 class TaxRepo extends ITaxRepo {
   final cleanApi = CleanApi.instance;
@@ -24,7 +24,8 @@ class TaxRepo extends ITaxRepo {
   }
 
   @override
-  Future<Either<CleanFailure, List<TaxModel>>> getAllTax({required String filter}) async {
+  Future<Either<CleanFailure, List<TaxModel>>> getAllTax(
+      {required String filter}) async {
     return cleanApi.get(
         fromData: ((json) =>
             List<TaxModel>.from(json['data'].map((e) => TaxModel.fromMap(e)))),
@@ -35,7 +36,8 @@ class TaxRepo extends ITaxRepo {
   Future<Either<CleanFailure, TaxModel>> getTaxDetails(
       {required int taxId}) async {
     return cleanApi.get(
-        fromData: (json) => TaxModel.fromMap(json['data']), endPoint: 'tax/$taxId');
+        fromData: (json) => TaxModel.fromMap(json['data']),
+        endPoint: 'tax/$taxId');
   }
 
   @override

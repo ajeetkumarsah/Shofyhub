@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/notification/notification_data_state.dart';
-import 'package:zcart_seller/domain/app/notification/i_notification_repo.dart';
-import 'package:zcart_seller/domain/app/notification/notification_model.dart';
-import 'package:zcart_seller/infrastructure/app/notification/notification_repo.dart';
+import 'package:alpesportif_seller/application/app/notification/notification_data_state.dart';
+import 'package:alpesportif_seller/domain/app/notification/i_notification_repo.dart';
+import 'package:alpesportif_seller/domain/app/notification/notification_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/notification/notification_repo.dart';
 
 final notificationDataProvider =
     StateNotifierProvider<NotificationDataNotifier, NotificationDataState>(

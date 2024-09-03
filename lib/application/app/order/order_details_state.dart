@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/order/order_details/order_details_model.dart';
+import 'package:alpesportif_seller/domain/app/order/order_details/order_details_model.dart';
 
 class OrderDetailsState extends Equatable {
   final bool loading;

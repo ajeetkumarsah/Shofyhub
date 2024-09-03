@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
+import 'package:alpesportif_seller/domain/app/catalog/attribute%20values/attribute_values_model.dart';
 
 import 'create_update_attribute_values_dialog.dart';
 import 'trash_attribute_value_dialog.dart';

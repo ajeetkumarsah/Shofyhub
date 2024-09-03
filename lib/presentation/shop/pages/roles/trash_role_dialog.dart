@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/shop/roles/role_provider.dart';
+import 'package:alpesportif_seller/application/app/shop/roles/role_provider.dart';
 
 class TrashRoleDialog extends HookConsumerWidget {
   final int roleId;

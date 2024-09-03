@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/links_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/meta_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/links_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/meta_model.dart';
 
 class CancellationPaginationModel extends Equatable {
   final List<CancellationModel> data;
@@ -54,7 +54,8 @@ class CancellationPaginationModel extends Equatable {
   @override
   bool get stringify => true;
 
-  factory CancellationPaginationModel.init() => const CancellationPaginationModel(
+  factory CancellationPaginationModel.init() =>
+      const CancellationPaginationModel(
         data: [],
         links: Links(),
         meta: Meta(currentPage: 1, lastPage: 1),

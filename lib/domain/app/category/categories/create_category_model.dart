@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+import 'package:alpesportif_seller/domain/app/form/key_value_data.dart';
 
 class CreateCategoryModel extends Equatable {
   final int categorySubGroupId;

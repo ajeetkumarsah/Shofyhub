@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/shop/roles/role_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/delete_role_dialog.dart';
-import 'package:zcart_seller/presentation/shop/pages/roles/restore_role_dialog.dart';
+import 'package:alpesportif_seller/domain/app/shop/roles/role_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/roles/delete_role_dialog.dart';
+import 'package:alpesportif_seller/presentation/shop/pages/roles/restore_role_dialog.dart';
 
 class TrashRoleListTile extends StatelessWidget {
   const TrashRoleListTile({Key? key, required this.role}) : super(key: key);

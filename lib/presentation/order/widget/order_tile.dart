@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/order/order_delivaryboy.dart';
-import 'package:zcart_seller/domain/app/order/order_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/order/fullfill_order_dialog.dart';
-import 'package:zcart_seller/presentation/order/widget/assign_delivery_boy_dialog.dart';
-import 'package:zcart_seller/presentation/order_details_page/order_details_screen.dart';
+import 'package:alpesportif_seller/domain/app/order/order_delivaryboy.dart';
+import 'package:alpesportif_seller/domain/app/order/order_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/order/fullfill_order_dialog.dart';
+import 'package:alpesportif_seller/presentation/order/widget/assign_delivery_boy_dialog.dart';
+import 'package:alpesportif_seller/presentation/order_details_page/order_details_screen.dart';
 
 import 'archive_order_confirmation.dart';
 import 'order_status_dialog.dart';

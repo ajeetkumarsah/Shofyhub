@@ -1,7 +1,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/shop/taxes/tax_model.dart';
+import 'package:alpesportif_seller/domain/app/shop/taxes/tax_model.dart';
 
 class TaxState extends Equatable {
   final bool loading;

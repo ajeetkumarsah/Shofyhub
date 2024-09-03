@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zcart_seller/presentation/stock/inventory/active_inventories_page.dart';
-import 'package:zcart_seller/presentation/stock/inventory/trash_inventories_page.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/active_inventories_page.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/trash_inventories_page.dart';
 
 class InventoryPage extends StatefulWidget {
   const InventoryPage({super.key});

@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/catalog/attribute%20values/attribute_value_details_model/attribute_class.dart';
+import 'package:alpesportif_seller/domain/app/catalog/attribute%20values/attribute_value_details_model/attribute_class.dart';
 
 class AttributeValueDetailsModel extends Equatable {
   final int id;

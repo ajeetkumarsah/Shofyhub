@@ -2,7 +2,7 @@
 
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/category/category%20group/category_group_show_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20group/category_group_show_model.dart';
 
 class CategoryGroupFamilyState extends Equatable {
   final bool loading;

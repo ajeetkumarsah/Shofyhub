@@ -2,7 +2,7 @@ import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+import 'package:alpesportif_seller/domain/app/form/key_value_data.dart';
 
 class KeyValueFormState extends Equatable {
   final IList<KeyValueData> dataList;

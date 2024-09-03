@@ -3,9 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_provider.dart';
-import 'package:zcart_seller/application/app/stocks/supplier/supplier_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/application/app/stocks/supplier/supplier_provider.dart';
+import 'package:alpesportif_seller/application/app/stocks/supplier/supplier_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
 
 class RestoreSupplierDialog extends HookConsumerWidget {
   final int supplierId;
@@ -19,10 +19,8 @@ class RestoreSupplierDialog extends HookConsumerWidget {
         Navigator.of(context).pop();
         if (next.failure == CleanFailure.none()) {
           NotificationHelper.success(message: 'item_restored'.tr());
-          
         } else if (next.failure != CleanFailure.none()) {
           NotificationHelper.error(message: next.failure.error);
-          
         }
       }
     });

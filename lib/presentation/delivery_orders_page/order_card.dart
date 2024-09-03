@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/presentation/delivery_details_page/delivery_details_page.dart';
+import 'package:alpesportif_seller/presentation/delivery_details_page/delivery_details_page.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:search_choices/search_choices.dart';
-import 'package:zcart_seller/domain/app/form/key_value_data.dart';
+import 'package:alpesportif_seller/domain/app/form/key_value_data.dart';
 
 class MultipleKeyValueSelector extends HookWidget {
   final IList<KeyValueData> allData;

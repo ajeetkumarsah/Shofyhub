@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order%20management/dispute/dispute_mode.dart';
-import 'package:zcart_seller/domain/app/category/categories/links_model.dart';
-import 'package:zcart_seller/domain/app/category/categories/meta_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/dispute/dispute_mode.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/links_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/meta_model.dart';
 
 class DisputePaginationModel extends Equatable {
   final List<DisputeModel> data;

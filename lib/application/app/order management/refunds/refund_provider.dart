@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order%20management/refunds/refund_state.dart';
-import 'package:zcart_seller/domain/app/order%20management/refund/i_refund_repo.dart';
-import 'package:zcart_seller/infrastructure/app/order%20management/refunds/refund_repo.dart';
+import 'package:alpesportif_seller/application/app/order%20management/refunds/refund_state.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/refund/i_refund_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/order%20management/refunds/refund_repo.dart';
 
 final refundProvider =
     StateNotifierProvider<RefundNotifier, RefundState>((ref) {

@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/dashboard/dashboard_state.dart';
-import 'package:zcart_seller/domain/app/dashboard/i_dashboard_repo.dart';
-import 'package:zcart_seller/infrastructure/app/dashboard/dashboard_repo.dart';
+import 'package:alpesportif_seller/application/app/dashboard/dashboard_state.dart';
+import 'package:alpesportif_seller/domain/app/dashboard/i_dashboard_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/dashboard/dashboard_repo.dart';
 
 final dashboardProvider =
     StateNotifierProvider<DashboardNotifier, DashboardState>((ref) {

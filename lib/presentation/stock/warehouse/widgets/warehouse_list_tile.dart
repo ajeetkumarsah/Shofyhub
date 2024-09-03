@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_model.dart';
-import 'package:zcart_seller/presentation/stock/warehouse/edit_warehouse_page.dart';
-import 'package:zcart_seller/presentation/stock/warehouse/warehouse_details_page.dart';
-import 'package:zcart_seller/presentation/stock/warehouse/widgets/trash_warehouse_dialog.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/warehouse_model.dart';
+import 'package:alpesportif_seller/presentation/stock/warehouse/edit_warehouse_page.dart';
+import 'package:alpesportif_seller/presentation/stock/warehouse/warehouse_details_page.dart';
+import 'package:alpesportif_seller/presentation/stock/warehouse/widgets/trash_warehouse_dialog.dart';
 
 class WarehouseListTile extends StatelessWidget {
   final WarehouseModel warehouseItem;

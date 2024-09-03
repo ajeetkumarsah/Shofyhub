@@ -4,23 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/form/subcroption_plan_provider.dart';
-import 'package:zcart_seller/application/app/plugin/plugin_provider.dart';
-import 'package:zcart_seller/application/auth/auth_provider.dart';
-import 'package:zcart_seller/application/auth/auth_state.dart';
-import 'package:zcart_seller/application/auth/country_code_provider.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/domain/app/form/key_value_data.dart';
-import 'package:zcart_seller/domain/auth/registration_body.dart';
-import 'package:zcart_seller/domain/auth/user_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
-import 'package:zcart_seller/presentation/app/dashboard/dashboard_home.dart';
-import 'package:zcart_seller/presentation/auth/otp_verification_screen.dart';
-import 'package:zcart_seller/presentation/auth/sign_in_page.dart';
-import 'package:zcart_seller/presentation/auth/widgets/country_widget.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_button.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
-import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
+import 'package:alpesportif_seller/application/app/form/subcroption_plan_provider.dart';
+import 'package:alpesportif_seller/application/app/plugin/plugin_provider.dart';
+import 'package:alpesportif_seller/application/auth/auth_provider.dart';
+import 'package:alpesportif_seller/application/auth/auth_state.dart';
+import 'package:alpesportif_seller/application/auth/country_code_provider.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/domain/app/form/key_value_data.dart';
+import 'package:alpesportif_seller/domain/auth/registration_body.dart';
+import 'package:alpesportif_seller/domain/auth/user_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/presentation/app/dashboard/dashboard_home.dart';
+import 'package:alpesportif_seller/presentation/auth/otp_verification_screen.dart';
+import 'package:alpesportif_seller/presentation/auth/sign_in_page.dart';
+import 'package:alpesportif_seller/presentation/auth/widgets/country_widget.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_button.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/validator_logic.dart';
 
 class SignupScreen extends HookConsumerWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -37,7 +37,6 @@ class SignupScreen extends HookConsumerWidget {
     final emailController = useTextEditingController();
     final shopNameController = useTextEditingController();
     final ValueNotifier<KeyValueData> selectedPlan = useState(planList[0]);
-
 
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (previous != next && !next.loading) {
@@ -87,18 +86,21 @@ class SignupScreen extends HookConsumerWidget {
         ),
         centerTitle: true,
         title: Container(
-            height: 100,
-            width: 200,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadiusDirectional.circular(10)),
-            child: ClipRRect(
-              borderRadius: BorderRadiusDirectional.circular(50),
-              child: Image.asset(
-                'assets/zcart_logo/seller_logo.png',
-                fit: BoxFit.cover,
-              ),
-            )),
+          height: 100.h,
+          width: 100.h,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadiusDirectional.circular(10)),
+          padding: EdgeInsets.all(4),
+          child: ClipRRect(
+            borderRadius: BorderRadiusDirectional.circular(50),
+            child: Image.asset(
+              'assets/zcart_logo/seller_logo.png',
+              fit: BoxFit.fitWidth,
+              // color: Colors.white,
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Form(

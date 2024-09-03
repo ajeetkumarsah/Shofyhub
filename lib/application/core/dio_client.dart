@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zcart_seller/application/core/config.dart';
+import 'package:alpesportif_seller/application/core/config.dart';
 
 class DioClient {
   static Future<BaseOptions> getBasseOptions() async {

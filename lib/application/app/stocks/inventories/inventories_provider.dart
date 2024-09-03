@@ -1,12 +1,12 @@
 // import 'package:clean_api/clean_api.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
-// import 'package:zcart_seller/application/app/stocks/inventories/inventories_state.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/i_inventories_repo.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventory_pagination_model.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/quick_update_model.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/update_inventory_model.dart';
-// import 'package:zcart_seller/infrastructure/app/stocks/inventories/inventories_repo.dart';
+// import 'package:alpesportif_seller/application/app/stocks/inventories/inventories_state.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/i_inventories_repo.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventories_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventory_pagination_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/quick_update_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/update_inventory_model.dart';
+// import 'package:alpesportif_seller/infrastructure/app/stocks/inventories/inventories_repo.dart';
 
 // final stockeInventoryProvider =
 //     StateNotifierProvider<AllInventoriesNotifier, InventoriesState>((ref) {

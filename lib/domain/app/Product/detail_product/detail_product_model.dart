@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/Product/detail_product/product_category_model.dart';
-import 'package:zcart_seller/domain/app/Product/detail_product/product_image_model.dart';
+import 'package:alpesportif_seller/domain/app/Product/detail_product/product_category_model.dart';
+import 'package:alpesportif_seller/domain/app/Product/detail_product/product_image_model.dart';
 
 import 'manufacturer_model.dart';
 

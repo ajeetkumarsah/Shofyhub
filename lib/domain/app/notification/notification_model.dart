@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/notification/notification_data_model.dart';
+import 'package:alpesportif_seller/domain/app/notification/notification_data_model.dart';
 
 class NotificationModel extends Equatable {
   final String id;

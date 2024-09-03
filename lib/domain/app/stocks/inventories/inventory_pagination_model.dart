@@ -1,9 +1,9 @@
 // import 'dart:convert';
 
 // import 'package:equatable/equatable.dart';
-// import 'package:zcart_seller/domain/app/category/categories/links_model.dart';
-// import 'package:zcart_seller/domain/app/category/categories/meta_model.dart';
-// import 'package:zcart_seller/domain/app/stocks/inventories/inventories_model.dart';
+// import 'package:alpesportif_seller/domain/app/category/categories/links_model.dart';
+// import 'package:alpesportif_seller/domain/app/category/categories/meta_model.dart';
+// import 'package:alpesportif_seller/domain/app/stocks/inventories/inventories_model.dart';
 
 // class InventoryPaginationModel extends Equatable {
 //   final List<InventoriesModel> data;

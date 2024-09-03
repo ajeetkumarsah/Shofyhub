@@ -1,9 +1,9 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order/order_details_state.dart';
-import 'package:zcart_seller/application/app/order/order_provider.dart';
-import 'package:zcart_seller/domain/app/order/i_order_repo.dart';
-import 'package:zcart_seller/infrastructure/app/order/order_repo.dart';
+import 'package:alpesportif_seller/application/app/order/order_details_state.dart';
+import 'package:alpesportif_seller/application/app/order/order_provider.dart';
+import 'package:alpesportif_seller/domain/app/order/i_order_repo.dart';
+import 'package:alpesportif_seller/infrastructure/app/order/order_repo.dart';
 
 final orderDetailsProvider = StateNotifierProvider.family
     .autoDispose<OrderDetailsNotifier, OrderDetailsState, int>((ref, id) {

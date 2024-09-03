@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:zcart_seller/application/auth/auth_provider.dart';
-import 'package:zcart_seller/models/inventory/inventory_details_model.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_multiline_text_field.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
-import 'package:zcart_seller/presentation/widget_for_all/validator_logic.dart';
-import 'package:zcart_seller/providers/stocks/form_data_provider.dart';
-import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
+import 'package:alpesportif_seller/application/auth/auth_provider.dart';
+import 'package:alpesportif_seller/models/inventory/inventory_details_model.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_multiline_text_field.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/validator_logic.dart';
+import 'package:alpesportif_seller/providers/stocks/form_data_provider.dart';
+import 'package:alpesportif_seller/providers/stocks/inventories_provider.dart';
 
 class UpdateInventoryPage extends ConsumerWidget {
   final int inventoryId;

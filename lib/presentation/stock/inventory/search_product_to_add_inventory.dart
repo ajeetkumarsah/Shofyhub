@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/presentation/stock/inventory/add_inventory/add_inventory_page.dart';
-import 'package:zcart_seller/presentation/stock/inventory/add_inventory/create_variants_page.dart';
-import 'package:zcart_seller/providers/stocks/inventories_provider.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/add_inventory/add_inventory_page.dart';
+import 'package:alpesportif_seller/presentation/stock/inventory/add_inventory/create_variants_page.dart';
+import 'package:alpesportif_seller/providers/stocks/inventories_provider.dart';
 
 class SearchProductToAddInventory extends ConsumerStatefulWidget {
   const SearchProductToAddInventory({super.key});

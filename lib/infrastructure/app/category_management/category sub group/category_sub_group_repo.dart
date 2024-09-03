@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/application/core/dio_client.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/category_sub_gropu_pagination_model.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
-import 'package:zcart_seller/domain/app/category/category%20sub%20group/i_category_sub_group_repo.dart';
+import 'package:alpesportif_seller/application/core/dio_client.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/category_sub_gropu_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/details%20model/category_sub_group_details_model.dart';
+import 'package:alpesportif_seller/domain/app/category/category%20sub%20group/i_category_sub_group_repo.dart';
 
 class CategorySubGroupRepo extends ICategorySubGroupRepo {
   final cleanApi = CleanApi.instance;

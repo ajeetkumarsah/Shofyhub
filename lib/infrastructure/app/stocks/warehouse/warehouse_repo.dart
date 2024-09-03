@@ -1,8 +1,8 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/create_update_warehouse_model.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/i_warehouse_repo.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_details_model.dart';
-import 'package:zcart_seller/domain/app/stocks/warehouse/warehouse_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/create_update_warehouse_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/i_warehouse_repo.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/warehouse_details_model.dart';
+import 'package:alpesportif_seller/domain/app/stocks/warehouse/warehouse_pagination_model.dart';
 
 class WarehouseRepo extends IWarehouseRepo {
   final cleanApi = CleanApi.instance;

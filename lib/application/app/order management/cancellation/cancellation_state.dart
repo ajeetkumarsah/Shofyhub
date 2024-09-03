@@ -1,6 +1,6 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/cancellation/cancellation_model.dart';
 
 class CancellationState extends Equatable {
   final bool loading;

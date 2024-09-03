@@ -1,5 +1,5 @@
 import 'package:clean_api/clean_api.dart';
-import 'package:zcart_seller/domain/app/order%20management/cancellation/cancellation_pagination_model.dart';
+import 'package:alpesportif_seller/domain/app/order%20management/cancellation/cancellation_pagination_model.dart';
 
 abstract class ICancellationRepo {
   Future<Either<CleanFailure, CancellationPaginationModel>> getCancellations(

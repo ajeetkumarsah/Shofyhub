@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:zcart_seller/domain/app/category/categories/category_model.dart';
+import 'package:alpesportif_seller/domain/app/category/categories/category_model.dart';
 
 import 'links_model.dart';
 import 'meta_model.dart';
@@ -54,7 +54,6 @@ class CategoryPaginationModel extends Equatable {
 
   @override
   bool get stringify => true;
-
 
   factory CategoryPaginationModel.init() => const CategoryPaginationModel(
         data: [],

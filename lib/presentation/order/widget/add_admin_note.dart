@@ -3,10 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zcart_seller/application/app/order/order_provider.dart';
-import 'package:zcart_seller/application/app/order/order_state.dart';
-import 'package:zcart_seller/application/core/notification_helper.dart';
-import 'package:zcart_seller/presentation/widget_for_all/k_text_field.dart';
+import 'package:alpesportif_seller/application/app/order/order_provider.dart';
+import 'package:alpesportif_seller/application/app/order/order_state.dart';
+import 'package:alpesportif_seller/application/core/notification_helper.dart';
+import 'package:alpesportif_seller/presentation/widget_for_all/k_text_field.dart';
 
 class AddAdminNote extends HookConsumerWidget {
   final int orderId;

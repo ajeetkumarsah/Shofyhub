@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:zcart_seller/domain/app/support/live_chat/conversession_details_model.dart';
-import 'package:zcart_seller/infrastructure/app/constants.dart';
+import 'package:alpesportif_seller/domain/app/support/live_chat/conversession_details_model.dart';
+import 'package:alpesportif_seller/infrastructure/app/constants.dart';
 
 class FirstMessageBox extends StatelessWidget {
   final ConversessionDetailsModel conversessionDetailsModel;

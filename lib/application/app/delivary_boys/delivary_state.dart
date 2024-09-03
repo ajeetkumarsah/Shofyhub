@@ -2,7 +2,7 @@
 import 'package:clean_api/clean_api.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:zcart_seller/domain/app/delivary%20boy/delivary_boy_model.dart';
+import 'package:alpesportif_seller/domain/app/delivary%20boy/delivary_boy_model.dart';
 
 class DelivaryState extends Equatable {
   final bool loading;
